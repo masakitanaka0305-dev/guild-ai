@@ -275,3 +275,34 @@ describe("jargon-lint: permitted mercari-copy terms", () => {
     expect(lintSrc).toContain('"取引所"');
   });
 });
+
+// ─── 10. Clarity: explainer heroes + 通帳 unification + Tip tooltip ───────────
+
+describe("clarity: explainer heroes and 通帳 unification", () => {
+  const jobsSrc  = readFileSync(resolve(root, "src/app/jobs/page.tsx"), "utf8");
+  const guildSrc = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
+  const tipSrc   = readFileSync(resolve(root, "src/components/Tip.tsx"), "utf8");
+
+  it("/jobs page has hero explainer block for かせぐ", () => {
+    expect(jobsSrc).toContain("かせぐ：あなたの");
+  });
+
+  it("/guild page has hero explainer block for マイ銀行", () => {
+    expect(guildSrc).toContain("マイ銀行：あなたの");
+  });
+
+  it("no UI file contains お財布通帳", () => {
+    const homeSrc  = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+    expect(homeSrc).not.toContain("お財布通帳");
+    expect(guildSrc).not.toContain("お財布通帳");
+    expect(jobsSrc).not.toContain("お財布通帳");
+  });
+
+  it("/guild page has 通帳 section heading for transaction history", () => {
+    expect(guildSrc).toContain("通帳：これまでの");
+  });
+
+  it("Tip component uses aria-describedby for accessibility", () => {
+    expect(tipSrc).toContain("aria-describedby");
+  });
+});

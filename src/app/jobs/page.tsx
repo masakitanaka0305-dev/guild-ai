@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MOCK_JOBS, checkJobEligibility, applyToJob, getApplications } from "@/lib/jobs";
 import { getWeapons } from "@/lib/weapons";
 import { useTactile } from "@/hooks/useTactile";
+import { Tip } from "@/components/Tip";
 import type { Weapon } from "@/types";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -48,12 +49,20 @@ export default function JobsPage() {
         </div>
       )}
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">いま、かせぎ どきの しごと。</h1>
-        <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">
-          あいしょうの高い案件から、すぐ応募できます。
+      {/* ── かせぐ ヒーローブロック ─────────────────── */}
+      <section className="mb-6 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
+        <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)] mb-2">
+          かせぐ：あなたの ノートが 役立つ おしごとです
+        </h1>
+        <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
+          ここでは、AIエージェントや企業から{" "}
+          <span className="text-[#E64545] font-semibold">おしごとの依頼</span>
+          が並びます。あなたの登記済みノートが活きる案件を選んで、
+          <span className="text-[#E64545] font-semibold">応募 1 タップ</span>
+          で挑戦できます。
         </p>
-      </div>
+        <p className="text-xs text-[var(--n-muted,#6B6456)] mt-2 font-medium">いま、かせぎ どきの しごと。</p>
+      </section>
 
       <ul className="space-y-4 pb-24">
         {MOCK_JOBS.map((job) => {
@@ -77,8 +86,9 @@ export default function JobsPage() {
                     <span className="text-[10px] bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] px-2 py-0.5 rounded-full">
                       {timeBucket}
                     </span>
-                    <span className={`text-[10px] font-bold ${fitCls}`}>
+                    <span className={`text-[10px] font-bold ${fitCls} inline-flex items-center`}>
                       あいしょう: {fitLbl}
+                      <Tip text="あなたの登記済みノートとの相性です" />
                     </span>
                   </div>
                   <h2 className="text-base font-bold text-[var(--n-text,#1A1714)] leading-snug">{job.title}</h2>
