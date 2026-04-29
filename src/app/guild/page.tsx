@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { RankBadge } from "@/components/RankBadge";
 import { Tip } from "@/components/Tip";
+import { AssetPortfolio } from "@/components/AssetPortfolio";
 import { getWeapons } from "@/lib/weapons";
 import { getApplications } from "@/lib/jobs";
 import { getPassbookSnapshot } from "@/lib/passbook";
@@ -12,14 +13,6 @@ import { useLiveEarnings } from "@/lib/live-earnings";
 import { FloatingPayoutToast } from "@/components/FloatingPayoutToast";
 import { useRoyaltyStream } from "@/lib/royalty-stream";
 import type { Weapon, PassbookTransaction } from "@/types";
-
-// ─── Mock active notes ────────────────────────────────────────────────────────
-
-const ACTIVE_NOTES = [
-  { id: "note-001", title: "TypeScript設計パターン集",    callsLast1m: 4, perCallJpy: 1.2, totalEarned: 184.8 },
-  { id: "note-002", title: "Rustメモリ安全設計ノート",    callsLast1m: 2, perCallJpy: 1.8, totalEarned:  97.2 },
-  { id: "note-003", title: "LLM Prompt Engineering集", callsLast1m: 1, perCallJpy: 0.9, totalEarned:  43.2 },
-] as const;
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
 
@@ -194,28 +187,13 @@ export default function GuildPage() {
         </div>
       )}
 
-      {/* ── 稼働中ノート上位3件 ───────────────────────────────────────── */}
+      {/* ── 運用中の資産（MDファイル） ────────────────────────────────── */}
       <section className="mb-4">
-        <SectionBand title="稼働中ノート 上位3件" tip="直近1分のコール数が多いノートです" />
-        <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory lg:flex-col lg:overflow-visible">
-          {ACTIVE_NOTES.map((n) => (
-            <div
-              key={n.id}
-              className="snap-start flex-shrink-0 w-56 lg:w-auto bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-3 shadow-sm"
-            >
-              <p className="text-xs font-bold text-[var(--n-text,#1A1714)] truncate mb-2">{n.title}</p>
-              <div className="flex items-center justify-between text-[10px] text-[var(--n-muted,#6B6456)]">
-                <span>直近1分 {n.callsLast1m} コール</span>
-                <span className="tabular-nums font-semibold text-[var(--n-positive,#0E9F4F)]">
-                  +¥{n.totalEarned.toFixed(1)}
-                </span>
-              </div>
-              <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">
-                1コール ¥{n.perCallJpy}
-              </p>
-            </div>
-          ))}
-        </div>
+        <SectionBand
+          title="運用中の資産：あなたが投稿したMDファイル"
+          tip="投稿したノートと、その稼働状況をまとめます"
+        />
+        <AssetPortfolio />
       </section>
 
       {/* ── 通帳：これまでの お取引 ───────────────────────────────────── */}
