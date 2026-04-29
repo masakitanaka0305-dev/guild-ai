@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-export type Theme = "nameraka" | "pro" | "kawaii";
-const THEMES: Theme[] = ["nameraka", "pro", "kawaii"];
+export type Theme = "nameraka" | "midnight" | "pro" | "kawaii";
+const THEMES: Theme[] = ["nameraka", "midnight", "pro", "kawaii"];
 const STORAGE_KEY = "guild_theme";
 
 const THEME_LABELS: Record<Theme, string> = {
   nameraka: "なめらか",
+  midnight: "ミッドナイト",
   pro: "Pro",
   kawaii: "Kawaii",
 };
@@ -42,7 +43,7 @@ export function ThemeToggle() {
     <div
       role="radiogroup"
       aria-label="テーマ切替"
-      className="flex items-center rounded-xl overflow-hidden border border-[var(--n-divider,#1F3A66)] text-[11px] font-sans"
+      className="flex items-center rounded-lg overflow-hidden border border-[var(--n-divider,rgba(0,0,0,0.12))] text-[10px] font-sans"
     >
       {THEMES.map((t) => (
         <button
@@ -50,10 +51,10 @@ export function ThemeToggle() {
           role="radio"
           aria-checked={theme === t}
           onClick={() => setTheme(t)}
-          className={`px-2.5 py-1.5 transition-colors ${
+          className={`px-2 py-1 transition-colors ${
             theme === t
-              ? "bg-[var(--n-gold,#D4AF37)] text-[#0A192F] font-bold"
-              : "bg-[var(--n-surface,#0E2240)] text-[var(--n-muted,#9FB1C8)] hover:text-[var(--n-text,#F1F4F9)]"
+              ? "bg-[var(--n-primary,#E64545)] text-white font-bold"
+              : "bg-[var(--n-surface,#FFFFFF)] text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
           {THEME_LABELS[t]}
@@ -64,6 +65,6 @@ export function ThemeToggle() {
 }
 
 export function ThemeInitScript() {
-  const script = `(function(){try{var t=localStorage.getItem('guild_theme');if(t&&['nameraka','pro','kawaii'].includes(t)){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','nameraka');}}catch(e){}})();`;
+  const script = `(function(){try{var t=localStorage.getItem('guild_theme');if(t&&['nameraka','midnight','pro','kawaii'].includes(t)){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme','nameraka');}}catch(e){}})();`;
   return <script dangerouslySetInnerHTML={{ __html: script }} />;
 }

@@ -159,7 +159,7 @@ export default function BankPage() {
           setTimeout(() => setStep("result"), 800);
         }, 600);
       }
-    }, isNameraka ? 600 : isTerminal ? 800 : 1400);
+    }, isNameraka ? 400 : isTerminal ? 800 : 1400);
   }, [noteContent, triggerStamp, isTerminal, isNameraka]);
 
   const handleMint = useCallback(() => {
@@ -207,41 +207,40 @@ export default function BankPage() {
     return (
       <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[var(--n-text,#F1F4F9)]">のこす</h1>
-          <p className="text-sm text-[var(--n-muted,#9FB1C8)] mt-1">
-            あなたのノートを提出すると、AIが査定して価値にします。
+          <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">何を のこしますか？</h1>
+          <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">
+            ノートを貼り付けると、AIが価値を査定します。
           </p>
         </div>
 
         {step === "input" && (
           <div className="space-y-4">
             {/* Drop area / text area */}
-            <div className="bg-[var(--n-surface,#0E2240)] border-2 border-dashed border-[var(--n-divider,#1F3A66)] rounded-3xl p-6 hover:border-[var(--n-gold,#D4AF37)]/50 transition-colors">
-              <p className="text-xs text-[var(--n-muted,#9FB1C8)] mb-2 text-center">
+            <div className="bg-[var(--n-surface,#FFFFFF)] border-2 border-dashed border-[var(--n-divider,rgba(0,0,0,0.12))] rounded-3xl p-6 hover:border-[var(--n-primary,#E64545)]/40 transition-colors">
+              <p className="text-xs text-[var(--n-muted,#6B6456)] mb-2 text-center">
                 ノートをここに貼り付け、または入力してください
               </p>
               <textarea
-                className="w-full h-52 bg-transparent resize-none text-sm text-[var(--n-text,#F1F4F9)] placeholder-[var(--n-muted,#9FB1C8)] focus:outline-none"
+                className="w-full h-52 bg-transparent resize-none text-sm text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] focus:outline-none"
                 placeholder={"# 設計ノート\n\nあなたのこだわり・設計判断・試行錯誤を書いてください..."}
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
                 aria-label="ノート提出フォーム"
               />
-              <div className="flex items-center justify-between mt-2 text-xs text-[var(--n-muted,#9FB1C8)]">
+              <div className="flex items-center justify-between mt-2 text-xs text-[var(--n-muted,#6B6456)]">
                 <span>{noteContent.length} 文字</span>
                 {noteContent.length > 50 && (
-                  <span className="text-[var(--n-gold,#D4AF37)] font-semibold">● 意志シグナル検出 → Sランク候補</span>
+                  <span className="text-[var(--n-primary,#E64545)] font-semibold">● 意志シグナル検出 → Sランク候補</span>
                 )}
               </div>
             </div>
 
             {/* Assessment range preview */}
             {assessRange && (
-              <div className="bg-[var(--n-surface-2,#122A4D)] rounded-2xl px-4 py-3 flex items-center justify-between">
-                <span className="text-xs text-[var(--n-muted,#9FB1C8)]">査定額レンジ（目安）</span>
-                <span className="font-bold tabular-nums text-[var(--n-gold,#D4AF37)] text-sm">
-                  {formatJpy(assessRange[0])} 〜 {formatJpy(assessRange[1])}
-                </span>
+              <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl px-4 py-3">
+                <p className="text-sm font-bold text-[var(--n-text,#1A1714)] tabular-nums">
+                  {formatJpy(assessRange[0])} から {formatJpy(assessRange[1])} で売れそうです
+                </p>
               </div>
             )}
 
@@ -249,7 +248,7 @@ export default function BankPage() {
               type="button"
               onClick={handleScore}
               disabled={noteContent.trim().length < 10}
-              className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#1F3A66] via-[#2A5298] to-[var(--n-gold,#D4AF37)] text-white font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 active:scale-[0.98] transition-all duration-220 shadow-lg"
+              className="w-full py-3.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 active:scale-[0.98] transition-all duration-220 shadow-md"
               aria-label="ノートを提出して鑑定する"
             >
               提出する →
@@ -258,11 +257,11 @@ export default function BankPage() {
         )}
 
         {step === "scoring" && (
-          <div className="bg-[var(--n-surface,#0E2240)] rounded-3xl p-8 text-center relative overflow-hidden">
-            {/* Gold scan line */}
-            <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--n-gold,#D4AF37)] to-transparent animate-[scanLine_0.6s_ease-in-out_forwards]" aria-hidden />
-            <p className="text-[var(--n-gold,#D4AF37)] font-bold text-lg">鑑定中…</p>
-            <p className="text-xs text-[var(--n-muted,#9FB1C8)] mt-2">AIが思考密度を解析しています</p>
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl p-8 text-center relative overflow-hidden">
+            {/* Scan line */}
+            <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--n-primary,#E64545)] to-transparent animate-[scanLine_0.4s_ease-in-out_forwards]" aria-hidden />
+            <p className="text-[var(--n-primary,#E64545)] font-bold text-lg">鑑定中…</p>
+            <p className="text-xs text-[var(--n-muted,#6B6456)] mt-2">AIが思考密度を解析しています</p>
           </div>
         )}
 

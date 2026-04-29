@@ -51,8 +51,9 @@ describe("nameraka-theme.theme-cycle", () => {
     expect(src).toContain('"kawaii"');
   });
 
-  it("ThemeToggle cycle is nameraka → pro → kawaii → nameraka", () => {
-    expect(src).toContain('["nameraka", "pro", "kawaii"]');
+  it("ThemeToggle cycle includes midnight (4-state: nameraka → midnight → pro → kawaii)", () => {
+    expect(src).toContain('"midnight"');
+    expect(src).toContain('["nameraka", "midnight", "pro", "kawaii"]');
   });
 
   it("ThemeInitScript defaults to nameraka", () => {
@@ -67,13 +68,13 @@ describe("nameraka-theme.theme-cycle", () => {
 describe("nameraka-theme.fab", () => {
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
 
-  it("layout has +のこす FAB linking to /bank", () => {
-    expect(layout).toContain("href=\"/bank\"");
-    expect(layout).toContain("のこす");
+  it("layout has +のこす FAB linking to /sell", () => {
+    expect(layout).toContain("href=\"/sell\"");
+    expect(layout).toContain("＋");
   });
 
   it("FAB has aria-label for accessibility", () => {
-    expect(layout).toContain('aria-label="ノートをのこす"');
+    expect(layout).toContain('aria-label="知恵をのこす"');
   });
 
   it("FAB is hidden in pro and kawaii themes", () => {
@@ -177,9 +178,56 @@ describe("nameraka-theme.royalty-stream", () => {
   });
 });
 
-// ─── 9. Jargon lint (nameraka) ───────────────────────────────────────────────
+// ─── 9. Light nameraka (v2 repaint) ─────────────────────────────────────────
 
-describe("nameraka-theme.jargon-lint", () => {
+describe("nameraka-theme.light-repaint", () => {
+  const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
+  const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+  const toggle = readFileSync(resolve(root, "src/components/ThemeToggle.tsx"), "utf8");
+  const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
+
+  it("nameraka --n-bg is light (#FAFAF7)", () => {
+    expect(css).toContain("--n-bg: #FAFAF7");
+  });
+
+  it("midnight theme retains old dark #0A192F as --n-bg", () => {
+    expect(css).toContain('[data-theme="midnight"]');
+    expect(css).toContain("--n-bg: #0A192F");
+  });
+
+  it("bottom nav has 4 core tabs (ホーム/のこす/かせぐ/マイ銀行)", () => {
+    expect(nav).toContain("BOTTOM_ITEMS");
+    expect(nav).toContain('"ホーム"');
+    expect(nav).toContain('"のこす"');
+    expect(nav).toContain('"かせぐ"');
+    expect(nav).toContain('"マイ銀行"');
+  });
+
+  it("ThemeToggle has 4 states including midnight", () => {
+    expect(toggle).toContain('"nameraka"');
+    expect(toggle).toContain('"midnight"');
+    expect(toggle).toContain('"pro"');
+    expect(toggle).toContain('"kawaii"');
+  });
+
+  it("FAB links to /sell (knowledge registration)", () => {
+    expect(layout).toContain('href="/sell"');
+    expect(layout).toContain('aria-label="知恵をのこす"');
+  });
+
+  it("fitLabel returns ぴったり/もう少し/これから at correct thresholds", async () => {
+    const { fitLabel } = await import("@/lib/match-fit");
+    expect(fitLabel(80)).toBe("ぴったり");
+    expect(fitLabel(79)).toBe("もう少し");
+    expect(fitLabel(50)).toBe("もう少し");
+    expect(fitLabel(49)).toBe("これから");
+    expect(fitLabel(0)).toBe("これから");
+  });
+});
+
+// ─── 10. Jargon lint (nameraka) ──────────────────────────────────────────────
+
+describe("nameraka-theme.jargon-lint-v2", () => {
   it("SidebarNav has hiragana nameraka labels", () => {
     const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
     expect(src).toContain("namerakaLabel");

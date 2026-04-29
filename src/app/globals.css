@@ -7,24 +7,27 @@
     color-scheme: light;
   }
 
-  /* ── Nameraka Theme CSS Variables (デフォルト) ─────────────── */
+  /* ── Nameraka Theme (ライト — デフォルト) ──────────────────── */
   [data-theme="nameraka"] {
-    color-scheme: dark;
-    --n-bg: #0A192F;
-    --n-surface: #0E2240;
-    --n-surface-2: #122A4D;
-    --n-divider: #1F3A66;
-    --n-text: #F1F4F9;
-    --n-muted: #9FB1C8;
+    color-scheme: light;
+    --n-bg: #FAFAF7;
+    --n-surface: #FFFFFF;
+    --n-surface-2: #F5F3EE;
+    --n-divider: rgba(0,0,0,0.08);
+    --n-text: #1A1714;
+    --n-muted: #6B6456;
+    --n-primary: #E64545;
+    --n-primary-hover: #CC3A3A;
     --n-gold: #D4AF37;
     --n-gold-soft: #F2DFA0;
-    --n-gold-glow: rgba(212,175,55,0.15);
-    --n-positive: #4DD08F;
-    --n-negative: #FF7676;
+    --n-positive: #0E9F4F;
+    --n-negative: #E64545;
     --radius-md: 16px;
     --radius-sm: 8px;
     --radius-lg: 24px;
     font-family: -apple-system, BlinkMacSystemFont, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
   }
 
   [data-theme="nameraka"] body,
@@ -42,6 +45,47 @@
 
   /* nameraka section card */
   [data-theme="nameraka"] .section-card {
+    background-color: var(--n-surface);
+    border-color: var(--n-divider);
+    border-radius: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  /* ── Midnight Theme (旧 nameraka — 濃紺ダーク) ──────────────── */
+  [data-theme="midnight"] {
+    color-scheme: dark;
+    --n-bg: #0A192F;
+    --n-surface: #0E2240;
+    --n-surface-2: #122A4D;
+    --n-divider: #1F3A66;
+    --n-text: #F1F4F9;
+    --n-muted: #9FB1C8;
+    --n-primary: #D4AF37;
+    --n-primary-hover: #C09C28;
+    --n-gold: #D4AF37;
+    --n-gold-soft: #F2DFA0;
+    --n-gold-glow: rgba(212,175,55,0.15);
+    --n-positive: #4DD08F;
+    --n-negative: #FF7676;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+    --radius-lg: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  }
+
+  [data-theme="midnight"] body,
+  [data-theme="midnight"] .n-bg {
+    background-color: var(--n-bg);
+    color: var(--n-text);
+  }
+
+  [data-theme="midnight"] .shimaenaga-mascot,
+  [data-theme="midnight"] .kawaii-only,
+  [data-theme="midnight"] .pro-only {
+    display: none !important;
+  }
+
+  [data-theme="midnight"] .section-card {
     background-color: var(--n-surface);
     border-color: var(--n-divider);
     border-radius: 16px;
