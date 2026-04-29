@@ -5,6 +5,7 @@ import "./globals.css";
 import { SidebarNav, BottomNav } from "@/components/SidebarNav";
 import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 import { ZeroDayToast } from "@/components/ZeroDayToast";
+import { SupportChat } from "@/components/SupportChat";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -102,6 +103,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
           {/* Zero-Day alert toast */}
           <ZeroDayToast />
+
+          {/* Shima Support floating chat */}
+          <SupportChat />
 
           {/* ＋ FAB — /bank への知恵登録ボタン */}
           <Link
