@@ -371,3 +371,37 @@ describe("guild-rename: 運用 / mobile / cleanup", () => {
     expect(guildSrc).toContain("pb-24");
   });
 });
+
+// ─── 13. 総資産カード ──────────────────────────────────────────────────────────
+
+describe("total-assets: hero card", () => {
+  const guildSrc  = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
+  const cardSrc   = readFileSync(resolve(root, "src/components/TotalAssetsCard.tsx"), "utf8");
+  const portfolioSrc = readFileSync(resolve(root, "src/lib/portfolio/index.ts"), "utf8");
+
+  it("/guild page contains 総資産 heading", () => {
+    expect(guildSrc).toContain("TotalAssetsCard");
+    expect(cardSrc).toContain("総資産");
+  });
+
+  it("getTotalPortfolio is deterministic (same output on repeated calls)", async () => {
+    const { getTotalPortfolio } = await import("@/lib/portfolio");
+    const a = getTotalPortfolio();
+    const b = getTotalPortfolio();
+    expect(a.currentBalanceJpy).toBe(b.currentBalanceJpy);
+    expect(a.lifetimeEarningsJpy).toBe(b.lifetimeEarningsJpy);
+    expect(a.runningAssetValueJpy).toBe(b.runningAssetValueJpy);
+    expect(a.monthlyChangePct).toBe(b.monthlyChangePct);
+  });
+
+  it("monthlyChangePct positive → green class, negative → red class in source", () => {
+    expect(cardSrc).toContain("text-[#0E9F4F]");
+    expect(cardSrc).toContain("text-[#E64545]");
+    expect(cardSrc).toContain("isPositive");
+  });
+
+  it("donut chart SVG has aria-label=\"資産の内訳\"", () => {
+    expect(cardSrc).toContain('<svg');
+    expect(cardSrc).toContain('aria-label="資産の内訳"');
+  });
+});

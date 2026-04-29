@@ -112,6 +112,48 @@ export function sortAssets(assets: PortfolioAsset[], key: SortKey): PortfolioAss
   });
 }
 
+// ─── Total Portfolio ──────────────────────────────────────────────────────────
+
+export interface TotalPortfolio {
+  currentBalanceJpy: number;
+  lifetimeEarningsJpy: number;
+  runningAssetValueJpy: number;
+  monthlyChangeJpy: number;
+  monthlyChangePct: number;
+  breakdown: {
+    current: number;
+    running: number;
+    withdrawn: number;
+  };
+}
+
+export function getTotalPortfolio(): TotalPortfolio {
+  const assets = getMyAssets();
+  const monthlyRevenue = assets
+    .filter((a) => a.status === "active")
+    .reduce((s, a) => s + a.monthlyJpy, 0);
+
+  const currentBalanceJpy = 1_248_400;
+  const withdrawnJpy = 607_800;
+  const lifetimeEarningsJpy = currentBalanceJpy + withdrawnJpy;
+  const runningAssetValueJpy = Math.round(monthlyRevenue * 50); // ~50-month demand forecast
+  const monthlyChangeJpy = 86_200;
+  const monthlyChangePct = 7.4;
+
+  return {
+    currentBalanceJpy,
+    lifetimeEarningsJpy,
+    runningAssetValueJpy,
+    monthlyChangeJpy,
+    monthlyChangePct,
+    breakdown: {
+      current: currentBalanceJpy,
+      running: runningAssetValueJpy,
+      withdrawn: withdrawnJpy,
+    },
+  };
+}
+
 export function relativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60_000);

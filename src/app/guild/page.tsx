@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RankBadge } from "@/components/RankBadge";
 import { Tip } from "@/components/Tip";
 import { AssetPortfolio } from "@/components/AssetPortfolio";
+import { TotalAssetsCard } from "@/components/TotalAssetsCard";
 import { getWeapons } from "@/lib/weapons";
 import { getApplications } from "@/lib/jobs";
 import { getPassbookSnapshot } from "@/lib/passbook";
@@ -137,7 +138,10 @@ export default function GuildPage() {
         </p>
       </section>
 
-      {/* ── いまの推定時給 ────────────────────────────────────────────── */}
+      {/* ── 総資産ヒーローカード ──────────────────────────────────────── */}
+      <TotalAssetsCard />
+
+      {/* ── 運用中のリアルタイム指標 ─────────────────────────────────── */}
       <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-positive,#0E9F4F)]/30 rounded-2xl px-5 py-4 mb-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
@@ -153,27 +157,22 @@ export default function GuildPage() {
               ¥{hourlyRate.toLocaleString("ja-JP")}
               <span className="text-base font-bold text-[var(--n-muted,#6B6456)] ml-1">/ 時間</span>
             </p>
-            <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-1">
-              直近 60 秒の API 印税から推計
-            </p>
           </div>
-          <PulseIndicator />
-        </div>
-      </div>
-
-      {/* ── 今日の報酬 / 今月の合計 ──────────────────────────────────── */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-4 text-center">
-          <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今日の報酬</p>
-          <p className="text-xl font-black tabular-nums text-[var(--n-positive,#0E9F4F)]">
-            ¥{Math.round(earnings.jpy / 30).toLocaleString("ja-JP")}
-          </p>
-        </div>
-        <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-4 text-center">
-          <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今月の合計</p>
-          <p className="text-xl font-black tabular-nums text-[var(--n-text,#1A1714)]">
-            ¥{earnings.jpy.toLocaleString("ja-JP")}
-          </p>
+          <div className="flex items-center gap-4">
+            <div className="text-center">
+              <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-0.5">今日の報酬</p>
+              <p className="text-sm font-bold tabular-nums text-[var(--n-positive,#0E9F4F)]">
+                ¥{Math.round(earnings.jpy / 30).toLocaleString("ja-JP")}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-0.5">今月の合計</p>
+              <p className="text-sm font-bold tabular-nums text-[var(--n-text,#1A1714)]">
+                ¥{earnings.jpy.toLocaleString("ja-JP")}
+              </p>
+            </div>
+            <PulseIndicator />
+          </div>
         </div>
       </div>
 
