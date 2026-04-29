@@ -4,58 +4,6 @@ import { resolve } from "path";
 
 const root = resolve(__dirname, "../../..");
 
-describe("AssetSpirit component", () => {
-  const src = readFileSync(resolve(root, "src/components/AssetSpirit.tsx"), "utf8");
-
-  it("is a use client component", () => {
-    expect(src).toMatch(/^"use client"/);
-  });
-
-  it("exports AssetSpirit function", () => {
-    expect(src).toContain("export function AssetSpirit");
-  });
-
-  it("renders JSX SVG (no dangerouslySetInnerHTML)", () => {
-    expect(src).not.toContain("dangerouslySetInnerHTML");
-    expect(src).toContain("<svg");
-  });
-
-  it("has rank-conditional rendering for all three ranks", () => {
-    expect(src).toContain('rank === "S"');
-    expect(src).toContain('rank === "A"');
-    expect(src).toContain('rank === "B"');
-  });
-
-  it("includes blush ellipses for S and A", () => {
-    expect(src).toContain("FFB6C1");
-  });
-});
-
-describe("HumanThumbnail 3-layer system (post-sublimation)", () => {
-  const src = readFileSync(resolve(root, "src/components/HumanThumbnail.tsx"), "utf8");
-
-  it("imports BeforeAfterHero as secondary layer", () => {
-    expect(src).toContain("BeforeAfterHero");
-  });
-
-  it("imports AssetEmblem as fallback layer", () => {
-    expect(src).toContain("AssetEmblem");
-  });
-
-  it("does NOT import AssetSpirit (sublimated from product cards)", () => {
-    expect(src).not.toContain("AssetSpirit");
-  });
-
-  it("accepts optional rank prop", () => {
-    expect(src).toContain("rank?");
-    expect(src).toContain("Rank");
-  });
-
-  it("renders AssetEmblem as fallback", () => {
-    expect(src).toContain("<AssetEmblem");
-  });
-});
-
 describe("PassbookTable component", () => {
   const src = readFileSync(resolve(root, "src/components/PassbookTable.tsx"), "utf8");
 
@@ -78,19 +26,15 @@ describe("PassbookTable component", () => {
   });
 });
 
-describe("playPassbookChime in sound module", () => {
+describe("playPoyon in sound module", () => {
   const src = readFileSync(resolve(root, "src/lib/sound/index.ts"), "utf8");
 
-  it("exports playPassbookChime", () => {
-    expect(src).toContain("export function playPassbookChime");
+  it("exports playPoyon", () => {
+    expect(src).toContain("export function playPoyon");
   });
 
-  it("uses A4 (440Hz) as main tone", () => {
-    expect(src).toContain("440");
-  });
-
-  it("exports PASSBOOK_CHIME_FREQUENCIES constant", () => {
-    expect(src).toContain("PASSBOOK_CHIME_FREQUENCIES");
+  it("exports POYON_FREQ_RANGE constant", () => {
+    expect(src).toContain("POYON_FREQ_RANGE");
   });
 });
 

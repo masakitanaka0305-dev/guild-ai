@@ -54,20 +54,19 @@ describe("api/atoa/[id] emblem field", () => {
   });
 });
 
-describe("globals.css shimmer", () => {
+describe("globals.css nameraka animations", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("defines shimmer keyframe animation", () => {
-    expect(src).toContain("@keyframes shimmer");
+  it("defines scanLine keyframe animation", () => {
+    expect(src).toContain("@keyframes scanLine");
   });
 
-  it("shimmer class uses 0.6s duration", () => {
-    expect(src).toContain("0.6s");
+  it("defines slideInToast keyframe animation", () => {
+    expect(src).toContain("@keyframes slideInToast");
   });
 
   it("respects prefers-reduced-motion", () => {
     expect(src).toContain("prefers-reduced-motion");
-    expect(src).toContain(".shimmer");
   });
 });
 
@@ -77,10 +76,6 @@ describe("sell page photo upload", () => {
   it("imports setPhoto from asset-photos", () => {
     expect(src).toContain("setPhoto");
     expect(src).toContain("asset-photos");
-  });
-
-  it("imports AssetEmblem for preview", () => {
-    expect(src).toContain("AssetEmblem");
   });
 
   it("has file input accepting images", () => {
@@ -94,23 +89,19 @@ describe("sell page photo upload", () => {
   });
 });
 
-describe("showcase page HumanThumbnail", () => {
+describe("showcase page nameraka", () => {
   const src = readFileSync(resolve(root, "src/app/showcase/page.tsx"), "utf8");
 
-  it("imports HumanThumbnail", () => {
-    expect(src).toContain("HumanThumbnail");
-  });
-
-  it("no longer uses the old THUMB_COLORS gradient fallback", () => {
+  it("does not use deprecated THUMB_COLORS gradient fallback", () => {
     expect(src).not.toContain("THUMB_COLORS");
     expect(src).not.toContain("thumbGradient");
   });
 });
 
-describe("marketplace page HumanThumbnail", () => {
+describe("marketplace page nameraka", () => {
   const src = readFileSync(resolve(root, "src/app/marketplace/page.tsx"), "utf8");
 
-  it("imports HumanThumbnail", () => {
-    expect(src).toContain("HumanThumbnail");
+  it("renders product listings", () => {
+    expect(src).toContain("MOCK_MARKETPLACE");
   });
 });

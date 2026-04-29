@@ -13,17 +13,17 @@ describe("nameraka-theme.tokens", () => {
     expect(css).toContain('[data-theme="nameraka"]');
   });
 
-  it("globals.css defines --n-bg token (#0A192F)", () => {
-    expect(css).toContain("--n-bg: #0A192F");
+  it("globals.css defines --n-bg token (#FAFAF7)", () => {
+    expect(css).toContain("--n-bg: #FAFAF7");
   });
 
   it("globals.css defines --n-gold token (#D4AF37)", () => {
     expect(css).toContain("--n-gold: #D4AF37");
   });
 
-  it("globals.css pro theme renames terminal", () => {
-    expect(css).toContain('[data-theme="pro"]');
-    expect(css).not.toContain('[data-theme="terminal"]');
+  it("globals.css does NOT define pro or kawaii themes (deleted)", () => {
+    expect(css).not.toContain('[data-theme="pro"]');
+    expect(css).not.toContain('[data-theme="kawaii"]');
   });
 
   it("globals.css has scanLine animation for bank assessment", () => {
@@ -32,34 +32,6 @@ describe("nameraka-theme.tokens", () => {
 
   it("globals.css has slideInToast animation for FloatingPayoutToast", () => {
     expect(css).toContain("slideInToast");
-  });
-});
-
-// ─── 2. ThemeToggle 3-state cycle ─────────────────────────────────────────────
-
-describe("nameraka-theme.theme-cycle", () => {
-  const src = readFileSync(resolve(root, "src/components/ThemeToggle.tsx"), "utf8");
-
-  it("ThemeToggle has nameraka as first/default theme", () => {
-    expect(src).toContain('"nameraka"');
-    expect(src).toContain("nameraka");
-  });
-
-  it("ThemeToggle has 3 states: nameraka, pro, kawaii", () => {
-    expect(src).toContain('"nameraka"');
-    expect(src).toContain('"pro"');
-    expect(src).toContain('"kawaii"');
-  });
-
-  it("ThemeToggle cycle includes midnight (4-state: nameraka → midnight → pro → kawaii)", () => {
-    expect(src).toContain('"midnight"');
-    expect(src).toContain('["nameraka", "midnight", "pro", "kawaii"]');
-  });
-
-  it("ThemeInitScript defaults to nameraka", () => {
-    expect(src).toContain("nameraka");
-    expect(src).toContain("dangerouslySetInnerHTML");
-    expect(src).not.toContain("'terminal'");
   });
 });
 
@@ -75,11 +47,6 @@ describe("nameraka-theme.fab", () => {
 
   it("FAB has aria-label for accessibility", () => {
     expect(layout).toContain('aria-label="知恵をのこす"');
-  });
-
-  it("FAB is hidden in pro and kawaii themes", () => {
-    expect(layout).toContain("[data-theme=pro]_&:hidden");
-    expect(layout).toContain("[data-theme=kawaii]_&:hidden");
   });
 });
 
@@ -183,16 +150,10 @@ describe("nameraka-theme.royalty-stream", () => {
 describe("nameraka-theme.light-repaint", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
-  const toggle = readFileSync(resolve(root, "src/components/ThemeToggle.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
   it("nameraka --n-bg is light (#FAFAF7)", () => {
     expect(css).toContain("--n-bg: #FAFAF7");
-  });
-
-  it("midnight theme retains old dark #0A192F as --n-bg", () => {
-    expect(css).toContain('[data-theme="midnight"]');
-    expect(css).toContain("--n-bg: #0A192F");
   });
 
   it("bottom nav has 4 core tabs (ホーム/のこす/かせぐ/マイ銀行)", () => {
@@ -201,13 +162,6 @@ describe("nameraka-theme.light-repaint", () => {
     expect(nav).toContain('"のこす"');
     expect(nav).toContain('"かせぐ"');
     expect(nav).toContain('"マイ銀行"');
-  });
-
-  it("ThemeToggle has 4 states including midnight", () => {
-    expect(toggle).toContain('"nameraka"');
-    expect(toggle).toContain('"midnight"');
-    expect(toggle).toContain('"pro"');
-    expect(toggle).toContain('"kawaii"');
   });
 
   it("FAB links to /sell (knowledge registration)", () => {
