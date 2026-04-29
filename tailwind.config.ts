@@ -23,7 +23,7 @@ const config: Config = {
         "timee-yellow": "#FFCC00",
         ink: "#1A1628",
         "ink-muted": "#6F6884",
-        // ─── Terminal Theme ────────────────────────────────────────
+        // ─── Pro Theme (旧 terminal) ───────────────────────────────
         obsidian: "#0B0D10",
         "obsidian-2": "#11141A",
         slate: "#1B2027",
@@ -36,6 +36,17 @@ const config: Config = {
         "t-gold-soft": "#B58E1A",
         positive: "#4DA968",
         negative: "#C45757",
+        // ─── Nameraka Theme (なめらか — デフォルト) ─────────────────
+        "n-bg": "#0A192F",
+        "n-surface": "#0E2240",
+        "n-surface-2": "#122A4D",
+        "n-divider": "#1F3A66",
+        "n-text": "#F1F4F9",
+        "n-muted": "#9FB1C8",
+        "n-gold": "#D4AF37",
+        "n-gold-soft": "#F2DFA0",
+        "n-positive": "#4DD08F",
+        "n-negative": "#FF7676",
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],
