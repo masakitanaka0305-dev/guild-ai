@@ -57,7 +57,7 @@ export default function GuildPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">マイ銀行</h1>
+          <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">今日も、あなたの 時間 を AI が 守っています。</h1>
           <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">保有資産と報酬履歴</p>
         </div>
         <Link href="/bank" className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0">

@@ -49,7 +49,7 @@ export default function JobsPage() {
       )}
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">かせぐ</h1>
+        <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">いま、かせぎ どきの しごと。</h1>
         <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">
           あいしょうの高い案件から、すぐ応募できます。
         </p>
@@ -115,7 +115,7 @@ export default function JobsPage() {
                   className="w-full py-3 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
                   aria-label={`${job.title}に応募する`}
                 >
-                  この知恵で応募 →
+                  この知恵で 応募する
                 </button>
               ) : (
                 <div className="rounded-2xl bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-xs text-[var(--n-muted,#6B6456)] text-center">

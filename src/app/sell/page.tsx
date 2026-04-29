@@ -889,6 +889,11 @@ function SellContent() {
         <AutoProgress steps={AUTO_STEPS} currentStep={doItForMeStep} overlay={true} />
       )}
 
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">3行で 出品完了。</h1>
+        <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">書いて提出するだけ。AIが自動で値段をつけます。</p>
+      </div>
+
       <StepIndicator current="register" />
 
       {/* Omakase banner */}
