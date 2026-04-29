@@ -4,20 +4,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { href: "/",      namerakaLabel: "ホーム",       terminalLabel: "Home",                    kawaiiLabel: "🏠 ホーム",           exact: true  },
-  { href: "/bank",  namerakaLabel: "のこす",        terminalLabel: "資産運用ターミナル",       kawaiiLabel: "🐦 シマエナガ銀行",   exact: false },
-  { href: "/jobs",  namerakaLabel: "かせぐ",        terminalLabel: "Engagement Terminal",     kawaiiLabel: "💼 案件ボード",        exact: false },
-  { href: "/guild", namerakaLabel: "マイ銀行",      terminalLabel: "Portfolio",               kawaiiLabel: "⚔️ 武器庫",           exact: false },
-  { href: "/sell",  namerakaLabel: "はじめての提出", terminalLabel: "Lodge",                   kawaiiLabel: "➕ 登録（出品）",      exact: false },
-  { href: "/wallet",namerakaLabel: "おさいふ",      terminalLabel: "Passbook",                kawaiiLabel: "💰 通帳・お知らせ",   exact: false },
+  { href: "/",      label: "ホーム",        exact: true  },
+  { href: "/bank",  label: "のこす",        exact: false },
+  { href: "/jobs",  label: "かせぐ",        exact: false },
+  { href: "/guild", label: "マイ銀行",      exact: false },
+  { href: "/sell",  label: "はじめての提出", exact: false },
+  { href: "/wallet",label: "おさいふ通帳",  exact: false },
 ];
 
-// 4 tabs — /sell はFABから
 const BOTTOM_ITEMS = [
-  { href: "/",      namerakaLabel: "ホーム",  terminalLabel: "Home",      kawaiiLabel: "ホーム",   icon: "home",  exact: true  },
-  { href: "/bank",  namerakaLabel: "のこす",  terminalLabel: "Terminal",  kawaiiLabel: "🐦 銀行",  icon: "save",  exact: false },
-  { href: "/jobs",  namerakaLabel: "かせぐ",  terminalLabel: "Engage",    kawaiiLabel: "💼 案件",  icon: "brief", exact: false },
-  { href: "/guild", namerakaLabel: "マイ銀行", terminalLabel: "Portfolio", kawaiiLabel: "⚔️ 武器庫", icon: "bank", exact: false },
+  { href: "/",      label: "ホーム",   icon: "home",  exact: true  },
+  { href: "/bank",  label: "のこす",   icon: "save",  exact: false },
+  { href: "/jobs",  label: "かせぐ",   icon: "brief", exact: false },
+  { href: "/guild", label: "マイ銀行", icon: "bank",  exact: false },
 ];
 
 function isActive(pathname: string, href: string, exact: boolean) {
@@ -61,21 +60,13 @@ export function SidebarNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-all duration-200 active:scale-[0.98] rounded-2xl ${
+            className={`w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-all duration-220 active:scale-[0.98] rounded-2xl ${
               active
                 ? "bg-[var(--n-primary,#E64545)]/10 text-[var(--n-primary,#E64545)] font-bold"
                 : "text-[var(--n-muted,#6B6456)] hover:bg-[var(--n-surface-2,#F5F3EE)] hover:text-[var(--n-text,#1A1714)]"
             }`}
           >
-            <span className="hidden [data-theme=pro]_&:block font-mono text-xs uppercase tracking-widest">
-              {item.terminalLabel}
-            </span>
-            <span className="hidden [data-theme=kawaii]_&:block">
-              {item.kawaiiLabel}
-            </span>
-            <span className="[data-theme=pro]_&:hidden [data-theme=kawaii]_&:hidden">
-              {item.namerakaLabel}
-            </span>
+            {item.label}
           </Link>
         );
       })}
@@ -103,9 +94,7 @@ export function BottomNav() {
             }`}
           >
             <TabIcon type={item.icon} active={active} />
-            <span className="hidden [data-theme=pro]_&:block text-[9px] font-mono uppercase tracking-widest">{item.terminalLabel}</span>
-            <span className="hidden [data-theme=kawaii]_&:block text-[10px] font-medium">{item.kawaiiLabel}</span>
-            <span className="[data-theme=pro]_&:hidden [data-theme=kawaii]_&:hidden text-[10px] font-medium">{item.namerakaLabel}</span>
+            <span className="text-[10px] font-medium">{item.label}</span>
             {active && <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--n-primary,#E64545)]" />}
           </Link>
         );
@@ -124,9 +113,7 @@ export function BottomNav() {
             }`}
           >
             <TabIcon type={item.icon} active={active} />
-            <span className="hidden [data-theme=pro]_&:block text-[9px] font-mono uppercase tracking-widest">{item.terminalLabel}</span>
-            <span className="hidden [data-theme=kawaii]_&:block text-[10px] font-medium">{item.kawaiiLabel}</span>
-            <span className="[data-theme=pro]_&:hidden [data-theme=kawaii]_&:hidden text-[10px] font-medium">{item.namerakaLabel}</span>
+            <span className="text-[10px] font-medium">{item.label}</span>
             {active && <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--n-primary,#E64545)]" />}
           </Link>
         );
