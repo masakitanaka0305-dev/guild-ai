@@ -16,6 +16,9 @@ import { getPassbookSnapshot } from "@/lib/passbook";
 import { getPassbookSnapshotAction } from "@/app/actions/passbook";
 import { playPassbookChime, playSuccessChime } from "@/lib/sound";
 import { getPortfolioStats, getSparklineData, getDeployStatus } from "@/lib/terminal-data";
+import { useLiveEarnings } from "@/lib/live-earnings";
+import { FloatingPayoutToast } from "@/components/FloatingPayoutToast";
+import { useRoyaltyStream } from "@/lib/royalty-stream";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Kawaii helpers ──────────────────────────────────────────────────────────
@@ -190,7 +193,7 @@ export default function GuildPage() {
   const [mounted, setMounted] = useState(false);
   // Mock for initial render; server action overrides with DB-enriched snapshot on mount.
   const [snap, setSnap] = useState(() => getPassbookSnapshot("demo-user"));
-  const [theme, setTheme] = useState<string>("terminal");
+  const [theme, setTheme] = useState<string>("nameraka");
   const stats = getPortfolioStats();
   const deployStatus = getDeployStatus();
 
@@ -199,16 +202,18 @@ export default function GuildPage() {
     setWeapons(getWeapons());
     getPassbookSnapshotAction("demo-user").then(setSnap);
 
-    const t = document.documentElement.getAttribute("data-theme") ?? "terminal";
+    const t = document.documentElement.getAttribute("data-theme") ?? "nameraka";
     setTheme(t);
     const observer = new MutationObserver(() => {
-      setTheme(document.documentElement.getAttribute("data-theme") ?? "terminal");
+      setTheme(document.documentElement.getAttribute("data-theme") ?? "nameraka");
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => observer.disconnect();
   }, []);
 
-  const isTerminal = theme === "terminal" || theme === "pro";
+  const isPro = theme === "pro";
+  const isNameraka = theme === "nameraka";
+  const isTerminal = isPro; // legacy compat
 
   function handleLoopComplete() {
     setConfetti(true);
@@ -229,9 +234,151 @@ export default function GuildPage() {
     })),
   ].slice(0, 8);
 
-  // ─── Terminal layout ───────────────────────────────────────────────────────
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const earnings = useLiveEarnings("demo-user");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const royalties = useRoyaltyStream(isNameraka);
 
-  if (isTerminal) {
+  // ─── Nameraka layout (マイ銀行 / メルカリ売上管理 style) ─────────────────
+
+  if (isNameraka) {
+    const royaltyTotal = royalties.reduce((s, r) => s + r.amountJpy, 0);
+    return (
+      <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 relative">
+        <FloatingPayoutToast
+          deltaJpy={earnings.lastDelta}
+          bumpCount={earnings.bumpCount}
+          label="おだちん入金"
+        />
+
+        {/* Header */}
+        <div className="flex items-start justify-between mb-6 gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--n-text,#F1F4F9)]">マイ銀行</h1>
+            <p className="text-sm text-[var(--n-muted,#9FB1C8)] mt-1">保有資産と報酬履歴</p>
+          </div>
+          <Link href="/bank" className="px-4 py-2 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0">
+            ＋ のこす
+          </Link>
+        </div>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          {[
+            {
+              label: "保有資産（AUM）",
+              value: `¥${(stats.aumJpy / 10000).toFixed(0)}万`,
+              color: "text-[var(--n-gold,#D4AF37)]",
+            },
+            {
+              label: "今月のおだちん",
+              value: `¥${earnings.jpy.toLocaleString("ja-JP")}`,
+              color: "text-[#4DD08F]",
+            },
+            {
+              label: "先月比",
+              value: `+${stats.momPct}%`,
+              color: "text-[#4DD08F]",
+            },
+          ].map((stat) => (
+            <div key={stat.label} className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl px-4 py-3 text-center">
+              <p className="text-[10px] text-[var(--n-muted,#9FB1C8)] mb-1">{stat.label}</p>
+              <p className={`text-lg font-black tabular-nums ${stat.color}`}>{stat.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* API royalty indicator */}
+        {royalties.length > 0 && (
+          <div className="bg-[var(--n-surface-2,#122A4D)] border border-[var(--n-divider,#1F3A66)] rounded-2xl px-4 py-2 mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-[var(--n-muted,#9FB1C8)]">API印税（累計 {royalties.length} 件）</span>
+            </div>
+            <span className="text-xs font-bold text-[var(--n-gold,#D4AF37)] tabular-nums">
+              +¥{royaltyTotal.toFixed(1)}
+            </span>
+          </div>
+        )}
+
+        {/* Note cards */}
+        {!mounted ? (
+          <p className="text-sm text-[var(--n-muted,#9FB1C8)]">読み込み中…</p>
+        ) : weapons.length === 0 ? (
+          <div className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-3xl p-8 text-center">
+            <p className="text-[var(--n-muted,#9FB1C8)] mb-4">まだノートがありません</p>
+            <Link href="/bank" className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white font-bold">
+              はじめてのこす →
+            </Link>
+          </div>
+        ) : (
+          <ul className="space-y-3">
+            {weapons.map((w) => (
+              <li key={w.id} className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--n-gold,#D4AF37)]/40 transition-colors">
+                <RatingPlate rank={w.rank} size="sm" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-[var(--n-text,#F1F4F9)] text-sm truncate">{w.title}</p>
+                  <p className="text-xs text-[var(--n-muted,#9FB1C8)] mt-0.5">
+                    スコア {w.score.toFixed(1)} · クエスト {w.jobsCompleted.length} 件
+                  </p>
+                </div>
+                <p className="text-xs text-[var(--n-muted,#9FB1C8)] shrink-0">
+                  {(w as unknown as { createdAt?: string }).createdAt ? new Date((w as unknown as { createdAt: string }).createdAt).toLocaleDateString("ja-JP") : "—"}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Passbook table */}
+        {guildTransactions.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-sm font-bold text-[var(--n-text,#F1F4F9)] mb-3">通帳</h2>
+            <div className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl overflow-hidden">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-[var(--n-divider,#1F3A66)]">
+                    {["日時", "種類", "金額", "残高"].map((h) => (
+                      <th key={h} className="px-3 py-2 text-left text-[var(--n-muted,#9FB1C8)] font-medium">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ...guildTransactions.map((tx) => ({
+                      id: tx.id, at: tx.at, label: tx.assetTitle, amount: tx.amount, type: "おだちん",
+                    })),
+                    ...royalties.slice(0, 3).map((r) => ({
+                      id: r.id, at: r.at, label: `API印税 #${r.apiCallId}`, amount: r.amountJpy, type: "印税",
+                    })),
+                  ]
+                    .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
+                    .slice(0, 10)
+                    .map((row, i, arr) => {
+                      const running = arr.slice(i).reduce((s, r) => s + r.amount, 0);
+                      return (
+                        <tr key={row.id} className="border-b border-[var(--n-divider,#1F3A66)] last:border-0">
+                          <td className="px-3 py-2.5 tabular-nums text-[var(--n-muted,#9FB1C8)]">
+                            {new Date(row.at).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                          </td>
+                          <td className="px-3 py-2.5 text-[var(--n-text,#F1F4F9)]">{row.type}</td>
+                          <td className="px-3 py-2.5 tabular-nums text-[#4DD08F] font-bold">+¥{row.amount.toFixed ? row.amount.toFixed(1) : row.amount.toLocaleString("ja-JP")}</td>
+                          <td className="px-3 py-2.5 tabular-nums text-[var(--n-muted,#9FB1C8)]">¥{running.toLocaleString("ja-JP", { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        <div className="h-24" />
+      </main>
+    );
+  }
+
+  // ─── Pro layout ────────────────────────────────────────────────────────────
+
+  if (isPro) {
     return (
       <main className="flex flex-col h-full min-h-0 bg-[var(--obsidian,#0B0D10)] text-[var(--text-primary,#E8EBF0)]">
         {/* Header */}
