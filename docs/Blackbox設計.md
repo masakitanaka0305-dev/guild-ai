@@ -1,5 +1,9 @@
 # Blackbox 設計 — 公開モード制御（Global Export Hub #94）
 
+> **注意**：Strategic Moat #95 にて **Encapsulated（最高保護）** モードが上位互換として導入されました。
+> Blackbox は中位保護として継続しますが、クローラーブロックが必要な場合は Encapsulated を推奨します。
+> 詳細は `docs/Encapsulated-Intelligence設計.md` を参照してください。
+
 ## 概要
 
 `src/lib/blackbox/` は GUILD ノートの **公開範囲を 3 段階で管理**するモジュール。
