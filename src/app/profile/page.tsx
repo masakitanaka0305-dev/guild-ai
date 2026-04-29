@@ -13,6 +13,7 @@ import { getComplexityBreakdown } from "@/lib/complexity-score";
 import { getMyAssets } from "@/lib/portfolio";
 import { getImpactStats } from "@/lib/impact";
 import { getMicroBalance } from "@/lib/shima-ledger";
+import { getRecentSettlements, getSettlementSummary, seedDemoSettlements, CURRENCY_LABELS, type Currency } from "@/lib/global-settlement";
 
 const HANDLE = "demo-user";
 
@@ -87,6 +88,10 @@ export default function ProfilePage() {
   const totalCalls  = assets.reduce((s, a) => s + a.callsLast30, 0);
   const impact = getImpactStats(HANDLE);
   const microBalance = getMicroBalance(HANDLE);
+  seedDemoSettlements();
+  const settlementSummary = getSettlementSummary(24);
+  const recentSettlements = getRecentSettlements(5);
+  const totalSettledJpy = Object.values(settlementSummary).reduce((s, v) => s + v, 0);
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12">
@@ -169,6 +174,60 @@ export default function ProfilePage() {
         thisMonthRank={impact.ranks.thisMonth}
         allTimeRank={impact.ranks.allTime}
       />
+
+      {/* ── 2c. グローバル着金 ─────────────────────────────────────── */}
+      <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm mb-6">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+          <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">グローバル着金</p>
+          <span className="text-[10px] text-[var(--n-muted,#6B6456)]">直近24h</span>
+        </div>
+
+        {/* 4-currency grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+          {(["JPY", "USD", "EUR", "GBP"] as Currency[]).map((cur) => (
+            <div key={cur} className="bg-[var(--n-surface-2,#F5F3EE)] rounded-xl px-3 py-2.5 text-center">
+              <p
+                className="text-[10px] font-bold text-[var(--n-muted,#6B6456)] mb-1"
+                aria-label={`${cur}: ${CURRENCY_LABELS[cur]}`}
+              >
+                {cur}
+              </p>
+              <p className="text-sm font-extrabold tabular-nums text-[var(--n-text,#1A1714)]">
+                ¥{Math.round(settlementSummary[cur]).toLocaleString("ja-JP")}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Total */}
+        <div className="flex items-center justify-between mb-3 px-3 py-2 bg-[var(--n-surface-2,#F5F3EE)] rounded-xl">
+          <span className="text-xs text-[var(--n-muted,#6B6456)]">合計 JPY 換算</span>
+          <span className="text-sm font-extrabold tabular-nums text-[var(--n-gold,#D4AF37)]">
+            ¥{Math.round(totalSettledJpy).toLocaleString("ja-JP")}
+          </span>
+        </div>
+
+        {/* Recent 5 settlements */}
+        <ol className="space-y-1.5">
+          {recentSettlements.map((s) => (
+            <li key={s.id} className="flex items-center justify-between text-[11px]">
+              <span className="flex items-center gap-1.5">
+                <span
+                  className="inline-block rounded px-1.5 py-0.5 text-[9px] font-bold bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
+                  aria-label={`通貨: ${s.input.payerCurrency}`}
+                >
+                  {s.input.payerCurrency}
+                </span>
+                <span className="text-[var(--n-muted,#6B6456)] capitalize">{s.input.payerType}</span>
+              </span>
+              <span className="tabular-nums font-bold text-[var(--n-positive,#0E9F4F)]">
+                +¥{Math.round(s.totalJpyEq).toLocaleString("ja-JP")}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       {/* ── 3. 自己紹介（最小限） ──────────────────────────────────── */}
       <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
