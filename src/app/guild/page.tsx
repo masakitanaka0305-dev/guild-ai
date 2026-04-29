@@ -14,6 +14,8 @@ import { useLiveEarnings } from "@/lib/live-earnings";
 import { FloatingPayoutToast } from "@/components/FloatingPayoutToast";
 import { useRoyaltyStream } from "@/lib/royalty-stream";
 import { MicroWalletPanel } from "@/components/MicroWalletPanel";
+import { ChainNotifyToast } from "@/components/ChainNotifyToast";
+import { getRecentSettlements, seedDemoSettlements } from "@/lib/global-settlement";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -51,6 +53,7 @@ export default function GuildPage() {
     setMounted(true);
     setWeapons(getWeapons());
     getPassbookSnapshotAction("demo-user").then(setSnap);
+    seedDemoSettlements();
   }, []);
 
   const applications = mounted ? getApplications() : [];
@@ -115,6 +118,7 @@ export default function GuildPage() {
         bumpCount={royaltyBump}
         label="API印税"
       />
+      <ChainNotifyToast />
 
       {/* ── 運用 ヒーローブロック ────────────────────────────── */}
       <section className="mb-5 sm:mb-8 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
@@ -229,6 +233,7 @@ export default function GuildPage() {
               </thead>
               <tbody>
                 {(() => {
+                  const settlements = mounted ? getRecentSettlements(5) : [];
                   const allRows = [
                     ...guildTransactions.map((tx) => ({
                       id: tx.id,
@@ -236,6 +241,7 @@ export default function GuildPage() {
                       label: tx.assetTitle,
                       amount: tx.amount,
                       type: "報酬",
+                      currency: undefined as string | undefined,
                     })),
                     ...royalties.slice(0, 3).map((r) => ({
                       id: r.id,
@@ -243,6 +249,15 @@ export default function GuildPage() {
                       label: `API印税 #${r.apiCallId}`,
                       amount: r.amountJpy,
                       type: "印税",
+                      currency: undefined as string | undefined,
+                    })),
+                    ...settlements.map((s) => ({
+                      id: s.id,
+                      at: new Date(s.settledAtMs).toISOString(),
+                      label: `グローバル着金`,
+                      amount: Math.round(s.totalJpyEq * 10) / 10,
+                      type: "着金",
+                      currency: s.input.payerCurrency as string,
                     })),
                   ].sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
                   const visibleRows = showAllTx ? allRows.slice(0, 30) : allRows.slice(0, 10);
@@ -261,7 +276,19 @@ export default function GuildPage() {
                             minute: "2-digit",
                           })}
                         </td>
-                        <td className="px-3 py-2.5 text-[var(--n-text,#1A1714)]">{row.type}</td>
+                        <td className="px-3 py-2.5 text-[var(--n-text,#1A1714)]">
+                          <span className="flex items-center gap-1.5">
+                            {row.type}
+                            {row.currency && (
+                              <span
+                                className="inline-block rounded px-1 py-0.5 text-[9px] font-bold bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] tabular-nums"
+                                aria-label={`通貨: ${row.currency}`}
+                              >
+                                {row.currency}
+                              </span>
+                            )}
+                          </span>
+                        </td>
                         <td className="px-3 py-2.5 tabular-nums text-[#4DD08F] font-bold">
                           +¥{typeof row.amount === "number" && row.amount % 1 !== 0
                             ? row.amount.toFixed(1)
