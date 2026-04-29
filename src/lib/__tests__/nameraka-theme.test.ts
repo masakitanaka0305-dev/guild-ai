@@ -40,8 +40,8 @@ describe("nameraka-theme.tokens", () => {
 describe("nameraka-theme.fab", () => {
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
 
-  it("layout has +のこす FAB linking to /sell", () => {
-    expect(layout).toContain("href=\"/sell\"");
+  it("layout has +のこす FAB linking to /bank", () => {
+    expect(layout).toContain("href=\"/bank\"");
     expect(layout).toContain("＋");
   });
 
@@ -164,8 +164,8 @@ describe("nameraka-theme.light-repaint", () => {
     expect(nav).toContain('"マイ銀行"');
   });
 
-  it("FAB links to /sell (knowledge registration)", () => {
-    expect(layout).toContain('href="/sell"');
+  it("FAB links to /bank (knowledge registration)", () => {
+    expect(layout).toContain('href="/bank"');
     expect(layout).toContain('aria-label="のこす"');
   });
 

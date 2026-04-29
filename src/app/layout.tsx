@@ -95,9 +95,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
           <BottomNav />
 
-          {/* ＋ FAB — /sell への知恵登録ボタン */}
+          {/* ＋ FAB — /bank への知恵登録ボタン */}
           <Link
-            href="/sell"
+            href="/bank"
             aria-label="のこす"
             className="fixed bottom-[88px] left-1/2 -translate-x-1/2 lg:left-auto lg:right-8 lg:bottom-8 lg:translate-x-0 z-50 w-14 h-14 flex items-center justify-center rounded-full shadow-xl text-2xl font-bold bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220"
           >

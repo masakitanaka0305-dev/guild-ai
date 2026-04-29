@@ -102,17 +102,62 @@ describe("mercari-ui: bottom tabs", () => {
   });
 });
 
-// ─── 5. FAB href=/sell aria-label="のこす" ────────────────────────────────────
+// ─── 5. FAB href=/bank aria-label="のこす" ───────────────────────────────────
 
 describe("mercari-ui: FAB", () => {
   const src = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
 
-  it('FAB links to /sell', () => {
-    expect(src).toContain('href="/sell"');
+  it('FAB links to /bank', () => {
+    expect(src).toContain('href="/bank"');
   });
 
   it('FAB has aria-label="のこす"', () => {
     expect(src).toContain('aria-label="のこす"');
+  });
+});
+
+// ─── 7. MD file input on bank page ───────────────────────────────────────────
+
+describe("sell: MD file input", () => {
+  const src = readFileSync(resolve(root, "src/app/bank/page.tsx"), "utf8");
+
+  it("file input accepts .md/.markdown/.txt", () => {
+    expect(src).toContain('accept=".md,.markdown,text/markdown,text/plain"');
+  });
+
+  it("file input has aria-label for accessibility", () => {
+    expect(src).toContain('aria-label="MD ファイルを選ぶ"');
+  });
+
+  it("drop zone has role=region and aria-label", () => {
+    expect(src).toContain('role="region"');
+    expect(src).toContain('aria-label="MD ファイルをドラッグ＆ドロップ"');
+  });
+
+  it("textarea has aria-label for direct input", () => {
+    expect(src).toContain('aria-label="MD を直接書く"');
+  });
+
+  it("size limit is 1MB (1048576 bytes)", () => {
+    expect(src).toContain("1_048_576");
+  });
+
+  it("extension validation rejects non-md files", () => {
+    expect(src).toContain("isAllowedFile");
+    expect(src).toContain(".md");
+    expect(src).toContain(".markdown");
+    expect(src).toContain(".txt");
+  });
+
+  it("dragging state class switches on drag-over", () => {
+    expect(src).toContain("isDragging");
+    expect(src).toContain("border-[#E64545]");
+    expect(src).toContain("bg-red-50");
+  });
+
+  it("submit button is disabled when content is short", () => {
+    expect(src).toContain("noteContent.trim().length < 10");
+    expect(src).toContain("disabled");
   });
 });
 
