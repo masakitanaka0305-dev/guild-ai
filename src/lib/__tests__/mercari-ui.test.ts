@@ -20,9 +20,33 @@ describe("catchphrase: hero", () => {
     expect(src).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 
-  it("footer contains secondary catchphrase", () => {
-    expect(src).toContain("AIエージェントで、あなたの時間をアップデート");
+  it("footer exists", () => {
     expect(src).toMatch(/<footer/);
+  });
+});
+
+// ─── 1b. Minimal home sections ───────────────────────────────────────────────
+
+describe("catchphrase: minimal home", () => {
+  const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+
+  it("3 action tiles (のこす / かせぐ / ふえる) exist", () => {
+    expect(src).toContain('"のこす"');
+    expect(src).toContain('"かせぐ"');
+    expect(src).toContain('"ふえる"');
+  });
+
+  it("action tile emojis have aria-label", () => {
+    expect(src).toContain('role="img"');
+    expect(src).toContain('aria-label');
+  });
+
+  it("section heading いま のこされた しごと exists", () => {
+    expect(src).toContain("いま のこされた しごと");
+  });
+
+  it("section heading かせげる しごと exists", () => {
+    expect(src).toContain("かせげる しごと");
   });
 });
 
