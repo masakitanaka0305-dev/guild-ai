@@ -11,16 +11,10 @@ const MOCK_NOTES = [
   { id: "n3", title: "LLM Prompt Engineering集", priceMin: 3000, priceMax: 12000, rank: "A" },
 ] as const;
 
-const ACTION_TILES = [
-  { emoji: "📝", label: "のこす", sub: "30秒", href: "/bank" },
-  { emoji: "💼", label: "かせぐ", sub: "即決",  href: "/jobs" },
-  { emoji: "🏦", label: "ふえる", sub: "24時間", href: "/guild" },
-] as const;
-
-const HOW_TO_STEPS = [
-  { emoji: "📝", label: "ノートを残す", sub: "（30秒で OK）" },
-  { emoji: "🤖", label: "AIが働く",    sub: "（24時間 自動）" },
-  { emoji: "💴", label: "¥が入る",     sub: "（チャリン）" },
+const HOW_TILES = [
+  { emoji: "📝", label: "のこす",    sub: "30秒",       href: "/sell" },
+  { emoji: "🤖", label: "AIが働く", sub: "24時間 自動", href: "/jobs" },
+  { emoji: "💴", label: "¥が入る",  sub: "チャリン",    href: "/guild" },
 ] as const;
 
 const RANK_COLORS: Record<string, string> = {
@@ -43,7 +37,7 @@ function SectionHeading({ title }: { title: string }) {
 
 export default function HomePage() {
   return (
-    <main className="max-w-2xl mx-auto space-y-10">
+    <main className="max-w-2xl mx-auto space-y-8">
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pt-8">
@@ -52,7 +46,7 @@ export default function HomePage() {
           <span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を<br />
           アップデート。
         </h1>
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 flex-wrap mb-6">
           <p className="text-base sm:text-lg text-gray-600 font-medium">
             日本最大のAIエージェント・プラットフォーム
           </p>
@@ -60,59 +54,38 @@ export default function HomePage() {
             いますぐ ¥30,000 から
           </span>
         </div>
-        <div className="flex gap-3 mt-6 flex-wrap">
-          <Link
-            href="/bank"
-            className="h-12 px-7 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm flex items-center justify-center"
-          >
-            いま のこす
-          </Link>
-          <Link
-            href="/jobs"
-            className="h-12 px-7 rounded-full border border-gray-200 bg-white text-[#1F1B16] font-bold text-base hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98] transition-all duration-220 flex items-center justify-center"
-          >
-            いま かせぐ
-          </Link>
-        </div>
+        <Link
+          href="/bank"
+          className="h-14 px-8 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm inline-flex items-center justify-center"
+        >
+          いま のこす
+        </Link>
+        <p className="mt-3 text-sm text-gray-500">ノートを残すだけ</p>
       </section>
 
-      {/* ── How-to 3 steps ───────────────────────────────────── */}
-      <section className="px-4 sm:px-6">
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">こんなふうに使います</p>
-        <ol className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-0">
-          {HOW_TO_STEPS.map((s, i) => (
-            <li key={s.label} className="flex sm:flex-1 items-center gap-3 sm:flex-col sm:gap-2 sm:text-center">
-              <div
-                role="img"
-                aria-label={`ステップ${i + 1}：${s.label}`}
-                className="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-full border border-gray-200 bg-white text-[28px]"
-              >
-                {s.emoji}
-              </div>
-              <div className="flex-1 sm:flex-none">
-                <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">{s.label}</p>
-                <p className="text-xs text-gray-500">{s.sub}</p>
-              </div>
-              {i < HOW_TO_STEPS.length - 1 && (
-                <span className="hidden sm:block text-gray-300 text-xl mx-2 flex-shrink-0" aria-hidden>→</span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* ── 3 Action tiles ────────────────────────────────────── */}
-      <section className="px-4 sm:px-6" aria-label="3つのアクション">
-        <div className="grid grid-cols-3 gap-3">
-          {ACTION_TILES.map((t) => (
+      {/* ── つかいかた はかんたん（統合ブロック）─────────────── */}
+      <section className="px-4 sm:px-6" aria-label="つかいかた はかんたん">
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+          つかいかた はかんたん
+        </p>
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          {HOW_TILES.map((t) => (
             <Link
               key={t.label}
               href={t.href}
-              className="bg-[var(--n-surface,#FFFFFF)] border border-black/5 rounded-2xl flex flex-col items-center justify-center gap-1 py-5 shadow-sm hover:border-[var(--n-primary,#E64545)]/40 active:scale-[0.98] transition-all duration-220 min-h-[80px]"
+              className="bg-[var(--n-surface,#FFFFFF)] border border-black/5 rounded-2xl flex flex-col items-center justify-center gap-1.5 py-5 shadow-sm hover:border-[var(--n-primary,#E64545)]/40 active:scale-[0.98] transition-all duration-220 min-h-[80px]"
             >
-              <span role="img" aria-label={t.label} className="text-[36px] leading-none">{t.emoji}</span>
-              <span className="text-[18px] font-bold text-[var(--n-text,#1A1714)]">{t.label}</span>
-              <span className="text-xs text-gray-500">{t.sub}</span>
+              <span
+                role="img"
+                aria-label={t.label}
+                className="text-[36px] leading-none"
+              >
+                {t.emoji}
+              </span>
+              <span className="text-[16px] sm:text-[18px] font-bold text-[var(--n-text,#1A1714)] text-center leading-tight px-1">
+                {t.label}
+              </span>
+              <span className="text-[10px] sm:text-xs text-gray-500">{t.sub}</span>
             </Link>
           ))}
         </div>
@@ -130,10 +103,14 @@ export default function HomePage() {
               href="/bank"
               className="snap-start flex-shrink-0 w-40 h-28 bg-[var(--n-surface,#FFFFFF)] border border-black/5 rounded-2xl p-3 shadow-sm hover:border-[var(--n-primary,#E64545)]/40 active:scale-[0.99] transition-all duration-220 flex flex-col justify-between"
             >
-              <span className={`inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${RANK_COLORS[n.rank] ?? ""}`}>
+              <span
+                className={`inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${RANK_COLORS[n.rank] ?? ""}`}
+              >
                 {n.rank}
               </span>
-              <p className="text-xs font-bold text-[var(--n-text,#1A1714)] leading-snug line-clamp-2">{n.title}</p>
+              <p className="text-xs font-bold text-[var(--n-text,#1A1714)] leading-snug line-clamp-2">
+                {n.title}
+              </p>
               <p className="text-xs font-bold tabular-nums text-[var(--n-primary,#E64545)]">
                 ¥{n.priceMin.toLocaleString("ja-JP")}〜
               </p>
@@ -151,7 +128,9 @@ export default function HomePage() {
             className="flex items-center gap-3 bg-[var(--n-surface,#FFFFFF)] border border-black/5 rounded-2xl px-4 py-3 shadow-sm"
           >
             <p className="flex-1 text-sm font-bold text-[var(--n-text,#1A1714)] truncate">{j.title}</p>
-            <p className="text-sm font-black tabular-nums text-[var(--n-positive,#0E9F4F)] shrink-0">¥{j.reward.toLocaleString("ja-JP")}</p>
+            <p className="text-sm font-black tabular-nums text-[var(--n-positive,#0E9F4F)] shrink-0">
+              ¥{j.reward.toLocaleString("ja-JP")}
+            </p>
             <Link
               href="/jobs"
               className="shrink-0 h-9 px-4 rounded-full bg-[var(--n-primary,#E64545)] text-white text-xs font-bold hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 flex items-center"
@@ -160,25 +139,12 @@ export default function HomePage() {
             </Link>
           </div>
         ))}
-        <Link href="/jobs" className="block text-center text-xs text-[var(--n-primary,#E64545)] font-semibold py-1 hover:underline">
+        <Link
+          href="/jobs"
+          className="block text-center text-xs text-[var(--n-primary,#E64545)] font-semibold py-1 hover:underline"
+        >
           もっと見る →
         </Link>
-      </section>
-
-      {/* ── Bottom banner ─────────────────────────────────────── */}
-      <section className="px-4 sm:px-6">
-        <div className="bg-gray-100 rounded-2xl px-5 py-4">
-          <div className="flex items-center justify-between gap-4 mb-2">
-            <p className="text-base font-bold text-[var(--n-text,#1A1714)]">まだ かせいでない？</p>
-            <Link
-              href="/bank"
-              className="shrink-0 h-10 px-5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-sm hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 flex items-center"
-            >
-              いま のこす
-            </Link>
-          </div>
-          <p className="text-sm text-gray-600">ノートを残すだけで、AIがあなたの代わりに働きます。</p>
-        </div>
       </section>
 
       {/* ── Footer ────────────────────────────────────────────── */}
@@ -192,7 +158,7 @@ export default function HomePage() {
         </div>
       </footer>
 
-      <div className="h-20" />
+      <div className="pb-20" />
     </main>
   );
 }

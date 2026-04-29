@@ -30,13 +30,13 @@ describe("catchphrase: hero", () => {
 describe("catchphrase: minimal home", () => {
   const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
 
-  it("3 action tiles (のこす / かせぐ / ふえる) exist", () => {
+  it("unified how-tiles (のこす / AIが働く / ¥が入る) exist", () => {
     expect(src).toContain('"のこす"');
-    expect(src).toContain('"かせぐ"');
-    expect(src).toContain('"ふえる"');
+    expect(src).toContain('"AIが働く"');
+    expect(src).toContain('"¥が入る"');
   });
 
-  it("action tile emojis have aria-label", () => {
+  it("how-tile emojis have role=img and aria-label", () => {
     expect(src).toContain('role="img"');
     expect(src).toContain('aria-label');
   });
@@ -161,29 +161,30 @@ describe("sell: MD file input", () => {
   });
 });
 
-// ─── 8. How-to 3-step section + price hint ───────────────────────────────────
+// ─── 8. Unified how-block + price hint ───────────────────────────────────────
 
-describe("home: 3-step illustration", () => {
+describe("home: unified how-block", () => {
   const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
 
-  it("home has heading こんなふうに使います", () => {
-    expect(src).toContain("こんなふうに使います");
+  it("home has heading つかいかた はかんたん", () => {
+    expect(src).toContain("つかいかた はかんたん");
   });
 
-  it("3 steps (ノートを残す / AIが働く / ¥が入る) exist in <ol>", () => {
-    expect(src).toMatch(/<ol/);
-    expect(src).toContain("ノートを残す");
-    expect(src).toContain("AIが働く");
-    expect(src).toContain("¥が入る");
+  it("3 cards link to /sell /jobs /guild", () => {
+    expect(src).toContain('"/sell"');
+    expect(src).toContain('"/jobs"');
+    expect(src).toContain('"/guild"');
+  });
+
+  it("hero has single primary CTA いま のこす (no かせぐ CTA in hero)", () => {
+    expect(src).toContain("いま のこす");
+    // Only one Link to /bank in the hero CTA, no second hero CTA button
+    const heroSection = src.split("いま のこす")[0];
+    expect(heroSection).not.toContain("いま かせぐ");
   });
 
   it("price hint chip いますぐ ¥30,000 から exists in hero", () => {
     expect(src).toContain("いますぐ ¥30,000 から");
-  });
-
-  it("step circles have aria-label with ステップN", () => {
-    expect(src).toContain("aria-label");
-    expect(src).toContain("ステップ");
   });
 });
 
