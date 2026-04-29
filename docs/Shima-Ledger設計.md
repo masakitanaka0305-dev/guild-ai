@@ -53,3 +53,14 @@ interface MicroBalance {
 | displayJpy フォーマット | ¥記号・カンマ含む |
 | OFF 時非発火 | autoWithdraw OFF で積算のみ |
 | ミリ↔円 逆変換 | milliToJpy(jpyToMilli(x)) === x |
+
+## Global Settlement との接続
+
+着金は通貨別タグ付きで端数（ミリ円）まで保持される。
+
+```
+settle() → distributeWithFallback() → accumulate(handle, jpyToMilli(amount))
+```
+
+- USD / EUR / GBP の支払いも JPY-equivalent に換算後、ミリ円精度で shima-ledger に積算。
+- 通貨タグは SettlementRecord に保持し、通帳 UI に `aria-label="通貨: USD"` バッジで表示。
