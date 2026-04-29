@@ -25,6 +25,7 @@ import { RevenueSimulatorCard } from "@/components/RevenueSimulatorCard";
 import { SchemaPanel } from "@/components/SchemaPanel";
 import { generateSchemas } from "@/lib/schema-generator";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
+import { BulkDepositSection } from "@/components/BulkDepositSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -996,6 +997,8 @@ function SellContent() {
               <TextPath onComplete={setCompletion} remixId={remixId} remixFrom={remixFrom} />
             )}
           </div>
+
+          <BulkDepositSection />
         </>
       )}
     </main>
