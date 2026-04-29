@@ -7,10 +7,8 @@ import { StarRating } from "@/components/StarRating";
 import { ShareButton } from "@/components/ShareButton";
 import { RankBadge } from "@/components/RankBadge";
 import { StepIndicator } from "@/components/StepIndicator";
-import { HumanThumbnail } from "@/components/HumanThumbnail";
 import type { MarketplaceListing } from "@/types";
 import { mapToEmotionalTags } from "@/lib/emotional-tags";
-import { FlipCard } from "@/components/FlipCard";
 
 function djb2(s: string): number {
   let h = 5381;
@@ -47,7 +45,7 @@ function ShowcaseCard({
     >
       {/* Thumbnail — aspect-[3/2] hero */}
       <div className="aspect-[3/2] bg-gradient-to-br from-kami to-kaki/5 flex items-center justify-center relative overflow-hidden">
-        <HumanThumbnail assetId={item.listing.id} title={item.listing.title} rank={item.listing.rank} size={80} />
+        <div className="w-full aspect-square bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl flex items-center justify-center text-4xl">🎁</div>
         <div className="absolute top-2 right-2">
           <RankBadge rank={item.listing.rank} />
         </div>
@@ -143,29 +141,7 @@ function ShowcaseCard({
     </article>
   );
 
-  const backFace = (
-    <div className="section-card p-4 bg-kuroko text-kami overflow-hidden" style={{ minHeight: "100%" }}>
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40 mb-3">技術仕様</p>
-      <pre className="text-[10px] font-mono text-accent-green leading-relaxed overflow-hidden">
-{JSON.stringify({ id: item.listing.id, rank: item.listing.rank, trustScore: item.trustScore.score, floorPrice: item.listing.floorPrice }, null, 2)}
-      </pre>
-      <div className="mt-3">
-        <p className="text-[10px] text-white/40 mb-1">エージェント接続</p>
-        <code className="text-[10px] font-mono text-accent-green break-all">
-          curl /api/atoa/{item.listing.id}
-        </code>
-      </div>
-      <Link
-        href={`/asset/${item.listing.id}`}
-        className="mt-4 inline-flex items-center justify-center rounded-lg bg-kaki px-3 py-1.5 text-xs font-bold text-white"
-        onClick={(e) => e.stopPropagation()}
-      >
-        詳細を見る →
-      </Link>
-    </div>
-  );
-
-  return <FlipCard front={frontFace} back={backFace} />;
+  return frontFace;
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────

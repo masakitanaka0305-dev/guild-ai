@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { messages } from "@/lib/microcopy";
-import { Shimaenaga } from "@/components/Shimaenaga";
 
 export default function NotFound() {
   return (
     <main className="flex min-h-[60vh] flex-col items-center justify-center px-6 py-16 text-center">
       <div className="mb-6 flex flex-col items-center gap-3">
-        <Shimaenaga variant="wave" size="lg" />
-        <div className="text-4xl" aria-hidden>🍅</div>
+        <div className="text-6xl" aria-hidden>🔍</div>
       </div>
       <h1 className="text-2xl font-bold text-kuroko leading-snug max-w-sm">
         {messages.notFound.heading}

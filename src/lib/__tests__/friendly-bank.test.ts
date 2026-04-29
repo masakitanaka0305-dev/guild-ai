@@ -43,19 +43,9 @@ describe("friendly-bank.shimaenaga-watch", () => {
 // ─── 3. Sound: playStampChime + playPoyon ─────────────────────────────────────
 
 describe("friendly-bank.sounds", () => {
-  it("STAMP_CHIME_FREQUENCIES exports [1200, 800, 400]", async () => {
-    const { STAMP_CHIME_FREQUENCIES } = await import("@/lib/sound");
-    expect(STAMP_CHIME_FREQUENCIES).toEqual([1200, 800, 400]);
-  });
-
   it("POYON_FREQ_RANGE exports [150, 250]", async () => {
     const { POYON_FREQ_RANGE } = await import("@/lib/sound");
     expect(POYON_FREQ_RANGE).toEqual([150, 250]);
-  });
-
-  it("playStampChime is exported as a function", async () => {
-    const { playStampChime } = await import("@/lib/sound");
-    expect(typeof playStampChime).toBe("function");
   });
 
   it("playPoyon is exported as a function", async () => {

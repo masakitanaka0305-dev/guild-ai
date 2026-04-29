@@ -14,7 +14,7 @@ import { NotificationBell } from "@/components/NotificationBell";
 import { getNotifications, getUnreadCount } from "@/lib/notifications";
 import { useLiveEarnings } from "@/lib/live-earnings";
 import { SlotNumber } from "@/components/SlotNumber";
-import { toggleMute, playSuccessChime, playPassbookChime } from "@/lib/sound";
+import { toggleMute } from "@/lib/sound";
 import { PassbookTable } from "@/components/PassbookTable";
 import { UserIcon, BanknoteIcon } from "@/components/icons";
 import { RawDataPanel } from "@/components/RawDataPanel";
@@ -118,11 +118,10 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
   const prevBumpRef = useRef(0);
   const assetCount = owned.length || snap.assetCount;
 
-  // Play chime when a new AtoA bump arrives
+  // Track AtoA bumps
   useEffect(() => {
     if (live.bumpCount > prevBumpRef.current) {
       prevBumpRef.current = live.bumpCount;
-      playSuccessChime();
     }
   }, [live.bumpCount]);
 
@@ -245,14 +244,6 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
       <div className="mt-4 pt-4 border-t border-kuroko/10">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-semibold text-[#9890A8]">おさいふ通帳</p>
-          <button
-            type="button"
-            onClick={playPassbookChime}
-            aria-label="通帳チャイムを鳴らす"
-            className="text-[10px] text-kaki font-semibold hover:underline"
-          >
-            🔔 チャイム
-          </button>
         </div>
         <PassbookTable transactions={snap.recentTransactions} />
       </div>

@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { RankRadar } from "@/components/RankRadar";
-import { WillSignalTrigger } from "@/components/WillSignalTrigger";
 import type { Rank } from "@/types";
 
 interface ValuationSectionProps {
@@ -22,14 +20,6 @@ export function ValuationSection({
   uptimeDays,
   justification,
 }: ValuationSectionProps) {
-  const [currentFloorPrice, setCurrentFloorPrice] = useState(floorPrice);
-  const [currentRank, setCurrentRank] = useState<Rank>(rank);
-
-  function handlePromoted(newFloorPrice: number) {
-    setCurrentFloorPrice(newFloorPrice);
-    setCurrentRank("S");
-  }
-
   return (
     <section className="mt-4 section-card p-5">
       <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8]">
@@ -50,22 +40,11 @@ export function ValuationSection({
           <div className="flex items-baseline gap-2">
             <span className="text-xs text-[#9890A8]">お値段の目安</span>
             <span className="text-2xl font-bold tabular-nums text-kuroko">
-              ¥{currentFloorPrice.toLocaleString()}
+              ¥{floorPrice.toLocaleString()}
             </span>
           </div>
-          {currentRank === "S" && currentFloorPrice > floorPrice && (
-            <p className="text-xs font-semibold text-accent-green">
-              ✓ 意思シグナルにより +50% 昇格済み
-            </p>
-          )}
         </div>
       </div>
-
-      <WillSignalTrigger
-        currentRank={currentRank}
-        floorPrice={currentFloorPrice}
-        onPromoted={handlePromoted}
-      />
     </section>
   );
 }

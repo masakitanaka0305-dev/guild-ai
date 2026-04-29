@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { playStampChime, playPoyon, playPassbookChime, isMuted } from "@/lib/sound";
+import { playPoyon, isMuted } from "@/lib/sound";
 
 export type TactileContext = "stamp" | "poyon" | "coin" | "quest";
 
@@ -24,12 +24,7 @@ function vibrate(pattern: number[]) {
 export function useTactile(context: TactileContext = "poyon") {
   const trigger = useCallback(() => {
     if (!isMuted()) {
-      switch (context) {
-        case "stamp": playStampChime(); break;
-        case "poyon": playPoyon(); break;
-        case "coin":
-        case "quest": playPassbookChime(); break;
-      }
+      playPoyon();
     }
     vibrate(VIBRATION_MS[context]);
   }, [context]);

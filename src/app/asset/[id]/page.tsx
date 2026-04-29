@@ -4,14 +4,9 @@ import { MOCK_MARKETPLACE } from "@/lib/marketplace";
 import { RankBadge } from "@/components/RankBadge";
 import { CheckoutSection } from "@/components/CheckoutSection";
 import { ValuationSection } from "@/components/ValuationSection";
-import { TrustPanel } from "@/components/TrustPanel";
-import { HelpHint } from "@/components/HelpHint";
-import { messages } from "@/lib/microcopy";
 import { SearchIcon, LinkIcon } from "@/components/icons";
 import { RawDataPanel } from "@/components/RawDataPanel";
 import { AssetReview } from "@/components/AssetReview";
-import { BeforeAfterHero } from "@/components/BeforeAfterHero";
-import { Shimaenaga } from "@/components/Shimaenaga";
 import { buildAssetJsonLd } from "@/lib/structured-data";
 import { computeBundlePricing, computeMonthlyFromFloor } from "@/lib/checkout";
 import { ActivityPulse } from "@/components/ActivityPulse";
@@ -108,7 +103,6 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       <section className="section-card p-5">
         <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] flex items-center">
           こだわり（実績ログ）
-          <HelpHint content={messages.helpProofOfMake} />
         </h2>
         <dl className="mt-3 space-y-2.5 text-sm">
           <div className="flex justify-between">
@@ -167,7 +161,6 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         <div className="section-card p-3 overflow-hidden">
           <p className="text-[10px] uppercase tracking-widest text-[#9890A8] truncate flex items-center">
             信用スコア
-            <HelpHint content={messages.helpTrustScore} />
           </p>
           <p className="mt-1 text-xl font-bold tabular-nums text-kuroko">{trustScore.score}</p>
           <p className="text-xs text-[#9890A8]">/ 1000</p>
@@ -175,7 +168,6 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         <div className="section-card p-3 overflow-hidden">
           <p className="text-[10px] uppercase tracking-widest text-[#9890A8] truncate flex items-center">
             こだわり
-            <HelpHint content={messages.helpProofOfMake} />
           </p>
           <p className="mt-1 text-xl font-bold tabular-nums text-kuroko">{auditResult.score.toFixed(1)}</p>
           <p className="text-xs text-[#9890A8]">/ 100</p>
@@ -206,7 +198,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       {/* Hero thumbnail */}
       <div className="mt-4 flex justify-center">
         <div className="w-full max-w-[480px] aspect-[3/2] bg-gradient-to-br from-kami to-kaki/5 rounded-2xl flex items-center justify-center relative overflow-hidden">
-          <BeforeAfterHero assetId={listing.id} rank={listing.rank} size={120} className="rounded-xl" />
+          <div className="w-full aspect-square bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl flex items-center justify-center text-4xl">🎁</div>
           <div className="absolute top-3 right-3">
             <RankBadge rank={listing.rank} large />
           </div>
@@ -248,13 +240,6 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         );
       })()}
 
-      {/* お墨付きパネル */}
-      <TrustPanel
-        assetId={listing.id}
-        rank={listing.rank}
-        trustScore={trustScore.score}
-        vercelUptimeDays={listing.vercelUptimeDays}
-      />
 
       {/* AI Valuation Radar + Will Signal Trigger */}
       <ValuationSection
@@ -269,7 +254,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       {/* Trust-Lock — Security Panel */}
       <div className="mt-6 section-card p-5">
         <div className="flex flex-col items-center gap-3 text-center mb-4">
-          <Shimaenaga variant="key" size="md" />
+          <div className="text-3xl">🔑</div>
           <h2 className="text-sm font-bold text-kuroko">権利は安全に保護されています</h2>
         </div>
         <ul className="space-y-2">
@@ -315,7 +300,6 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-1.5 flex items-center">
               おしごと窓口（接続先）
-              <HelpHint content={messages.helpEndpoint} />
             </p>
             {/* コードフェンス内はjargon-lint例外 */}
             <code className="block rounded-lg bg-kuroko px-3 py-2 text-xs font-mono text-accent-green break-all">

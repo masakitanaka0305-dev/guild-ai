@@ -14,9 +14,6 @@ import { StarRating } from "@/components/StarRating";
 import { StepIndicator } from "@/components/StepIndicator";
 import type { Rank, MarketplaceListing } from "@/types";
 import { ShoppingBagIcon } from "@/components/icons";
-import { HumanThumbnail } from "@/components/HumanThumbnail";
-import { FlipCard } from "@/components/FlipCard";
-import { ActivityPulse } from "@/components/ActivityPulse";
 import { generatePersonaCards, type Persona } from "@/lib/persona-cards";
 import { useLazyMount } from "@/hooks/useLazyMount";
 import { generateAllDraftListings, type ProvisionalListing } from "@/lib/draft-listing";
@@ -37,7 +34,7 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
   const frontContent = (
     <div className={`section-card p-4 transition-all ${isNew ? "ring-2 ring-kaki animate-pulse" : ""}`}>
       <div className="aspect-[3/2] bg-gradient-to-br from-kami to-kaki/5 rounded-xl flex items-center justify-center relative mb-3 overflow-hidden">
-        <HumanThumbnail assetId={item.listing.id} title={item.listing.title} rank={item.listing.rank} size={80} />
+        <div className="w-full aspect-square bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl flex items-center justify-center text-4xl">🎁</div>
         <div className="absolute top-2 right-2">
           <RankBadge rank={item.listing.rank} large />
         </div>
@@ -78,46 +75,14 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
         <span className="text-xs font-semibold text-kaki">{personaCard.ctaLabel}</span>
       </div>
 
-      {hasDetailPage && (
-        <p className="mt-2 text-[10px] text-[#9890A8] text-right">ホバーで技術仕様を見る →</p>
-      )}
     </div>
   );
 
-  const backContent = (
-    <div className="section-card p-4 bg-kuroko text-kami h-full min-h-[300px] flex flex-col gap-3">
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40">技術仕様</p>
-      <pre className="text-[10px] font-mono text-accent-green leading-relaxed overflow-hidden">
-{JSON.stringify({ id: item.listing.id, rank: item.listing.rank, trustScore: item.trustScore.score, floorPrice: item.listing.floorPrice }, null, 2)}
-      </pre>
-      <div className="mt-auto">
-        <p className="text-[10px] text-white/40 mb-1">エージェント向け接続</p>
-        <code className="text-[10px] font-mono text-accent-green break-all">
-          curl /api/atoa/{item.listing.id}
-        </code>
-      </div>
-      <ul className="space-y-1">
-        {item.auditResult.reasons.slice(0, 2).map((r) => (
-          <li key={r} className="text-[10px] text-white/60 flex gap-1"><span className="text-kaki">·</span>{r}</li>
-        ))}
-      </ul>
-      <ActivityPulse assetId={item.listing.id} />
-      {hasDetailPage && (
-        <Link
-          href={`/asset/${item.listing.id}`}
-          className="mt-1 inline-flex items-center justify-center rounded-lg bg-kaki px-3 py-1.5 text-xs font-bold text-white"
-          onClick={(e) => e.stopPropagation()}
-        >
-          詳細を見る →
-        </Link>
-      )}
-    </div>
-  );
 
   return (
     <div ref={ref}>
       {mounted ? (
-        <FlipCard front={frontContent} back={backContent} />
+        frontContent
       ) : (
         <div className="section-card aspect-[3/2] animate-pulse bg-kuroko/5" aria-hidden="true" />
       )}

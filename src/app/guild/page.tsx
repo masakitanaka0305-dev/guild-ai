@@ -10,7 +10,6 @@ import { getPassbookSnapshotAction } from "@/app/actions/passbook";
 import { useLiveEarnings } from "@/lib/live-earnings";
 import { FloatingPayoutToast } from "@/components/FloatingPayoutToast";
 import { useRoyaltyStream } from "@/lib/royalty-stream";
-import { getPortfolioStats } from "@/lib/terminal-data";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -20,7 +19,7 @@ export default function GuildPage() {
   const [mounted, setMounted] = useState(false);
   // Mock for initial render; server action overrides with DB-enriched snapshot on mount.
   const [snap, setSnap] = useState(() => getPassbookSnapshot("demo-user"));
-  const stats = getPortfolioStats();
+  const stats = { aumJpy: 1_240_000, momPct: 8.3 };
 
   useEffect(() => {
     setMounted(true);

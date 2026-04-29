@@ -10,7 +10,6 @@ import { autoList } from "@/lib/marketplace";
 import { persistListingAction } from "@/app/actions/marketplace";
 import { RankBadge } from "@/components/RankBadge";
 import { RankRadar } from "@/components/RankRadar";
-import { WillSignalTrigger } from "@/components/WillSignalTrigger";
 import { StepIndicator } from "@/components/StepIndicator";
 import { formatJPY, isGithubUrl } from "@/utils/format";
 import { generateRemixDescription, extractFromReadme, extractSalesParts } from "@/lib/listing-generator";
@@ -20,11 +19,8 @@ import { voiceLogToProofOfMake, generateProductPitch } from "@/lib/proof-of-make
 import type { CCAF, MarketplaceListing, Currency, Rank } from "@/types";
 import { PackageIcon, SearchIcon } from "@/components/icons";
 import { ShareButton } from "@/components/ShareButton";
-import { AssetEmblem } from "@/components/AssetEmblem";
 import { setPhoto } from "@/lib/asset-photos";
-import { Shimaenaga } from "@/components/Shimaenaga";
 import { computeBundlePricing } from "@/lib/checkout";
-import { ClaimFlow } from "@/components/ClaimFlow";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,7 +170,6 @@ function CompletionCard({ data }: { data: CompletionData }) {
       <div className="rounded-2xl bg-accent-green/10 border border-accent-green/30 p-5 text-center">
         <div className="flex justify-center mb-2 gap-3 items-center">
           <div className="text-4xl">🎉</div>
-          <Shimaenaga variant="coin" size="sm" />
         </div>
         <h2 className="text-xl font-bold text-kuroko">あなたの たからもの として登録されました</h2>
         <p className="mt-1 text-sm text-[#9890A8]">
@@ -189,7 +184,7 @@ function CompletionCard({ data }: { data: CompletionData }) {
           {photoPreview ? (
             <img src={photoPreview} alt="プレビュー" width={56} height={56} className="rounded-xl object-cover" />
           ) : (
-            <AssetEmblem assetId={data.listingId} size={56} className="rounded-xl" />
+            <div className="w-14 h-14 rounded-xl bg-[var(--n-surface-2,#F5F3EE)] flex items-center justify-center text-2xl">🎁</div>
           )}
         </div>
         <div className="flex-1 min-w-0">
@@ -755,11 +750,6 @@ function TextPath({
                 <p className="text-sm text-[#3A3664] leading-relaxed">{auditResult.justification}</p>
               </div>
             )}
-            <WillSignalTrigger
-              currentRank={auditResult.rank}
-              floorPrice={floor}
-              onPromoted={(p) => { setPromotedPrice(p); setCcaf((c) => ({ ...c, intentSignals: [...c.intentSignals, "voice-intent"] })); }}
-            />
           </div>
         </div>
       </div>
@@ -893,7 +883,6 @@ function SellContent() {
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-3xl mx-auto">
 
       {/* Claim flow — shown when ?claim= param is present */}
-      {claimId && <ClaimFlow assetId={claimId} />}
 
       {/* Do It For Me overlay */}
       {doItForMeActive && (
