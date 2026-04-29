@@ -81,6 +81,16 @@ export function SidebarNav() {
           <span>🏢</span> 法人検索
         </Link>
         <Link
+          href="/disputes"
+          className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
+            isActive(pathname, "/disputes", false)
+              ? "text-[var(--n-primary,#E64545)]"
+              : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
+          }`}
+        >
+          <span>⚖️</span> 紛争解決
+        </Link>
+        <Link
           href="/scout"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/scout", false)
