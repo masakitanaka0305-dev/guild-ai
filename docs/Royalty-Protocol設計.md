@@ -55,17 +55,19 @@ POST /api/note/GUILD:0001
 
 | 受取先 | 割合 |
 |--------|------|
-| 作成者 | **70%** |
-| プラットフォーム | **25%** |
-| インデックス基金 | **5%** |
+| 作成者 | **100%** |
+| プラットフォーム | **0%** |
+| インデックス基金 | **0%** |
+
+> ゼロ手数料モデル：プラットフォーム手数料なし、全額が作成者に還元されます。
 
 ### 計算式
 
 ```typescript
 distribute(perCallJpy: number): RoyaltyDistribution {
-  author:    perCallJpy × 0.70
-  platform:  perCallJpy × 0.25
-  indexFund: perCallJpy × 0.05
+  author:    perCallJpy
+  platform:  0
+  indexFund: 0
 }
 ```
 

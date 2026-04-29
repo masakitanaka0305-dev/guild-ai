@@ -35,12 +35,12 @@ describe("note-endpoint: getEndpointStats", () => {
 // ─── 2. royalty-protocol distribution ────────────────────────────────────────
 
 describe("royalty-protocol: distribute", () => {
-  it("distributes 70 / 25 / 5 correctly for 1.0 JPY", async () => {
+  it("distributes 100 / 0 / 0 correctly for 1.0 JPY", async () => {
     const { distribute } = await import("@/lib/royalty-protocol");
     const d = distribute(1.0);
-    expect(d.author).toBeCloseTo(0.70, 5);
-    expect(d.platform).toBeCloseTo(0.25, 5);
-    expect(d.indexFund).toBeCloseTo(0.05, 5);
+    expect(d.author).toBeCloseTo(1.0, 5);
+    expect(d.platform).toBe(0);
+    expect(d.indexFund).toBe(0);
   });
 
   it("distribute totals equal perCallJpy", async () => {

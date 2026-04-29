@@ -153,7 +153,7 @@ bg-white border border-black/5 rounded-2xl shadow-sm active:scale-[0.99] transit
 
 1. **ヒーロー**：「AIエージェントで、」「あなたの時間を」「アップデート。」の 3 行強制改行（`<span className="block lg:inline">`）+ 「日本最大のAIエージェント・プラットフォーム」+ CTA **1 個**（「いま のこす」→ `/bank`）。価格チップ廃止。
 2. **初めてのギルドエーアイ講座バナー**：ゴールドグラデ背景、マスコット PNG + 見出し + サブ文（「自分のペース」赤強調）。タップでオンボーディングモーダル開示。右上 ✕ で非表示（`guild_onboarding_dismissed`）。`aria-label="初めてのギルドエーアイ講座"`
-   - **OnboardingModal**：`max-h-[80vh] overflow-y-auto overscroll-contain`。4 ステップ `<ol space-y-5>`。各ステップ：太字ラベル → 短サブ（xs gray）→ 本文（sm gray-700 leading-relaxed）。強調語（`text-[#E64545] font-semibold`）：「タイトル・想定価格・難易度」「専用の API エンドポイント」「1 コール 0.1〜10 円」「70%」「直近の印税・推定時給・累計売上」。Esc 閉じ・focus trap・`aria-modal="true"` 維持。
+   - **OnboardingModal**：`max-h-[80vh] overflow-y-auto overscroll-contain`。4 ステップ `<ol space-y-5>`。各ステップ：太字ラベル → 短サブ（xs gray）→ 本文（sm gray-700 leading-relaxed）。強調語（`text-[#E64545] font-semibold`）：「タイトル・想定価格・難易度」「専用の API エンドポイント」「1 コール 0.1〜10 円」「作成者であるあなたに 100%」「直近の印税・推定時給・累計売上」。Esc 閉じ・focus trap・`aria-modal="true"` 維持。
 3. **つかいかた はかんたん**（統合ブロック）：3 カード 3 列（📝のこす→/sell / 🤖AIが働く→/jobs / 💴¥が入る→/guild）
 4. **いま のこされた しごと**：横スクロール 3 件、タイトル＋¥価格のみ
 5. **かせげる しごと**：縦リスト 2 件、タイトル＋報酬＋「応募する」赤ボタン
