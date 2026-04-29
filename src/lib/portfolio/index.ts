@@ -1,5 +1,5 @@
 export type AssetStatus = "active" | "reviewing" | "paused";
-export type SortKey = "monthly" | "calls" | "lastCalled" | "postedAt";
+export type SortKey = "monthly" | "calls" | "lastCalled" | "postedAt" | "status";
 
 export interface PortfolioAsset {
   guildId: string;
@@ -108,6 +108,7 @@ export function sortAssets(assets: PortfolioAsset[], key: SortKey): PortfolioAss
       case "calls":      return b.callsLast30 - a.callsLast30;
       case "lastCalled": return new Date(b.lastCalledAt).getTime() - new Date(a.lastCalledAt).getTime();
       case "postedAt":   return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
+      default:           return 0;
     }
   });
 }
