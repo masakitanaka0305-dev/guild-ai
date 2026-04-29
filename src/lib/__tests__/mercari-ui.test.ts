@@ -405,3 +405,101 @@ describe("total-assets: hero card", () => {
     expect(cardSrc).toContain('aria-label="資産の内訳"');
   });
 });
+
+// ─── 14. api-usage ────────────────────────────────────────────────────────────
+
+describe("api-usage: determinism and deltas", () => {
+  it("getDailyUsage is deterministic", async () => {
+    const { getDailyUsage } = await import("@/lib/api-usage");
+    const a = getDailyUsage("test-handle");
+    const b = getDailyUsage("test-handle");
+    expect(a.jpy).toBe(b.jpy);
+    expect(a.calls).toBe(b.calls);
+  });
+
+  it("getDeltas dailyPct is in range -20..40", async () => {
+    const { getDeltas } = await import("@/lib/api-usage");
+    const { dailyPct } = getDeltas("test-handle");
+    expect(dailyPct).toBeGreaterThanOrEqual(-20);
+    expect(dailyPct).toBeLessThanOrEqual(40);
+  });
+
+  it("getDeltas weeklyPct is in range -15..40", async () => {
+    const { getDeltas } = await import("@/lib/api-usage");
+    const { weeklyPct } = getDeltas("test-handle");
+    expect(weeklyPct).toBeGreaterThanOrEqual(-15);
+    expect(weeklyPct).toBeLessThanOrEqual(40);
+  });
+});
+
+// ─── 15. complexity-score ─────────────────────────────────────────────────────
+
+describe("complexity-score: range", () => {
+  it("computeComplexityScore returns 0–100", async () => {
+    const { computeComplexityScore } = await import("@/lib/complexity-score");
+    const score = computeComplexityScore("test-handle");
+    expect(score).toBeGreaterThanOrEqual(0);
+    expect(score).toBeLessThanOrEqual(100);
+  });
+});
+
+// ─── 16. asset-status ────────────────────────────────────────────────────────
+
+describe("asset-status: boundary conditions", () => {
+  it("returns 'ready' when lastCalledAt is 5 minutes ago", async () => {
+    const { computeStatus } = await import("@/lib/asset-status");
+    const now = Date.now();
+    const asset = {
+      guildId: "x", titleJa: "x", status: "active" as const,
+      endpointShort: "x", monthlyJpy: 100, callsLast30: 10,
+      sparkline: [], lastCalledAt: new Date(now - 5 * 60_000).toISOString(),
+      postedAt: new Date().toISOString(),
+    };
+    expect(computeStatus(asset, now)).toBe("ready");
+  });
+
+  it("returns 'executing' when lastCalledAt is within 30 seconds", async () => {
+    const { computeStatus } = await import("@/lib/asset-status");
+    const now = Date.now();
+    const asset = {
+      guildId: "x", titleJa: "x", status: "active" as const,
+      endpointShort: "x", monthlyJpy: 100, callsLast30: 10,
+      sparkline: [], lastCalledAt: new Date(now - 10_000).toISOString(),
+      postedAt: new Date().toISOString(),
+    };
+    expect(computeStatus(asset, now)).toBe("executing");
+  });
+
+  it("returns 'awaiting_update' for paused assets", async () => {
+    const { computeStatus } = await import("@/lib/asset-status");
+    const now = Date.now();
+    const asset = {
+      guildId: "x", titleJa: "x", status: "paused" as const,
+      endpointShort: "x", monthlyJpy: 0, callsLast30: 0,
+      sparkline: [], lastCalledAt: new Date(now - 5 * 60_000).toISOString(),
+      postedAt: new Date().toISOString(),
+    };
+    expect(computeStatus(asset, now)).toBe("awaiting_update");
+  });
+});
+
+// ─── 17. profile page ────────────────────────────────────────────────────────
+
+describe("profile: page structure", () => {
+  const profileSrc = readFileSync(resolve(root, "src/app/profile/page.tsx"), "utf8");
+
+  it("profile page has h1 プロフィール", () => {
+    expect(profileSrc).toContain("プロフィール");
+  });
+});
+
+// ─── 18. guild: ステータス別 sort ─────────────────────────────────────────────
+
+describe("guild: sort by status option", () => {
+  const portfolioSrc  = readFileSync(resolve(root, "src/components/AssetPortfolio.tsx"), "utf8");
+
+  it("AssetPortfolio has ステータス別 sort option", () => {
+    expect(portfolioSrc).toContain("ステータス別");
+    expect(portfolioSrc).toContain('"status"');
+  });
+});

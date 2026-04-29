@@ -121,12 +121,20 @@ export default function GuildPage() {
           <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)]">
             運用：あなたが投稿したMDファイルの状況・報酬・取引をまとめる場所
           </h1>
-          <Link
-            href="/bank"
-            className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0"
-          >
-            ＋ 投稿する
-          </Link>
+          <div className="flex flex-col gap-1.5 shrink-0">
+            <Link
+              href="/bank"
+              className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all text-center"
+            >
+              ＋ 投稿する
+            </Link>
+            <Link
+              href="/profile"
+              className="px-4 py-1.5 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors text-center"
+            >
+              マイプロフィール
+            </Link>
+          </div>
         </div>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
           <span className="text-[#E64545] font-semibold">今日の報酬</span>・
