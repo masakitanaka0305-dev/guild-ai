@@ -122,3 +122,22 @@ curl -X POST https://guild-ai.vercel.app/api/note/GUILD:0001
 | `src/app/bank/page.tsx` | 登録完了後の「この知恵の API」カード |
 | `src/lib/royalty-stream/index.ts` | `useRoyaltyStream` — 28〜32s 間隔イベント |
 | `src/lib/__tests__/royalty-protocol.test.ts` | 8 件のテスト |
+
+
+---
+
+## 家系図との関係（Asset-Dopamine Suite #80）
+
+`distribute(perCallJpy)` の実分配は変更なし：
+
+```typescript
+{ author: perCallJpy, platform: 0, indexFund: 0 }
+```
+
+`/lineage/[guildId]` の家系図に表示される「分配経路」と「分配率（shareRate）」は
+**視覚化のみの仮想レイヤー**であり、実際の報酬移動とは無関係です。
+
+- 親ノードへの `shareRate: 30%` = 「このノートを支えた知識への感謝の見える化」
+- 子ノードへの `shareRate: 10%` = 「このノートから生まれた派生作品への還流イメージ」
+
+ロイヤリティは作成者 100% 還元のまま維持。家系図は探索 UX のためのメタファー表示。

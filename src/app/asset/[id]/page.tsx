@@ -78,6 +78,14 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         </a>
       )}
 
+      {/* Lineage link */}
+      <Link
+        href={`/lineage/${encodeURIComponent(listing.id)}`}
+        className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--n-primary,#E64545)] hover:underline font-semibold"
+      >
+        この知能の家系図を見る →
+      </Link>
+
       {/* クリエイターのこだわり (Proof of Make) */}
       {listing.proofOfMakeNote && (
         <section className="mt-4 section-card p-5">

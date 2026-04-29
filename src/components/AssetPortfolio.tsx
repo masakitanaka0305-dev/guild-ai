@@ -164,12 +164,22 @@ export function AssetPortfolio() {
                   {relativeTime(asset.lastCalledAt)}
                 </td>
                 <td className="px-4 py-3">
-                  <Link
-                    href={`/asset/${asset.guildId}`}
-                    className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
-                  >
-                    詳細
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/asset/${asset.guildId}`}
+                      className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
+                    >
+                      詳細
+                    </Link>
+                    <Link
+                      href={`/lineage/${encodeURIComponent(asset.guildId)}`}
+                      aria-label={`${asset.titleJa} の家系図を見る`}
+                      title="家系図"
+                      className="px-2 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-gold,#D4AF37)] hover:text-[var(--n-gold,#D4AF37)] transition-colors text-xs"
+                    >
+                      🌳
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -215,7 +225,15 @@ export function AssetPortfolio() {
                 <p className="text-xs text-[var(--n-muted,#6B6456)]">{relativeTime(asset.lastCalledAt)}</p>
               </div>
             </div>
-            <div className="flex justify-end mt-3">
+            <div className="flex justify-end gap-2 mt-3">
+              <Link
+                href={`/lineage/${encodeURIComponent(asset.guildId)}`}
+                aria-label={`${asset.titleJa} の家系図を見る`}
+                title="家系図"
+                className="px-2 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-xs text-[var(--n-muted,#6B6456)] hover:border-[var(--n-gold,#D4AF37)] hover:text-[var(--n-gold,#D4AF37)] transition-colors"
+              >
+                🌳
+              </Link>
               <Link
                 href={`/asset/${asset.guildId}`}
                 className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-xs text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
