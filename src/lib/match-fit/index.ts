@@ -13,13 +13,12 @@ export function computeFit(jobId: string, ownedRecipeIds: string[]): number {
 
 export function fitLabel(score: number): string {
   if (score >= 80) return "ぴったり";
-  if (score >= 60) return "いいかんじ";
-  if (score >= 40) return "もう一歩";
-  return "準備中";
+  if (score >= 50) return "もう少し";
+  return "これから";
 }
 
 export function fitColor(score: number): string {
-  if (score >= 80) return "text-[#4DD08F]";
-  if (score >= 60) return "text-[#D4AF37]";
-  return "text-[#9FB1C8]";
+  if (score >= 80) return "text-[var(--n-positive,#0E9F4F)]";
+  if (score >= 50) return "text-[var(--n-gold,#D4AF37)]";
+  return "text-[var(--n-muted,#6B6456)]";
 }

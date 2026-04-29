@@ -18,9 +18,9 @@ const MOCK_NOTES = [
 ] as const;
 
 const RANK_COLORS: Record<string, string> = {
-  S: "bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/40",
-  A: "bg-[#9FB1C8]/20 text-[#F1F4F9] border-[#9FB1C8]/40",
-  B: "bg-[#1F3A66] text-[#9FB1C8] border-[#1F3A66]",
+  S: "bg-[#D4AF37]/15 text-[#7A5000] border-[#D4AF37]/40",
+  A: "bg-[var(--n-text,#1A1714)]/5 text-[var(--n-text,#1A1714)] border-[var(--n-text,#1A1714)]/15",
+  B: "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border-[var(--n-divider,rgba(0,0,0,0.08))]",
 };
 
 // ─── Market heat bar ──────────────────────────────────────────────────────────
@@ -58,18 +58,18 @@ function NoteTile({ note }: { note: typeof MOCK_NOTES[number] }) {
   return (
     <Link
       href="/bank"
-      className="block bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl p-4 hover:border-[var(--n-gold,#D4AF37)]/50 hover:shadow-lg transition-all duration-220 group"
+      className="block bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 hover:border-[var(--n-primary,#E64545)]/40 hover:shadow-md transition-all duration-220 group"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${RANK_COLORS[note.rank]}`}>
           {note.rank}ランク
         </span>
-        <span className="text-[10px] text-[var(--n-muted,#9FB1C8)]">{note.author}</span>
+        <span className="text-[10px] text-[var(--n-muted,#6B6456)]">{note.author}</span>
       </div>
-      <h3 className="text-sm font-bold text-[var(--n-text,#F1F4F9)] leading-snug mb-1 group-hover:text-[var(--n-gold,#D4AF37)] transition-colors">
+      <h3 className="text-sm font-bold text-[var(--n-text,#1A1714)] leading-snug mb-1 group-hover:text-[var(--n-primary,#E64545)] transition-colors">
         {note.title}
       </h3>
-      <p className="text-xs text-[var(--n-muted,#9FB1C8)] leading-relaxed line-clamp-2 mb-3">
+      <p className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed line-clamp-2 mb-3">
         {note.summary}
       </p>
       <p className="text-xs font-bold tabular-nums text-[var(--n-gold,#D4AF37)]">
@@ -86,23 +86,23 @@ function JobTile({ job }: { job: typeof MOCK_JOBS[number] }) {
   return (
     <Link
       href="/jobs"
-      className="block bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl p-4 hover:border-[var(--n-gold,#D4AF37)]/50 hover:shadow-lg transition-all duration-220 group"
+      className="block bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 hover:border-[var(--n-primary,#E64545)]/40 hover:shadow-md transition-all duration-220 group"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="text-[10px] font-semibold text-[var(--n-muted,#9FB1C8)] bg-[var(--n-surface-2,#122A4D)] px-2 py-0.5 rounded-full">
+        <span className="text-[10px] font-semibold text-[var(--n-muted,#6B6456)] bg-[var(--n-surface-2,#F5F3EE)] px-2 py-0.5 rounded-full">
           {job.category}
         </span>
-        <span className={`text-[10px] font-bold tabular-nums ${fit >= 70 ? "text-[#4DD08F]" : fit >= 50 ? "text-[#D4AF37]" : "text-[#9FB1C8]"}`}>
-          適合率 {fit}%
+        <span className={`text-[10px] font-bold ${fit >= 70 ? "text-[var(--n-positive,#0E9F4F)]" : fit >= 50 ? "text-[var(--n-gold,#D4AF37)]" : "text-[var(--n-muted,#6B6456)]"}`}>
+          {fit >= 70 ? "ぴったり" : fit >= 50 ? "もう少し" : "これから"}
         </span>
       </div>
-      <h3 className="text-sm font-bold text-[var(--n-text,#F1F4F9)] leading-snug mb-1 group-hover:text-[var(--n-gold,#D4AF37)] transition-colors">
+      <h3 className="text-sm font-bold text-[var(--n-text,#1A1714)] leading-snug mb-1 group-hover:text-[var(--n-primary,#E64545)] transition-colors">
         {job.title}
       </h3>
-      <p className="text-xs text-[var(--n-muted,#9FB1C8)] leading-relaxed line-clamp-2 mb-3">
+      <p className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed line-clamp-2 mb-3">
         {job.description}
       </p>
-      <p className="text-xs font-bold tabular-nums text-[#4DD08F]">
+      <p className="text-xs font-bold tabular-nums text-[var(--n-positive,#0E9F4F)]">
         報酬 ¥{job.reward.toLocaleString("ja-JP")}
       </p>
     </Link>
@@ -151,41 +151,37 @@ export default function HomePage() {
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
 
-      {/* ── Hero (compact) ───────────────────────────────────── */}
-      <section className="pt-8 pb-6">
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-[var(--n-text,#F1F4F9)] leading-tight">
-              知恵を、<span className="text-[var(--n-gold,#D4AF37)]">金塊に。</span>
-            </h1>
-            <p className="mt-2 text-sm text-[var(--n-muted,#9FB1C8)] max-w-md leading-relaxed">
-              あなたのノートが、寝ている間に値段になる場所です。
-            </p>
-          </div>
-          {/* Market heat */}
-          <div className="flex items-center gap-3 bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl px-4 py-2 shrink-0">
-            <div>
-              <p className="text-[9px] text-[var(--n-muted,#9FB1C8)] mb-1">市場の熱量</p>
-              <MarketHeatBar />
-            </div>
-            <div className="border-l border-[var(--n-divider,#1F3A66)] pl-3">
-              <p className="text-[9px] text-[var(--n-muted,#9FB1C8)]">直近5分</p>
-              <p className="text-xs font-bold tabular-nums text-[var(--n-text,#F1F4F9)]">{ticker.length * 3 + 12} 件</p>
-            </div>
-          </div>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="pt-8 pb-5">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--n-text,#1A1714)] leading-tight">
+          知恵を、<span className="text-[var(--n-primary,#E64545)]">寝てる間も</span>働かせる場所。
+        </h1>
+        <div className="flex gap-3 mt-5 flex-wrap">
+          <Link
+            href="/bank"
+            className="px-7 py-3.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
+          >
+            いま のこす
+          </Link>
+          <Link
+            href="/jobs"
+            className="px-7 py-3.5 rounded-full border-2 border-[var(--n-primary,#E64545)] text-[var(--n-primary,#E64545)] font-bold text-sm hover:bg-[var(--n-primary,#E64545)]/5 active:scale-[0.98] transition-all"
+          >
+            いま かせぐ
+          </Link>
         </div>
       </section>
 
       {/* ── Tabs ─────────────────────────────────────────────── */}
-      <div className="flex gap-1 mb-4 bg-[var(--n-surface,#0E2240)] rounded-2xl p-1 w-fit">
+      <div className="flex gap-1 mb-4 bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl p-1 w-fit">
         {(["notes", "jobs"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={`px-4 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
               tab === t
-                ? "bg-[var(--n-gold,#D4AF37)] text-[#0A192F]"
-                : "text-[var(--n-muted,#9FB1C8)] hover:text-[var(--n-text,#F1F4F9)]"
+                ? "bg-[var(--n-primary,#E64545)] text-white"
+                : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
             }`}
           >
             {t === "notes" ? "新着の知恵" : "おすすめ案件"}

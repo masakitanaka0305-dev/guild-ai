@@ -97,8 +97,8 @@ describe("playPassbookChime in sound module", () => {
 describe("Guardian branding in nav", () => {
   const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("nav uses 保管庫 for marketplace", () => {
-    expect(src).toContain("保管庫");
+  it("nav uses おさいふ for wallet (marketplace removed from nav)", () => {
+    expect(src).toContain("おさいふ");
   });
 
   it("nav uses おさいふ通帳 or 通帳 for wallet", () => {

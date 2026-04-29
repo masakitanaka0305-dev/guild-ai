@@ -254,39 +254,48 @@ export default function GuildPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-6 gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--n-text,#F1F4F9)]">マイ銀行</h1>
-            <p className="text-sm text-[var(--n-muted,#9FB1C8)] mt-1">保有資産と報酬履歴</p>
+            <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)]">マイ銀行</h1>
+            <p className="text-sm text-[var(--n-muted,#6B6456)] mt-1">保有資産と報酬履歴</p>
           </div>
-          <Link href="/bank" className="px-4 py-2 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0">
+          <Link href="/bank" className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0">
             ＋ のこす
           </Link>
         </div>
 
-        {/* Stats row */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          {[
-            {
-              label: "保有資産（AUM）",
-              value: `¥${(stats.aumJpy / 10000).toFixed(0)}万`,
-              color: "text-[var(--n-gold,#D4AF37)]",
-            },
-            {
-              label: "今月のおだちん",
-              value: `¥${earnings.jpy.toLocaleString("ja-JP")}`,
-              color: "text-[#4DD08F]",
-            },
-            {
-              label: "先月比",
-              value: `+${stats.momPct}%`,
-              color: "text-[#4DD08F]",
-            },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl px-4 py-3 text-center">
-              <p className="text-[10px] text-[var(--n-muted,#9FB1C8)] mb-1">{stat.label}</p>
-              <p className={`text-lg font-black tabular-nums ${stat.color}`}>{stat.value}</p>
-            </div>
-          ))}
+        {/* Top 2 metrics */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-4 text-center">
+            <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今日のおだちん</p>
+            <p className="text-xl font-black tabular-nums text-[var(--n-positive,#0E9F4F)]">
+              ¥{Math.round(earnings.jpy / 30).toLocaleString("ja-JP")}
+            </p>
+          </div>
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-4 text-center">
+            <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今月の合計</p>
+            <p className="text-xl font-black tabular-nums text-[var(--n-text,#1A1714)]">
+              ¥{earnings.jpy.toLocaleString("ja-JP")}
+            </p>
+          </div>
         </div>
+
+        {/* Collapsible advanced stats */}
+        <details className="mb-6 bg-[var(--n-surface-2,#F5F3EE)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl overflow-hidden">
+          <summary className="px-4 py-3 text-sm text-[var(--n-muted,#6B6456)] cursor-pointer select-none font-medium">
+            くわしく見る
+          </summary>
+          <div className="grid grid-cols-3 gap-2 px-4 pb-4 pt-1">
+            {[
+              { label: "保有資産（AUM）", value: `¥${(stats.aumJpy / 10000).toFixed(0)}万`, color: "text-[var(--n-gold,#D4AF37)]" },
+              { label: "先月比（MoM）", value: `+${stats.momPct}%`, color: "text-[var(--n-positive,#0E9F4F)]" },
+              { label: "APR", value: `${(stats.momPct * 1.2).toFixed(1)}%`, color: "text-[var(--n-text,#1A1714)]" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center py-2">
+                <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-0.5">{stat.label}</p>
+                <p className={`text-sm font-bold tabular-nums ${stat.color}`}>{stat.value}</p>
+              </div>
+            ))}
+          </div>
+        </details>
 
         {/* API royalty indicator */}
         {royalties.length > 0 && (
@@ -304,16 +313,16 @@ export default function GuildPage() {
         {!mounted ? (
           <p className="text-sm text-[var(--n-muted,#9FB1C8)]">読み込み中…</p>
         ) : weapons.length === 0 ? (
-          <div className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-3xl p-8 text-center">
-            <p className="text-[var(--n-muted,#9FB1C8)] mb-4">まだノートがありません</p>
-            <Link href="/bank" className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white font-bold">
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl p-8 text-center">
+            <p className="text-[var(--n-muted,#6B6456)] mb-4">まだノートがありません</p>
+            <Link href="/bank" className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all">
               はじめてのこす →
             </Link>
           </div>
         ) : (
           <ul className="space-y-3">
             {weapons.map((w) => (
-              <li key={w.id} className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--n-gold,#D4AF37)]/40 transition-colors">
+              <li key={w.id} className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--n-primary,#E64545)]/30 hover:shadow-sm transition-all">
                 <RatingPlate rank={w.rank} size="sm" />
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-[var(--n-text,#F1F4F9)] text-sm truncate">{w.title}</p>
