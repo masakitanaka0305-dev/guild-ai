@@ -1,8 +1,8 @@
 # Friendly Intelligence Bank — デザイン設計書
 
-> **⚠️ テーマ注記（#71 更新）**
-> GUILD AI のデフォルトテーマは **Terminal Theme** に昇格しました（`data-theme="terminal"`）。
-> 本書は **kawaii テーマ（旧デフォルト）** の仕様書です。ThemeToggle で「Kawaii」を選択した場合にのみ適用されます。
+> **⚠️ テーマ注記（v13 更新）**
+> GUILD AI のデフォルトテーマは **なめらかテーマ** (`data-theme="nameraka"`) になりました。
+> 本書は **kawaii テーマ** の仕様書です。ThemeToggle で「Kawaii」を選択した場合にのみ適用されます。
 > Terminal Theme の仕様は [`docs/Terminal-Theme設計.md`](./Terminal-Theme設計.md) を参照。
 
 ## 1. カラートークン

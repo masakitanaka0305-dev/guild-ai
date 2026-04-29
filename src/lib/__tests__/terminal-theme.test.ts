@@ -9,8 +9,8 @@ const root = process.cwd();
 describe("terminal-theme.tokens", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("globals.css defines [data-theme='terminal'] selector", () => {
-    expect(css).toContain('[data-theme="terminal"]');
+  it("globals.css defines [data-theme='pro'] selector (renamed from terminal)", () => {
+    expect(css).toContain('[data-theme="pro"]');
   });
 
   it("globals.css defines --obsidian variable", () => {
@@ -174,14 +174,13 @@ describe("terminal-theme.charts.stream-feed", () => {
 describe("terminal-theme.theme-toggle", () => {
   const src = readFileSync(resolve(root, "src/components/ThemeToggle.tsx"), "utf8");
 
-  it("ThemeToggle has terminal as default theme", () => {
-    expect(src).toContain('"terminal"');
-    // default is terminal
-    expect(src).toContain("terminal");
+  it("ThemeToggle has nameraka as default theme (renamed from terminal)", () => {
+    expect(src).toContain('"nameraka"');
+    expect(src).toContain("nameraka");
   });
 
-  it("ThemeToggle has 3 states: terminal, pro, kawaii", () => {
-    expect(src).toContain('"terminal"');
+  it("ThemeToggle has 3 states: nameraka, pro, kawaii", () => {
+    expect(src).toContain('"nameraka"');
     expect(src).toContain('"pro"');
     expect(src).toContain('"kawaii"');
   });

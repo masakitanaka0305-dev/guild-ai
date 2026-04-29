@@ -1,6 +1,6 @@
 # GUILD AI Terminal Theme — 設計書
 
-> **デフォルトテーマ**。Friendly Bank (kawaii) は隠しトグル (Kawaii モード) として保持。
+> ⚠️ **v13 更新（Intelligence-as-a-Transaction）**：`pro` テーマとして維持。デフォルトは `nameraka` テーマに移行しました。`data-theme="pro"` で切替可能。
 
 ---
 
