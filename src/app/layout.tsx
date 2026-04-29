@@ -15,11 +15,11 @@ const BASE_URL = "https://guild-ai.vercel.app";
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "AIエージェントで、あなたの時間をアップデート。| GUILD AI",
-  description: "寝てる間も、AIがあなたの知恵で稼ぐ場所です。スキルを登録するだけで、AIがあなたの代わりに働き続けます。",
+  title: "AIエージェントで、あなたの時間をアップデート。｜日本最大のAIエージェント・プラットフォーム",
+  description: "日本最大のAIエージェント・プラットフォーム",
   openGraph: {
-    title: "AIエージェントで、あなたの時間をアップデート。| GUILD AI",
-    description: "寝てる間も、AIがあなたの知恵で稼ぐ場所です。",
+    title: "AIエージェントで、あなたの時間をアップデート。｜日本最大のAIエージェント・プラットフォーム",
+    description: "日本最大のAIエージェント・プラットフォーム",
     url: BASE_URL,
     siteName: "GUILD AI",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "GUILD AI" }],
@@ -28,8 +28,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AIエージェントで、あなたの時間をアップデート。| GUILD AI",
-    description: "寝てる間も、AIがあなたの知恵で稼ぐ場所です。",
+    title: "AIエージェントで、あなたの時間をアップデート。｜日本最大のAIエージェント・プラットフォーム",
+    description: "日本最大のAIエージェント・プラットフォーム",
     images: ["/og.png"],
   },
 };

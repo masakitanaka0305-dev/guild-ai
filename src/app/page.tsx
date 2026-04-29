@@ -116,13 +116,13 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pt-8 pb-8">
-        <h1 className="text-[28px] sm:text-[40px] font-black text-[var(--n-text,#1A1714)] leading-tight tracking-tight">
-          AIエージェントで、<br />
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1F1B16] leading-[1.1] tracking-tight mb-4 sm:mb-5">
+          AIエージェントで、<br className="sm:hidden" />
           <span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を<br />
           アップデート。
         </h1>
-        <p className="text-base sm:text-[18px] text-[var(--n-muted,#6B6456)] mt-3 leading-relaxed">
-          寝てる間も、AIがあなたの知恵で稼ぐ場所です。
+        <p className="text-base sm:text-lg text-gray-600 font-medium">
+          日本最大のAIエージェント・プラットフォーム
         </p>
         <div className="flex gap-3 mt-6 flex-wrap">
           <Link

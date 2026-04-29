@@ -16,8 +16,8 @@ describe("catchphrase: hero", () => {
     expect(src).toMatch(/<h1/);
   });
 
-  it("subtitle appears below h1", () => {
-    expect(src).toContain("寝てる間も、AIがあなたの知恵で稼ぐ場所です");
+  it("subline 日本最大のAIエージェント・プラットフォーム appears below h1", () => {
+    expect(src).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 
   it("footer contains secondary catchphrase", () => {
@@ -31,12 +31,17 @@ describe("catchphrase: hero", () => {
 describe("catchphrase: metadata", () => {
   const src = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
 
-  it("metadata.title contains the primary catchphrase", () => {
-    expect(src).toContain("AIエージェントで、あなたの時間をアップデート。| GUILD AI");
+  it("metadata.title uses new format with platform subline", () => {
+    expect(src).toContain("AIエージェントで、あなたの時間をアップデート。｜日本最大のAIエージェント・プラットフォーム");
   });
 
-  it("og:title matches", () => {
-    expect(src).toContain("AIエージェントで、あなたの時間をアップデート。| GUILD AI");
+  it("og:description is platform subline", () => {
+    expect(src).toContain("日本最大のAIエージェント・プラットフォーム");
+  });
+
+  it("home subline 日本最大のAIエージェント・プラットフォーム is displayed", () => {
+    const pageSrc = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+    expect(pageSrc).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 });
 
