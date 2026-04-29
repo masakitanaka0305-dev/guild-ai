@@ -196,6 +196,36 @@ describe("home: unified how-block", () => {
   });
 });
 
+// ─── 9. Onboarding banner + modal ────────────────────────────────────────────
+
+describe("onboarding: banner and modal", () => {
+  const pageSrc   = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+  const modalSrc  = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
+
+  it('home page has banner with aria-label="初めてのギルドエーアイ講座"', () => {
+    expect(pageSrc).toContain('aria-label="初めてのギルドエーアイ講座"');
+  });
+
+  it("banner click opens OnboardingModal (source imports and renders it)", () => {
+    expect(pageSrc).toContain("OnboardingModal");
+    expect(pageSrc).toContain("modalOpen");
+    expect(modalSrc).toContain('role="dialog"');
+  });
+
+  it("modal contains 4 steps in <ol>", () => {
+    expect(modalSrc).toMatch(/<ol/);
+    expect(modalSrc).toContain("ノートを残す");
+    expect(modalSrc).toContain("AIが働く");
+    expect(modalSrc).toContain("¥が入る");
+    expect(modalSrc).toContain("マイ銀行で確認");
+  });
+
+  it('modal CTA links to /sell', () => {
+    expect(modalSrc).toContain('今すぐ ノートを残す');
+    expect(modalSrc).toContain('href="/sell"');
+  });
+});
+
 // ─── 6. jargon-lint: allowed terms don't trigger forbidden list ───────────────
 
 describe("jargon-lint: permitted mercari-copy terms", () => {

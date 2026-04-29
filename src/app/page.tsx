@@ -1,7 +1,10 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MOCK_JOBS } from "@/lib/jobs";
+import { OnboardingModal } from "@/components/OnboardingModal";
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
@@ -36,6 +39,24 @@ function SectionHeading({ title }: { title: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
+
+  const openModal = useCallback(() => setModalOpen(true), []);
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("guild_onboarding_seen", "1");
+    }
+  }, []);
+  const dismissBanner = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setBannerDismissed(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("guild_onboarding_dismissed", "1");
+    }
+  }, []);
+
   return (
     <main className="max-w-2xl mx-auto space-y-8">
 
@@ -57,6 +78,65 @@ export default function HomePage() {
         </Link>
         <p className="mt-3 text-sm text-gray-500">ノートを残すだけ</p>
       </section>
+
+      {/* ── 初めてのギルドエーアイ講座 バナー ────────────────── */}
+      {!bannerDismissed && (
+        <section className="px-4 sm:px-6">
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="初めてのギルドエーアイ講座"
+            onClick={openModal}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openModal(); }}
+            className="relative flex items-center gap-4 sm:gap-5 rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-220 cursor-pointer overflow-hidden px-5 py-4 sm:px-6 sm:py-5"
+            style={{
+              background: "linear-gradient(120deg, #FAFAF7 0%, #F2DFA0 60%, #F5E8B0 100%)",
+            }}
+          >
+            {/* Mascot left */}
+            <Image
+              src="/onboarding/guild-ai-mascot.png"
+              alt="Guild AI マスコット"
+              width={80}
+              height={80}
+              className="object-contain flex-shrink-0 w-[72px] h-[72px] sm:w-[88px] sm:h-[88px]"
+              priority
+            />
+
+            {/* Text center */}
+            <div className="flex-1 min-w-0">
+              <p className="text-[17px] sm:text-[18px] font-extrabold text-[#1F1B16] leading-tight mb-1">
+                📘 初めてのギルドエーアイ講座
+              </p>
+              <p className="text-[12px] sm:text-[13px] text-gray-600 leading-snug">
+                いまから見ても、
+                <span className="text-[var(--n-primary,#E64545)] font-bold">自分のペース</span>
+                で学べます！
+              </p>
+            </div>
+
+            {/* Mascot right (PC only) */}
+            <Image
+              src="/onboarding/guild-ai-mascot.png"
+              alt=""
+              aria-hidden
+              width={56}
+              height={56}
+              className="object-contain hidden sm:block flex-shrink-0 opacity-40 w-[52px] h-[52px]"
+            />
+
+            {/* Dismiss × */}
+            <button
+              type="button"
+              aria-label="バナーを閉じる"
+              onClick={dismissBanner}
+              className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-black/5 transition-colors text-[11px] focus:outline-none focus:ring-1 focus:ring-[var(--n-primary,#E64545)]"
+            >
+              ✕
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* ── つかいかた はかんたん（統合ブロック）─────────────── */}
       <section className="px-4 sm:px-6" aria-label="つかいかた はかんたん">
@@ -150,10 +230,20 @@ export default function HomePage() {
           <Link href="/jobs" className="hover:text-[var(--n-primary,#E64545)] transition-colors">かせぐ</Link>
           <Link href="/guild" className="hover:text-[var(--n-primary,#E64545)] transition-colors">マイ銀行</Link>
           <Link href="/wallet" className="hover:text-[var(--n-primary,#E64545)] transition-colors">おさいふ</Link>
+          <button
+            type="button"
+            onClick={openModal}
+            className="hover:text-[var(--n-primary,#E64545)] transition-colors"
+          >
+            初めての方へ
+          </button>
         </div>
       </footer>
 
       <div className="pb-20" />
+
+      {/* ── Onboarding Modal ──────────────────────────────────── */}
+      {modalOpen && <OnboardingModal onClose={closeModal} />}
     </main>
   );
 }
