@@ -14,7 +14,9 @@ import { mintWeapon, extractTags, deriveTitle } from "@/lib/weapons";
 import { playPassbookChime, playSuccessChime, playStampChime } from "@/lib/sound";
 import { useTactile } from "@/hooks/useTactile";
 import { getTickerSnapshot, getStreamFeed } from "@/lib/terminal-data";
+import { offerInstantBuyout, computeAssessmentRange, formatJpy } from "@/lib/instant-buyout";
 import type { AuditResult } from "@/types";
+import type { InstantBuyoutOffer } from "@/lib/instant-buyout";
 
 type Step = "input" | "scoring" | "result" | "minting" | "done";
 
@@ -90,11 +92,14 @@ export default function BankPage() {
   const [confetti, setConfetti] = useState(false);
   const [weaponTitle, setWeaponTitle] = useState("");
   const [stamped, setStamped] = useState(false);
-  const [theme, setTheme] = useState<string>("terminal");
+  const [theme, setTheme] = useState<string>("nameraka");
   const [flash, setFlash] = useState(false);
+  const [buyoutOffer, setBuyoutOffer] = useState<InstantBuyoutOffer | null>(null);
+  const [buyoutAccepted, setBuyoutAccepted] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
-    const t = document.documentElement.getAttribute("data-theme") ?? "terminal";
+    const t = document.documentElement.getAttribute("data-theme") ?? "nameraka";
     setTheme(t);
     const observer = new MutationObserver(() => {
       setTheme(document.documentElement.getAttribute("data-theme") ?? "terminal");
@@ -103,7 +108,9 @@ export default function BankPage() {
     return () => observer.disconnect();
   }, []);
 
-  const isTerminal = theme === "terminal" || theme === "pro";
+  const isPro = theme === "pro";
+  const isNameraka = theme === "nameraka";
+  const isTerminal = isPro; // legacy compat for handlers below
 
   const triggerStamp = useTactile("stamp");
   const triggerPoyon = useTactile("poyon");
@@ -111,6 +118,7 @@ export default function BankPage() {
   const handleScore = useCallback(() => {
     if (!noteContent.trim()) return;
     setStep("scoring");
+    if (isNameraka) setScanning(true);
 
     setTimeout(() => {
       const wordCount = noteContent.replace(/\s/g, "").length;
@@ -132,9 +140,15 @@ export default function BankPage() {
 
       setAuditResult(result);
       setWeaponTitle(deriveTitle(noteContent));
+      setBuyoutOffer(offerInstantBuyout(result));
 
-      if (isTerminal) {
-        // Terminal: snap transition with gold flash
+      if (isNameraka) {
+        // Nameraka: gold scan line then reveal
+        setScanning(false);
+        setFlash(true);
+        setTimeout(() => { setFlash(false); setStep("result"); }, 300);
+      } else if (isTerminal) {
+        // Pro: snap transition with gold flash
         setFlash(true);
         setTimeout(() => { setFlash(false); setStep("result"); }, 120);
       } else {
@@ -145,8 +159,8 @@ export default function BankPage() {
           setTimeout(() => setStep("result"), 800);
         }, 600);
       }
-    }, isTerminal ? 800 : 1400);
-  }, [noteContent, triggerStamp, isTerminal]);
+    }, isNameraka ? 600 : isTerminal ? 800 : 1400);
+  }, [noteContent, triggerStamp, isTerminal, isNameraka]);
 
   const handleMint = useCallback(() => {
     if (!auditResult) return;
@@ -183,9 +197,170 @@ export default function BankPage() {
   const ticker = getTickerSnapshot();
   const stream = getStreamFeed(8);
 
-  // ─── Terminal layout ───────────────────────────────────────────────────────
+  // ─── Nameraka layout (メルカリ style) ──────────────────────────────────────
 
-  if (isTerminal) {
+  if (isNameraka) {
+    const assessRange = noteContent.length > 0
+      ? computeAssessmentRange(Math.min(100, Math.max(20, noteContent.replace(/\s/g, "").length / 2)))
+      : null;
+
+    return (
+      <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-[var(--n-text,#F1F4F9)]">のこす</h1>
+          <p className="text-sm text-[var(--n-muted,#9FB1C8)] mt-1">
+            あなたのノートを提出すると、AIが査定して価値にします。
+          </p>
+        </div>
+
+        {step === "input" && (
+          <div className="space-y-4">
+            {/* Drop area / text area */}
+            <div className="bg-[var(--n-surface,#0E2240)] border-2 border-dashed border-[var(--n-divider,#1F3A66)] rounded-3xl p-6 hover:border-[var(--n-gold,#D4AF37)]/50 transition-colors">
+              <p className="text-xs text-[var(--n-muted,#9FB1C8)] mb-2 text-center">
+                ノートをここに貼り付け、または入力してください
+              </p>
+              <textarea
+                className="w-full h-52 bg-transparent resize-none text-sm text-[var(--n-text,#F1F4F9)] placeholder-[var(--n-muted,#9FB1C8)] focus:outline-none"
+                placeholder={"# 設計ノート\n\nあなたのこだわり・設計判断・試行錯誤を書いてください..."}
+                value={noteContent}
+                onChange={(e) => setNoteContent(e.target.value)}
+                aria-label="ノート提出フォーム"
+              />
+              <div className="flex items-center justify-between mt-2 text-xs text-[var(--n-muted,#9FB1C8)]">
+                <span>{noteContent.length} 文字</span>
+                {noteContent.length > 50 && (
+                  <span className="text-[var(--n-gold,#D4AF37)] font-semibold">● 意志シグナル検出 → Sランク候補</span>
+                )}
+              </div>
+            </div>
+
+            {/* Assessment range preview */}
+            {assessRange && (
+              <div className="bg-[var(--n-surface-2,#122A4D)] rounded-2xl px-4 py-3 flex items-center justify-between">
+                <span className="text-xs text-[var(--n-muted,#9FB1C8)]">査定額レンジ（目安）</span>
+                <span className="font-bold tabular-nums text-[var(--n-gold,#D4AF37)] text-sm">
+                  {formatJpy(assessRange[0])} 〜 {formatJpy(assessRange[1])}
+                </span>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={handleScore}
+              disabled={noteContent.trim().length < 10}
+              className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#1F3A66] via-[#2A5298] to-[var(--n-gold,#D4AF37)] text-white font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 active:scale-[0.98] transition-all duration-220 shadow-lg"
+              aria-label="ノートを提出して鑑定する"
+            >
+              提出する →
+            </button>
+          </div>
+        )}
+
+        {step === "scoring" && (
+          <div className="bg-[var(--n-surface,#0E2240)] rounded-3xl p-8 text-center relative overflow-hidden">
+            {/* Gold scan line */}
+            <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--n-gold,#D4AF37)] to-transparent animate-[scanLine_0.6s_ease-in-out_forwards]" aria-hidden />
+            <p className="text-[var(--n-gold,#D4AF37)] font-bold text-lg">鑑定中…</p>
+            <p className="text-xs text-[var(--n-muted,#9FB1C8)] mt-2">AIが思考密度を解析しています</p>
+          </div>
+        )}
+
+        {step === "result" && auditResult && (
+          <div className="space-y-4">
+            {/* Result card */}
+            <div className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-gold,#D4AF37)]/40 rounded-3xl p-6 text-center relative">
+              <div className="absolute top-4 right-4">
+                <GoldenSeal size={32} />
+              </div>
+              <div className="flex justify-center mb-4"><RatingPlate rank={auditResult.rank} size="lg" /></div>
+              <p className="text-[var(--n-text,#F1F4F9)] font-bold text-xl">
+                {auditResult.rank === "S" ? "殿堂入り！" : auditResult.rank === "A" ? "優秀な知恵です" : "良質なノートです"}
+              </p>
+              <p className="text-xs text-[var(--n-muted,#9FB1C8)] mt-1 tabular-nums">
+                スコア {auditResult.score.toFixed(1)} / 100
+              </p>
+
+              {/* Assessment range */}
+              <div className="mt-4 bg-[var(--n-surface-2,#122A4D)] rounded-2xl px-4 py-3">
+                <p className="text-xs text-[var(--n-muted,#9FB1C8)] mb-1">査定額レンジ</p>
+                <p className="font-bold tabular-nums text-[var(--n-gold,#D4AF37)] text-lg">
+                  {formatJpy(computeAssessmentRange(auditResult.score)[0])} 〜 {formatJpy(computeAssessmentRange(auditResult.score)[1])}
+                </p>
+              </div>
+
+              {/* 0秒換金オファー (S/A only) */}
+              {buyoutOffer && !buyoutAccepted && (
+                <div className="mt-4 border border-[var(--n-gold,#D4AF37)] rounded-2xl px-4 py-3 bg-[var(--n-gold,#D4AF37)]/10">
+                  <p className="text-xs text-[var(--n-gold,#D4AF37)] font-bold mb-1">
+                    ⚡ いまだけ 0秒換金オファー（{buyoutOffer.expiresInSec}秒以内）
+                  </p>
+                  <p className="font-black text-[var(--n-text,#F1F4F9)] text-xl tabular-nums mb-2">
+                    {formatJpy(buyoutOffer.amountJpy)} で即時買い取り
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => { setBuyoutAccepted(true); handleMint(); }}
+                    className="w-full py-2.5 rounded-xl bg-[var(--n-gold,#D4AF37)] text-[#0A192F] font-bold hover:opacity-90 active:scale-[0.98] transition-all"
+                  >
+                    受諾して即時換金 →
+                  </button>
+                </div>
+              )}
+              {buyoutAccepted && (
+                <p className="mt-3 text-[#4DD08F] font-bold text-sm">✓ 換金オファー受諾 — 通帳に着金しました</p>
+              )}
+            </div>
+
+            {/* Title edit */}
+            <div className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl px-4 py-3">
+              <p className="text-xs text-[var(--n-muted,#9FB1C8)] mb-1">タイトル（編集できます）</p>
+              <input
+                type="text"
+                className="w-full bg-transparent text-sm font-bold text-[var(--n-text,#F1F4F9)] focus:outline-none border-b border-[var(--n-divider,#1F3A66)] pb-1"
+                value={weaponTitle}
+                onChange={(e) => setWeaponTitle(e.target.value)}
+                aria-label="ノートのタイトル"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <button type="button" onClick={handleReset} className="flex-1 py-3 rounded-full border border-[var(--n-divider,#1F3A66)] text-[var(--n-muted,#9FB1C8)] hover:border-[var(--n-gold,#D4AF37)] transition-colors">
+                やり直す
+              </button>
+              <button type="button" onClick={handleMint} className="flex-1 py-3 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all">
+                のこす →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {(step === "minting" || step === "done") && auditResult && (
+          <div className="bg-[var(--n-surface,#0E2240)] border border-[#4DD08F]/40 rounded-3xl p-8 text-center">
+            <div className="flex justify-center mb-4"><RatingPlate rank={auditResult.rank} size="lg" /></div>
+            <h2 className="text-xl font-bold text-[var(--n-text,#F1F4F9)] mb-2">
+              {step === "minting" ? "登録中…" : "のこせました！"}
+            </h2>
+            <p className="text-sm text-[var(--n-muted,#9FB1C8)] mb-6">
+              「{weaponTitle}」が資産として登録されました。
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button type="button" onClick={handleReset} className="px-5 py-2.5 rounded-full border border-[var(--n-divider,#1F3A66)] text-[var(--n-muted,#9FB1C8)] hover:border-[var(--n-gold,#D4AF37)] transition-colors">
+                もう一つのこす
+              </button>
+              <button type="button" onClick={() => router.push("/jobs")} className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1F3A66] to-[var(--n-gold,#D4AF37)] text-white font-bold hover:opacity-90">
+                かせぐ →
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    );
+  }
+
+  // ─── Pro layout ────────────────────────────────────────────────────────────
+
+  if (isPro) {
     return (
       <main className="flex flex-col h-full min-h-0 bg-[var(--obsidian,#0B0D10)] text-[var(--text-primary,#E8EBF0)]">
         {/* Ticker strip */}

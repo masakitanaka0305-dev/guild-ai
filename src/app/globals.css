@@ -255,6 +255,18 @@
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Nameraka: scan line for bank assessment */
+@keyframes scanLine {
+  0%   { transform: translateX(-100%); opacity: 1; }
+  100% { transform: translateX(100%);  opacity: 0; }
+}
+
+/* Nameraka: floating toast slide-in */
+@keyframes slideInToast {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
 /* Asset thumbnail shimmer — loading skeleton for HumanThumbnail */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
