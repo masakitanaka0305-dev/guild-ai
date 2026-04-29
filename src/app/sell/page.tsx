@@ -843,6 +843,7 @@ function SellContent() {
   const remixId = params.get("remix");
   const remixFrom = params.get("from");
   const claimId = params.get("claim");
+  const topicParam = params.get("topic"); // ZERO-DAY:event-id
 
   const [activePath, setActivePath] = useState<RegistrationPath>("ai");
   const [completion, setCompletion] = useState<CompletionData | null>(null);
@@ -932,6 +933,21 @@ function SellContent() {
         <div className="mt-3 inline-flex items-center gap-2 rounded-lg border border-kaki/30 bg-kaki/10 px-3 py-2">
           <span className="text-sm text-kaki font-medium">組み合わせ元:</span>
           <span className="text-sm text-kuroko font-semibold truncate max-w-[240px]">{remixFrom}</span>
+        </div>
+      )}
+
+      {topicParam?.startsWith("ZERO-DAY:") && (
+        <div
+          className="mt-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3"
+          role="note"
+          aria-label="ゼロデイ出品ヒント"
+        >
+          <p className="text-xs font-semibold text-blue-700 mb-0.5">ゼロデイ対応 MD の出品</p>
+          <p className="text-xs text-blue-600 leading-relaxed">
+            このフォームから出品すると、ゼロデイフィードの
+            <span className="font-mono mx-1 bg-blue-100 px-1 rounded">{topicParam}</span>
+            トピックに自動で紐付けられます。いち早く対応したクリエイターに優先表示の機会が与えられます。
+          </p>
         </div>
       )}
 

@@ -16,6 +16,8 @@ import { TryItNowButton } from "@/components/TryItNowButton";
 import { SchemaPanel } from "@/components/SchemaPanel";
 import { generateSchemas } from "@/lib/schema-generator";
 import { getBacktestStats, formatSamples } from "@/lib/backtest";
+import { VerificationLogSection } from "@/components/VerificationLogSection";
+import { getDeltaCompare } from "@/lib/insight-delta";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -52,6 +54,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
   const guildId = mintGuildIdForAsset(listing.id);
   const schemas = generateSchemas(listing.description, { title: listing.title, rank: listing.rank });
   const backtest = getBacktestStats(listing.id);
+  const delta = getDeltaCompare(guildId);
 
   const curlSample = `curl -X POST https://guild-ai.vercel.app/api/atoa/${listing.id} \\
   -H "Authorization: Bearer gld_<YOUR_ACCESS_KEY>" \\
@@ -330,6 +333,90 @@ export default function AssetPage({ params }: { params: { id: string } }) {
             <p className="text-[10px] text-[#9890A8]">
               過去 {formatSamples(backtest.samples)} 件の実行ログから計測。実環境の挙動はワークロードにより変動します。
             </p>
+          </section>
+        );
+      })()}
+
+      {/* 実行エビデンス (Verification Log) */}
+      <VerificationLogSection guildId={guildId} />
+
+      {/* プロの工夫 (Insight Delta) */}
+      {(() => {
+        const intensityColor: Record<string, string> = {
+          high:   "bg-[var(--n-primary,#E64545)] text-white",
+          medium: "bg-amber-500 text-white",
+          low:    "bg-blue-500 text-white",
+        };
+        return (
+          <section className="mt-4 section-card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8]">
+                プロの工夫
+              </h2>
+              <span className="inline-flex items-center gap-1 rounded-full bg-kaki/10 border border-kaki/20 px-2.5 py-0.5 text-[10px] font-bold text-kaki">
+                +{delta.pro.valueDeltaPct}% の価値
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              {/* Generic */}
+              <div className="rounded-xl border border-kuroko/10 bg-[var(--n-surface-2,#F5F3EE)] p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-[#9890A8] mb-2">汎用 AI の回答</p>
+                <ul className="space-y-1.5">
+                  {delta.generic.points.map((pt) => (
+                    <li key={pt} className="flex gap-2 text-xs text-[#4A4464]">
+                      <span className="text-[#9890A8] mt-0.5 shrink-0">·</span>
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Pro */}
+              <div className="rounded-xl border border-kaki/20 bg-kaki/5 p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-kaki mb-2">このノートの回答</p>
+                <ul className="space-y-1.5 mb-3">
+                  {delta.pro.points.map((pt) => (
+                    <li key={pt} className="flex gap-2 text-xs text-[#3A3664]">
+                      <span className="text-kaki mt-0.5 shrink-0">✓</span>
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-1">
+                  {delta.pro.differentiators.map((tag) => (
+                    <span
+                      key={tag.tag}
+                      title={tag.tooltip}
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${intensityColor[tag.intensity] ?? "bg-gray-100 text-gray-700"}`}
+                    >
+                      {tag.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Value delta meter */}
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-[10px] text-[#9890A8]">価値のデルタ（汎用 AI 比）</p>
+                <p className="text-[10px] font-bold text-kaki">+{delta.pro.valueDeltaPct}%</p>
+              </div>
+              <div
+                role="meter"
+                aria-valuenow={delta.pro.valueDeltaPct}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={`価値のデルタ ${delta.pro.valueDeltaPct} パーセント`}
+                className="h-2 rounded-full bg-kuroko/10 overflow-hidden"
+              >
+                <div
+                  className="h-2 rounded-full bg-kaki transition-all"
+                  style={{ width: `${delta.pro.valueDeltaPct}%` }}
+                />
+              </div>
+            </div>
           </section>
         );
       })()}
