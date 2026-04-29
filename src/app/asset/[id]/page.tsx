@@ -13,6 +13,9 @@ import { ActivityPulse } from "@/components/ActivityPulse";
 import { BilingualLayout } from "@/components/BilingualLayout";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 import { TryItNowButton } from "@/components/TryItNowButton";
+import { SchemaPanel } from "@/components/SchemaPanel";
+import { generateSchemas } from "@/lib/schema-generator";
+import { getBacktestStats, formatSamples } from "@/lib/backtest";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -47,6 +50,8 @@ export default function AssetPage({ params }: { params: { id: string } }) {
 
   const { listing, auditResult, trustScore } = item;
   const guildId = mintGuildIdForAsset(listing.id);
+  const schemas = generateSchemas(listing.description, { title: listing.title, rank: listing.rank });
+  const backtest = getBacktestStats(listing.id);
 
   const curlSample = `curl -X POST https://guild-ai.vercel.app/api/atoa/${listing.id} \\
   -H "Authorization: Bearer gld_<YOUR_ACCESS_KEY>" \\
@@ -195,6 +200,11 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <p className="text-xs text-[#9890A8]">日</p>
         </div>
       </div>
+
+      {/* Compact schema panel */}
+      <div className="mt-3">
+        <SchemaPanel guildId={guildId} title={listing.title} schemas={schemas} compact />
+      </div>
     </>
   );
 
@@ -242,6 +252,87 @@ export default function AssetPage({ params }: { params: { id: string } }) {
 
       {/* Bilingual two-column layout */}
       <BilingualLayout emotionalContent={emotionalContent} specContent={specContent} />
+
+      {/* 精度実績 (Backtest) */}
+      {(() => {
+        const trend = backtest.monthlyTrend;
+        const minY = Math.min(...trend);
+        const maxY = Math.max(...trend);
+        const rangeY = Math.max(maxY - minY, 1);
+        const W = 280; const H = 40;
+        const pts = trend.map((v, i) => {
+          const x = (i / (trend.length - 1)) * W;
+          const y = H - ((v - minY) / rangeY) * H;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(" ");
+
+        const metrics = [
+          { label: "精度",       value: `${backtest.accuracyPct.toFixed(1)}%`, tip: "実行ログから算出した正答率" },
+          { label: "平均レイテンシ", value: `${backtest.avgLatencyMs}ms`,        tip: "平均応答時間" },
+          { label: "p95",       value: `${backtest.p95LatencyMs}ms`,        tip: "95パーセンタイル応答時間" },
+          { label: "エラー率",   value: `${backtest.errorRatePct.toFixed(1)}%`, tip: "全リクエストに対するエラー率" },
+        ];
+
+        return (
+          <section className="mt-4 section-card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8]">精度実績</h2>
+              <span
+                role="status"
+                aria-label={`精度 ${backtest.accuracyPct.toFixed(1)} パーセント`}
+                className="inline-flex items-center gap-1 rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-bold text-green-700"
+              >
+                精度 {backtest.accuracyPct.toFixed(1)}%
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+              {metrics.map(({ label, value, tip }) => (
+                <div key={label} className="section-card p-3 text-center group relative">
+                  <p className="text-[10px] text-[#9890A8] mb-1 flex items-center justify-center gap-1">
+                    {label}
+                    <span
+                      className="cursor-help text-[9px] text-[#9890A8] border border-[#9890A8]/40 rounded-full w-3.5 h-3.5 flex items-center justify-center"
+                      title={tip}
+                      aria-label={tip}
+                    >?</span>
+                  </p>
+                  <p className="text-base font-extrabold tabular-nums text-kuroko">{value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 12-month sparkline */}
+            <div className="mb-3">
+              <svg
+                viewBox={`0 0 ${W} ${H}`}
+                width="100%"
+                height={H}
+                aria-label="直近12ヶ月の精度推移グラフ"
+                role="img"
+                className="overflow-visible"
+              >
+                <title>直近12ヶ月の精度推移</title>
+                <polyline
+                  points={pts}
+                  fill="none"
+                  stroke="#0E9F4F"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <div className="flex justify-between text-[9px] text-[#9890A8] mt-1">
+                <span>12ヶ月前</span><span>今月</span>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-[#9890A8]">
+              過去 {formatSamples(backtest.samples)} 件の実行ログから計測。実環境の挙動はワークロードにより変動します。
+            </p>
+          </section>
+        );
+      })()}
 
       {/* Two-Way Pricing */}
       {(() => {

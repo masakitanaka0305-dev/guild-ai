@@ -22,6 +22,9 @@ import { ShareButton } from "@/components/ShareButton";
 import { setPhoto } from "@/lib/asset-photos";
 import { computeBundlePricing } from "@/lib/checkout";
 import { RevenueSimulatorCard } from "@/components/RevenueSimulatorCard";
+import { SchemaPanel } from "@/components/SchemaPanel";
+import { generateSchemas } from "@/lib/schema-generator";
+import { mintGuildIdForAsset } from "@/lib/guild-id";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -200,6 +203,13 @@ function CompletionCard({ data }: { data: CompletionData }) {
 
       {/* Simulator card — before API endpoint */}
       <RevenueSimulatorCard rank={data.rank} floorPrice={data.floorPrice} title={data.title} />
+
+      {/* Auto-generated schema spec */}
+      {(() => {
+        const schemas = generateSchemas(data.title, { title: data.title, rank: data.rank });
+        const guildId = mintGuildIdForAsset(data.listingId);
+        return <SchemaPanel guildId={guildId} title={data.title} schemas={schemas} />;
+      })()}
 
       {/* 3 parallel links */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
