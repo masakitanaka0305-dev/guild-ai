@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef, DragEvent, ChangeEvent } from "react";
+import { useState, useCallback, useRef, DragEvent, ChangeEvent, useEffect } from "react";
+import { formatEndpointUrl } from "@/lib/note-endpoint";
 import { useRouter } from "next/navigation";
 import { RankBadge } from "@/components/RankBadge";
 import { audit } from "@/lib/ai-auditor";
@@ -51,6 +52,9 @@ export default function BankPage() {
   const [weaponTitle, setWeaponTitle] = useState("");
   const [buyoutOffer, setBuyoutOffer] = useState<InstantBuyoutOffer | null>(null);
   const [buyoutAccepted, setBuyoutAccepted] = useState(false);
+  const [guildId, setGuildId] = useState("GUILD:0001");
+  const [copied, setCopied] = useState(false);
+  const [showCurl, setShowCurl] = useState(false);
 
   const triggerPoyon = useTactile("poyon");
 
@@ -128,6 +132,8 @@ export default function BankPage() {
     triggerPoyon();
     setTimeout(() => {
       mintWeapon({ title: weaponTitle, noteContent, rank: auditResult.rank, score: auditResult.score, tags: extractTags(noteContent) });
+      const slug = weaponTitle.replace(/\s+/g, "-").replace(/[^\w-]/g, "").slice(0, 12) || "0001";
+      setGuildId(`GUILD:${slug}`);
       setStep("done");
     }, 1500);
   }, [auditResult, noteContent, weaponTitle, triggerPoyon]);
@@ -138,7 +144,20 @@ export default function BankPage() {
     setFileName(null);
     setAuditResult(null);
     setWeaponTitle("");
+    setCopied(false);
+    setShowCurl(false);
   }, []);
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(t);
+  }, [copied]);
+
+  const endpointUrl = formatEndpointUrl(guildId);
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(endpointUrl).then(() => setCopied(true));
+  }, [endpointUrl]);
 
   const previewText = noteContent.length > PREVIEW_CHARS ? noteContent.slice(0, PREVIEW_CHARS) : noteContent;
   const remaining = noteContent.length > PREVIEW_CHARS ? noteContent.length - PREVIEW_CHARS : 0;
@@ -326,24 +345,77 @@ export default function BankPage() {
       )}
 
       {(step === "minting" || step === "done") && auditResult && (
-        <div className="bg-[var(--n-surface,#FFFFFF)] border border-[#4DD08F]/40 rounded-3xl p-8 text-center">
-          <div className="flex justify-center mb-4">
-            <RankBadge rank={auditResult.rank} />
+        <div className="space-y-4">
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[#4DD08F]/40 rounded-3xl p-8 text-center">
+            <div className="flex justify-center mb-4">
+              <RankBadge rank={auditResult.rank} />
+            </div>
+            <h2 className="text-xl font-bold text-[var(--n-text,#1A1714)] mb-2">
+              {step === "minting" ? "登録中…" : "のこせました！"}
+            </h2>
+            <p className="text-sm text-[var(--n-muted,#6B6456)] mb-6">
+              「{weaponTitle}」が資産として登録されました。
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="px-5 py-2.5 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-gold,#D4AF37)] transition-colors"
+              >
+                もう一つのこす
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push("/jobs")}
+                className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:bg-[#D03A3A]"
+              >
+                かせぐ →
+              </button>
+            </div>
           </div>
-          <h2 className="text-xl font-bold text-[var(--n-text,#1A1714)] mb-2">
-            {step === "minting" ? "登録中…" : "のこせました！"}
-          </h2>
-          <p className="text-sm text-[var(--n-muted,#6B6456)] mb-6">
-            「{weaponTitle}」が資産として登録されました。
-          </p>
-          <div className="flex gap-3 justify-center">
-            <button type="button" onClick={handleReset} className="px-5 py-2.5 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-gold,#D4AF37)] transition-colors">
-              もう一つのこす
-            </button>
-            <button type="button" onClick={() => router.push("/jobs")} className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:bg-[#D03A3A]">
-              かせぐ →
-            </button>
-          </div>
+
+          {/* ── この知恵のAPI ───────────────────────────────────── */}
+          {step === "done" && (
+            <div
+              className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 space-y-3"
+              data-testid="endpoint-card"
+            >
+              <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">この知恵の API</p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 text-[10px] bg-[var(--n-surface-2,#F5F3EE)] rounded-xl px-3 py-2 font-mono text-[var(--n-muted,#6B6456)] truncate">
+                  {endpointUrl}
+                </code>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label="URLをコピー"
+                  className="shrink-0 px-3 py-1.5 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-xs font-bold hover:bg-[#D03A3A] active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] focus:ring-offset-1"
+                >
+                  {copied ? "コピー済み ✓" : "コピー"}
+                </button>
+              </div>
+              <p className="text-[10px] text-[var(--n-muted,#6B6456)]">
+                1コール ¥1.2 · 24時間稼働
+              </p>
+              <details open={showCurl}>
+                <summary
+                  className="text-[10px] text-[var(--n-primary,#E64545)] font-semibold cursor-pointer select-none"
+                  onClick={(e) => { e.preventDefault(); setShowCurl((v) => !v); }}
+                >
+                  使い方を見る
+                </summary>
+                {showCurl && (
+                  <pre className="mt-2 bg-[var(--n-surface-2,#F5F3EE)] rounded-xl p-3 text-[10px] font-mono text-[var(--n-muted,#6B6456)] overflow-x-auto whitespace-pre-wrap break-all">
+{`# GET メタ情報
+curl ${endpointUrl}
+
+# POST 実行（印税カウント）
+curl -X POST ${endpointUrl}`}
+                  </pre>
+                )}
+              </details>
+            </div>
+          )}
         </div>
       )}
     </main>
