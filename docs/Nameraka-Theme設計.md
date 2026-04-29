@@ -1,9 +1,29 @@
-# なめらかテーマ設計書 v2（ライト × 日常アプリ調）
+# なめらかテーマ設計書 v3（メルカリ風統一 UI）
 
-> コンセプト：**知恵（MD）を金塊（資産）に変える、メルカリ／LINE／PayPay 的な日常アプリのトーン**
-> ベンチマーク：メルカリの出品の速さ ＋ タイミーの即時報酬
->
-> **v2 変更点（light repaint）**：ベースカラーを濃紺（`#0A192F`）から ライト（`#FAFAF7`）に刷新。旧カラーは `midnight` テーマとして保持。
+> コンセプト：**GUILD AI の唯一テーマ。メルカリ×LINE×PayPay 的な日常アプリのトーン。**
+> キャッチコピー：**「AIエージェントで、あなたの時間をアップデート。」**
+> 補助コピー：**「寝てる間も、AIがあなたの知恵で稼ぐ場所です。」**
+
+---
+
+## 0. キャッチコピー定義
+
+| 用途 | コピー |
+|------|--------|
+| メインコピー（公式） | AIエージェントで、あなたの時間をアップデート。 |
+| 補助文 | 寝てる間も、AIがあなたの知恵で稼ぐ場所です。 |
+| ホーム CTA (1) | いま のこす |
+| ホーム CTA (2) | いま かせぐ |
+| フッタ副文 | AIエージェントで、あなたの時間をアップデート。 |
+| `/bank` | 何を のこしますか？ |
+| `/jobs` | いま、かせぎ どきの しごと。 |
+| `/guild` | 今日も、あなたの 時間 を AI が 守っています。 |
+| `/sell` | 3行で 出品完了。 |
+
+配置：
+- ホームの `<h1>` にモバイル 28px / PC 40px で表示
+- `src/app/layout.tsx` の `metadata.title` / `og:title` に設定
+- フッタの 2 行目に控えめに掲載
 
 ---
 
@@ -12,171 +32,199 @@
 | トークン | 値 | 用途 |
 |----------|-----|------|
 | `--n-bg` | `#FAFAF7` | 薄いオフホワイト背景 |
-| `--n-surface` | `#FFFFFF` | カード・ダイアログ |
+| `--n-surface` | `#FFFFFF` | カード・ダイアログ（純白） |
 | `--n-surface-2` | `#F5F3EE` | インナーサーフェス・セクション |
-| `--n-divider` | `rgba(0,0,0,0.08)` | 区切り線（薄グレー） |
+| `--n-divider` | `rgba(0,0,0,0.08)` | 区切り線 |
 | `--n-text` | `#1A1714` | 主テキスト（濃いブラウン） |
 | `--n-muted` | `#6B6456` | 補助テキスト |
-| `--n-primary` | `#E64545` | 主アクション CTA（赤） |
-| `--n-primary-hover` | `#CC3A3A` | ホバー状態 |
+| `--n-primary` | `#E64545` | **メルカリ赤** Primary CTA |
+| `--n-primary-hover` | `#D03A3A` | ホバー状態 |
 | `--n-gold` | `#D4AF37` | 格付・重要指標（ゴールド） |
 | `--n-gold-soft` | `#F2DFA0` | ゴールドのソフト版 |
 | `--n-positive` | `#0E9F4F` | 加算・成功（緑） |
 | `--n-negative` | `#E64545` | 減算・エラー |
 
-角丸：`rounded-2xl`（16px）基本、主要カードは `rounded-3xl`、ボタンは `rounded-full`
-
-フォント：本文 `-apple-system / Yu Gothic / Noto Sans JP`
-
-アニメーション：180〜260ms `ease-out`。Pro の 100ms キャップは nameraka では外れる（220ms デフォルト）。
+サイドバー背景：`#F2F0EB`（メインとの差別化）
 
 ---
 
-## 1b. ミッドナイトテーマ（midnight — 旧 nameraka ダーク）
+## 2. メルカリ風統一ガイド
 
-| トークン | 値 |
-|----------|----|
-| `--n-bg` | `#0A192F` |
-| `--n-surface` | `#0E2240` |
-| `--n-primary` | `#D4AF37`（ゴールド） |
-| `--n-positive` | `#4DD08F` |
+### 色
 
-`midnight` は ThemeToggle の 2 番目の状態。旧 nameraka（濃紺）を好むユーザー向け隠しトグル。
+- **背景**：オフホワイト `#FAFAF7`、サーフェスは純白 `#FFFFFF`、サイドバーは `#F2F0EB`
+- **Primary CTA**：`#E64545`（メルカリ赤）、ホバーで `#D03A3A`、文字白
+- **Secondary**：白 + グレー枠 `border-gray-200`、文字 `#1F1B16`
+
+### 余白
+
+- セクション間：`space-y-10`
+- カード内：`p-5` 〜 `p-6`
+
+### 角丸
+
+| 要素 | クラス |
+|------|--------|
+| カード | `rounded-2xl` |
+| ボタン | `rounded-full` |
+| 入力 | `rounded-xl` |
+| タグ / チップ | `rounded-full` |
+
+### ボタン
+
+| 種別 | クラス例 |
+|------|---------|
+| Primary CTA | `h-12 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm` |
+| Secondary | `h-12 rounded-full border border-gray-200 bg-white text-[#1F1B16] font-bold hover:bg-gray-50 active:scale-[0.98] transition-all duration-220` |
+
+### タグ / チップ
+
+```
+bg-gray-100 text-gray-700 rounded-full px-3 py-1 text-xs
+```
+
+### カード
+
+```
+bg-white border border-black/5 rounded-2xl shadow-sm active:scale-[0.99] transition-all duration-220
+```
+
+### タイポグラフィ
+
+- 本文：16px / `leading-relaxed`
+- 見出し：20〜28px
+- 英数字：`tabular-nums`、円マーク半角 `¥`、3桁カンマ
+- フォント：Yu Gothic + Noto Sans JP
+
+### アイコン
+
+- 単色 `text-gray-700`、サイズ `w-5 h-5`
+- アイコン + ラベル必須
+- lucide-react 等の外部依存を入れず SVG ピクト流用
+
+### アニメーション
+
+- 全体：`220ms ease-out`（`cubic-bezier(0.22, 1, 0.36, 1)`）
+- タップ時：`active:scale-[0.98]`（ボタン全種）
+- `prefers-reduced-motion` 対応あり
+
+### 見出し帯スタイル
+
+```tsx
+<div className="flex items-center gap-3 mb-5">
+  <div className="w-1 h-6 rounded-full bg-[var(--n-primary,#E64545)]" />  {/* 赤縦バー 4px */}
+  <h2 className="text-lg font-bold text-[var(--n-text,#1A1714)]">{title}</h2>
+</div>
+```
 
 ---
 
-## 2. ナビラベル（nameraka 専用）
+## 3. ナビゲーション
 
-| パス | ラベル | 説明 |
-|------|--------|------|
-| `/` | ホーム | タイル型マーケット概観 |
-| `/bank` | のこす | ノート提出→鑑定 |
-| `/jobs` | かせぐ | あいしょうベースの案件一覧 |
-| `/guild` | マイ銀行 | 今日のおだちん・今月の合計 |
-| `/sell` | はじめての提出 | ミニマル登録フォーム |
-| `/wallet` | おさいふ | 通帳・お知らせ |
+### サイドバー（PC）
+
+| パス | ラベル |
+|------|--------|
+| `/` | ホーム |
+| `/bank` | のこす |
+| `/jobs` | かせぐ |
+| `/guild` | マイ銀行 |
+| `/sell` | はじめての提出 |
+| `/wallet` | おさいふ通帳 |
 
 ### ボトムナビ（モバイル）
 
-4 タブ＋中央 FAB 構成：
-
+4 タブ + 中央 FAB 構成：
 ```
 [ホーム] [のこす] [  ＋  ] [かせぐ] [マイ銀行]
                   ↑ FAB (64px 赤丸) → /sell
 ```
 
-- FAB: `w-14 h-14` 丸型、`bg-[var(--n-primary)]` 赤、`aria-label="知恵をのこす"`
-- タブの active: 赤いドット＋赤テキスト（`--n-primary`）
+- FAB：`w-14 h-14` 丸型、赤、`aria-label="のこす"`、`bottom-[88px]`（タブバーと重ならない）
+- タブの active：赤ドット + 赤テキスト
 
 ---
 
-## 3. 画面別レイアウト
+## 4. 各画面の最終構成
 
 ### ホーム（/）
 
-- ヒーロー（1行）：「知恵を、寝てる間も働かせる場所。」
-  - 赤アクセント：「寝てる間も」が `--n-primary` 色
-- CTA 2 ボタン：「いま のこす」（赤 filled）+ 「いま かせぐ」（赤 outlined）
-- **MarketHeatBar は nameraka では非表示**（シンプルを維持）
-- 2 タブ：「新着の知恵」「おすすめ案件」— active は赤
-- タイルグリッド：モバイル 1 列 / タブレット 2 列 / PC 3 列
-
-**知恵タイル**：タイトル / 概要 1 行 / 査定額レンジ / ランクバッジ / 著者ハンドル
-- hover: `border-[var(--n-primary)]/40`
-- タイトル hover: 赤
-
-**案件タイル**：タイトル / カテゴリ / **あいしょう**（ぴったり/もう少し/これから）/ 報酬
+1. **ヒーロー**：「AIエージェントで、あなたの時間をアップデート。」（h1） + 補助文 + 2 CTA
+2. **3 バリュー**：「すぐ売れる」「むずかしくない」「24時間 AIが働く」 — 3カラム(PC) / 縦タイル(mobile)
+3. **新着の知恵**：横スクロール 4 カード（セクション赤縦バー見出し）
+4. **おすすめの しごと**：縦リスト 3 件
+5. **帯バナー**：「まだ かせいでない？ いま のこしてみよう。」+ 白ボタン
+6. **フッタ**：GUILD AI ロゴ + 副コピー + ナビリンク群
 
 ### のこす（/bank）
 
-1. 中央大型ドロップエリア（白背景・薄ボーダー）
-2. **「¥◯◯ から ¥◯◯ で売れそうです」**（assessRange プレビュー）
-3. 提出ボタン：`rounded-full` **赤 CTA**（`bg-[var(--n-primary)]`）
-4. **0.4s スキャンライン演出**（赤ライン）→ 鑑定結果
-5. 結果：格付プレート大型中央表示 + 査定額レンジ
-6. **0秒換金オファー**（S/A のみ）
-
-#### スキャンタイムライン（nameraka v2）
-```
-入力 → 提出する → (0.4s スキャン) → 結果表示
-```
-
-#### 0秒換金オファー計算式
-```
-amount = clamp(score × 800, 5000, 500000)
-```
-
-#### 査定額レンジ計算式
-```
-center = clamp(score × 800, 500, 500000)
-min    = max(500, round(center × 0.6))
-max    = min(500000, round(center × 1.4))
-表示: "¥{min} から ¥{max} で売れそうです"
-```
+- 見出し：「何を のこしますか？」
+- 大型ドロップエリア（白・破線）
+- 査定プレビュー → 赤丸ボタン「提出する →」
 
 ### かせぐ（/jobs）
 
-- 縦カード一覧（白カード、`--n-primary` ボーダー for eligible）
-- 各カード：
-  - **時間バケット**ラベル（今日中に終わる / 今週中に終わる / いつでもOK）— seed % 3 で決定論的
-  - **あいしょう**ラベル（適合率%の代わり）：ぴったり / もう少し / これから
-  - タイトル / 説明 / 必要バッジ / おだちん
-- 「この知恵で応募」CTA → **赤 rounded-full ボタン**
-- 採用モーダル：白背景、n-positive（緑）ボーダー
-
-#### あいしょう判定式
-```
-fit >= 80 → "ぴったり"
-fit >= 50 → "もう少し"
-fit <  50 → "これから"
-```
+- 見出し：「いま、かせぎ どきの しごと。」
+- 縦カード一覧 + 赤ボタン「この知恵で 応募する」
 
 ### マイ銀行（/guild）
 
-- 上段 **2 カード**（白）：
-  1. 今日のおだちん（緑 `--n-positive`）
-  2. 今月の合計（主テキスト）
-- `<details>` 折りたたみ「くわしく見る」：AUM / MoM / APR の 3 指標
-- FloatingPayoutToast：入金時に右下スライドイン
-- ノートカード：白カード、hover で `--n-primary` ボーダー
-- 通帳テーブル
+- 見出し：「今日も、あなたの 時間 を AI が 守っています。」
+- 2 数字カード（今日のおだちん / 今月の合計）
+- 詳細折りたたみ → 通帳テーブル
+
+### 出品（/sell）
+
+- 見出し：「3行で 出品完了。」
+- ステップインジケーター → フォーム → 赤丸ボタン
 
 ---
 
-## 4. アニメーション仕様
+## 5. jargon-lint 許可 / 禁止リスト
+
+### 許可語（FORBIDDEN リストに含めない）
+
+| 語 | 理由 |
+|----|------|
+| AIエージェント | メインキャッチコピーの一部 |
+| アップデート | メインキャッチコピーの一部 |
+| あなたの時間 | メインキャッチコピーの一部 |
+
+### 禁止語（`src/lib/__tests__/jargon-lint.test.ts` の FORBIDDEN）
+
+| 語 | 置換先 |
+|----|--------|
+| JPYC | デジタル円 または ¥ |
+| ステーブルコイン | デジタル円 |
+| Stablecoin | デジタル円 |
+| API Hotbed | おしごと窓口 |
+| APIエンドポイント | おしごと窓口 |
+| CCAF | こだわり（実績ログ） |
+| お仕事 | おしごと（ひらがな） |
+| 取引所 | 保管庫 |
+
+---
+
+## 6. アニメーション仕様
 
 | 名前 | 用途 | 時間 |
 |------|------|------|
-| `scanLine` | のこす の鑑定演出（nameraka v2 では赤ライン） | **0.4s** |
+| `scanLine` | のこす 鑑定演出（赤ライン） | 0.4s |
 | `slideInToast` | FloatingPayoutToast 出現 | 220ms |
 | Default transition | nameraka 全体 | 220ms ease-out |
 
 ---
 
-## 5. テーマ階層（4 状態）
+## 7. ビジネスロジック（モック）
 
-| `data-theme` | 概要 | デフォルト |
-|---|---|---|
-| `nameraka` | **本仕様。ライト×赤 CTA。日常アプリ調。** | ✅ |
-| `midnight` | 旧 nameraka。濃紺×ゴールド。同じ n-* 変数、異なる値。 | — |
-| `pro` | 旧 terminal。エンジニア向け硬派。 | — |
-| `kawaii` | Friendly Bank。kawaii UI。 | — |
-
-ThemeToggle: `["nameraka", "midnight", "pro", "kawaii"]` の 4 状態ボタン。
-
----
-
-## 6. ビジネスロジック（モック）
-
-### instant-buyout (`src/lib/instant-buyout/index.ts`)
+### instant-buyout
 - `offerInstantBuyout(audit)` → S/A のみオファー、B は null
 - `computeAssessmentRange(score)` → `[min, max]` in JPY
 
-### match-fit (`src/lib/match-fit/index.ts`)
+### match-fit
 - `computeFit(jobId, ownedRecipeIds)` → 0-100
 - `fitLabel(score)` → "ぴったり"（≥80）/ "もう少し"（≥50）/ "これから"（<50）
-- `fitColor(score)` → CSS var based color class
 
-### royalty-stream (`src/lib/royalty-stream/index.ts`)
-- `useRoyaltyStream(enabled)` → 28〜32s 間隔で RoyaltyEvent を発火
+### royalty-stream
+- `useRoyaltyStream(true)` → 28〜32s 間隔で RoyaltyEvent
 - `ROYALTY_EVENTS_PER_MINUTE = 2`
