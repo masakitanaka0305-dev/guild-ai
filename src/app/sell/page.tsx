@@ -7,6 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { audit, computeFloorPrice } from "@/lib/ai-auditor";
 import { computeTrustScore } from "@/lib/trust-score";
 import { autoList } from "@/lib/marketplace";
+import { persistListingAction } from "@/app/actions/marketplace";
 import { RankBadge } from "@/components/RankBadge";
 import { RankRadar } from "@/components/RankRadar";
 import { WillSignalTrigger } from "@/components/WillSignalTrigger";
@@ -332,6 +333,7 @@ function AiPath({
       new Date().toISOString()
     );
 
+    persistListingAction(ml.listing).catch((e) => console.error("Persist listing failed:", e));
     try {
       const existing: MarketplaceListing[] = JSON.parse(localStorage.getItem("guild_custom_listings") ?? "[]");
       localStorage.setItem("guild_custom_listings", JSON.stringify([...existing, ml]));
@@ -544,6 +546,7 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );
+    persistListingAction(ml.listing).catch((e) => console.error("Persist listing failed:", e));
     try {
       const existing: MarketplaceListing[] = JSON.parse(localStorage.getItem("guild_custom_listings") ?? "[]");
       localStorage.setItem("guild_custom_listings", JSON.stringify([...existing, ml]));
@@ -663,6 +666,7 @@ function TextPath({
       new Date().toISOString()
     );
 
+    persistListingAction(ml.listing).catch((e) => console.error("Persist listing failed:", e));
     try {
       const existing: MarketplaceListing[] = JSON.parse(localStorage.getItem("guild_custom_listings") ?? "[]");
       localStorage.setItem("guild_custom_listings", JSON.stringify([...existing, ml]));
@@ -861,6 +865,7 @@ function SellContent() {
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );
+    persistListingAction(ml.listing).catch((e) => console.error("Persist listing failed:", e));
     try {
       const existing: MarketplaceListing[] = JSON.parse(localStorage.getItem("guild_custom_listings") ?? "[]");
       localStorage.setItem("guild_custom_listings", JSON.stringify([...existing, ml]));
