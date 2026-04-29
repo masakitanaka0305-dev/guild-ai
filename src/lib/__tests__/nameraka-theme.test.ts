@@ -156,12 +156,12 @@ describe("nameraka-theme.light-repaint", () => {
     expect(css).toContain("--n-bg: #FAFAF7");
   });
 
-  it("bottom nav has 4 core tabs (ホーム/投稿/案件/マイ銀行)", () => {
+  it("bottom nav has 4 core tabs (ホーム/投稿/案件/運用)", () => {
     expect(nav).toContain("BOTTOM_ITEMS");
     expect(nav).toContain('"ホーム"');
     expect(nav).toContain('"投稿"');
     expect(nav).toContain('"案件"');
-    expect(nav).toContain('"マイ銀行"');
+    expect(nav).toContain('"運用"');
   });
 
   it("FAB links to /bank (knowledge registration)", () => {
@@ -186,7 +186,7 @@ describe("nameraka-theme.jargon-lint-v2", () => {
     const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
     expect(src).toContain("投稿");
     expect(src).toContain("案件");
-    expect(src).toContain("マイ銀行");
+    expect(src).toContain("運用");
   });
 
   it("nameraka nav does not show English technical terms in labels", () => {

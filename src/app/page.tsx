@@ -225,7 +225,7 @@ export default function HomePage() {
         <div className="flex flex-wrap justify-center gap-4 text-xs text-[var(--n-muted,#6B6456)]">
           <Link href="/bank" className="hover:text-[var(--n-primary,#E64545)] transition-colors">のこす</Link>
           <Link href="/jobs" className="hover:text-[var(--n-primary,#E64545)] transition-colors">かせぐ</Link>
-          <Link href="/guild" className="hover:text-[var(--n-primary,#E64545)] transition-colors">マイ銀行</Link>
+          <Link href="/guild" className="hover:text-[var(--n-primary,#E64545)] transition-colors">運用</Link>
           <Link href="/wallet" className="hover:text-[var(--n-primary,#E64545)] transition-colors">おさいふ</Link>
           <button
             type="button"

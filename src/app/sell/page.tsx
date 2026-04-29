@@ -233,15 +233,15 @@ function CompletionCard({ data }: { data: CompletionData }) {
 
         {/* Management */}
         <div className="section-card p-4 flex flex-col">
-          <p className="text-xs text-[#9890A8] font-semibold mb-2">💰 お財布</p>
-          <p className="text-sm text-kuroko leading-relaxed flex-1">収益と信用スコアを確認できます</p>
+          <p className="text-xs text-[#9890A8] font-semibold mb-2">💴 運用</p>
+          <p className="text-sm text-kuroko leading-relaxed flex-1">報酬・資産・取引履歴を確認できます</p>
           <button
             type="button"
-            onClick={() => router.push("/wallet")}
-            aria-label="お財布へ移動"
+            onClick={() => router.push("/guild")}
+            aria-label="運用へ移動"
             className="btn-primary w-full !py-1.5 !text-xs mt-2"
           >
-            💰 お財布へ →
+            💴 運用へ →
           </button>
         </div>
       </div>

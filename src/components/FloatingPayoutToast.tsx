@@ -21,7 +21,7 @@ let _toastId = 0;
  * stays 1.5s, then fades out.
  * aria-live="polite" so screen readers announce the payout.
  */
-export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "おだちん入金" }: Props) {
+export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "報酬入金" }: Props) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {

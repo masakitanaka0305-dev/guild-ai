@@ -63,6 +63,8 @@ export default function GuildPage() {
     })),
   ].slice(0, 8);
 
+  const [showAllTx, setShowAllTx] = useState(false);
+
   const earnings = useLiveEarnings("demo-user");
   const royalties = useRoyaltyStream(true);
   const royaltyTotal = royalties.reduce((s, r) => s + r.amountJpy, 0);
@@ -100,7 +102,7 @@ export default function GuildPage() {
   }, [royalties]);
 
   return (
-    <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 relative">
+    <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12 relative">
       <FloatingPayoutToast
         deltaJpy={earnings.lastDelta}
         bumpCount={earnings.bumpCount}
@@ -112,17 +114,17 @@ export default function GuildPage() {
         label="API印税"
       />
 
-      {/* ── マイ銀行 ヒーローブロック ─────────────────────────── */}
-      <section className="mb-5 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
+      {/* ── 運用 ヒーローブロック ────────────────────────────── */}
+      <section className="mb-5 sm:mb-8 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
         <div className="flex items-start justify-between gap-3 mb-2">
           <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)]">
-            マイ銀行：あなたの報酬と資産をまとめる場所
+            運用：あなたが投稿したMDファイルの状況・報酬・取引をまとめる場所
           </h1>
           <Link
             href="/bank"
             className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all shrink-0"
           >
-            ＋ のこす
+            ＋ 投稿する
           </Link>
         </div>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
@@ -188,7 +190,7 @@ export default function GuildPage() {
       )}
 
       {/* ── 運用中の資産（MDファイル） ────────────────────────────────── */}
-      <section className="mb-4">
+      <section className="mb-6 sm:mb-8">
         <SectionBand
           title="運用中の資産：あなたが投稿したMDファイル"
           tip="投稿したノートと、その稼働状況をまとめます"
@@ -198,9 +200,9 @@ export default function GuildPage() {
 
       {/* ── 通帳：これまでの お取引 ───────────────────────────────────── */}
       {guildTransactions.length > 0 && (
-        <section className="mb-4">
+        <section className="mb-6 sm:mb-8">
           <SectionBand title="通帳：これまでの取引" tip="過去の入出金が時系列で確認できます" />
-          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl overflow-hidden">
+          <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-[var(--n-divider,rgba(0,0,0,0.08))]">
@@ -215,26 +217,26 @@ export default function GuildPage() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ...guildTransactions.map((tx) => ({
-                    id: tx.id,
-                    at: tx.at,
-                    label: tx.assetTitle,
-                    amount: tx.amount,
-                    type: "報酬",
-                  })),
-                  ...royalties.slice(0, 3).map((r) => ({
-                    id: r.id,
-                    at: r.at,
-                    label: `API印税 #${r.apiCallId}`,
-                    amount: r.amountJpy,
-                    type: "印税",
-                  })),
-                ]
-                  .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
-                  .slice(0, 10)
-                  .map((row, i, arr) => {
-                    const running = arr.slice(i).reduce((s, r) => s + r.amount, 0);
+                {(() => {
+                  const allRows = [
+                    ...guildTransactions.map((tx) => ({
+                      id: tx.id,
+                      at: tx.at,
+                      label: tx.assetTitle,
+                      amount: tx.amount,
+                      type: "報酬",
+                    })),
+                    ...royalties.slice(0, 3).map((r) => ({
+                      id: r.id,
+                      at: r.at,
+                      label: `API印税 #${r.apiCallId}`,
+                      amount: r.amountJpy,
+                      type: "印税",
+                    })),
+                  ].sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
+                  const visibleRows = showAllTx ? allRows.slice(0, 30) : allRows.slice(0, 10);
+                  return visibleRows.map((row, i) => {
+                    const running = allRows.slice(i).reduce((s, r) => s + r.amount, 0);
                     return (
                       <tr
                         key={row.id}
@@ -262,10 +264,20 @@ export default function GuildPage() {
                         </td>
                       </tr>
                     );
-                  })}
+                  });
+                })()}
               </tbody>
             </table>
           </div>
+          {guildTransactions.length + royalties.slice(0, 3).length > 10 && !showAllTx && (
+            <button
+              type="button"
+              onClick={() => setShowAllTx(true)}
+              className="mt-2 w-full text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--n-primary,#E64545)] transition-colors py-2"
+            >
+              もっと見る ↓
+            </button>
+          )}
         </section>
       )}
 
@@ -298,7 +310,7 @@ export default function GuildPage() {
             href="/bank"
             className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
           >
-            はじめてのこす →
+            はじめて投稿する →
           </Link>
         </div>
       ) : (

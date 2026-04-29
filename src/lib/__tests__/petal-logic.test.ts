@@ -41,16 +41,16 @@ describe("playPoyon in sound module", () => {
 describe("Guardian branding in nav", () => {
   const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("nav uses おさいふ for wallet (marketplace removed from nav)", () => {
-    expect(src).toContain("おさいふ");
-  });
-
-  it("nav uses おさいふ通帳 or 通帳 for wallet", () => {
-    expect(src).toMatch(/通帳/);
+  it("nav has exactly 4 clean items (ホーム/投稿/案件/運用)", () => {
+    expect(src).toContain('"ホーム"');
+    expect(src).toContain('"投稿"');
+    expect(src).toContain('"案件"');
+    expect(src).toContain('"運用"');
+    expect(src).not.toContain("おさいふ通帳");
+    expect(src).not.toContain("はじめての提出");
   });
 
   it("no longer uses マーケット as standalone label", () => {
-    // The word マーケット should not appear as a simple label string
     expect(src).not.toMatch(/"マーケット"/);
   });
 });

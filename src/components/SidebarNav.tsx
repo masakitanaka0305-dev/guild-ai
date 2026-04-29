@@ -4,19 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { href: "/",      label: "ホーム",        exact: true  },
-  { href: "/bank",  label: "投稿",          exact: false },
-  { href: "/jobs",  label: "案件",          exact: false },
-  { href: "/guild", label: "マイ銀行",      exact: false },
-  { href: "/sell",  label: "はじめての提出", exact: false },
-  { href: "/wallet",label: "おさいふ通帳",  exact: false },
+  { href: "/",      label: "ホーム", exact: true  },
+  { href: "/bank",  label: "投稿",   exact: false },
+  { href: "/jobs",  label: "案件",   exact: false },
+  { href: "/guild", label: "運用",   exact: false },
 ];
 
 const BOTTOM_ITEMS = [
-  { href: "/",      label: "ホーム",   icon: "home",  exact: true  },
-  { href: "/bank",  label: "投稿",     icon: "save",  exact: false },
-  { href: "/jobs",  label: "案件",     icon: "brief", exact: false },
-  { href: "/guild", label: "マイ銀行", icon: "bank",  exact: false },
+  { href: "/",      label: "ホーム", icon: "home",  exact: true  },
+  { href: "/bank",  label: "投稿",   icon: "save",  exact: false },
+  { href: "/jobs",  label: "案件",   icon: "brief", exact: false },
+  { href: "/guild", label: "運用",   icon: "bank",  exact: false },
 ];
 
 function isActive(pathname: string, href: string, exact: boolean) {

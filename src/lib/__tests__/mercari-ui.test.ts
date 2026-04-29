@@ -92,7 +92,7 @@ describe("mercari-ui: bottom tabs", () => {
     expect(src).toContain('"ホーム"');
     expect(src).toContain('"投稿"');
     expect(src).toContain('"案件"');
-    expect(src).toContain('"マイ銀行"');
+    expect(src).toContain('"運用"');
   });
 
   it("BottomNav exports correct component", () => {
@@ -219,7 +219,7 @@ describe("onboarding: banner and modal", () => {
     expect(modalSrc).toContain("ノートを投稿する");
     expect(modalSrc).toContain("AIが自動で稼働");
     expect(modalSrc).toContain("報酬が入る");
-    expect(modalSrc).toContain("マイ銀行で確認");
+    expect(modalSrc).toContain("運用で確認");
   });
 
   it('modal CTA links to /sell', () => {
@@ -282,8 +282,8 @@ describe("clarity: explainer heroes and 通帳 unification", () => {
     expect(jobsSrc).toContain("稼ぐ：あなたの");
   });
 
-  it("/guild page has hero explainer block for マイ銀行", () => {
-    expect(guildSrc).toContain("マイ銀行：あなたの");
+  it("/guild page has hero explainer block for 運用", () => {
+    expect(guildSrc).toContain("運用：あなたが");
   });
 
   it("no UI file contains お財布通帳", () => {
@@ -310,10 +310,10 @@ describe("tone: 18y/o-friendly copy", () => {
   const guildSrc = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
   const modalSrc = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
 
-  it("bottom nav labels are ホーム/投稿/案件/マイ銀行", () => {
+  it("bottom nav labels are ホーム/投稿/案件/運用", () => {
     expect(navSrc).toContain('"投稿"');
     expect(navSrc).toContain('"案件"');
-    expect(navSrc).toContain('"マイ銀行"');
+    expect(navSrc).toContain('"運用"');
     expect(navSrc).toContain('"ホーム"');
   });
 
@@ -331,6 +331,43 @@ describe("tone: 18y/o-friendly copy", () => {
     expect(modalSrc).toContain("ノートを投稿する");
     expect(modalSrc).toContain("AIが自動で稼働");
     expect(modalSrc).toContain("報酬が入る");
-    expect(modalSrc).toContain("マイ銀行で確認");
+    expect(modalSrc).toContain("運用で確認");
+  });
+});
+
+// ─── 12. 運用リネーム + モバイル修正 + 残骸一掃 ──────────────────────────────
+
+describe("guild-rename: 運用 / mobile / cleanup", () => {
+  const navSrc   = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
+  const guildSrc = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
+  const homeSrc  = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+  const modalSrc = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
+
+  it("BOTTOM_ITEMS final tab is 運用", () => {
+    const m = navSrc.match(/BOTTOM_ITEMS\s*=\s*\[([\s\S]*?)\];/);
+    expect(m).not.toBeNull();
+    expect(m![1]).toContain('"運用"');
+    expect(m![1]).not.toContain('"マイ銀行"');
+  });
+
+  it("/guild hero heading contains 運用", () => {
+    expect(guildSrc).toContain("運用：あなたが投稿したMDファイル");
+    expect(guildSrc).not.toContain("マイ銀行：あなたの");
+  });
+
+  it("no UI contains Lodge / 初めての提出 / お財布通帳", () => {
+    expect(navSrc).not.toContain("はじめての提出");
+    expect(navSrc).not.toContain("おさいふ通帳");
+    expect(homeSrc).not.toContain("お財布通帳");
+    expect(guildSrc).not.toContain("お財布通帳");
+    expect(modalSrc).not.toContain("マイ銀行で確認");
+  });
+
+  it("/guild page has 通帳 section", () => {
+    expect(guildSrc).toContain("通帳：これまでの取引");
+  });
+
+  it("/guild main has pb-24 for mobile safe area", () => {
+    expect(guildSrc).toContain("pb-24");
   });
 });
