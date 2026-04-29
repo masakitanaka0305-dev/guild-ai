@@ -3,9 +3,6 @@ import { Noto_Sans_JP } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { SidebarNav, BottomNav } from "@/components/SidebarNav";
-import { OnboardingGuide } from "@/components/OnboardingGuide";
-import { ShimaenagaGuide } from "@/components/ShimaenagaGuide";
-import { ThemeInitScript, ThemeToggle } from "@/components/ThemeToggle";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -40,22 +37,17 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja" className={notoSansJP.variable} data-theme="nameraka">
-      <head>
-        <ThemeInitScript />
-      </head>
-      <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased [data-theme=kawaii]:bg-kami [data-theme=kawaii]:text-kuroko [data-theme=pro]:bg-obsidian [data-theme=pro]:text-t-text">
+      <head />
+      <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased">
 
         {/* ── Desktop sidebar ───────────────────────────────── */}
-        <aside className="hidden lg:flex w-52 flex-shrink-0 flex-col border-r border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-surface-2,#F5F3EE)] [data-theme=kawaii]:bg-surface-inset [data-theme=kawaii]:border-kuroko/10 [data-theme=pro]:bg-obsidian-2 [data-theme=pro]:border-divider">
+        <aside className="hidden lg:flex w-52 flex-shrink-0 flex-col border-r border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-surface-2,#F5F3EE)]">
           {/* Logo */}
           <div className="h-14 flex items-center gap-2.5 px-4 border-b border-[var(--n-divider,rgba(0,0,0,0.08))] flex-shrink-0">
             <div className="w-8 h-8 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[var(--n-primary,#E64545)]">
               <span className="text-white text-xs font-black tracking-wider">G</span>
             </div>
             <span className="text-sm font-bold text-[var(--n-text,#1A1714)]">GUILD AI</span>
-            <div className="ml-auto">
-              <ThemeToggle />
-            </div>
           </div>
           <SidebarNav />
           <div className="px-4 py-4 border-t border-[var(--n-divider,rgba(0,0,0,0.08))] flex-shrink-0">
@@ -75,7 +67,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
               <span className="text-sm font-bold text-[var(--n-text,#1A1714)]">GUILD AI</span>
             </div>
-            <ThemeToggle />
           </header>
 
           <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">
@@ -88,17 +79,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Link
             href="/sell"
             aria-label="知恵をのこす"
-            className="fixed bottom-[72px] left-1/2 -translate-x-1/2 lg:left-auto lg:right-8 lg:bottom-8 lg:translate-x-0 z-50 w-14 h-14 flex items-center justify-center rounded-full shadow-xl text-2xl font-bold bg-[var(--n-primary,#E64545)] text-white hover:opacity-90 active:scale-95 transition-all duration-220 [data-theme=pro]_&:hidden [data-theme=kawaii]_&:hidden"
+            className="fixed bottom-[72px] left-1/2 -translate-x-1/2 lg:left-auto lg:right-8 lg:bottom-8 lg:translate-x-0 z-50 w-14 h-14 flex items-center justify-center rounded-full shadow-xl text-2xl font-bold bg-[var(--n-primary,#E64545)] text-white hover:opacity-90 active:scale-95 transition-all duration-220"
           >
             ＋
           </Link>
-        </div>
-
-        <OnboardingGuide />
-
-        {/* ShimaenagaGuide — kawaii theme only */}
-        <div className="kawaii-only">
-          <ShimaenagaGuide />
         </div>
 
       </body>
