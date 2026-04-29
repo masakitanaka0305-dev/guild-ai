@@ -3,6 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { SidebarNav, BottomNav } from "@/components/SidebarNav";
+import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -94,6 +95,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
 
           <BottomNav />
+
+          {/* Global income stream toasts */}
+          <IncomeStreamBar />
 
           {/* ＋ FAB — /bank への知恵登録ボタン */}
           <Link
