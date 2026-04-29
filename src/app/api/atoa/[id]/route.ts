@@ -4,6 +4,7 @@ import { runWithQA } from "@/lib/atoa-runner";
 import { generateEmblemSpec, specToVectorEmbedding } from "@/lib/asset-emblem";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 import { getLicenseQuote, recordMicropayment, type CallerType } from "@/lib/api-licensing";
+import { resolvePrice } from "@/lib/dynamic-pricing";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,12 @@ export async function POST(
 
   const callerType: CallerType =
     (req.headers.get("X-Caller-Type") as CallerType | null) ?? "agent";
+
+  const callerIp =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "";
+  const callerRegion = req.headers.get("X-Caller-Region") ?? "";
 
   const agent = MOCK_MARKETPLACE.find((m) => m.listing.id === params.id);
   if (!agent) {
@@ -52,6 +59,12 @@ export async function POST(
   const licenseQuote = getLicenseQuote(callerType, { floorPrice: agent.listing.floorPrice });
   recordMicropayment(params.id, callerType, licenseQuote.perCallJpyc);
 
+  const pricing = resolvePrice({
+    ip: callerIp || callerRegion,
+    authToken: authHeader.replace("Bearer ", ""),
+    floorPriceJpy: agent.listing.floorPrice,
+  });
+
   const spec = generateEmblemSpec(params.id);
   return NextResponse.json({
     agentId: params.id,
@@ -61,6 +74,12 @@ export async function POST(
     durationMs: result.durationMs,
     billedJpy: agent.listing.floorPrice,
     licenseQuote,
+    pricing: {
+      currency: pricing.currency,
+      perCallNet: pricing.floorPriceLocal,
+      multiplier: pricing.multiplier,
+      reasoning: pricing.reasoning,
+    },
     emblem: {
       vectorEmbedding: specToVectorEmbedding(spec),
       svgUrl: `/api/emblem/${params.id}`,
