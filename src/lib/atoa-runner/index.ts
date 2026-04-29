@@ -1,49 +1,65 @@
-// GUILD AI — AtoA Runner (Auto-Instantiate + Health Check + Self-QA)
+// GUILD AI — AtoA Runner (Postgres-backed)
 // Lifecycle: instantiate → run → health check → release escrow (or refund on failure)
 
+import { eq } from "drizzle-orm";
 import type { AgentInstance, HealthCheckResult, AtoaRunResult } from "@/types";
-import { createAtoaEscrow, releaseAtoaEscrow, refundAtoaEscrow, recordMicropayment } from "@/lib/atoa-escrow";
+import { db } from "@/db/client";
+import { agentInstances } from "@/db/schema";
+import {
+  createAtoaEscrow, releaseAtoaEscrow, refundAtoaEscrow, recordMicropayment,
+} from "@/lib/atoa-escrow";
 
 let instanceCounter = 0;
-const instanceStore = new Map<string, AgentInstance>();
+
+type AgentInstanceRow = typeof agentInstances.$inferSelect;
+
+function rowToInstance(row: AgentInstanceRow): AgentInstance {
+  return {
+    instanceId: row.instanceId,
+    agentId: row.agentId,
+    startedAt: row.startedAt.getTime(),
+    status: row.status,
+  };
+}
 
 // Deterministic health: agents with "degraded" in their id always fail (test hook)
 function isHealthy(agentId: string): boolean {
   return !agentId.includes("degraded");
 }
 
-export function instantiateAgent(agentId: string): AgentInstance {
+export async function instantiateAgent(agentId: string): Promise<AgentInstance> {
   const instanceId = `inst_${Date.now()}_${(++instanceCounter).toString().padStart(4, "0")}`;
-  const instance: AgentInstance = {
-    instanceId,
-    agentId,
-    startedAt: Date.now(),
-    status: "running",
-  };
-  instanceStore.set(instanceId, instance);
-  return instance;
+  const [row] = await db
+    .insert(agentInstances)
+    .values({ instanceId, agentId, status: "running" })
+    .returning();
+  return rowToInstance(row);
 }
 
-export function healthCheck(instanceId: string): HealthCheckResult {
-  const instance = instanceStore.get(instanceId);
-  if (!instance) {
+export async function healthCheck(instanceId: string): Promise<HealthCheckResult> {
+  const [row] = await db.select().from(agentInstances).where(eq(agentInstances.instanceId, instanceId));
+  if (!row) {
     return { instanceId, ok: false, latencyMs: 0, checkedAt: Date.now() };
   }
-
-  const ok = isHealthy(instance.agentId);
+  const ok = isHealthy(row.agentId);
   const latencyMs = ok ? 40 + Math.floor(Math.abs(instanceId.charCodeAt(5) * 7) % 120) : 0;
-  instance.status = ok ? "healthy" : "degraded";
-
+  await db
+    .update(agentInstances)
+    .set({ status: ok ? "healthy" : "degraded" })
+    .where(eq(agentInstances.instanceId, instanceId));
   return { instanceId, ok, latencyMs, checkedAt: Date.now() };
 }
 
-export function stopInstance(instanceId: string): void {
-  const instance = instanceStore.get(instanceId);
-  if (instance) instance.status = "stopped";
+export async function stopInstance(instanceId: string): Promise<void> {
+  await db
+    .update(agentInstances)
+    .set({ status: "stopped" })
+    .where(eq(agentInstances.instanceId, instanceId));
 }
 
-export function getInstance(instanceId: string): AgentInstance | undefined {
-  return instanceStore.get(instanceId);
+export async function getInstance(instanceId: string): Promise<AgentInstance | undefined> {
+  const [row] = await db.select().from(agentInstances).where(eq(agentInstances.instanceId, instanceId));
+  return row ? rowToInstance(row) : undefined;
 }
 
 /**
@@ -55,18 +71,18 @@ export function getInstance(instanceId: string): AgentInstance | undefined {
  *  5. Record micropayment
  *  6. Release escrow
  */
-export function runWithQA(
+export async function runWithQA(
   agentId: string,
   input: string,
   amount = 500
-): AtoaRunResult {
-  const escrow = createAtoaEscrow(agentId, "system", amount);
-  const instance = instantiateAgent(agentId);
-  const health = healthCheck(instance.instanceId);
+): Promise<AtoaRunResult> {
+  const escrow = await createAtoaEscrow(agentId, "system", amount);
+  const instance = await instantiateAgent(agentId);
+  const health = await healthCheck(instance.instanceId);
 
   if (!health.ok) {
-    refundAtoaEscrow(escrow.id);
-    stopInstance(instance.instanceId);
+    await refundAtoaEscrow(escrow.id);
+    await stopInstance(instance.instanceId);
     return {
       success: false,
       instanceId: instance.instanceId,
@@ -87,9 +103,9 @@ export function runWithQA(
   ];
   const output = outputVariants[Math.abs(outputSeed) % outputVariants.length];
 
-  recordMicropayment(escrow.id, Math.floor(amount / 10));
-  releaseAtoaEscrow(escrow.id);
-  stopInstance(instance.instanceId);
+  await recordMicropayment(escrow.id, Math.floor(amount / 10));
+  await releaseAtoaEscrow(escrow.id);
+  await stopInstance(instance.instanceId);
 
   return {
     success: true,
@@ -100,7 +116,7 @@ export function runWithQA(
   };
 }
 
-export function _resetRunner(): void {
-  instanceStore.clear();
+export async function _resetRunner(): Promise<void> {
+  await db.delete(agentInstances);
   instanceCounter = 0;
 }

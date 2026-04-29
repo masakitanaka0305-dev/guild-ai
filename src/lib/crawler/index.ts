@@ -1,3 +1,13 @@
+// GUILD AI — Crawler
+// MOCK_REPOS is static seed data (sync). Claim status mutations are persisted to
+// the crawl_claims table and exposed via async functions. crawlPublicSources()
+// stays sync for callers that don't need live status; crawlPublicSourcesWithStatus()
+// is the DB-aware variant.
+
+import { eq } from "drizzle-orm";
+import { db } from "@/db/client";
+import { crawlClaims } from "@/db/schema";
+
 export type ClaimStatus = "unclaimed" | "verifying" | "claimed";
 
 export interface CrawledRepo {
@@ -24,20 +34,44 @@ const MOCK_REPOS: CrawledRepo[] = [
   { source: "github", repoUrl: "https://github.com/example/perf-profiler", defaultBranch: "main", topics: ["performance", "profiling", "node"], summaryFromReadme: "Node.js performance profiler with flame graph visualization.", lastCommitSha: "y7z8a9b0", signals: { stars: 521, forks: 103, recentCommits: 45 }, claimStatus: "unclaimed" },
 ];
 
-const claimStore = new Map<string, ClaimStatus>(MOCK_REPOS.map((r) => [r.repoUrl, r.claimStatus]));
-
+/** Sync — returns the static seed data with default 'unclaimed' status. */
 export function crawlPublicSources(): CrawledRepo[] {
-  return MOCK_REPOS.map((r) => ({ ...r, claimStatus: claimStore.get(r.repoUrl) ?? "unclaimed" }));
+  return MOCK_REPOS.map((r) => ({ ...r }));
 }
 
-export function markUnclaimed(repoUrl: string): void {
-  if (!claimStore.has(repoUrl)) claimStore.set(repoUrl, "unclaimed");
+/** Async — returns seed data merged with persisted claim status from DB. */
+export async function crawlPublicSourcesWithStatus(): Promise<CrawledRepo[]> {
+  const rows = await db.select().from(crawlClaims);
+  const statusMap = new Map(rows.map((r) => [r.repoUrl, r.status]));
+  return MOCK_REPOS.map((r) => ({
+    ...r,
+    claimStatus: statusMap.get(r.repoUrl) ?? r.claimStatus,
+  }));
 }
 
-export function updateClaimStatus(repoUrl: string, status: ClaimStatus): void {
-  claimStore.set(repoUrl, status);
+export async function markUnclaimed(repoUrl: string): Promise<void> {
+  await db
+    .insert(crawlClaims)
+    .values({ repoUrl, status: "unclaimed" })
+    .onConflictDoNothing();
 }
 
-export function getClaimStatus(repoUrl: string): ClaimStatus {
-  return claimStore.get(repoUrl) ?? "unclaimed";
+export async function updateClaimStatus(repoUrl: string, status: ClaimStatus): Promise<void> {
+  await db
+    .insert(crawlClaims)
+    .values({ repoUrl, status, updatedAt: new Date() })
+    .onConflictDoUpdate({
+      target: crawlClaims.repoUrl,
+      set: { status, updatedAt: new Date() },
+    });
+}
+
+export async function getClaimStatus(repoUrl: string): Promise<ClaimStatus> {
+  const [row] = await db.select().from(crawlClaims).where(eq(crawlClaims.repoUrl, repoUrl));
+  return row?.status ?? "unclaimed";
+}
+
+// Test-only.
+export async function _resetClaims(): Promise<void> {
+  await db.delete(crawlClaims);
 }

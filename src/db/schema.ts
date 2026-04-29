@@ -9,12 +9,17 @@ import {
 import type { CCAF } from "@/types";
 
 // ─── enums ────────────────────────────────────────────────────────────────────
-export const rankEnum           = pgEnum("rank", ["S", "A", "B"]);
-export const paymentMethodEnum  = pgEnum("payment_method", ["card", "bank", "jpyc", "onramp"]);
-export const currencyEnum       = pgEnum("currency", ["JPY", "JPYC"]);
-export const checkoutStatusEnum = pgEnum("checkout_status", ["pending", "settled", "failed"]);
-export const escrowStatusEnum   = pgEnum("escrow_status", ["held", "confirmed", "released"]);
-export const discordActionEnum  = pgEnum("discord_action_kind", ["share", "endorse", "react", "bug-report"]);
+export const rankEnum                = pgEnum("rank", ["S", "A", "B"]);
+export const paymentMethodEnum       = pgEnum("payment_method", ["card", "bank", "jpyc", "onramp"]);
+export const currencyEnum            = pgEnum("currency", ["JPY", "JPYC"]);
+export const checkoutStatusEnum      = pgEnum("checkout_status", ["pending", "settled", "failed"]);
+export const escrowStatusEnum        = pgEnum("escrow_status", ["held", "confirmed", "released"]);
+export const discordActionEnum       = pgEnum("discord_action_kind", ["share", "endorse", "react", "bug-report"]);
+export const atoaEscrowStatusEnum    = pgEnum("atoa_escrow_status", ["held", "released", "refunded"]);
+export const micropaymentStatusEnum  = pgEnum("micropayment_status", ["pending", "settled"]);
+export const agentInstanceStatusEnum = pgEnum("agent_instance_status", ["running", "healthy", "degraded", "stopped"]);
+export const claimStatusEnum         = pgEnum("claim_status", ["unclaimed", "verifying", "claimed"]);
+export const verifyChallengeTypeEnum = pgEnum("verify_challenge_type", ["commit", "file"]);
 
 // ─── listings ────────────────────────────────────────────────────────────────
 // rank / floor_price are cached at write time (autoList in lib/marketplace).
@@ -181,6 +186,100 @@ export const royaltyDistributions = pgTable("royalty_distributions", {
   index("royalty_dist_creator_idx").on(t.creatorId),
 ]);
 
+// ─── atoa_escrow_sessions ────────────────────────────────────────────────────
+// Non-custodial escrow for autonomous Agent-to-Agent transactions.
+// Distinct from human escrow (escrow_records) — different domain, status enum.
+export const atoaEscrowSessions = pgTable("atoa_escrow_sessions", {
+  id:         text("id").primaryKey(),                       // esw_<ts>_<seq>
+  agentId:    text("agent_id").notNull(),
+  callerId:   text("caller_id").notNull(),
+  amount:     integer("amount").notNull(),
+  status:     atoaEscrowStatusEnum("status").notNull().default("held"),
+  createdAt:  timestamp("created_at",  { withTimezone: true }).defaultNow().notNull(),
+  releasedAt: timestamp("released_at", { withTimezone: true }),
+}, (t) => [
+  index("atoa_escrow_agent_idx").on(t.agentId),
+  index("atoa_escrow_status_idx").on(t.status),
+]);
+
+// ─── atoa_micropayments ──────────────────────────────────────────────────────
+export const atoaMicropayments = pgTable("atoa_micropayments", {
+  id:             text("id").primaryKey(),                    // pay_<ts>_<seq>
+  escrowId:       text("escrow_id").notNull().references(() => atoaEscrowSessions.id, { onDelete: "cascade" }),
+  agentId:        text("agent_id").notNull(),
+  perCallAmount:  integer("per_call_amount").notNull(),
+  callCount:      integer("call_count").notNull().default(1),
+  totalBilled:    integer("total_billed").notNull(),
+  status:         micropaymentStatusEnum("status").notNull().default("pending"),
+}, (t) => [
+  uniqueIndex("atoa_micropay_escrow_uniq").on(t.escrowId),    // 1 record per escrow
+  index("atoa_micropay_agent_idx").on(t.agentId),
+]);
+
+// ─── agent_instances (atoa-runner) ──────────────────────────────────────────
+export const agentInstances = pgTable("agent_instances", {
+  instanceId: text("instance_id").primaryKey(),
+  agentId:    text("agent_id").notNull(),
+  startedAt:  timestamp("started_at", { withTimezone: true }).defaultNow().notNull(),
+  status:     agentInstanceStatusEnum("status").notNull().default("running"),
+}, (t) => [
+  index("agent_instance_agent_idx").on(t.agentId),
+]);
+
+// ─── crawl_claims (lib/crawler) ──────────────────────────────────────────────
+// One row per crawled repo URL. Status updated as claim flow progresses.
+export const crawlClaims = pgTable("crawl_claims", {
+  repoUrl:   text("repo_url").primaryKey(),
+  status:    claimStatusEnum("status").notNull().default("unclaimed"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+// ─── discord_user_state (lib/discord-bridge) ────────────────────────────────
+// Per-user daily ingest state + cumulative contribution. One row per user.
+export const discordUserState = pgTable("discord_user_state", {
+  userId:            text("user_id").primaryKey(),
+  currentDate:       text("current_date").notNull(),         // YYYY-MM-DD
+  earnedToday:       integer("earned_today").notNull().default(0),
+  contributionTotal: integer("contribution_total").notNull().default(0),
+  updatedAt:         timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+// ─── verification_challenges (lib/ownership-verify) ─────────────────────────
+// Cryptographic challenges for proving repo ownership. Keyed by `${type}:${repoUrl}`
+// to allow simultaneous commit + file challenges per repo.
+export const verificationChallenges = pgTable("verification_challenges", {
+  key:             text("key").primaryKey(),                  // "commit:<repoUrl>" or "file:<repoUrl>"
+  type:            verifyChallengeTypeEnum("type").notNull(),
+  repoUrl:         text("repo_url").notNull(),
+  token:           text("token").notNull(),
+  claimerHandle:   text("claimer_handle"),
+  payload:         jsonb("payload").notNull(),                // full challenge object (commit message or expected file contents)
+  createdAt:       timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("verify_challenge_repo_idx").on(t.repoUrl),
+]);
+
+// ─── value_pools + value_pool_entries (lib/value-pool) ──────────────────────
+// Retroactive reward pool: usage events accumulate per asset; on claim, total
+// is released to the claimer (one-shot distributedYet flag).
+export const valuePools = pgTable("value_pools", {
+  assetId:        text("asset_id").primaryKey(),
+  totalPooledJpy: integer("total_pooled_jpy").notNull().default(0),
+  sinceDate:      text("since_date").notNull(),               // YYYY-MM-DD
+  distributedYet: boolean("distributed_yet").notNull().default(false),
+  creditedAt:     timestamp("credited_at", { withTimezone: true }),
+  claimerId:      text("claimer_id"),
+});
+
+export const valuePoolEntries = pgTable("value_pool_entries", {
+  id:        text("id").primaryKey(),
+  assetId:   text("asset_id").notNull().references(() => valuePools.assetId, { onDelete: "cascade" }),
+  amountJpy: integer("amount_jpy").notNull(),
+  occurredAt: timestamp("occurred_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("value_pool_entry_asset_idx").on(t.assetId, t.occurredAt),
+]);
+
 // ─── inferred row types ──────────────────────────────────────────────────────
 export type ListingRow             = typeof listings.$inferSelect;
 export type ListingInsert          = typeof listings.$inferInsert;
@@ -194,3 +293,11 @@ export type TrustScoreInputRow     = typeof trustScoreInputs.$inferSelect;
 export type DiscordEventRow        = typeof discordEvents.$inferSelect;
 export type RoyaltyPayoutRow       = typeof royaltyPayouts.$inferSelect;
 export type RoyaltyDistributionRow = typeof royaltyDistributions.$inferSelect;
+export type AtoaEscrowSessionRow      = typeof atoaEscrowSessions.$inferSelect;
+export type AtoaMicropaymentRow       = typeof atoaMicropayments.$inferSelect;
+export type AgentInstanceRow          = typeof agentInstances.$inferSelect;
+export type CrawlClaimRow             = typeof crawlClaims.$inferSelect;
+export type DiscordUserStateRow       = typeof discordUserState.$inferSelect;
+export type VerificationChallengeRow  = typeof verificationChallenges.$inferSelect;
+export type ValuePoolRow              = typeof valuePools.$inferSelect;
+export type ValuePoolEntryRow         = typeof valuePoolEntries.$inferSelect;

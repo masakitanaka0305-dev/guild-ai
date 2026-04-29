@@ -35,7 +35,7 @@ export async function POST(
   }
 
   const input = typeof body.input === "string" ? body.input : "No input provided";
-  const result = runWithQA(params.id, input);
+  const result = await runWithQA(params.id, input);
 
   if (!result.success) {
     return NextResponse.json(

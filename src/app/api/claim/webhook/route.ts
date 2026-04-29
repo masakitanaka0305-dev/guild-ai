@@ -12,12 +12,9 @@ export async function POST(req: NextRequest) {
     payload: unknown;
   };
 
-  let result;
-  if (method === "commit") {
-    result = verifySignedCommit(repoUrl, payload as { message: string; verified: boolean });
-  } else {
-    result = verifyHiddenFile(repoUrl, payload as { path: string; contents: Record<string, unknown> });
-  }
+  const result = method === "commit"
+    ? await verifySignedCommit(repoUrl, payload as { message: string; verified: boolean })
+    : await verifyHiddenFile(repoUrl, payload as { path: string; contents: Record<string, unknown> });
 
   return NextResponse.json(result);
 }
