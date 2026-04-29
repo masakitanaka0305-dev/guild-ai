@@ -12,6 +12,7 @@ import { computeBundlePricing, computeMonthlyFromFloor } from "@/lib/checkout";
 import { ActivityPulse } from "@/components/ActivityPulse";
 import { BilingualLayout } from "@/components/BilingualLayout";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
+import { TryItNowButton } from "@/components/TryItNowButton";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -84,6 +85,14 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--n-primary,#E64545)] hover:underline font-semibold"
       >
         この知能の家系図を見る →
+      </Link>
+
+      {/* SDK pipeline link */}
+      <Link
+        href={`/sdk?from=${encodeURIComponent(guildId)}`}
+        className="mt-1 inline-flex items-center gap-1 text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--n-primary,#E64545)] hover:underline font-semibold transition-colors"
+      >
+        このノートを使ったパイプラインを見る →
       </Link>
 
       {/* クリエイターのこだわり (Proof of Make) */}
@@ -217,6 +226,9 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       <div className="mt-4 flex items-start gap-4">
         <div className="flex-1">
           <h1 className="text-2xl font-bold leading-tight text-kuroko">{listing.title}</h1>
+          <div className="mt-2 flex items-center gap-2 flex-wrap">
+            <TryItNowButton guildId={guildId} />
+          </div>
           {/* Persistence badge — shown for all listed assets */}
           <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
