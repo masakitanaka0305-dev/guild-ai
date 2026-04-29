@@ -68,8 +68,8 @@ export function SidebarNav() {
           </Link>
         );
       })}
-      {/* Subtle footer link — enterprise, not main nav */}
-      <div className="mt-auto pt-4 border-t border-[var(--n-divider,rgba(0,0,0,0.08))] mx-1">
+      {/* Subtle footer links — enterprise + global scout */}
+      <div className="mt-auto pt-4 border-t border-[var(--n-divider,rgba(0,0,0,0.08))] mx-1 flex flex-col gap-1">
         <Link
           href="/marketplace/pro"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
@@ -79,6 +79,16 @@ export function SidebarNav() {
           }`}
         >
           <span>🏢</span> 法人検索
+        </Link>
+        <Link
+          href="/scout"
+          className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
+            isActive(pathname, "/scout", false)
+              ? "text-[var(--n-primary,#E64545)]"
+              : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
+          }`}
+        >
+          <span>🌐</span> Global Scout
         </Link>
       </div>
     </nav>
