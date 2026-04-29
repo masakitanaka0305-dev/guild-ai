@@ -41,19 +41,14 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pt-8">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1F1B16] leading-[1.1] tracking-tight mb-4 sm:mb-5">
-          AIエージェントで、<br className="sm:hidden" />
-          <span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を<br />
-          アップデート。
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1F1B16] leading-[1.15] tracking-tight mb-4 sm:mb-5">
+          <span className="block lg:inline">AIエージェントで、</span>
+          <span className="block lg:inline"><span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を</span>
+          <span className="block lg:inline">アップデート。</span>
         </h1>
-        <div className="flex items-center gap-3 flex-wrap mb-6">
-          <p className="text-base sm:text-lg text-gray-600 font-medium">
-            日本最大のAIエージェント・プラットフォーム
-          </p>
-          <span className="inline-flex items-center border border-gray-300 rounded-full px-3 py-1 text-xs text-gray-600 font-medium whitespace-nowrap">
-            いますぐ ¥30,000 から
-          </span>
-        </div>
+        <p className="text-base sm:text-lg text-gray-600 font-medium mb-6">
+          日本最大のAIエージェント・プラットフォーム
+        </p>
         <Link
           href="/bank"
           className="h-14 px-8 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm inline-flex items-center justify-center"

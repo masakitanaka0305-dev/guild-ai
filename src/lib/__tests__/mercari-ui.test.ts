@@ -183,8 +183,16 @@ describe("home: unified how-block", () => {
     expect(heroSection).not.toContain("いま かせぐ");
   });
 
-  it("price hint chip いますぐ ¥30,000 から exists in hero", () => {
-    expect(src).toContain("いますぐ ¥30,000 から");
+  it("hero has no price chip (いますぐ ¥30,000 から removed)", () => {
+    expect(src).not.toContain("いますぐ ¥30,000 から");
+  });
+
+  it("h1 has 3 block spans for forced 3-line layout on mobile", () => {
+    const h1Match = src.match(/<h1[\s\S]*?<\/h1>/);
+    expect(h1Match).not.toBeNull();
+    const h1 = h1Match![0];
+    const spanBlocks = (h1.match(/className="block/g) ?? []).length;
+    expect(spanBlocks).toBeGreaterThanOrEqual(3);
   });
 });
 
