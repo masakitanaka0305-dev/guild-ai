@@ -23,6 +23,7 @@ import { getPayoutDisplayEntries } from "@/lib/recursive-payout";
 import { translateForAgent } from "@/lib/translator";
 import { PublicModeSelector } from "@/components/PublicModeSelector";
 import { ALL_CURRENCIES, CURRENCY_SYMBOLS, CURRENCY_FLAGS } from "@/lib/dynamic-pricing";
+import { signOrigin } from "@/lib/origin-registry";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -63,6 +64,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
   const ledgerHash = shortHash(guildId);
   const payoutEntries = getPayoutDisplayEntries(guildId, 10);
   const agentTranslation = translateForAgent(listing.description, { title: listing.title, rank: listing.rank });
+  const originSig = signOrigin(guildId, { title: listing.title, rank: listing.rank });
 
   const curlSample = `curl -X POST https://guild-ai.vercel.app/api/atoa/${listing.id} \\
   -H "Authorization: Bearer gld_<YOUR_ACCESS_KEY>" \\
@@ -195,6 +197,15 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <span className="text-[10px] font-semibold text-blue-700">権利の系譜（変更不可）</span>
           <code className="text-[9px] font-mono text-blue-500">#{ledgerHash}</code>
         </div>
+        {/* JP オリジン認証バッジ */}
+        <div
+          className="mt-2 ml-2 inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3 py-1"
+          aria-label="日本オリジン認証済み"
+        >
+          <span className="text-[10px]">🇯🇵</span>
+          <span className="text-[10px] font-semibold text-green-700">Origin Verified — JP</span>
+          <code className="text-[9px] font-mono text-green-500">{originSig.signerKeyId}</code>
+        </div>
       </section>
 
       {/* Metrics */}
@@ -265,6 +276,10 @@ export default function AssetPage({ params }: { params: { id: string } }) {
               <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span className="text-[10px] font-semibold text-blue-700">永続化されています</span>
+          </div>
+          {/* Encapsulated Intelligence badge */}
+          <div className="mt-2 ml-2 inline-flex items-center gap-1.5 rounded-full border-2 border-yellow-400 bg-red-50 px-3 py-1">
+            <span className="text-[10px] font-bold text-red-700">🛡 Encapsulated Intelligence</span>
           </div>
         </div>
       </div>

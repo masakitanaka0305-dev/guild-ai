@@ -23,6 +23,10 @@ const nextConfig = {
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
       {
+        source: "/api/note/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet" }],
+      },
+      {
         source: "/asset/:path*",
         headers: [{ key: "X-Robots-Tag", value: "index, noarchive, max-snippet:140" }],
       },
