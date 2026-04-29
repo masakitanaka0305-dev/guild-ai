@@ -47,6 +47,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Grand Launch v1): 永続化 / インデックス基金 / 連鎖配当 / グローバル着金 / 知能指数 / 累積配当
 // Explicitly PERMITTED (C2C Exchange v1): Hobby / Pro Indie / Enterprise / パイプライン / 引用ネットワーク / 師匠 / 弟子 / 集合知
 // Explicitly PERMITTED (Productization v1): JSON Schema / OpenAPI / 精度 / 平均レイテンシ / p95 / エラー率 / SLA / 法人検索
+// Explicitly PERMITTED (Competitive Moat v1): 実行エビデンス / プロの工夫 / 価値のデルタ / ゼロデイ / 未学習 / 対応MD / 募集中
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "JPYC",           reason: "→ デジタル円 または ¥ に置換" },
   { term: "ステーブルコイン", reason: "→ デジタル円 に置換" },
