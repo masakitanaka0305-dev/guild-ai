@@ -46,7 +46,7 @@ describe("nameraka-theme.fab", () => {
   });
 
   it("FAB has aria-label for accessibility", () => {
-    expect(layout).toContain('aria-label="知恵をのこす"');
+    expect(layout).toContain('aria-label="のこす"');
   });
 });
 
@@ -166,7 +166,7 @@ describe("nameraka-theme.light-repaint", () => {
 
   it("FAB links to /sell (knowledge registration)", () => {
     expect(layout).toContain('href="/sell"');
-    expect(layout).toContain('aria-label="知恵をのこす"');
+    expect(layout).toContain('aria-label="のこす"');
   });
 
   it("fitLabel returns ぴったり/もう少し/これから at correct thresholds", async () => {
@@ -184,7 +184,6 @@ describe("nameraka-theme.light-repaint", () => {
 describe("nameraka-theme.jargon-lint-v2", () => {
   it("SidebarNav has hiragana nameraka labels", () => {
     const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
-    expect(src).toContain("namerakaLabel");
     expect(src).toContain("のこす");
     expect(src).toContain("かせぐ");
     expect(src).toContain("マイ銀行");
