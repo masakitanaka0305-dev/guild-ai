@@ -7,6 +7,7 @@ import { getWeapons } from "@/lib/weapons";
 import { useTactile } from "@/hooks/useTactile";
 import { Tip } from "@/components/Tip";
 import type { Weapon } from "@/types";
+import { getBacktestStats } from "@/lib/backtest";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -96,6 +97,18 @@ export default function JobsPage() {
                 <div className="text-right shrink-0">
                   <p className="text-lg font-black text-[var(--n-positive,#0E9F4F)] tabular-nums">¥{job.reward.toLocaleString("ja-JP")}</p>
                   <p className="text-[10px] text-[var(--n-muted,#6B6456)]">報酬</p>
+                  {(() => {
+                    const acc = getBacktestStats(job.id).accuracyPct;
+                    return (
+                      <span
+                        role="status"
+                        aria-label={`精度 ${acc.toFixed(1)} パーセント`}
+                        className="mt-1 inline-block rounded-full bg-green-50 border border-green-200 px-1.5 py-0.5 text-[9px] font-bold text-green-700 tabular-nums"
+                      >
+                        精度 {acc.toFixed(1)}%
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
 

@@ -18,6 +18,7 @@ import { generatePersonaCards, type Persona } from "@/lib/persona-cards";
 import { useLazyMount } from "@/hooks/useLazyMount";
 import { generateAllDraftListings, type ProvisionalListing } from "@/lib/draft-listing";
 import { PoolPulse } from "@/components/PoolPulse";
+import { getBacktestStats } from "@/lib/backtest";
 
 interface LazyMarketplaceCardProps {
   item: MarketplaceListing;
@@ -58,7 +59,21 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
         <h2 className="text-base font-semibold leading-snug text-kuroko line-clamp-2 flex-1">
           {personaCard.headline}
         </h2>
-        <StarRating rank={item.listing.rank} size="sm" />
+        <div className="flex flex-col items-end gap-1 flex-shrink-0">
+          <StarRating rank={item.listing.rank} size="sm" />
+          {(() => {
+            const acc = getBacktestStats(item.listing.id).accuracyPct;
+            return (
+              <span
+                role="status"
+                aria-label={`精度 ${acc.toFixed(1)} パーセント`}
+                className="rounded-full bg-green-50 border border-green-200 px-2 py-0.5 text-[9px] font-bold text-green-700 tabular-nums"
+              >
+                精度 {acc.toFixed(1)}%
+              </span>
+            );
+          })()}
+        </div>
       </div>
 
       <ul className="mt-2 space-y-1">
