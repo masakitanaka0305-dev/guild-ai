@@ -15,6 +15,7 @@ import { getImpactStats } from "@/lib/impact";
 import { getMicroBalance } from "@/lib/shima-ledger";
 import { getRecentSettlements, getSettlementSummary, seedDemoSettlements, CURRENCY_LABELS, type Currency } from "@/lib/global-settlement";
 import { getTierUsageBreakdown } from "@/lib/individual-tier";
+import { screenSubmission } from "@/lib/originality-watch";
 
 const HANDLE = "demo-user";
 
@@ -279,7 +280,72 @@ export default function ProfilePage() {
         </ol>
       </section>
 
-      {/* ── 3. 自己紹介（最小限） ──────────────────────────────────── */}
+      {/* ── 3. オリジナリティスコア ─────────────────────────────── */}
+      {(() => {
+        const demoMd = "エージェント時代の知識を MD ファイルに蒸留し、AI が自律的に活用できる形で公開しています。";
+        const pool = [
+          { guildId: "GUILD:SAMPLE001", title: "Sample Asset", mdContent: "サンプルの全く別のコンテンツ" },
+        ];
+        const screening = screenSubmission(demoMd, pool);
+        const topSim = screening.topMatches[0]?.similarity ?? 0;
+        const originalityPct = Math.round((1 - topSim) * 100);
+        const isS = topRank === "S";
+
+        return (
+          <section className="mb-6 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+              <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">オリジナリティ</p>
+            </div>
+
+            <div className="flex items-center gap-4 mb-4">
+              <div className="relative w-16 h-16 flex-shrink-0">
+                <svg viewBox="0 0 64 64" className="w-full h-full -rotate-90" aria-hidden="true">
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="#F0EDE8" strokeWidth="8" />
+                  <circle
+                    cx="32" cy="32" r="26" fill="none"
+                    stroke={originalityPct >= 80 ? "#0E9F4F" : originalityPct >= 50 ? "#D4AF37" : "#E64545"}
+                    strokeWidth="8"
+                    strokeDasharray={`${(originalityPct / 100) * 163.4} 163.4`}
+                  />
+                </svg>
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-extrabold text-[var(--n-text,#1A1714)]">
+                  {originalityPct}%
+                </span>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-[var(--n-text,#1A1714)]">
+                  {originalityPct >= 80 ? "高い独自性" : originalityPct >= 50 ? "一部類似あり" : "要確認"}
+                </p>
+                <p className="text-xs text-[var(--n-muted,#6B6456)] mt-0.5">
+                  類似スコア {Math.round(topSim * 100)}% · {screening.verdict === "ok" ? "✓ 問題なし" : screening.verdict === "review" ? "⚠ 要レビュー" : "🚨 要確認"}
+                </p>
+                <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-1">
+                  Originality Watch v1 · djb2 shingling
+                </p>
+              </div>
+            </div>
+
+            {isS && (
+              <div
+                className="flex items-center gap-3 rounded-xl border-2 border-yellow-400 bg-yellow-50 px-4 py-3"
+                role="status"
+                aria-label="S ランク達成バッジ"
+              >
+                <span className="text-2xl flex-shrink-0">🏆</span>
+                <div>
+                  <p className="text-sm font-black text-yellow-800">魂の登記 — S ランク達成</p>
+                  <p className="text-xs text-yellow-700 mt-0.5">
+                    思考密度・稼働実績・意思シグナル・実稼働コードの全条件を満たした最高格付け
+                  </p>
+                </div>
+              </div>
+            )}
+          </section>
+        );
+      })()}
+
+      {/* ── 4. 自己紹介（最小限） ──────────────────────────────────── */}
       <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
         <div className="flex items-center gap-3 mb-3">
           <Monogram handle={HANDLE} />
