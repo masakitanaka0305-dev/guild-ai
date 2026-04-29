@@ -18,6 +18,11 @@ import { generateSchemas } from "@/lib/schema-generator";
 import { getBacktestStats, formatSamples } from "@/lib/backtest";
 import { VerificationLogSection } from "@/components/VerificationLogSection";
 import { getDeltaCompare } from "@/lib/insight-delta";
+import { shortHash } from "@/lib/dep-ledger";
+import { getPayoutDisplayEntries } from "@/lib/recursive-payout";
+import { translateForAgent } from "@/lib/translator";
+import { PublicModeSelector } from "@/components/PublicModeSelector";
+import { ALL_CURRENCIES, CURRENCY_SYMBOLS, CURRENCY_FLAGS } from "@/lib/dynamic-pricing";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -55,6 +60,9 @@ export default function AssetPage({ params }: { params: { id: string } }) {
   const schemas = generateSchemas(listing.description, { title: listing.title, rank: listing.rank });
   const backtest = getBacktestStats(listing.id);
   const delta = getDeltaCompare(guildId);
+  const ledgerHash = shortHash(guildId);
+  const payoutEntries = getPayoutDisplayEntries(guildId, 10);
+  const agentTranslation = translateForAgent(listing.description, { title: listing.title, rank: listing.rank });
 
   const curlSample = `curl -X POST https://guild-ai.vercel.app/api/atoa/${listing.id} \\
   -H "Authorization: Bearer gld_<YOUR_ACCESS_KEY>" \\
@@ -179,6 +187,14 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         <code className="block rounded-lg bg-kuroko px-3 py-2 text-xs font-mono text-accent-green break-all">
           {guildId}
         </code>
+        {/* 権利の系譜バッジ */}
+        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7L12 2z" fill="#2563EB" />
+          </svg>
+          <span className="text-[10px] font-semibold text-blue-700">権利の系譜（変更不可）</span>
+          <code className="text-[9px] font-mono text-blue-500">#{ledgerHash}</code>
+        </div>
       </section>
 
       {/* Metrics */}
@@ -421,6 +437,78 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         );
       })()}
 
+      {/* 自動分配履歴 */}
+      {(() => {
+        const DEPTH_LABEL: Record<number, string> = { 1: "直接親", 2: "祖父", 3: "曾祖父以遠" };
+        return (
+          <section className="mt-4 section-card p-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-3">
+              自動分配履歴
+            </h2>
+            <div className="overflow-x-auto rounded-xl border border-kuroko/10">
+              <table className="w-full text-left text-sm" aria-label="自動分配履歴">
+                <caption className="sr-only">API コール時の自動配当履歴（直近10件）</caption>
+                <thead>
+                  <tr className="bg-[var(--n-surface-2,#F5F3EE)]">
+                    <th className="py-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#9890A8]">層</th>
+                    <th className="py-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#9890A8]">受領者</th>
+                    <th className="py-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#9890A8] text-right">配分額</th>
+                    <th className="py-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#9890A8]">時刻</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payoutEntries.map((entry, i) => {
+                    const d = new Date(entry.ts);
+                    const timeStr = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+                    return (
+                      <tr key={i} className="border-t border-kuroko/5 hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors">
+                        <td className="py-2 px-3 text-xs">
+                          <span className="inline-block rounded-full bg-blue-50 border border-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-700">
+                            {DEPTH_LABEL[entry.layer] ?? `深度${entry.layer}`}
+                          </span>
+                        </td>
+                        <td className="py-2 px-3 text-[10px] font-mono text-[#9890A8] truncate max-w-[140px]">{entry.recipientId}</td>
+                        <td className="py-2 px-3 text-xs tabular-nums text-kaki text-right font-semibold">¥{entry.amountJpy}</td>
+                        <td className="py-2 px-3 text-[10px] text-[#9890A8] whitespace-nowrap tabular-nums">{timeStr}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-[10px] text-[#9890A8]">
+              末端 API 利用料が発生した際、依存ツリーを遡って全貢献者に 0.01円単位で自動分配されます。
+            </p>
+          </section>
+        );
+      })()}
+
+      {/* AI 向け翻訳プレビュー */}
+      <section className="mt-4 section-card p-5">
+        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-3">
+          AI 向け翻訳プレビュー
+        </h2>
+        <div className="rounded-xl border border-kuroko/10 bg-[var(--n-surface-2,#F5F3EE)] p-3 mb-3">
+          <p className="text-[10px] font-semibold text-[#9890A8] mb-1 uppercase tracking-widest">英語サマリ（60語）</p>
+          <p className="text-xs text-kuroko leading-relaxed font-mono">
+            {agentTranslation.summary60w || "(translation unavailable)"}
+          </p>
+        </div>
+        <div className="rounded-xl border border-kaki/10 bg-kaki/5 p-3">
+          <p className="text-[10px] font-semibold text-kaki mb-1 uppercase tracking-widest">スキーマ（入力）</p>
+          <pre className="text-[10px] font-mono text-kuroko overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-24">
+            {JSON.stringify(agentTranslation.schema.input, null, 2).slice(0, 300)}…
+          </pre>
+        </div>
+        <p className="mt-2 text-[10px] text-[#9890A8]">
+          AIエージェントが最も効率よく理解できる形式で API 配信されます。
+          <code className="ml-1 bg-kuroko/5 px-1 rounded text-[9px]">GET /api/note/{guildId}</code>
+        </p>
+      </section>
+
+      {/* 公開モード (Blackbox) */}
+      <PublicModeSelector />
+
       {/* Two-Way Pricing */}
       {(() => {
         const monthly = computeMonthlyFromFloor(listing.floorPrice);
@@ -494,6 +582,22 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <span className="inline-flex items-center gap-1 rounded-full border border-kaki/20 bg-kaki/5 px-3 py-1 text-[11px] font-semibold text-kaki">
             AI連携（Agent-to-Agent）対応
           </span>
+        </div>
+        {/* 為替対応チップ */}
+        <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+          <span className="text-[10px] font-semibold text-[#9890A8]">為替対応：</span>
+          {ALL_CURRENCIES.map((c) => (
+            <span
+              key={c}
+              className={`inline-flex items-center gap-0.5 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                c === "JPY" || c === "USD"
+                  ? "border-kaki/40 bg-kaki/10 text-kaki"
+                  : "border-kuroko/10 bg-[var(--n-surface-2,#F5F3EE)] text-[#9890A8]"
+              }`}
+            >
+              {CURRENCY_FLAGS[c]} {CURRENCY_SYMBOLS[c]} {c}
+            </span>
+          ))}
         </div>
         <p className="mt-2 text-sm text-[#4A4464]">
           AIエージェントが直接このスキルを利用できます — 人間の介在なしに採用・実行が完結します。
