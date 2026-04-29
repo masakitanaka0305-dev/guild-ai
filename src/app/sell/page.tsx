@@ -21,6 +21,7 @@ import { PackageIcon, SearchIcon } from "@/components/icons";
 import { ShareButton } from "@/components/ShareButton";
 import { setPhoto } from "@/lib/asset-photos";
 import { computeBundlePricing } from "@/lib/checkout";
+import { RevenueSimulatorCard } from "@/components/RevenueSimulatorCard";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -196,6 +197,9 @@ function CompletionCard({ data }: { data: CompletionData }) {
           </label>
         </div>
       </div>
+
+      {/* Simulator card — before API endpoint */}
+      <RevenueSimulatorCard rank={data.rank} floorPrice={data.floorPrice} title={data.title} />
 
       {/* 3 parallel links */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
