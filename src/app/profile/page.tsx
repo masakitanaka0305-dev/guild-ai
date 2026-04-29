@@ -14,6 +14,7 @@ import { getMyAssets } from "@/lib/portfolio";
 import { getImpactStats } from "@/lib/impact";
 import { getMicroBalance } from "@/lib/shima-ledger";
 import { getRecentSettlements, getSettlementSummary, seedDemoSettlements, CURRENCY_LABELS, type Currency } from "@/lib/global-settlement";
+import { getTierUsageBreakdown } from "@/lib/individual-tier";
 
 const HANDLE = "demo-user";
 
@@ -92,6 +93,7 @@ export default function ProfilePage() {
   const settlementSummary = getSettlementSummary(24);
   const recentSettlements = getRecentSettlements(5);
   const totalSettledJpy = Object.values(settlementSummary).reduce((s, v) => s + v, 0);
+  const tierBreakdown = getTierUsageBreakdown(totalCalls * 15 / 100, totalCalls * 45 / 100, totalCalls * 40 / 100);
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12">
@@ -133,6 +135,54 @@ export default function ProfilePage() {
             {formatMilliDisplay(microBalance.totalMilliJpy)}
           </span>
         </div>
+
+        {/* ティア別利用 donut */}
+        {(() => {
+          const { hobby, proIndie, enterprise, total } = tierBreakdown;
+          const r = 30;
+          const circ = 2 * Math.PI * r;
+          const safe = total > 0 ? total : 1;
+          const hobbyLen = (hobby / safe) * circ;
+          const proLen   = (proIndie / safe) * circ;
+          const entLen   = (enterprise / safe) * circ;
+          const o0 = circ / 4;
+          const o1 = circ / 4 - hobbyLen;
+          const o2 = circ / 4 - hobbyLen - proLen;
+          const rows = [
+            { label: "Hobby",      color: "#0E9F4F", calls: hobby },
+            { label: "Pro Indie",  color: "#E64545", calls: proIndie },
+            { label: "Enterprise", color: "#D4AF37", calls: enterprise },
+          ];
+          return (
+            <div className="mt-3 flex items-center gap-4 bg-[var(--n-surface-2,#F5F3EE)] rounded-xl px-4 py-3">
+              <svg width="72" height="72" viewBox="0 0 88 88" role="img" aria-label="ティア別利用比率" className="flex-shrink-0">
+                <title>ティア別利用比率</title>
+                <circle cx="44" cy="44" r={r} fill="none" stroke="#E9E7E1" strokeWidth="16" />
+                <circle cx="44" cy="44" r={r} fill="none" stroke="#0E9F4F" strokeWidth="16"
+                  strokeDasharray={`${hobbyLen} ${circ - hobbyLen}`} strokeDashoffset={o0} />
+                <circle cx="44" cy="44" r={r} fill="none" stroke="#E64545" strokeWidth="16"
+                  strokeDasharray={`${proLen} ${circ - proLen}`} strokeDashoffset={o1} />
+                <circle cx="44" cy="44" r={r} fill="none" stroke="#D4AF37" strokeWidth="16"
+                  strokeDasharray={`${entLen} ${circ - entLen}`} strokeDashoffset={o2} />
+              </svg>
+              <div className="flex-1">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--n-muted,#6B6456)] mb-1.5">ティア別利用</p>
+                <div className="space-y-1">
+                  {rows.map(({ label, color, calls }) => {
+                    const pct = Math.round((calls / safe) * 100);
+                    return (
+                      <div key={label} className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+                        <span className="text-[10px] text-[var(--n-muted,#6B6456)] flex-1">{label}</span>
+                        <span className="text-[10px] font-bold tabular-nums text-[var(--n-text,#1A1714)]">{pct}%</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* ── 2. プロ識別バッジ列 ────────────────────────────────────── */}

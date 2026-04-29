@@ -3,11 +3,13 @@ import Link from "next/link";
 import { RankShield } from "@/components/RankShield";
 import { ComplexityMeter } from "@/components/ComplexityMeter";
 import { AreaChart } from "@/components/AreaChart";
+import { LearnFromMasterButton } from "@/components/LearnFromMasterButton";
 import {
   getDailyUsage, getWeeklyUsage, getLifetimeUsage,
   getDeltas, getLockUnlockedRewards, getUsageHistory,
 } from "@/lib/api-usage";
 import { getComplexityBreakdown } from "@/lib/complexity-score";
+import { getMasterStats } from "@/lib/master-reputation";
 
 const KNOWN_HANDLES = ["alice", "bob", "carol", "dave", "eve"];
 
@@ -40,6 +42,7 @@ export default function HandleProfilePage({ params }: { params: { handle: string
   const lock     = getLockUnlockedRewards(handle);
   const history  = getUsageHistory(handle);
   const cx       = getComplexityBreakdown(handle);
+  const master   = getMasterStats(handle);
   const ranks: Array<"S" | "A" | "B"> = ["S", "A", "B"];
   const rank = ranks[Math.abs(handle.charCodeAt(0)) % 3];
 
@@ -108,6 +111,48 @@ export default function HandleProfilePage({ params }: { params: { handle: string
           </div>
         </div>
         <ComplexityMeter score={cx.score} label={cx.label} />
+      </section>
+
+      {/* Master Reputation Card */}
+      <section className="bg-[var(--n-text,#1A1714)] rounded-2xl p-5 shadow-sm mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-1 h-5 rounded-full bg-[var(--n-gold,#D4AF37)]" />
+          <p className="text-sm font-bold text-[var(--n-gold,#D4AF37)]">師匠スコア</p>
+          <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--n-gold,#D4AF37)]/20 text-[var(--n-gold,#D4AF37)]">
+            {master.label}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="text-center">
+            <p className="text-xl font-black tabular-nums text-white">{master.citationCount}</p>
+            <p className="text-[10px] text-[#9890A8]">被引用</p>
+          </div>
+          <div className="text-center">
+            <p className="text-xl font-black tabular-nums text-white">{master.discipleCount}</p>
+            <p className="text-[10px] text-[#9890A8]">弟子</p>
+          </div>
+          <div className="text-center">
+            <p className="text-xl font-black tabular-nums text-[var(--n-gold,#D4AF37)]">{master.collectiveScore}</p>
+            <p className="text-[10px] text-[#9890A8]">集合知スコア</p>
+          </div>
+        </div>
+
+        {/* Master score bar */}
+        <div className="mb-4">
+          <div className="flex justify-between text-[10px] mb-1">
+            <span className="text-[#9890A8]">マスタースコア</span>
+            <span className="tabular-nums font-bold text-[var(--n-gold,#D4AF37)]">{master.masterScore} / 1000</span>
+          </div>
+          <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-[var(--n-gold,#D4AF37)]"
+              style={{ width: `${(master.masterScore / 1000) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        <LearnFromMasterButton handle={handle} />
       </section>
     </main>
   );
