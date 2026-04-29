@@ -59,6 +59,7 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "おだちん",        reason: "→ 報酬 に置換（18y/o tone v2）" },
   { term: "おたから",        reason: "→ 資産 に置換（18y/o tone v2）" },
   { term: "ぶき",            reason: "→ スキル / ノート に置換（18y/o tone v2）" },
+  { term: "シマエナガ通帳",   reason: "→ UI 上は「端数残高」に置換（内部モジュール名は shima-ledger で維持）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

@@ -13,6 +13,7 @@ import { getPassbookSnapshotAction } from "@/app/actions/passbook";
 import { useLiveEarnings } from "@/lib/live-earnings";
 import { FloatingPayoutToast } from "@/components/FloatingPayoutToast";
 import { useRoyaltyStream } from "@/lib/royalty-stream";
+import { MicroWalletPanel } from "@/components/MicroWalletPanel";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -148,6 +149,9 @@ export default function GuildPage() {
 
       {/* ── 総資産ヒーローカード ──────────────────────────────────────── */}
       <TotalAssetsCard />
+
+      {/* ── 端数残高 ────────────────────────────────────────────────── */}
+      <MicroWalletPanel />
 
       {/* ── 運用中のリアルタイム指標 ─────────────────────────────────── */}
       <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-positive,#0E9F4F)]/30 rounded-2xl px-5 py-4 mb-4">
