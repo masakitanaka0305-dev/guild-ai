@@ -23,6 +23,7 @@ import { setPhoto } from "@/lib/asset-photos";
 import { computeBundlePricing } from "@/lib/checkout";
 import { RevenueSimulatorCard } from "@/components/RevenueSimulatorCard";
 import { SchemaPanel } from "@/components/SchemaPanel";
+import { useUserId } from "@/components/AuthProvider";
 import { generateSchemas } from "@/lib/schema-generator";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 import { BulkDepositSection } from "@/components/BulkDepositSection";
@@ -301,6 +302,7 @@ function AiPath({
   onComplete: (data: CompletionData) => void;
   onReset: () => void;
 }) {
+  const userId = useUserId();
   const [username, setUsername] = useState("");
   const [connected, setConnected] = useState(false);
   const [repos, setRepos] = useState<MockRepo[]>([]);
@@ -332,13 +334,13 @@ function AiPath({
     const extract = extractFromReadme(readmeText);
     const salesParts = extractSalesParts(readmeText);
     const newId = `listing_${Date.now()}`;
-    const ccaf: CCAF = { intentSignals: ["author-statement"], thoughtDensity: 75, iterations: 10, authorId: "demo-user", createdAt: new Date().toISOString() };
+    const ccaf: CCAF = { intentSignals: ["author-statement"], thoughtDensity: 75, iterations: 10, authorId: userId, createdAt: new Date().toISOString() };
     const auditResult = audit({ ccaf, vercelUptimeDays: 30 });
     const blendedPrice = Math.round((extract.suggestedPrice + salesParts.priceSuggestion) / 2);
     const floor = computeFloorPrice(blendedPrice, trust.score);
 
     const ml: MarketplaceListing = autoList(
-      { id: newId, ownerId: "demo-user", title: extract.title, description: extract.description, ccaf, vercelUptimeDays: 30, basePrice: extract.suggestedPrice, githubUrl: selectedRepo.url },
+      { id: newId, ownerId: userId, title: extract.title, description: extract.description, ccaf, vercelUptimeDays: 30, basePrice: extract.suggestedPrice, githubUrl: selectedRepo.url },
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );
@@ -486,6 +488,7 @@ function AiPath({
 // ─── Path 2: 音声で登記 ────────────────────────────────────────────────────────
 
 function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void }) {
+  const userId = useUserId();
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [hasSpeechApi, setHasSpeechApi] = useState(false);
@@ -545,14 +548,14 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
     setProcessStep(VOICE_STEPS.length);
 
     const newId = `listing_${Date.now()}`;
-    const ccaf: CCAF = { intentSignals: proof.intentSignals, thoughtDensity: 72, iterations: 14, authorId: "demo-user", createdAt: new Date().toISOString() };
+    const ccaf: CCAF = { intentSignals: proof.intentSignals, thoughtDensity: 72, iterations: 14, authorId: userId, createdAt: new Date().toISOString() };
     const auditResult = audit({ ccaf, vercelUptimeDays: 30 });
     const floor = computeFloorPrice(5000, trust.score);
     const title = pitch?.description.slice(0, 30) + "…" || `音声登録 — ${new Date().toLocaleDateString("ja-JP")}`;
     const description = pitch?.description || proof.refinedDescription;
 
     const ml: MarketplaceListing = autoList(
-      { id: newId, ownerId: "demo-user", title, description, ccaf, vercelUptimeDays: 30, basePrice: 5000, proofOfMakeNote: transcript },
+      { id: newId, ownerId: userId, title, description, ccaf, vercelUptimeDays: 30, basePrice: 5000, proofOfMakeNote: transcript },
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );
@@ -649,6 +652,7 @@ function TextPath({
   remixId: string | null;
   remixFrom: string | null;
 }) {
+  const userId = useUserId();
   const [title, setTitle] = useState(remixFrom ? `${remixFrom} — 派生版` : "");
   const [githubUrl, setGithubUrl] = useState("");
   const [description, setDescription] = useState(remixFrom ? generateRemixDescription(remixFrom) : "");
@@ -671,7 +675,7 @@ function TextPath({
     const newId = `listing_${Date.now()}`;
 
     const ml: MarketplaceListing = autoList(
-      { id: newId, ownerId: "demo-user", title: finalTitle, description: description || "説明なし", ccaf: { ...ccaf, createdAt: new Date().toISOString() }, vercelUptimeDays, basePrice, githubUrl: githubUrl || undefined, remixedFrom: remixId || undefined, proofOfMakeNote: proofOfMakeNote || undefined },
+      { id: newId, ownerId: userId, title: finalTitle, description: description || "説明なし", ccaf: { ...ccaf, createdAt: new Date().toISOString() }, vercelUptimeDays, basePrice, githubUrl: githubUrl || undefined, remixedFrom: remixId || undefined, proofOfMakeNote: proofOfMakeNote || undefined },
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );
@@ -840,6 +844,7 @@ function TextPath({
 // ─── Main SellContent ─────────────────────────────────────────────────────────
 
 function SellContent() {
+  const userId = useUserId();
   const params = useSearchParams();
   const remixId = params.get("remix");
   const remixFrom = params.get("from");
@@ -862,12 +867,12 @@ function SellContent() {
     setDoItForMeStep(AUTO_STEPS.length);
 
     const newId = `listing_${Date.now()}`;
-    const ccaf: CCAF = { intentSignals: ["author-statement", "auto-generated"], thoughtDensity: 78, iterations: 12, authorId: "demo-user", createdAt: new Date().toISOString() };
+    const ccaf: CCAF = { intentSignals: ["author-statement", "auto-generated"], thoughtDensity: 78, iterations: 12, authorId: userId, createdAt: new Date().toISOString() };
     const auditResult = audit({ ccaf, vercelUptimeDays: 30 });
     const floor = computeFloorPrice(7000, trust.score);
 
     const ml: MarketplaceListing = autoList(
-      { id: newId, ownerId: "demo-user", title: "AI全自動 — スキル資産", description: "AIが全自動で生成したスキル資産。高品質なコードとマニュアルを自動最適化。", ccaf, vercelUptimeDays: 30, basePrice: 7000 },
+      { id: newId, ownerId: userId, title: "AI全自動 — スキル資産", description: "AIが全自動で生成したスキル資産。高品質なコードとマニュアルを自動最適化。", ccaf, vercelUptimeDays: 30, basePrice: 7000 },
       { qualityHistory: 70, discordContribution: 55, xAmplification: 40 },
       new Date().toISOString()
     );

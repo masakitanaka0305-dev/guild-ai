@@ -16,8 +16,7 @@ import { getMicroBalance } from "@/lib/shima-ledger";
 import { getRecentSettlements, getSettlementSummary, seedDemoSettlements, CURRENCY_LABELS, type Currency } from "@/lib/global-settlement";
 import { getTierUsageBreakdown } from "@/lib/individual-tier";
 import { screenSubmission } from "@/lib/originality-watch";
-
-const HANDLE = "demo-user";
+import { useUserId } from "@/components/AuthProvider";
 
 function formatMilliDisplay(milliJpy: number): string {
   const jpy = milliJpy / 1_000;
@@ -77,19 +76,20 @@ function RevenueBlock({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ProfilePage() {
-  const daily    = getDailyUsage(HANDLE);
-  const weekly   = getWeeklyUsage(HANDLE);
-  const lifetime = getLifetimeUsage(HANDLE);
-  const deltas   = getDeltas(HANDLE);
-  const lockReward = getLockUnlockedRewards(HANDLE);
-  const history  = getUsageHistory(HANDLE);
-  const complexity = getComplexityBreakdown(HANDLE);
+  const handle = useUserId();
+  const daily    = getDailyUsage(handle);
+  const weekly   = getWeeklyUsage(handle);
+  const lifetime = getLifetimeUsage(handle);
+  const deltas   = getDeltas(handle);
+  const lockReward = getLockUnlockedRewards(handle);
+  const history  = getUsageHistory(handle);
+  const complexity = getComplexityBreakdown(handle);
   const assets   = getMyAssets();
   const topRank  = assets.find((a) => a.status === "active") ? "S" : "A";
   const activeCount = assets.filter((a) => a.status === "active").length;
   const totalCalls  = assets.reduce((s, a) => s + a.callsLast30, 0);
-  const impact = getImpactStats(HANDLE);
-  const microBalance = getMicroBalance(HANDLE);
+  const impact = getImpactStats(handle);
+  const microBalance = getMicroBalance(handle);
   seedDemoSettlements();
   const settlementSummary = getSettlementSummary(24);
   const recentSettlements = getRecentSettlements(5);
@@ -348,9 +348,9 @@ export default function ProfilePage() {
       {/* ── 4. 自己紹介（最小限） ──────────────────────────────────── */}
       <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
         <div className="flex items-center gap-3 mb-3">
-          <Monogram handle={HANDLE} />
+          <Monogram handle={handle} />
           <div>
-            <p className="font-bold text-[var(--n-text,#1A1714)]">@{HANDLE}</p>
+            <p className="font-bold text-[var(--n-text,#1A1714)]">@{handle}</p>
             <p className="text-xs text-[var(--n-muted,#6B6456)]">AI Ops Engineer / SQL × LLM</p>
           </div>
         </div>

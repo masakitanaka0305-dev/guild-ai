@@ -6,6 +6,7 @@
 import {
   pgTable, pgEnum, text, integer, jsonb, timestamp, boolean, index, uniqueIndex,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import type { CCAF } from "@/types";
 
 // ─── enums ────────────────────────────────────────────────────────────────────
@@ -20,6 +21,49 @@ export const micropaymentStatusEnum  = pgEnum("micropayment_status", ["pending",
 export const agentInstanceStatusEnum = pgEnum("agent_instance_status", ["running", "healthy", "degraded", "stopped"]);
 export const claimStatusEnum         = pgEnum("claim_status", ["unclaimed", "verifying", "claimed"]);
 export const verifyChallengeTypeEnum = pgEnum("verify_challenge_type", ["commit", "file"]);
+export const genderEnum              = pgEnum("gender", ["male", "female", "other", "prefer_not_to_say"]);
+
+// ─── users ───────────────────────────────────────────────────────────────────
+// 個人情報をメインに保持する。auth は email + password (scrypt-hashed) のシンプル構成。
+// 住所・氏名・電話等は任意（ただし氏名と生年月日は新規登録時に推奨）。
+export const users = pgTable("users", {
+  id:                text("id").primaryKey(),                       // usr_<random>
+  email:             text("email").notNull(),                        // login key (unique)
+  passwordHash:      text("password_hash").notNull(),                // "scrypt:<saltHex>:<hashHex>"
+  displayName:       text("display_name").notNull(),                 // 表示名（公開）
+  // 氏名（漢字 + ふりがな）
+  lastNameKanji:     text("last_name_kanji"),
+  firstNameKanji:    text("first_name_kanji"),
+  lastNameKana:      text("last_name_kana"),
+  firstNameKana:     text("first_name_kana"),
+  // 個人属性
+  birthDate:         text("birth_date"),                              // YYYY-MM-DD
+  gender:            genderEnum("gender"),
+  phone:             text("phone"),
+  // 住所
+  postalCode:        text("postal_code"),
+  prefecture:        text("prefecture"),
+  city:              text("city"),
+  addressLine1:      text("address_line1"),
+  addressLine2:      text("address_line2"),
+  // 同意・タイムスタンプ
+  agreedToTermsAt:   timestamp("agreed_to_terms_at",  { withTimezone: true }),
+  createdAt:         timestamp("created_at",          { withTimezone: true }).defaultNow().notNull(),
+  updatedAt:         timestamp("updated_at",          { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  uniqueIndex("users_email_uniq").on(t.email),
+]);
+
+// ─── sessions ────────────────────────────────────────────────────────────────
+// HttpOnly cookie に保存される token を主キーとした session 表。
+export const sessions = pgTable("sessions", {
+  token:     text("token").primaryKey(),
+  userId:    text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("sessions_user_idx").on(t.userId),
+]);
 
 // ─── listings ────────────────────────────────────────────────────────────────
 // rank / floor_price are cached at write time (autoList in lib/marketplace).
@@ -280,6 +324,166 @@ export const valuePoolEntries = pgTable("value_pool_entries", {
   index("value_pool_entry_asset_idx").on(t.assetId, t.occurredAt),
 ]);
 
+// ─── audit_policies (v2: dynamic market policy) ─────────────────────────────
+// Versioned snapshots of MarketPolicy. Each audit_results_history row
+// references the policy_version that was active at audit time, enabling
+// "this MD was rated S under growth-v3 policy" auditability.
+export const auditPolicies = pgTable("audit_policies", {
+  policyVersion: text("policy_version").primaryKey(),
+  marketPhase:   text("market_phase").notNull(),                     // bootstrap | growth | competitive | mature
+  params:        jsonb("params").notNull(),                          // full MarketPolicy object
+  effectiveFrom: timestamp("effective_from", { withTimezone: true }).notNull(),
+  effectiveTo:   timestamp("effective_to",   { withTimezone: true }),
+  createdAt:     timestamp("created_at",     { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("audit_policies_phase_idx").on(t.marketPhase),
+  index("audit_policies_effective_idx").on(t.effectiveFrom),
+]);
+
+// ─── audit_results_history (v3: every audit result over time) ──────────────
+// Append-only log of audits. Latest row per md_id = current rank.
+export const auditResultsHistory = pgTable("audit_results_history", {
+  id:             text("id").primaryKey(),
+  mdId:           text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  auditedAt:      timestamp("audited_at", { withTimezone: true }).defaultNow().notNull(),
+  rank:           text("rank").notNull(),                             // "S" | "A" | "B" | "C"
+  subRanks:       text("sub_ranks").array().notNull().default([]),    // ["S-Core", "S-Hot"]
+  score:          integer("score").notNull(),                         // 0..100 final composite
+  layerScores:    jsonb("layer_scores").notNull(),                    // { static, market, longitudinal }
+  policyVersion:  text("policy_version").references(() => auditPolicies.policyVersion),
+  triggerEvent:   text("trigger_event").notNull(),                    // scheduled-7d | event-purchase | challenge-resolution
+  confidence:     integer("confidence").notNull(),                    // 0..100, time-confidence(T)
+  rawSignals:     jsonb("raw_signals"),                               // private — full breakdown
+}, (t) => [
+  index("audit_history_md_idx").on(t.mdId, t.auditedAt),
+  index("audit_history_rank_idx").on(t.rank),
+]);
+
+// ─── md_market_metrics (v3: period snapshots of market signals) ────────────
+export const mdMarketMetrics = pgTable("md_market_metrics", {
+  mdId:                    text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  periodStart:             timestamp("period_start", { withTimezone: true }).notNull(),
+  periodEnd:               timestamp("period_end",   { withTimezone: true }).notNull(),
+  purchases:               integer("purchases").notNull().default(0),
+  repurchases:             integer("repurchases").notNull().default(0),
+  refunds:                 integer("refunds").notNull().default(0),
+  saves:                   integer("saves").notNull().default(0),
+  apiCalls:                integer("api_calls").notNull().default(0),
+  downstreamSuccessScore:  integer("downstream_success_score"),       // nullable: not measured this period
+}, (t) => [
+  uniqueIndex("md_market_metrics_pk").on(t.mdId, t.periodStart),
+]);
+
+// ─── freshness_signals (v3: detected freshness issues per MD) ──────────────
+export const freshnessSignals = pgTable("freshness_signals", {
+  id:          text("id").primaryKey(),
+  mdId:        text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  signalType:  text("signal_type").notNull(),                         // keyword | deprecated_api | version_outdated
+  keyword:     text("keyword"),
+  centrality:  integer("centrality").notNull().default(50),           // 0..100, how central the keyword is to the MD
+  detectedAt:  timestamp("detected_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("freshness_signals_md_idx").on(t.mdId),
+]);
+
+// ─── freshness_keywords (v3: tech keyword × decay rate table) ──────────────
+// Hand-curated catalog of technologies and their typical decay rates.
+// E.g. "Next.js 14" decays 0.45/year, "binary search" decays 0.02/year.
+export const freshnessKeywords = pgTable("freshness_keywords", {
+  pattern:       text("pattern").primaryKey(),                        // regex or literal string
+  domain:        text("domain").notNull(),                            // web | ml | infra | algorithm | general
+  decayPerYear:  integer("decay_per_year").notNull(),                 // 0..100 (percentage)
+  deprecated:    boolean("deprecated").notNull().default(false),
+  firstSeenAt:   text("first_seen_at").notNull(),                     // YYYY-MM-DD
+  notes:         text("notes"),
+});
+
+// ─── md_equity_tokens (v4: knowledge equity tokens) ────────────────────────
+// Each MD has 1000 shares. Author starts at 70%; remaining 30% distributable
+// to early curators / benchmarkers via auctions. Royalties flow to holders.
+export const mdEquityTokens = pgTable("md_equity_tokens", {
+  mdId:           text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  holderId:       text("holder_id").notNull(),                        // users.id (loose FK — could be system pool)
+  shares:         integer("shares").notNull(),                        // 0..1000
+  acquiredAt:     timestamp("acquired_at", { withTimezone: true }).defaultNow().notNull(),
+  acquiredPriceJpy: integer("acquired_price_jpy").notNull().default(0),
+}, (t) => [
+  uniqueIndex("md_equity_pk").on(t.mdId, t.holderId),
+  index("md_equity_holder_idx").on(t.holderId),
+]);
+
+// ─── audit_stakes (v4: TCR/prediction-market stakes) ───────────────────────
+// Curators stake on rank predictions. Correct call → reward; wrong → slash.
+export const auditStakes = pgTable("audit_stakes", {
+  id:             text("id").primaryKey(),
+  mdId:           text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  stakerId:       text("staker_id").notNull(),                       // users.id
+  position:       text("position").notNull(),                         // promote | demote | hold
+  predictedRank:  text("predicted_rank").notNull(),                   // "S" | "A" | "B" | "C"
+  amountJpyc:     integer("amount_jpyc").notNull(),
+  stakedAt:       timestamp("staked_at",    { withTimezone: true }).defaultNow().notNull(),
+  resolvedAt:     timestamp("resolved_at",  { withTimezone: true }),
+  won:            boolean("won"),                                     // null until resolved
+  payoutJpyc:     integer("payout_jpyc"),                             // null until resolved
+}, (t) => [
+  index("audit_stakes_md_idx").on(t.mdId, t.stakedAt),
+  index("audit_stakes_staker_idx").on(t.stakerId),
+]);
+
+// ─── audit_challenges (v4: dispute mechanism) ──────────────────────────────
+export const auditChallenges = pgTable("audit_challenges", {
+  id:            text("id").primaryKey(),
+  mdId:          text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  challengerId:  text("challenger_id").notNull(),
+  originalRank:  text("original_rank").notNull(),
+  proposedRank:  text("proposed_rank").notNull(),
+  bondJpyc:      integer("bond_jpyc").notNull(),
+  status:        text("status").notNull().default("open"),            // open | resolved-overturned | resolved-upheld
+  reason:        text("reason"),
+  createdAt:     timestamp("created_at",  { withTimezone: true }).defaultNow().notNull(),
+  resolvedAt:    timestamp("resolved_at", { withTimezone: true }),
+  resolutionNote: text("resolution_note"),
+}, (t) => [
+  index("audit_challenges_md_idx").on(t.mdId),
+  index("audit_challenges_status_idx").on(t.status),
+]);
+
+// ─── md_citations (v4: citation graph for PageRank-like flow) ──────────────
+export const mdCitations = pgTable("md_citations", {
+  citingMd:        text("citing_md").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  citedMd:         text("cited_md").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  weight:          integer("weight").notNull().default(50),           // 0..100
+  detectedMethod:  text("detected_method").notNull(),                 // author-declared | semantic-similarity | etc.
+  detectedAt:      timestamp("detected_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  uniqueIndex("md_citations_pk").on(t.citingMd, t.citedMd),
+  index("md_citations_cited_idx").on(t.citedMd),
+]);
+
+// ─── negative_flags (v4: harmful-MD flags from buyers) ─────────────────────
+export const negativeFlags = pgTable("negative_flags", {
+  id:          text("id").primaryKey(),
+  mdId:        text("md_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  flaggerId:   text("flagger_id").notNull(),
+  flagType:    text("flag_type").notNull(),                           // harmful | stale | plagiarism | fake-claim
+  bondJpyc:    integer("bond_jpyc").notNull(),
+  evidence:    jsonb("evidence"),
+  status:      text("status").notNull().default("open"),              // open | confirmed | dismissed
+  createdAt:   timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  resolvedAt:  timestamp("resolved_at", { withTimezone: true }),
+}, (t) => [
+  index("negative_flags_md_idx").on(t.mdId),
+  index("negative_flags_status_idx").on(t.status),
+]);
+
+// ─── author_reputation (v3+: per-user score) ───────────────────────────────
+export const authorReputation = pgTable("author_reputation", {
+  userId:      text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+  score:       integer("score").notNull().default(50),                // 0..100, default 50 (neutral cold-start)
+  components:  jsonb("components").notNull(),                         // breakdown of score
+  updatedAt:   timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 // ─── inferred row types ──────────────────────────────────────────────────────
 export type ListingRow             = typeof listings.$inferSelect;
 export type ListingInsert          = typeof listings.$inferInsert;
@@ -301,3 +505,84 @@ export type DiscordUserStateRow       = typeof discordUserState.$inferSelect;
 export type VerificationChallengeRow  = typeof verificationChallenges.$inferSelect;
 export type ValuePoolRow              = typeof valuePools.$inferSelect;
 export type ValuePoolEntryRow         = typeof valuePoolEntries.$inferSelect;
+export type UserRow                   = typeof users.$inferSelect;
+export type UserInsert                = typeof users.$inferInsert;
+export type SessionRow                = typeof sessions.$inferSelect;
+export type AuditPolicyRow            = typeof auditPolicies.$inferSelect;
+export type AuditResultHistoryRow     = typeof auditResultsHistory.$inferSelect;
+export type MdMarketMetricsRow        = typeof mdMarketMetrics.$inferSelect;
+export type FreshnessSignalRow        = typeof freshnessSignals.$inferSelect;
+export type FreshnessKeywordRow       = typeof freshnessKeywords.$inferSelect;
+export type MdEquityTokenRow          = typeof mdEquityTokens.$inferSelect;
+export type AuditStakeRow             = typeof auditStakes.$inferSelect;
+export type AuditChallengeRow         = typeof auditChallenges.$inferSelect;
+export type MdCitationRow             = typeof mdCitations.$inferSelect;
+export type NegativeFlagRow           = typeof negativeFlags.$inferSelect;
+export type AuthorReputationRow       = typeof authorReputation.$inferSelect;
+
+// ─── relations (TypeScript-level joins) ──────────────────────────────────────
+// Drizzle relations enable type-safe query joins like
+// `db.query.users.findFirst({ with: { listings: true, ownerships: true } })`.
+// DB-level FK constraints are intentionally NOT added on these columns yet —
+// adding strict FKs would cascade-break smoke tests / integration tests that
+// insert rows referring to ad-hoc userIds (smoke-creator, fixture-creator, etc.).
+// FK enforcement is a follow-up: requires updating each test fixture to seed a
+// user row before inserting referencing rows.
+export const usersRelations = relations(users, ({ many }) => ({
+  sessions:           many(sessions),
+  ownedListings:      many(listings),
+  ownershipRecords:   many(ownershipRecords),
+  checkoutSessions:   many(checkoutSessions),
+  apiKeys:            many(apiKeys),
+  payoutPreference:   many(payoutPreferences),
+  trustScoreInputs:   many(trustScoreInputs),
+  discordEvents:      many(discordEvents),
+  royaltyDistributions: many(royaltyDistributions),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+}));
+
+export const listingsRelations = relations(listings, ({ one, many }) => ({
+  owner:           one(users, { fields: [listings.ownerId], references: [users.id] }),
+  ownerships:      many(ownershipRecords),
+  checkoutSessions: many(checkoutSessions),
+  apiKeys:         many(apiKeys),
+  escrowRecords:   many(escrowRecords),
+  royaltyPayouts:  many(royaltyPayouts),
+}));
+
+export const ownershipRecordsRelations = relations(ownershipRecords, ({ one }) => ({
+  asset: one(listings, { fields: [ownershipRecords.assetId], references: [listings.id] }),
+  owner: one(users,    { fields: [ownershipRecords.ownerId], references: [users.id] }),
+}));
+
+export const checkoutSessionsRelations = relations(checkoutSessions, ({ one }) => ({
+  asset: one(listings, { fields: [checkoutSessions.assetId], references: [listings.id] }),
+  buyer: one(users,    { fields: [checkoutSessions.buyerId], references: [users.id] }),
+}));
+
+export const apiKeysRelations = relations(apiKeys, ({ one, many }) => ({
+  asset: one(listings, { fields: [apiKeys.assetId], references: [listings.id] }),
+  buyer: one(users,    { fields: [apiKeys.buyerId], references: [users.id] }),
+  logs:  many(gatewayLogs),
+}));
+
+export const payoutPreferencesRelations = relations(payoutPreferences, ({ one }) => ({
+  creator: one(users, { fields: [payoutPreferences.creatorId], references: [users.id] }),
+}));
+
+export const trustScoreInputsRelations = relations(trustScoreInputs, ({ one }) => ({
+  owner: one(users, { fields: [trustScoreInputs.ownerId], references: [users.id] }),
+}));
+
+export const discordEventsRelations = relations(discordEvents, ({ one }) => ({
+  user:    one(users,    { fields: [discordEvents.userId],    references: [users.id] }),
+  listing: one(listings, { fields: [discordEvents.listingId], references: [listings.id] }),
+}));
+
+export const royaltyDistributionsRelations = relations(royaltyDistributions, ({ one }) => ({
+  payout:  one(royaltyPayouts, { fields: [royaltyDistributions.payoutId], references: [royaltyPayouts.id] }),
+  creator: one(users,          { fields: [royaltyDistributions.creatorId], references: [users.id] }),
+}));

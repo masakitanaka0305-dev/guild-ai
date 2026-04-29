@@ -91,9 +91,10 @@ export function settle(input: SettleInput, lineageRoot: string): SettleResult {
     }
   }
 
-  // 5. Also accumulate index-fund share for demo-user
+  // 5. Also accumulate index-fund share to the system pool (no specific user
+  // attribution; orphan distributions are pooled here for periodic distribution).
   if (fallbackResult.indexFundJpy > 0) {
-    accumulate("demo-user", jpyToMilli(fallbackResult.indexFundJpy));
+    accumulate("system:index-fund", jpyToMilli(fallbackResult.indexFundJpy));
     distributions.push({
       guildId: "index-fund",
       amountJpy: fallbackResult.indexFundJpy,

@@ -10,6 +10,7 @@ import { useTactile } from "@/hooks/useTactile";
 import { offerInstantBuyout, computeAssessmentRange, formatJpy } from "@/lib/instant-buyout";
 import type { AuditResult } from "@/types";
 import type { InstantBuyoutOffer } from "@/lib/instant-buyout";
+import { useUserId } from "@/components/AuthProvider";
 
 type Step = "input" | "scoring" | "result" | "minting" | "done";
 type InputMode = "file" | "text";
@@ -40,6 +41,7 @@ function ErrorToast({ msg }: { msg: string }) {
 
 export default function BankPage() {
   const router = useRouter();
+  const userId = useUserId();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<Step>("input");
@@ -116,7 +118,7 @@ export default function BankPage() {
       const iterations = Math.max(1, Math.floor(wordCount / 30));
       const hasIntent = noteContent.length > 50;
       const result = audit({
-        ccaf: { intentSignals: hasIntent ? ["author-statement"] : [], thoughtDensity, iterations, authorId: "demo-user", createdAt: new Date().toISOString() },
+        ccaf: { intentSignals: hasIntent ? ["author-statement"] : [], thoughtDensity, iterations, authorId: userId, createdAt: new Date().toISOString() },
         vercelUptimeDays: 30,
       });
       setAuditResult(result);

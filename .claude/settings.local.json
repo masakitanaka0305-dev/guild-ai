@@ -11,7 +11,27 @@
       "Bash(npx vercel *)",
       "Bash(npm test *)",
       "WebFetch(domain:dist-zeta-ten-15.vercel.app)",
-      "Bash(vercel --prod --yes)"
+      "Bash(vercel --prod --yes)",
+      "Bash(git merge *)",
+      "Bash(git checkout *)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"TS_EXIT: $?\")",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(git stash *)",
+      "Bash(git pull *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/signup)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/login)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" --connect-timeout 5 http://127.0.0.1:4983/)",
+      "Bash(curl -s -o /dev/null -w \"signup HTTP %{http_code}\\\\n\" http://localhost:3000/signup)",
+      "Bash(curl -s -o /dev/null -w \"/ HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"/ \\(no cookie\\) HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(awk -F: '$1 < 870')",
+      "Bash(curl -s -o /dev/null -w \"/wallet \\(no cookie\\) → %{http_code} %{redirect_url}\\\\n\" http://localhost:3000/wallet)",
+      "Bash(curl -s -o /dev/null -w \"/login \\(no cookie\\) → %{http_code}\\\\n\" http://localhost:3000/login)",
+      "Bash(curl -s -o /dev/null -w \"/ \\(no cookie\\) → %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(npx tsx *)"
     ]
   }
 }
