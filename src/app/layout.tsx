@@ -7,6 +7,7 @@ import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 import { ZeroDayToast } from "@/components/ZeroDayToast";
 import { SupportChat } from "@/components/SupportChat";
 import { MainHeader } from "@/components/MainHeader";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ja" className={notoSansJP.variable} data-theme="nameraka">
       <head />
       <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased">
+        <AuthProvider>
 
         {/* ── Desktop sidebar ───────────────────────────────── */}
         <aside className="hidden lg:flex w-52 flex-shrink-0 flex-col border-r border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[#F2F0EB]">
@@ -90,6 +92,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             ＋
           </Link>
         </div>
+        </AuthProvider>
 
       </body>
     </html>

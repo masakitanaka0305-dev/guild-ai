@@ -26,12 +26,12 @@ export interface FallbackDistribution {
 
 const tombstoneStore = new Map<string, TombstoneRecord>();
 
-// Seed with one demo tombstone to make tests meaningful
+// Seed with one demo tombstone to make tests meaningful (system-level entry)
 tombstoneStore.set("GUILD:DEMO-TOMB-0001", {
   guildId: "GUILD:DEMO-TOMB-0001",
   reason: "deleted-by-author",
   tombstonedAt: "2026-01-15T10:00:00Z",
-  authorHandle: "demo-user",
+  authorHandle: "system",
 });
 
 // ─── Index fund accumulator ───────────────────────────────────────────────────
@@ -47,7 +47,7 @@ export function getIndexFundBalance(): number {
 export function tombstone(
   guildId: string,
   reason: TombstoneReason = "deleted-by-author",
-  authorHandle = "demo-user",
+  authorHandle = "system",
 ): TombstoneRecord {
   const record: TombstoneRecord = {
     guildId,

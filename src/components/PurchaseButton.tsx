@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { generateDeployUrl } from "@/lib/ownership";
+import { useUserId } from "@/components/AuthProvider";
 import type { OwnershipRecord } from "@/types";
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function PurchaseButton({ assetId, assetTitle, price }: Props) {
+  const userId = useUserId();
   const [purchased, setPurchased] = useState(false);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export function PurchaseButton({ assetId, assetTitle, price }: Props) {
       );
       const record: OwnershipRecord = {
         assetId,
-        ownerId: "demo-user",
+        ownerId: userId,
         acquiredAt: new Date().toISOString(),
         deployUrl: generateDeployUrl(assetId),
         assetTitle,

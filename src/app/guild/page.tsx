@@ -16,6 +16,7 @@ import { useRoyaltyStream } from "@/lib/royalty-stream";
 import { MicroWalletPanel } from "@/components/MicroWalletPanel";
 import { ChainNotifyToast } from "@/components/ChainNotifyToast";
 import { getRecentSettlements, seedDemoSettlements } from "@/lib/global-settlement";
+import { useUserId } from "@/components/AuthProvider";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -44,17 +45,19 @@ function SectionBand({ title, tip }: { title: string; tip?: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function GuildPage() {
+  const userId = useUserId();
   const [weapons, setWeapons] = useState<Weapon[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [snap, setSnap] = useState(() => getPassbookSnapshot("demo-user"));
+  const [snap, setSnap] = useState(() => getPassbookSnapshot(userId));
   const stats = { aumJpy: 1_240_000, momPct: 8.3 };
 
   useEffect(() => {
     setMounted(true);
     setWeapons(getWeapons());
-    getPassbookSnapshotAction("demo-user").then(setSnap);
+    setSnap(getPassbookSnapshot(userId));
+    getPassbookSnapshotAction(userId).then(setSnap);
     seedDemoSettlements();
-  }, []);
+  }, [userId]);
 
   const applications = mounted ? getApplications() : [];
   const guildTransactions: PassbookTransaction[] = [
@@ -70,7 +73,7 @@ export default function GuildPage() {
 
   const [showAllTx, setShowAllTx] = useState(false);
 
-  const earnings = useLiveEarnings("demo-user");
+  const earnings = useLiveEarnings(userId);
   const royalties = useRoyaltyStream(true);
   const royaltyTotal = royalties.reduce((s, r) => s + r.amountJpy, 0);
 

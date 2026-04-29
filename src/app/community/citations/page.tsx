@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Link from "next/link";
 import { getCitationGraph, addRespect, type CitationNode, type CitationEdge } from "@/lib/citation-network";
 import { getTopMasters } from "@/lib/master-reputation";
+import { useUserId } from "@/components/AuthProvider";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -41,9 +42,10 @@ function nodeRadius(n: CitationNode): number {
 // ─── Respect modal ────────────────────────────────────────────────────────────
 
 function RespectModal({ handle, onClose }: { handle: string; onClose: () => void }) {
+  const userId = useUserId();
   const [done, setDone] = useState(false);
   const handleRespect = () => {
-    addRespect("demo-user", handle);
+    addRespect(userId, handle);
     setDone(true);
   };
   return (

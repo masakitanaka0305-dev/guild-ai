@@ -21,6 +21,7 @@ import { RawDataPanel } from "@/components/RawDataPanel";
 import { ShareButton } from "@/components/ShareButton";
 import { getGithubGreenScore, getLearningProgress, applySkillBoost } from "@/lib/skill-sync";
 import { ActivityPulse } from "@/components/ActivityPulse";
+import { useUserId } from "@/components/AuthProvider";
 
 // ─── Rank styling ─────────────────────────────────────────────────────────────
 
@@ -60,8 +61,9 @@ function SkillProgressBar({ value, color = "bg-kaki" }: { value: number; color?:
 }
 
 function SkillGrowthCard({ currentRank }: { currentRank: Rank }) {
-  const greenScore = getGithubGreenScore("demo-user");
-  const learningProgress = getLearningProgress("demo-user");
+  const userId = useUserId();
+  const greenScore = getGithubGreenScore(userId);
+  const learningProgress = getLearningProgress(userId);
   const boostedRank = applySkillBoost(currentRank, greenScore, learningProgress);
   const greenPct = Math.min(100, Math.round((greenScore / 70) * 100));
   const learnPct = Math.min(100, Math.round((learningProgress / 10) * 100));
@@ -107,14 +109,16 @@ function SkillGrowthCard({ currentRank }: { currentRank: Rank }) {
 // ─── 今月の通帳カード ─────────────────────────────────────────────────────────
 
 function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
+  const userId = useUserId();
   // Initial render: deterministic mock (no flash). After mount: replace with
-  // DB-enriched snapshot via server action.
-  const [snap, setSnap] = useState(() => getPassbookSnapshot("demo-user"));
+  // DB-enriched snapshot via server action. Refetches if userId changes (login).
+  const [snap, setSnap] = useState(() => getPassbookSnapshot(userId));
   useEffect(() => {
-    getPassbookSnapshotAction("demo-user").then(setSnap);
-  }, []);
-  const monthly = getMonthlyEarnings("demo-user");
-  const live = useLiveEarnings("demo-user");
+    setSnap(getPassbookSnapshot(userId));
+    getPassbookSnapshotAction(userId).then(setSnap);
+  }, [userId]);
+  const monthly = getMonthlyEarnings(userId);
+  const live = useLiveEarnings(userId);
   const prevBumpRef = useRef(0);
   const assetCount = owned.length || snap.assetCount;
 
@@ -528,8 +532,9 @@ export default function WalletPage() {
   const [mounted, setMounted] = useState(false);
   const [corporateMode, setCorporateMode] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
-  const notifications = getNotifications("demo-user");
-  const unreadCount = getUnreadCount("demo-user");
+  const userId = useUserId();
+  const notifications = getNotifications(userId);
+  const unreadCount = getUnreadCount(userId);
 
   function handleToggleMute() {
     const newMuted = toggleMute();

@@ -7,28 +7,30 @@ import {
   setThreshold,
   triggerWithdraw,
 } from "@/lib/shima-ledger";
+import { useUserId } from "@/components/AuthProvider";
 
 const THRESHOLD_OPTIONS = [1_000, 3_000, 10_000] as const;
 
 export function MicroWalletPanel() {
-  const [balance, setBalance] = useState(() => getMicroBalance("demo-user"));
+  const userId = useUserId();
+  const [balance, setBalance] = useState(() => getMicroBalance(userId));
   const progressId = useId();
   const switchId = useId();
 
   const progressPct = Math.min(100, (balance.displayJpy / balance.threshold) * 100);
 
   const handleToggleAuto = () => {
-    const updated = setAutoWithdraw("demo-user", !balance.autoWithdraw);
+    const updated = setAutoWithdraw(userId, !balance.autoWithdraw);
     setBalance(updated);
   };
 
   const handleThreshold = (val: number) => {
-    const updated = setThreshold("demo-user", val);
+    const updated = setThreshold(userId, val);
     setBalance(updated);
   };
 
   const handleWithdraw = () => {
-    const updated = triggerWithdraw("demo-user");
+    const updated = triggerWithdraw(userId);
     setBalance(updated);
   };
 

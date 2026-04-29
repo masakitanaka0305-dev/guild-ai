@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MOCK_JOBS } from "@/lib/jobs";
 import { OnboardingModal } from "@/components/OnboardingModal";
+import { AuthBar } from "@/components/AuthBar";
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
@@ -60,8 +61,11 @@ export default function HomePage() {
   return (
     <main className="max-w-2xl mx-auto space-y-8">
 
+      {/* ── Auth bar (session-aware login/signup or user/logout) ── */}
+      <AuthBar />
+
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 pt-8">
+      <section className="px-4 sm:px-6 pt-2">
         <h1 className="text-[28px] sm:text-4xl lg:text-5xl font-extrabold leading-[1.2] tracking-tight text-[#1F1B16] mb-4 sm:mb-5">
           <span className="block">AIエージェントで、</span>
           <span className="block">あなたの時間を</span>
