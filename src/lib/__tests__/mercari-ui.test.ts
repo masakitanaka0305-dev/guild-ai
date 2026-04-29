@@ -194,6 +194,13 @@ describe("home: unified how-block", () => {
     const spanBlocks = (h1.match(/className="block/g) ?? []).length;
     expect(spanBlocks).toBeGreaterThanOrEqual(3);
   });
+
+  it("hero h1 uses tightened mobile font size text-[28px] and leading-[1.2]", () => {
+    const h1Match = src.match(/<h1[^>]*>/);
+    expect(h1Match).not.toBeNull();
+    expect(h1Match![0]).toContain("text-[28px]");
+    expect(h1Match![0]).toContain("leading-[1.2]");
+  });
 });
 
 // ─── 9. Onboarding banner + modal ────────────────────────────────────────────
@@ -236,6 +243,12 @@ describe("onboarding: banner and modal", () => {
   it("modal shows 100% and does not show 70%", () => {
     expect(modalSrc).toContain("100%");
     expect(modalSrc).not.toContain("70%");
+  });
+
+  it("onboarding banner uses light sky gradient (not gold)", () => {
+    expect(pageSrc).toContain("from-[#E0F2FE]");
+    expect(pageSrc).not.toContain("#F2DFA0");
+    expect(pageSrc).not.toContain("#F5E8B0");
   });
 });
 

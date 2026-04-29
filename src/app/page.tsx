@@ -62,12 +62,12 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pt-8">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1F1B16] leading-[1.15] tracking-tight mb-4 sm:mb-5">
-          <span className="block lg:inline">AIエージェントで、</span>
-          <span className="block lg:inline"><span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を</span>
-          <span className="block lg:inline">アップデート。</span>
+        <h1 className="text-[28px] sm:text-4xl lg:text-5xl font-extrabold leading-[1.2] tracking-tight text-[#1F1B16] mb-4 sm:mb-5">
+          <span className="block">AIエージェントで、</span>
+          <span className="block">あなたの時間を</span>
+          <span className="block">アップデート。</span>
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 font-medium mb-6">
+        <p className="text-base sm:text-lg font-semibold text-[#4A4458] mt-3 mb-5">
           日本最大のAIエージェント・プラットフォーム
         </p>
         <Link
@@ -88,10 +88,7 @@ export default function HomePage() {
             aria-label="初めてのギルドエーアイ講座"
             onClick={openModal}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openModal(); }}
-            className="relative flex items-center gap-4 sm:gap-5 rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-220 cursor-pointer overflow-hidden px-5 py-4 sm:px-6 sm:py-5"
-            style={{
-              background: "linear-gradient(120deg, #FAFAF7 0%, #F2DFA0 60%, #F5E8B0 100%)",
-            }}
+            className="relative flex items-center gap-4 sm:gap-5 rounded-3xl shadow-sm ring-1 ring-sky-100/60 hover:shadow-md active:scale-[0.99] transition-all duration-220 cursor-pointer overflow-hidden px-5 py-4 sm:px-6 sm:py-5 bg-gradient-to-br from-[#E0F2FE] to-[#BAE6FD]"
           >
             {/* Mascot left */}
             <Image
