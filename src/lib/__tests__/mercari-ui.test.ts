@@ -224,6 +224,14 @@ describe("onboarding: banner and modal", () => {
     expect(modalSrc).toContain('今すぐ ノートを残す');
     expect(modalSrc).toContain('href="/sell"');
   });
+
+  it("modal step bodies contain key highlight terms", () => {
+    expect(modalSrc).toContain("専用の API エンドポイント");
+    expect(modalSrc).toContain("70%");
+    expect(modalSrc).toContain("推定時給");
+    expect(modalSrc).toContain("max-h-[80vh]");
+    expect(modalSrc).toContain("overflow-y-auto");
+  });
 });
 
 // ─── 6. jargon-lint: allowed terms don't trigger forbidden list ───────────────

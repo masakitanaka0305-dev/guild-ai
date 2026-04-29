@@ -4,12 +4,63 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const STEPS = [
-  { emoji: "📝", label: "ノートを残す",    sub: "30秒でOK" },
-  { emoji: "🤖", label: "AIが働く",       sub: "24時間 自動で" },
-  { emoji: "💴", label: "¥が入る",        sub: "チャリン、と" },
-  { emoji: "🏦", label: "マイ銀行で確認", sub: "推定時給も見える" },
-] as const;
+function Hi({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-[#E64545] font-semibold">{children}</span>
+  );
+}
+
+const STEPS: Array<{
+  emoji: string;
+  label: string;
+  sub: string;
+  body: React.ReactNode;
+}> = [
+  {
+    emoji: "📝",
+    label: "ノートを残す",
+    sub: "30秒でOK",
+    body: (
+      <>
+        あなたの知恵やノウハウを、Markdown で書くか、ファイルから貼り付けるだけ。AI が{" "}
+        <Hi>タイトル・想定価格・難易度</Hi>を自動で提案します。
+      </>
+    ),
+  },
+  {
+    emoji: "🤖",
+    label: "AIが働く",
+    sub: "24時間 自動で",
+    body: (
+      <>
+        公開した瞬間、ノートには<Hi>専用の API エンドポイント</Hi>が割り当てられます。
+        世界中の AI エージェントが、必要な時に呼び出して使ってくれます。
+      </>
+    ),
+  },
+  {
+    emoji: "💴",
+    label: "¥が入る",
+    sub: "チャリン、と",
+    body: (
+      <>
+        呼び出されるたびに<Hi>1 コール 0.1〜10 円</Hi>が発生し、
+        作成者であるあなたに<Hi>70%</Hi>が還元。寝ている間も稼ぎ続けます。
+      </>
+    ),
+  },
+  {
+    emoji: "🏦",
+    label: "マイ銀行で確認",
+    sub: "推定時給も見える",
+    body: (
+      <>
+        マイ銀行画面で<Hi>直近の印税・推定時給・累計売上</Hi>を
+        10 秒ごとに更新表示。稼働中のノート上位3件もリアルタイムで確認できます。
+      </>
+    ),
+  },
+];
 
 interface Props {
   onClose: () => void;
@@ -19,21 +70,14 @@ export function OnboardingModal({ onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = "onboarding-modal-title";
 
-  // Focus close button on mount
-  useEffect(() => {
-    closeRef.current?.focus();
-  }, []);
+  useEffect(() => { closeRef.current?.focus(); }, []);
 
-  // Close on Escape
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  // Prevent body scroll while open
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -49,7 +93,7 @@ export function OnboardingModal({ onClose }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative w-full max-w-md bg-white rounded-3xl shadow-xl p-6 animate-[slideInToast_200ms_ease-out]"
+        className="relative w-full max-w-md bg-white rounded-3xl shadow-xl p-6 max-h-[80vh] overflow-y-auto overscroll-contain animate-[slideInToast_200ms_ease-out]"
       >
         {/* Close button */}
         <button
@@ -80,18 +124,23 @@ export function OnboardingModal({ onClose }: Props) {
         </div>
 
         {/* 4 steps */}
-        <ol className="space-y-3 mb-6">
+        <ol className="space-y-5 mb-6">
           {STEPS.map((s, i) => (
-            <li key={s.label} className="flex items-center gap-3">
-              <span className="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-sm font-bold text-[var(--n-muted,#6B6456)]">
+            <li key={s.label} className="flex gap-3">
+              <span className="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-sm font-bold text-[var(--n-muted,#6B6456)] mt-0.5">
                 {i + 1}
               </span>
-              <span className="text-[28px] leading-none flex-shrink-0" role="img" aria-label={s.label}>
+              <span
+                className="text-[28px] leading-none flex-shrink-0 mt-0.5"
+                role="img"
+                aria-label={s.label}
+              >
                 {s.emoji}
               </span>
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-[#1F1B16]">{s.label}</p>
-                <p className="text-xs text-gray-500">{s.sub}</p>
+                <p className="text-xs text-gray-500 mb-1">{s.sub}</p>
+                <p className="text-sm text-gray-700 leading-relaxed">{s.body}</p>
               </div>
             </li>
           ))}
