@@ -12,9 +12,15 @@ const MOCK_NOTES = [
 ] as const;
 
 const ACTION_TILES = [
-  { emoji: "📝", label: "のこす", sub: "30秒", href: "/sell" },
+  { emoji: "📝", label: "のこす", sub: "30秒", href: "/bank" },
   { emoji: "💼", label: "かせぐ", sub: "即決",  href: "/jobs" },
   { emoji: "🏦", label: "ふえる", sub: "24時間", href: "/guild" },
+] as const;
+
+const HOW_TO_STEPS = [
+  { emoji: "📝", label: "ノートを残す", sub: "（30秒で OK）" },
+  { emoji: "🤖", label: "AIが働く",    sub: "（24時間 自動）" },
+  { emoji: "💴", label: "¥が入る",     sub: "（チャリン）" },
 ] as const;
 
 const RANK_COLORS: Record<string, string> = {
@@ -37,7 +43,7 @@ function SectionHeading({ title }: { title: string }) {
 
 export default function HomePage() {
   return (
-    <main className="max-w-2xl mx-auto space-y-8">
+    <main className="max-w-2xl mx-auto space-y-10">
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6 pt-8">
@@ -46,9 +52,14 @@ export default function HomePage() {
           <span className="text-[var(--n-primary,#E64545)]">あなたの時間</span>を<br />
           アップデート。
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 font-medium">
-          日本最大のAIエージェント・プラットフォーム
-        </p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <p className="text-base sm:text-lg text-gray-600 font-medium">
+            日本最大のAIエージェント・プラットフォーム
+          </p>
+          <span className="inline-flex items-center border border-gray-300 rounded-full px-3 py-1 text-xs text-gray-600 font-medium whitespace-nowrap">
+            いますぐ ¥30,000 から
+          </span>
+        </div>
         <div className="flex gap-3 mt-6 flex-wrap">
           <Link
             href="/bank"
@@ -63,6 +74,31 @@ export default function HomePage() {
             いま かせぐ
           </Link>
         </div>
+      </section>
+
+      {/* ── How-to 3 steps ───────────────────────────────────── */}
+      <section className="px-4 sm:px-6">
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">こんなふうに使います</p>
+        <ol className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-0">
+          {HOW_TO_STEPS.map((s, i) => (
+            <li key={s.label} className="flex sm:flex-1 items-center gap-3 sm:flex-col sm:gap-2 sm:text-center">
+              <div
+                role="img"
+                aria-label={`ステップ${i + 1}：${s.label}`}
+                className="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-full border border-gray-200 bg-white text-[28px]"
+              >
+                {s.emoji}
+              </div>
+              <div className="flex-1 sm:flex-none">
+                <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">{s.label}</p>
+                <p className="text-xs text-gray-500">{s.sub}</p>
+              </div>
+              {i < HOW_TO_STEPS.length - 1 && (
+                <span className="hidden sm:block text-gray-300 text-xl mx-2 flex-shrink-0" aria-hidden>→</span>
+              )}
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* ── 3 Action tiles ────────────────────────────────────── */}
@@ -131,14 +167,17 @@ export default function HomePage() {
 
       {/* ── Bottom banner ─────────────────────────────────────── */}
       <section className="px-4 sm:px-6">
-        <div className="bg-gray-100 rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
-          <p className="text-base font-bold text-[var(--n-text,#1A1714)]">まだ かせいでない？</p>
-          <Link
-            href="/bank"
-            className="shrink-0 h-10 px-5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-sm hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 flex items-center"
-          >
-            いま のこす
-          </Link>
+        <div className="bg-gray-100 rounded-2xl px-5 py-4">
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <p className="text-base font-bold text-[var(--n-text,#1A1714)]">まだ かせいでない？</p>
+            <Link
+              href="/bank"
+              className="shrink-0 h-10 px-5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-sm hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 flex items-center"
+            >
+              いま のこす
+            </Link>
+          </div>
+          <p className="text-sm text-gray-600">ノートを残すだけで、AIがあなたの代わりに働きます。</p>
         </div>
       </section>
 

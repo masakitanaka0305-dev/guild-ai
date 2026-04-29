@@ -161,6 +161,32 @@ describe("sell: MD file input", () => {
   });
 });
 
+// ─── 8. How-to 3-step section + price hint ───────────────────────────────────
+
+describe("home: 3-step illustration", () => {
+  const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+
+  it("home has heading こんなふうに使います", () => {
+    expect(src).toContain("こんなふうに使います");
+  });
+
+  it("3 steps (ノートを残す / AIが働く / ¥が入る) exist in <ol>", () => {
+    expect(src).toMatch(/<ol/);
+    expect(src).toContain("ノートを残す");
+    expect(src).toContain("AIが働く");
+    expect(src).toContain("¥が入る");
+  });
+
+  it("price hint chip いますぐ ¥30,000 から exists in hero", () => {
+    expect(src).toContain("いますぐ ¥30,000 から");
+  });
+
+  it("step circles have aria-label with ステップN", () => {
+    expect(src).toContain("aria-label");
+    expect(src).toContain("ステップ");
+  });
+});
+
 // ─── 6. jargon-lint: allowed terms don't trigger forbidden list ───────────────
 
 describe("jargon-lint: permitted mercari-copy terms", () => {
