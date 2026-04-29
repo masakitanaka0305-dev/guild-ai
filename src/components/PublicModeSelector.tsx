@@ -28,7 +28,9 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
             key={info.mode}
             className={`flex items-start gap-3 rounded-xl border p-3 cursor-pointer transition-all ${
               mode === info.mode
-                ? "border-kaki bg-kaki/5 ring-1 ring-kaki/20"
+                ? info.mode === "encapsulated"
+                  ? "border-red-400 bg-red-50 ring-1 ring-red-200"
+                  : "border-kaki bg-kaki/5 ring-1 ring-kaki/20"
                 : "border-kuroko/10 bg-white hover:border-kaki/20"
             }`}
           >
@@ -38,11 +40,15 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
               value={info.mode}
               checked={mode === info.mode}
               onChange={() => setMode(info.mode)}
-              className="mt-0.5 accent-kaki"
+              className={`mt-0.5 ${info.mode === "encapsulated" ? "accent-red-500" : "accent-kaki"}`}
               aria-label={info.label}
             />
             <div className="flex-1 min-w-0">
-              <p className={`text-sm font-semibold ${mode === info.mode ? "text-kaki" : "text-kuroko"}`}>
+              <p className={`text-sm font-semibold ${
+                mode === info.mode
+                  ? info.mode === "encapsulated" ? "text-red-600" : "text-kaki"
+                  : "text-kuroko"
+              }`}>
                 {info.label}
               </p>
               <p className="text-xs text-[#9890A8] mt-0.5 leading-relaxed">{info.description}</p>
@@ -51,9 +57,15 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
         ))}
       </div>
 
-      {selected?.badge && mode === "blackbox" && (
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5">
-          <span className="text-sm">{selected.badge}</span>
+      {selected?.badge && (mode === "blackbox" || mode === "encapsulated") && (
+        <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 ${
+          mode === "encapsulated"
+            ? "border-yellow-400 bg-yellow-50"
+            : "border-blue-200 bg-blue-50"
+        }`}>
+          <span className={`text-sm font-semibold ${mode === "encapsulated" ? "text-red-700" : ""}`}>
+            {selected.badge}
+          </span>
         </div>
       )}
 

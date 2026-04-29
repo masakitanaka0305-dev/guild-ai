@@ -1,8 +1,9 @@
 // Global IP Protection — Black-box Execution Mode
-// Three visibility levels: open (default) | api-only | blackbox
+// Four visibility levels: open (default) | api-only | blackbox | encapsulated
 // Blackbox: GET excludes mdBody/source; only POST execution permitted.
+// Encapsulated (highest protection): adds crawler UA blocking + rate limit — see src/lib/encapsulated.
 
-export type VisibilityMode = "open" | "api-only" | "blackbox";
+export type VisibilityMode = "open" | "api-only" | "blackbox" | "encapsulated";
 
 export interface BlackboxOptions {
   enabledAt?: string;
@@ -54,19 +55,19 @@ export function getVisibilityRecord(guildId: string): VisibilityRecord | null {
 
 // ─── Response filtering ───────────────────────────────────────────────────────
 
-/** Remove mdBody + source from response when visibility is "blackbox" */
+/** Remove mdBody + source from response when visibility is "blackbox" or "encapsulated" */
 export function filterGetResponse<T extends Record<string, unknown>>(
   guildId: string,
   data: T,
 ): Record<string, unknown> {
   const mode = getVisibility(guildId);
-  if (mode !== "blackbox") return data;
+  if (mode !== "blackbox" && mode !== "encapsulated") return data;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { mdBody: _mb, source: _s, body: _b, content: _c, ...rest } = data;
   return rest;
 }
 
-/** Whether GET body content is accessible */
+/** Whether GET body content is accessible (only "open" mode exposes body) */
 export function isBodyVisible(guildId: string): boolean {
   return getVisibility(guildId) === "open";
 }
@@ -101,6 +102,12 @@ export const VISIBILITY_MODES: VisibilityModeInfo[] = [
     label: "Blackbox（実行専用）",
     description: "コードは見せない、結果だけ売る。海外スクレイピング対策済み。",
     badge: "🛡 海外スクレイピング対策済み",
+  },
+  {
+    mode: "encapsulated",
+    label: "Encapsulated（最高保護）",
+    description: "クローラー UA を即ブロック + rate limit + 実行従量課金。最上位保護。",
+    badge: "🛡 Encapsulated Intelligence",
   },
 ];
 
