@@ -124,12 +124,20 @@ export default function BusinessPage() {
           月額定額で全ゼロデイアラートを受信。
           Slack・Teams 連携、API 配信にも対応。
         </p>
-        <Link
-          href="/marketplace/pro"
-          className="inline-block rounded-xl bg-[var(--n-primary,#E64545)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
-        >
-          法人検索・相談 →
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/business/checkout"
+            className="inline-block rounded-xl bg-[var(--n-primary,#E64545)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+          >
+            プランを選んで始める →
+          </Link>
+          <Link
+            href="/marketplace/pro"
+            className="inline-block rounded-xl border border-kuroko/20 px-8 py-3 text-sm font-bold text-kuroko hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors"
+          >
+            法人検索・相談
+          </Link>
+        </div>
         <p className="mt-3 text-[10px] text-[#9890A8]">初月無料 · クレジットカード不要（モック）</p>
       </div>
     </main>
