@@ -21,8 +21,6 @@ import { RawDataPanel } from "@/components/RawDataPanel";
 import { ShareButton } from "@/components/ShareButton";
 import { getGithubGreenScore, getLearningProgress, applySkillBoost } from "@/lib/skill-sync";
 import { ActivityPulse } from "@/components/ActivityPulse";
-import { ProToggle } from "@/components/ProToggle";
-import { ProSummaryRow } from "@/components/ProSummaryRow";
 
 // ─── Rank styling ─────────────────────────────────────────────────────────────
 
@@ -539,8 +537,6 @@ export default function WalletPage() {
   const [mounted, setMounted] = useState(false);
   const [corporateMode, setCorporateMode] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
-  const [proMode, setProMode] = useState(false);
-
   const notifications = getNotifications("demo-user");
   const unreadCount = getUnreadCount("demo-user");
 
@@ -556,20 +552,6 @@ export default function WalletPage() {
       if (stored === "true") { setSoundMuted(true); }
     } catch { /* ignore */ }
   }, []);
-
-  useEffect(() => {
-    try {
-      if (localStorage.getItem("guild_pro_mode") === "true") { setProMode(true); }
-    } catch { /* ignore */ }
-  }, []);
-
-  function handleToggleProMode() {
-    setProMode((v) => {
-      const next = !v;
-      try { localStorage.setItem("guild_pro_mode", String(next)); } catch { /* ignore */ }
-      return next;
-    });
-  }
 
   useEffect(() => {
     setMounted(true);
@@ -603,9 +585,6 @@ export default function WalletPage() {
             {soundMuted ? "🔕" : "🔔"}
           </button>
           <NotificationBell notifications={notifications} unreadCount={unreadCount} />
-          {/* Pro mode toggle */}
-          <span className="text-xs font-semibold text-[#9890A8] hidden sm:inline">Pro</span>
-          <ProToggle isOn={proMode} onToggle={handleToggleProMode} />
           <Link href="/showcase" className="btn-secondary" aria-label="つくったものを見る">
             ✨ つくったもの →
           </Link>
@@ -618,19 +597,6 @@ export default function WalletPage() {
         </div>
       ) : (
         <>
-          {/* Pro mode summary — high-density metrics */}
-          {proMode && (
-            <ProSummaryRow
-              rps={4.2}
-              trustScore={820}
-              totalValueJpy={128000}
-              maxValueJpy={240000}
-              minValueJpy={48000}
-              last24hJpy={3200}
-              last30dPnlJpy={18500}
-            />
-          )}
-
           {/* 今月の通帳 — always shown */}
           <PassbookCard owned={owned} />
 

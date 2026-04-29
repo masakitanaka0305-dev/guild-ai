@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import TrustScore from "@/components/trust-score/TrustScore";
 import { MOCK_JOBS } from "@/lib/jobs";
-import { getTickerSnapshot } from "@/lib/terminal-data";
 
 // ─── Mock tile data ───────────────────────────────────────────────────────────
 
@@ -22,35 +21,6 @@ const RANK_COLORS: Record<string, string> = {
   A: "bg-[var(--n-text,#1A1714)]/5 text-[var(--n-text,#1A1714)] border-[var(--n-text,#1A1714)]/15",
   B: "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border-[var(--n-divider,rgba(0,0,0,0.08))]",
 };
-
-// ─── Market heat bar ──────────────────────────────────────────────────────────
-
-function MarketHeatBar() {
-  const [pulses, setPulses] = useState([3, 7, 2, 5, 4, 6, 1, 8, 3]);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setPulses((prev) => [...prev.slice(1), Math.floor(Math.random() * 9) + 1]);
-    }, 1800);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div
-      className="flex items-end gap-0.5 h-6"
-      aria-label="市場の熱量（直近の取引・登記件数）"
-      role="img"
-    >
-      {pulses.map((h, i) => (
-        <div
-          key={i}
-          className="w-1.5 rounded-sm bg-[var(--n-gold,#D4AF37)] transition-all duration-700"
-          style={{ height: `${(h / 9) * 100}%`, opacity: 0.4 + (h / 9) * 0.6 }}
-        />
-      ))}
-    </div>
-  );
-}
 
 // ─── Note tile ────────────────────────────────────────────────────────────────
 
@@ -113,40 +83,6 @@ function JobTile({ job }: { job: typeof MOCK_JOBS[number] }) {
 
 export default function HomePage() {
   const [tab, setTab] = useState<"notes" | "jobs">("notes");
-  const [isNameraka, setIsNameraka] = useState(true);
-  const ticker = getTickerSnapshot();
-
-  useEffect(() => {
-    const update = () => {
-      const t = document.documentElement.getAttribute("data-theme") ?? "nameraka";
-      setIsNameraka(t === "nameraka");
-    };
-    update();
-    const obs = new MutationObserver(update);
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => obs.disconnect();
-  }, []);
-
-  if (!isNameraka) {
-    // ─── Fallback layout (pro/kawaii keeps original) ──────────
-    return (
-      <main className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto py-10">
-        <h1 className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-[var(--t-text,#1A1628)] mb-4">
-          思想を登記すれば、<br />
-          <span className="text-[var(--t-gold,#1A6BB5)]">AIが買いに来る。</span>
-        </h1>
-        <p className="text-sm text-[#9FB1C8] mb-6">
-          あなたのスキルやコードを資産として登録すると、世界中のAIが利用料を払って使ってくれます。
-        </p>
-        <div className="flex gap-3">
-          <Link href="/sell" className="btn-primary">登録する →</Link>
-          <Link href="/jobs" className="btn-secondary">案件を見る</Link>
-        </div>
-      </main>
-    );
-  }
-
-  // ─── Nameraka layout ──────────────────────────────────────────────────────
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
@@ -201,8 +137,8 @@ export default function HomePage() {
 
       {/* ── Trust demo (collapsed) ───────────────────────────── */}
       <section className="pb-10">
-        <details className="bg-[var(--n-surface,#0E2240)] border border-[var(--n-divider,#1F3A66)] rounded-2xl p-4">
-          <summary className="text-sm text-[var(--n-muted,#9FB1C8)] cursor-pointer select-none">
+        <details className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4">
+          <summary className="text-sm text-[var(--n-muted,#6B6456)] cursor-pointer select-none">
             信用スコアのしくみ →
           </summary>
           <div className="mt-4">

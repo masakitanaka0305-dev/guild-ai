@@ -902,26 +902,6 @@ function SellContent() {
 
       <StepIndicator current="register" />
 
-      {/* Lodge header (terminal) — visible via CSS when data-theme=terminal */}
-      <div className="lodge-terminal-header mt-4 hidden">
-        <span className="text-[10px] font-mono text-[var(--text-muted,#98A1B0)] uppercase tracking-widest">Lodge</span>
-        <h1 className="mt-0.5 text-sm font-mono font-bold text-[var(--t-gold,#D4AF37)] uppercase tracking-widest">
-          ノート提出 — Recipe Registration
-        </h1>
-        <p className="text-[10px] font-mono text-[var(--text-muted,#98A1B0)] mt-0.5">
-          GitHub URL / CCAF / テキスト形式対応。AI評価後に即時市場公開。
-        </p>
-      </div>
-
-      {/* Kawaii Header (hidden in terminal via kawaii-only CSS) */}
-      <div className="kawaii-only mt-4">
-        <span className="text-xs font-semibold uppercase tracking-widest text-kaki">おしごとに登録</span>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-kuroko leading-snug flex items-center gap-2">
-          <PackageIcon size={22} className="text-kaki" />おしごとに登録する
-        </h1>
-        <p className="mt-1 text-sm text-[#9890A8]">たからものを30秒でお店にならべる</p>
-      </div>
-
       {/* Omakase banner */}
       <button
         type="button"
