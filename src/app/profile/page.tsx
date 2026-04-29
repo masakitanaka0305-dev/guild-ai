@@ -4,14 +4,24 @@ import Link from "next/link";
 import { RankShield } from "@/components/RankShield";
 import { ComplexityMeter } from "@/components/ComplexityMeter";
 import { AreaChart } from "@/components/AreaChart";
+import { ImpactCard } from "@/components/ImpactCard";
 import {
   getDailyUsage, getWeeklyUsage, getLifetimeUsage,
   getDeltas, getLockUnlockedRewards, getUsageHistory,
 } from "@/lib/api-usage";
 import { getComplexityBreakdown } from "@/lib/complexity-score";
 import { getMyAssets } from "@/lib/portfolio";
+import { getImpactStats } from "@/lib/impact";
+import { getMicroBalance } from "@/lib/shima-ledger";
 
 const HANDLE = "demo-user";
+
+function formatMilliDisplay(milliJpy: number): string {
+  const jpy = milliJpy / 1_000;
+  const intPart = Math.floor(jpy).toLocaleString("ja-JP");
+  const frac = (jpy % 1).toFixed(2).slice(1);
+  return `¥${intPart}${frac}`;
+}
 
 // ─── Monogram circle ─────────────────────────────────────────────────────────
 
@@ -75,6 +85,8 @@ export default function ProfilePage() {
   const topRank  = assets.find((a) => a.status === "active") ? "S" : "A";
   const activeCount = assets.filter((a) => a.status === "active").length;
   const totalCalls  = assets.reduce((s, a) => s + a.callsLast30, 0);
+  const impact = getImpactStats(HANDLE);
+  const microBalance = getMicroBalance(HANDLE);
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12">
@@ -107,6 +119,14 @@ export default function ProfilePage() {
         {/* 30-day area chart */}
         <div className="mt-3 h-16 rounded-2xl overflow-hidden bg-[var(--n-surface-2,#F5F3EE)] px-2 py-1">
           <AreaChart data={history} title="直近30日のAPI利用料推移" />
+        </div>
+
+        {/* 端数残高 (1-line summary) */}
+        <div className="mt-2 flex items-center justify-between px-4 py-2 bg-[var(--n-surface-2,#F5F3EE)] rounded-xl">
+          <span className="text-[10px] text-[var(--n-muted,#6B6456)]">端数残高</span>
+          <span className="text-xs font-bold tabular-nums text-[var(--n-gold,#D4AF37)]">
+            {formatMilliDisplay(microBalance.totalMilliJpy)}
+          </span>
         </div>
       </section>
 
@@ -141,6 +161,14 @@ export default function ProfilePage() {
         {/* Complexity meter */}
         <ComplexityMeter score={complexity.score} label={complexity.label} />
       </section>
+
+      {/* ── 2b. 社会インパクト ─────────────────────────────────────── */}
+      <ImpactCard
+        savedProjects={impact.savedProjects}
+        contributionScore={impact.contributionScore}
+        thisMonthRank={impact.ranks.thisMonth}
+        allTimeRank={impact.ranks.allTime}
+      />
 
       {/* ── 3. 自己紹介（最小限） ──────────────────────────────────── */}
       <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
