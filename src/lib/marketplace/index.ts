@@ -7,7 +7,7 @@ import { audit } from "@/lib/ai-auditor";
 import { computeFloorPrice } from "@/lib/ai-auditor";
 import { computeTrustScore } from "@/lib/trust-score";
 
-type ListingInput = Omit<Listing, "rank" | "floorPrice">;
+type ListingInput = Omit<Listing, "rank" | "floorPrice"> & { mdContent?: string };
 
 /**
  * autoList — takes a raw Listing + Trust Score inputs, runs the AI Auditor,
@@ -18,7 +18,7 @@ export function autoList(
   trustInput: TrustScoreInput,
   listedAt = "2026-04-28T00:00:00.000Z"
 ): MarketplaceListing {
-  const auditResult = audit({ ccaf: listing.ccaf, vercelUptimeDays: listing.vercelUptimeDays });
+  const auditResult = audit({ ccaf: listing.ccaf, vercelUptimeDays: listing.vercelUptimeDays, mdContent: listing.mdContent });
   const trustScore = computeTrustScore(trustInput);
   const floorPrice = computeFloorPrice(listing.basePrice, trustScore.score);
   return {
@@ -70,7 +70,7 @@ const MOCK_RAW: Array<{
       description:
         "TypeScript/Python に対応した意図駆動コード補完エンジン。Proof of Thought により設計意図が API として公開される。",
       ccaf: {
-        intentSignals: ["設計レビュー済み", "ペアプロ実施"],
+        intentSignals: ["設計レビュー済み", "ペアプロ実施", "author-statement"],
         thoughtDensity: 92,
         iterations: 28,
         authorId: "creator-001",
@@ -79,6 +79,12 @@ const MOCK_RAW: Array<{
       vercelUptimeDays: 45,
       basePrice: 50000,
       githubUrl: "https://github.com/guild-ai/code-complete-beta",
+      mdContent: `
+async function complete(input: string) { }
+function validate(data: unknown) { }
+class CompletionEngine { }
+// test example: output: { result: "ok" }
+`,
     },
     trustInput: { qualityHistory: 88, discordContribution: 75, xAmplification: 60 },
   },

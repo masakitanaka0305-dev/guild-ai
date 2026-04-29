@@ -1,13 +1,20 @@
 import { describe, it, expect } from "vitest";
 import { autoList, sortListings, filterListings, MOCK_MARKETPLACE } from "../index";
 
+const S_MD = `
+async function process(input: string) { }
+function validate(data: unknown) { }
+class Engine { }
+// test example: output: { result: 42 }
+`;
+
 const SAMPLE: Parameters<typeof autoList>[0] = {
   id: "test-001",
   ownerId: "creator-test",
   title: "Test Asset",
   description: "Test description",
   ccaf: {
-    intentSignals: ["design review"],
+    intentSignals: ["design review", "author-statement", "manual-edit"],
     thoughtDensity: 85,
     iterations: 10,
     authorId: "creator-test",
@@ -15,6 +22,7 @@ const SAMPLE: Parameters<typeof autoList>[0] = {
   },
   vercelUptimeDays: 45,
   basePrice: 10000,
+  mdContent: S_MD,
 };
 
 describe("autoList", () => {

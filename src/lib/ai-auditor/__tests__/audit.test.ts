@@ -3,7 +3,7 @@ import { audit, computeFloorPrice } from "../index";
 import type { CCAF } from "@/types";
 
 const baseCCAF = (overrides: Partial<CCAF> = {}): CCAF => ({
-  intentSignals: ["author-statement"],
+  intentSignals: ["author-statement", "voice-intent", "manual-edit"],
   thoughtDensity: 85,
   iterations: 12,
   authorId: "user_1",
@@ -11,9 +11,18 @@ const baseCCAF = (overrides: Partial<CCAF> = {}): CCAF => ({
   ...overrides
 });
 
+// S rank requires mdContent with running code + test evidence
+const S_MD = `
+async function processInvoice(input: string) { }
+function validate(data: unknown) { }
+class InvoiceProcessor { }
+def run(x): pass
+// test example: output: { result: 42 }
+`;
+
 describe("ai-auditor.audit", () => {
-  it("assigns S rank when density>=80, uptime>=30, and intent signals present (魂の登記)", () => {
-    const result = audit({ ccaf: baseCCAF(), vercelUptimeDays: 45 });
+  it("assigns S rank when density>=70, uptime>=30, intentSignals>=3, running code + test evidence (魂の登記)", () => {
+    const result = audit({ ccaf: baseCCAF(), vercelUptimeDays: 45, mdContent: S_MD });
     expect(result.rank).toBe("S");
     expect(result.reasons.join(" ")).toMatch(/魂の登記/);
   });
@@ -21,7 +30,8 @@ describe("ai-auditor.audit", () => {
   it("never reaches S when intent signals are missing (魂の登記 guard)", () => {
     const result = audit({
       ccaf: baseCCAF({ intentSignals: [] }),
-      vercelUptimeDays: 90
+      vercelUptimeDays: 90,
+      mdContent: S_MD,
     });
     expect(result.rank).not.toBe("S");
   });

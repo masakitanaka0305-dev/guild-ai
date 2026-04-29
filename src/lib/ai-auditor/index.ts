@@ -1,15 +1,29 @@
 // GUILD AI — ai-auditor (知能鑑定士)
-// Decides S/A/B rank from CCAF + Vercel uptime.
+// Decides S/A/B rank from CCAF + Vercel uptime + running code evidence.
+// Quality-Gate (Shima-Final): S rank requires hasRunningCode + test evidence.
 
 import type { AuditResult, CCAF, Rank } from "@/types";
 
 export interface AuditInput {
   ccaf: CCAF;
   vercelUptimeDays: number;
+  mdContent?: string;  // optional: raw MD text for running-code detection
 }
 
-const S_THRESHOLD = { density: 80, uptime: 30 } as const;
+// Quality-Gate Shima-Final: S rank tightened
+const S_THRESHOLD = { density: 70, uptime: 30, intentSignals: 3 } as const;
 const A_THRESHOLD = { density: 60, uptime: 7 } as const;
+
+// Running code keywords (execution declarations)
+const RUNNING_CODE_PATTERNS = [/\bfunction\b/, /\basync\b/, /\bdef\b/, /\bclass\b/, /\bfn\s/];
+const TEST_EVIDENCE_PATTERNS = [/\btest\b/i, /\bverify\b/i, /\bexample\b/i, /output:/i];
+
+/** Detect if MD contains at least 3 running-code declarations */
+export function evaluateDepth(mdContent: string): { hasRunningCode: boolean; hasTestEvidence: boolean } {
+  const runningCodeCount = RUNNING_CODE_PATTERNS.filter((p) => p.test(mdContent)).length;
+  const hasTestEvidence = TEST_EVIDENCE_PATTERNS.some((p) => p.test(mdContent));
+  return { hasRunningCode: runningCodeCount >= 3, hasTestEvidence };
+}
 
 function buildJustification(ccaf: CCAF, vercelUptimeDays: number, rank: Rank): string {
   const signals = ccaf.intentSignals.length;
@@ -21,19 +35,31 @@ function buildJustification(ccaf: CCAF, vercelUptimeDays: number, rank: Rank): s
 }
 
 export function audit(input: AuditInput): AuditResult {
-  const { ccaf, vercelUptimeDays } = input;
+  const { ccaf, vercelUptimeDays, mdContent = "" } = input;
   const reasons: string[] = [];
 
-  const hasIntent = ccaf.intentSignals.length > 0;
+  const hasIntent = ccaf.intentSignals.length >= S_THRESHOLD.intentSignals;
+  const { hasRunningCode, hasTestEvidence } = evaluateDepth(mdContent);
 
   let rank: Rank = "B";
   if (
     ccaf.thoughtDensity >= S_THRESHOLD.density &&
     vercelUptimeDays >= S_THRESHOLD.uptime &&
-    hasIntent
+    hasIntent &&
+    hasRunningCode &&
+    hasTestEvidence
   ) {
     rank = "S";
-    reasons.push("魂の登記: thoughtDensity ≥ 80, uptime ≥ 30d, intent signals present");
+    reasons.push("魂の登記: thoughtDensity ≥ 70, uptime ≥ 30d, intentSignals ≥ 3, 実稼働コード ✓, テスト証跡 ✓");
+  } else if (
+    ccaf.thoughtDensity >= S_THRESHOLD.density &&
+    vercelUptimeDays >= S_THRESHOLD.uptime &&
+    hasIntent &&
+    (!hasRunningCode || !hasTestEvidence)
+  ) {
+    rank = "A";
+    if (!hasRunningCode) reasons.push("実稼働コード ✗：S ランク条件を満たしません");
+    if (!hasTestEvidence) reasons.push("テスト証跡 ✗：S ランク条件を満たしません");
   } else if (
     ccaf.thoughtDensity >= A_THRESHOLD.density &&
     vercelUptimeDays >= A_THRESHOLD.uptime
