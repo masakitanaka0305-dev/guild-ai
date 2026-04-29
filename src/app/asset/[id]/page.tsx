@@ -217,6 +217,14 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       <div className="mt-4 flex items-start gap-4">
         <div className="flex-1">
           <h1 className="text-2xl font-bold leading-tight text-kuroko">{listing.title}</h1>
+          {/* Persistence badge — shown for all listed assets */}
+          <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7L12 2z" fill="#2563EB" />
+              <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="text-[10px] font-semibold text-blue-700">永続化されています</span>
+          </div>
         </div>
       </div>
 
