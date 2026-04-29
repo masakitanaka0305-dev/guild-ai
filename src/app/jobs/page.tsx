@@ -52,16 +52,15 @@ export default function JobsPage() {
       {/* ── かせぐ ヒーローブロック ─────────────────── */}
       <section className="mb-6 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
         <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)] mb-2">
-          かせぐ：あなたの ノートが 役立つ おしごとです
+          稼ぐ：あなたのノートが活きる案件を集めました
         </h1>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
-          ここでは、AIエージェントや企業から{" "}
-          <span className="text-[#E64545] font-semibold">おしごとの依頼</span>
-          が並びます。あなたの登記済みノートが活きる案件を選んで、
-          <span className="text-[#E64545] font-semibold">応募 1 タップ</span>
-          で挑戦できます。
+          ここでは AI エージェントや企業からの{" "}
+          <span className="text-[#E64545] font-semibold">依頼</span>
+          が並びます。マッチ度の高い案件を選んで、
+          <span className="text-[#E64545] font-semibold">1 タップで応募</span>
+          できます。
         </p>
-        <p className="text-xs text-[var(--n-muted,#6B6456)] mt-2 font-medium">いま、かせぎ どきの しごと。</p>
       </section>
 
       <ul className="space-y-4 pb-24">
@@ -87,7 +86,7 @@ export default function JobsPage() {
                       {timeBucket}
                     </span>
                     <span className={`text-[10px] font-bold ${fitCls} inline-flex items-center`}>
-                      あいしょう: {fitLbl}
+                      マッチ度: {fitLbl}
                       <Tip text="あなたの登記済みノートとの相性です" />
                     </span>
                   </div>
@@ -96,7 +95,7 @@ export default function JobsPage() {
                 </div>
                 <div className="text-right shrink-0">
                   <p className="text-lg font-black text-[var(--n-positive,#0E9F4F)] tabular-nums">¥{job.reward.toLocaleString("ja-JP")}</p>
-                  <p className="text-[10px] text-[var(--n-muted,#6B6456)]">おだちん</p>
+                  <p className="text-[10px] text-[var(--n-muted,#6B6456)]">報酬</p>
                 </div>
               </div>
 
@@ -125,7 +124,7 @@ export default function JobsPage() {
                   className="w-full py-3 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
                   aria-label={`${job.title}に応募する`}
                 >
-                  この知恵で 応募する
+                  応募する
                 </button>
               ) : (
                 <div className="rounded-2xl bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-xs text-[var(--n-muted,#6B6456)] text-center">

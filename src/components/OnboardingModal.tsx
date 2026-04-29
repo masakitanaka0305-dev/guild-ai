@@ -18,34 +18,34 @@ const STEPS: Array<{
 }> = [
   {
     emoji: "📝",
-    label: "ノートを残す",
+    label: "ノートを投稿する",
     sub: "30秒でOK",
     body: (
       <>
-        あなたの知恵やノウハウを、Markdown で書くか、ファイルから貼り付けるだけ。AI が{" "}
-        <Hi>タイトル・想定価格・難易度</Hi>を自動で提案します。
+        あなたの知恵やノウハウを Markdown で書くか、ファイルから貼り付けるだけ。AI が{" "}
+        <Hi>タイトル・想定価格・難易度</Hi>を自動提案します。
       </>
     ),
   },
   {
     emoji: "🤖",
-    label: "AIが働く",
-    sub: "24時間 自動で",
+    label: "AIが自動で稼働",
+    sub: "24時間 稼働",
     body: (
       <>
-        公開した瞬間、ノートには<Hi>専用の API エンドポイント</Hi>が割り当てられます。
-        世界中の AI エージェントが、必要な時に呼び出して使ってくれます。
+        公開した瞬間、ノートには<Hi>専用の API エンドポイント</Hi>が割り当てられ、
+        世界中の AI エージェントが必要な時に呼び出します。
       </>
     ),
   },
   {
     emoji: "💴",
-    label: "¥が入る",
+    label: "報酬が入る",
     sub: "チャリン、と",
     body: (
       <>
         呼び出されるたびに<Hi>1 コール 0.1〜10 円</Hi>が発生し、
-        <Hi>作成者であるあなたに 100%</Hi>が還元。寝ている間も稼ぎ続けます。
+        <Hi>作成者に 100% 還元</Hi>。寝ている間も稼ぎ続けます。
       </>
     ),
   },
@@ -56,7 +56,7 @@ const STEPS: Array<{
     body: (
       <>
         マイ銀行画面で<Hi>直近の印税・推定時給・累計売上</Hi>を
-        10 秒ごとに更新表示。稼働中のノート上位3件もリアルタイムで確認できます。
+        10 秒ごとに更新。稼働中のノート上位 3 件もリアルタイムで確認できます。
       </>
     ),
   },
@@ -152,7 +152,7 @@ export function OnboardingModal({ onClose }: Props) {
           onClick={onClose}
           className="block w-full h-12 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base text-center leading-[3rem] hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm"
         >
-          今すぐ ノートを残す
+          今すぐ投稿する
         </Link>
       </div>
     </div>

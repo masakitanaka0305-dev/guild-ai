@@ -56,6 +56,9 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "お仕事",          reason: "→ おしごと（ひらがな）に置換（Final Vision §4）" },
   { term: "取引所",          reason: "→ 保管庫 に置換（Petal Logic §Guardian）" },
   { term: "お財布通帳",      reason: "→ マイ銀行（/guild）または 通帳（セクション名）に統一" },
+  { term: "おだちん",        reason: "→ 報酬 に置換（18y/o tone v2）" },
+  { term: "おたから",        reason: "→ 資産 に置換（18y/o tone v2）" },
+  { term: "ぶき",            reason: "→ スキル / ノート に置換（18y/o tone v2）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

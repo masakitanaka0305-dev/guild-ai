@@ -46,7 +46,7 @@ describe("nameraka-theme.fab", () => {
   });
 
   it("FAB has aria-label for accessibility", () => {
-    expect(layout).toContain('aria-label="のこす"');
+    expect(layout).toContain('aria-label="投稿"');
   });
 });
 
@@ -156,17 +156,17 @@ describe("nameraka-theme.light-repaint", () => {
     expect(css).toContain("--n-bg: #FAFAF7");
   });
 
-  it("bottom nav has 4 core tabs (ホーム/のこす/かせぐ/マイ銀行)", () => {
+  it("bottom nav has 4 core tabs (ホーム/投稿/案件/マイ銀行)", () => {
     expect(nav).toContain("BOTTOM_ITEMS");
     expect(nav).toContain('"ホーム"');
-    expect(nav).toContain('"のこす"');
-    expect(nav).toContain('"かせぐ"');
+    expect(nav).toContain('"投稿"');
+    expect(nav).toContain('"案件"');
     expect(nav).toContain('"マイ銀行"');
   });
 
   it("FAB links to /bank (knowledge registration)", () => {
     expect(layout).toContain('href="/bank"');
-    expect(layout).toContain('aria-label="のこす"');
+    expect(layout).toContain('aria-label="投稿"');
   });
 
   it("fitLabel returns ぴったり/もう少し/これから at correct thresholds", async () => {
@@ -182,10 +182,10 @@ describe("nameraka-theme.light-repaint", () => {
 // ─── 10. Jargon lint (nameraka) ──────────────────────────────────────────────
 
 describe("nameraka-theme.jargon-lint-v2", () => {
-  it("SidebarNav has hiragana nameraka labels", () => {
+  it("SidebarNav has mature nameraka labels", () => {
     const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
-    expect(src).toContain("のこす");
-    expect(src).toContain("かせぐ");
+    expect(src).toContain("投稿");
+    expect(src).toContain("案件");
     expect(src).toContain("マイ銀行");
   });
 

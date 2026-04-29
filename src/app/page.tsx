@@ -15,9 +15,9 @@ const MOCK_NOTES = [
 ] as const;
 
 const HOW_TILES = [
-  { emoji: "📝", label: "のこす",    sub: "30秒",       href: "/sell" },
-  { emoji: "🤖", label: "AIが働く", sub: "24時間 自動", href: "/jobs" },
-  { emoji: "💴", label: "¥が入る",  sub: "チャリン",    href: "/guild" },
+  { emoji: "📝", label: "ノートを投稿",     sub: "30秒でOK",    href: "/sell" },
+  { emoji: "🤖", label: "AIが自動で稼働",  sub: "24時間 稼働",  href: "/jobs" },
+  { emoji: "💴", label: "報酬が入る",       sub: "チャリン",     href: "/guild" },
 ] as const;
 
 const RANK_COLORS: Record<string, string> = {
@@ -74,9 +74,9 @@ export default function HomePage() {
           href="/bank"
           className="h-14 px-8 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm inline-flex items-center justify-center"
         >
-          いま のこす
+          投稿する
         </Link>
-        <p className="mt-3 text-sm text-gray-500">ノートを残すだけ</p>
+        <p className="mt-3 text-sm text-gray-500">ノートを投稿するだけ</p>
       </section>
 
       {/* ── 初めてのギルドエーアイ講座 バナー ────────────────── */}
@@ -136,9 +136,9 @@ export default function HomePage() {
       )}
 
       {/* ── つかいかた はかんたん（統合ブロック）─────────────── */}
-      <section className="px-4 sm:px-6" aria-label="つかいかた はかんたん">
+      <section className="px-4 sm:px-6" aria-label="使い方は3ステップ">
         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-          つかいかた はかんたん
+          使い方は3ステップ
         </p>
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {HOW_TILES.map((t) => (

@@ -65,7 +65,7 @@ export default function GuildPage() {
       id: `app_tx_${i}`,
       type: "card" as const,
       amount: app.reward,
-      assetTitle: "クエストおだちん",
+      assetTitle: "クエスト報酬",
       at: app.appliedAt,
     })),
   ].slice(0, 8);
@@ -111,7 +111,7 @@ export default function GuildPage() {
       <FloatingPayoutToast
         deltaJpy={earnings.lastDelta}
         bumpCount={earnings.bumpCount}
-        label="おだちん入金"
+        label="報酬入金"
       />
       <FloatingPayoutToast
         deltaJpy={royaltyDelta}
@@ -123,7 +123,7 @@ export default function GuildPage() {
       <section className="mb-5 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
         <div className="flex items-start justify-between gap-3 mb-2">
           <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)]">
-            マイ銀行：あなたの "おだちん" を まとめる場所
+            マイ銀行：あなたの報酬と資産をまとめる場所
           </h1>
           <Link
             href="/bank"
@@ -133,10 +133,10 @@ export default function GuildPage() {
           </Link>
         </div>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
-          <span className="text-[#E64545] font-semibold">今日の おだちん</span>・
+          <span className="text-[#E64545] font-semibold">今日の報酬</span>・
           <span className="text-[#E64545] font-semibold">今月の合計</span>・
-          <span className="text-[#E64545] font-semibold">いまの推定時給</span>
-          を見ながら、過去のお取引も{" "}
+          <span className="text-[#E64545] font-semibold">推定時給</span>
+          を見ながら、過去の取引も{" "}
           <span className="font-semibold text-[var(--n-text,#1A1714)]">通帳</span>
           で確認できます。
         </p>
@@ -166,10 +166,10 @@ export default function GuildPage() {
         </div>
       </div>
 
-      {/* ── 今日のおだちん / 今月の合計 ──────────────────────────────────── */}
+      {/* ── 今日の報酬 / 今月の合計 ──────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-4 text-center">
-          <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今日のおだちん</p>
+          <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-1">今日の報酬</p>
           <p className="text-xl font-black tabular-nums text-[var(--n-positive,#0E9F4F)]">
             ¥{Math.round(earnings.jpy / 30).toLocaleString("ja-JP")}
           </p>
@@ -221,7 +221,7 @@ export default function GuildPage() {
       {/* ── 通帳：これまでの お取引 ───────────────────────────────────── */}
       {guildTransactions.length > 0 && (
         <section className="mb-4">
-          <SectionBand title="通帳：これまでの お取引" tip="過去の入出金が時系列で確認できます" />
+          <SectionBand title="通帳：これまでの取引" tip="過去の入出金が時系列で確認できます" />
           <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl overflow-hidden">
             <table className="w-full text-xs">
               <thead>
@@ -243,7 +243,7 @@ export default function GuildPage() {
                     at: tx.at,
                     label: tx.assetTitle,
                     amount: tx.amount,
-                    type: "おだちん",
+                    type: "報酬",
                   })),
                   ...royalties.slice(0, 3).map((r) => ({
                     id: r.id,
