@@ -27,6 +27,22 @@ const config: Config = {
         "n-gold-soft": "#F2DFA0",
         "n-positive": "#0E9F4F",
         "n-negative": "#E64545",
+        // ─── Water Guild — Hexagonal Robustness ─────────────────────
+        water: {
+          bg:             "#0B1121",
+          surface:        "#162035",
+          "surface-2":    "#1E293B",
+          accent:         "#22D3EE",
+          "accent-hover": "#06B6D4",
+          text:           "#E2E8F0",
+          muted:          "#94A3B8",
+          divider:        "rgba(226,232,240,0.10)",
+        },
+      },
+      boxShadow: {
+        card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",
+        "card-hover": "0px 4px 12px rgba(0,0,0,0.10)",
+        "water-glow": "0 0 0 1px rgba(34,211,238,0.35), 0 8px 24px -12px rgba(34,211,238,0.45)",
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],
@@ -45,10 +61,6 @@ const config: Config = {
       },
       transitionTimingFunction: {
         "out-quart": "cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      boxShadow: {
-        card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",
-        "card-hover": "0px 4px 12px rgba(0,0,0,0.10)",
       },
       transitionDuration: {
         "100": "100ms",

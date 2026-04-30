@@ -37,9 +37,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja" className={notoSansJP.variable} data-theme="nameraka">
+    <html lang="ja" className={notoSansJP.variable} data-theme="water" data-anim="off">
       <head />
-      <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased">
+      <body className="h-screen h-dvh flex bg-[var(--water-bg,#0B1121)] overflow-hidden text-[var(--water-text,#E2E8F0)] font-sans antialiased">
         <AuthProvider>
           {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
           <GuestInit />

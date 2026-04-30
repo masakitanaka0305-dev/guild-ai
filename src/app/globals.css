@@ -4,10 +4,75 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
+    --water-bg:           #0B1121;
+    --water-surface:      #162035;
+    --water-surface-2:    #1E293B;
+    --water-accent:       #22D3EE;
+    --water-accent-hover: #06B6D4;
+    --water-text:         #E2E8F0;
+    --water-muted:        #94A3B8;
+    --water-divider:      rgba(226,232,240,0.10);
   }
 
-  /* ── Nameraka Theme (ライト — デフォルト) ──────────────────── */
+  /* ── Water Guild — Hexagonal Robustness (デフォルト) ─────────── */
+  [data-theme="water"] {
+    color-scheme: dark;
+    /* Water tokens */
+    --water-bg:           #0B1121;
+    --water-surface:      #162035;
+    --water-surface-2:    #1E293B;
+    --water-accent:       #22D3EE;
+    --water-accent-hover: #06B6D4;
+    --water-text:         #E2E8F0;
+    --water-muted:        #94A3B8;
+    --water-divider:      rgba(226,232,240,0.10);
+
+    /* Redirect legacy --n-* variables to Water palette so existing
+       components (referencing --n-bg / --n-text / etc.) automatically
+       inherit the deep-sea theme without per-file rewrites. */
+    --n-bg:               var(--water-bg);
+    --n-surface:          var(--water-surface);
+    --n-surface-2:        var(--water-surface-2);
+    --n-divider:          var(--water-divider);
+    --n-text:             var(--water-text);
+    --n-muted:            var(--water-muted);
+    --n-primary:          var(--water-accent);
+    --n-primary-hover:    var(--water-accent-hover);
+    --n-gold:             var(--water-accent);
+    --n-gold-soft:        rgba(34,211,238,0.18);
+    --n-positive:         var(--water-accent);
+    --n-negative:         #F87171;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 22px;
+    font-family: -apple-system, BlinkMacSystemFont, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  [data-theme="water"] body,
+  [data-theme="water"] .n-bg {
+    background-color: var(--water-bg);
+    color: var(--water-text);
+  }
+
+  [data-theme="water"] .section-card {
+    background-color: var(--water-surface);
+    border: 1px solid var(--water-divider);
+    border-radius: 14px;
+    box-shadow: none;
+  }
+
+  /* ── Anim Off — global kill-switch for all transitions/animations ── */
+  [data-anim="off"] *,
+  [data-anim="off"] *::before,
+  [data-anim="off"] *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ── Legacy Nameraka Theme (kept for compat, no longer used) ───── */
   [data-theme="nameraka"] {
     color-scheme: light;
     --n-bg: #FAFAF7;
