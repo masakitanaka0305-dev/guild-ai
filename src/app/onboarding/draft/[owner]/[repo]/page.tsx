@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { BackArrow } from "@/components/ui/BackArrow";
 
 export default function DraftPage() {
   const params = useParams();
@@ -60,7 +61,11 @@ export default function DraftPage() {
   const SECTIONS = ["課題", "本質", "鑑定", "出口"] as const;
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
+    <main className="p-6 max-w-3xl mx-auto pb-32">
+      <div className="-ml-2 mb-2 flex items-center gap-1">
+        <BackArrow href="/onboarding/repos" label="コードベース選択に戻る" />
+        <span className="text-xs text-slate-400">コードベース選択</span>
+      </div>
       <h1 className="text-xl font-semibold tracking-tight text-white mb-1">Edit & Mint — {owner}/{repo}</h1>
       {context && (
         <p className="text-xs text-[#E2E8F0] mb-6">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { BackArrow } from "@/components/ui/BackArrow";
 import type { MockRepo } from "@/lib/github-picker";
 
 interface RepoItem extends MockRepo {
@@ -47,18 +48,18 @@ export default function ReposPage() {
   }, []);
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-8">
+    <main className="max-w-4xl mx-auto px-4 py-8 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
       {/* Header */}
       <div className="mb-8">
-        <nav className="flex items-center gap-2 text-sm text-[var(--n-muted,#6B6456)] mb-4">
-          <Link href="/onboarding" className="hover:underline">オンボーディング</Link>
-          <span>›</span>
-          <span aria-current="step" className="text-[var(--n-text,#1A1714)] font-medium">コードベース選択</span>
-        </nav>
-        <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)] mb-2">
+        <div className="-ml-2 mb-2 flex items-center gap-1">
+          <BackArrow href="/onboarding" label="オンボーディングに戻る" />
+          <span className="text-xs text-slate-400">オンボーディング ›</span>
+          <span aria-current="step" className="text-xs text-white font-medium">コードベース選択</span>
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
           コードベースを選択
         </h1>
-        <p className="text-[var(--n-muted,#6B6456)] text-sm">
+        <p className="text-slate-400 text-sm">
           GUILD AI に登記するコードベースを選んでください。AI が内容を解析して知能資産の草稿を生成します。
         </p>
       </div>

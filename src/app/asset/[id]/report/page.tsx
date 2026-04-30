@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MOCK_MARKETPLACE } from "@/lib/marketplace";
 import { buildReport } from "@/lib/compliance-report";
 import { PrintButton } from "@/components/PrintButton";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 
 export function generateStaticParams() {
@@ -33,9 +34,10 @@ export default function ReportPage({ params }: { params: { id: string } }) {
     <>
       {/* Print button — hidden on print */}
       <div className="print:hidden px-4 sm:px-6 lg:px-8 pt-6 max-w-4xl mx-auto flex items-center justify-between">
-        <Link href={`/asset/${params.id}`} className="text-xs text-[var(--n-muted,#6B6456)] hover:underline">
-          ← アセット詳細に戻る
-        </Link>
+        <div className="-ml-2 flex items-center gap-1">
+          <BackArrow href={`/asset/${params.id}`} label="アセット詳細に戻る" />
+          <span className="text-xs text-slate-400">アセット詳細</span>
+        </div>
         <PrintButton />
       </div>
 

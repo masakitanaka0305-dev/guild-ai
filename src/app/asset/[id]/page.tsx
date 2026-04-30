@@ -13,6 +13,7 @@ import { ActivityPulse } from "@/components/ActivityPulse";
 import { BilingualLayout } from "@/components/BilingualLayout";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 import { TryItNowButton } from "@/components/TryItNowButton";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { SchemaPanel } from "@/components/SchemaPanel";
 import { generateSchemas } from "@/lib/schema-generator";
 import { getBacktestStats, formatSamples } from "@/lib/backtest";
@@ -249,9 +250,12 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       />
 
       {/* Back */}
-      <Link href="/marketplace" className="text-xs text-slate-400 hover:text-kaki transition-colors">
-        ← お店に戻る
-      </Link>
+      <div className="-ml-2 mb-1 flex items-center gap-1">
+        <BackArrow href="/marketplace" label="お店に戻る" />
+        <Link href="/marketplace" className="text-xs text-slate-400 hover:text-white">
+          お店
+        </Link>
+      </div>
 
       {/* Hero thumbnail */}
       <div className="mt-4 flex justify-center">

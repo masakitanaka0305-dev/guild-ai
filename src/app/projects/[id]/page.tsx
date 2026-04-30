@@ -6,6 +6,7 @@ import { calcNet, formatJpy } from "@/lib/payout-sim";
 import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
 import { PlugInApply } from "@/components/PlugInApply";
 import { ClampDescription } from "@/components/ui/ClampDescription";
+import { BackArrow } from "@/components/ui/BackArrow";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -97,9 +98,15 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 pb-44 md:pb-8 max-w-4xl mx-auto">
       {/* Back */}
-      <Link href="/projects" className="text-xs text-[var(--n-muted,#6B6456)] hover:underline">
-        ← 案件一覧に戻る
-      </Link>
+      <div className="-ml-2 -mt-2 mb-1 flex items-center gap-1">
+        <BackArrow href="/projects" label="案件一覧に戻る" />
+        <Link
+          href="/projects"
+          className="text-xs text-slate-400 hover:text-white"
+        >
+          案件一覧
+        </Link>
+      </div>
 
       {/* Header */}
       <div className="mt-4 mb-6">
