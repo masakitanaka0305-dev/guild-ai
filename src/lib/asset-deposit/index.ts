@@ -1,5 +1,6 @@
 import type { IntelDraft } from "@/lib/intel-parser";
 import { autoList } from "@/lib/marketplace";
+import { getDb } from "@/lib/db";
 
 export interface DepositInput {
   owner: string;
@@ -75,10 +76,9 @@ export async function depositAsset(input: DepositInput): Promise<DepositResult> 
   deposits.set(guildId, { ...result, draft });
 
   // Optional Supabase
-  if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
+  const supabase = getDb();
+  if (supabase) {
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
       await supabase.from("md_assets").insert({
         id: guildId,
         owner_handle: owner,
