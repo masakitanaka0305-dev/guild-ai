@@ -17,6 +17,12 @@ const config: Config = {
         },
         // retain for negative indicators only
         negative: "#E64545",
+        // Legacy tokens retained for existing components (not used in new Water theme UI)
+        kuroko: "#1A1628",
+        kaki: "#1A6BB5",
+        "accent-green": "#0FA968",
+        kami: "#FAFAFA",
+        "surface-inset": "#F4F4F5",
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],

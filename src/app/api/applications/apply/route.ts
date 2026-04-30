@@ -12,7 +12,8 @@ export interface Application {
   appliedAt: string;
 }
 
-export function getApplications(): Application[] { return applications; }
+// Note: getApplications is for internal use only — not exported as a route handler
+function getApplications(): Application[] { return applications; }
 
 export async function POST(req: NextRequest) {
   const { projectId, mdGuildId } = await req.json();
