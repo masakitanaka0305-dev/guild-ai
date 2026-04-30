@@ -52,12 +52,9 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Strategic Moat #95): Encapsulated Intelligence / クローラー検知 / rate limit / オリジン署名 / オリジン認証 / JP発祥 / Global Scout
 // Explicitly PERMITTED (Intelligence Marketplace #105): Validation Score / Matching Score / Asset Ledger / Escrow Reserve / Ownership Attestation / Terms of Service / Liability Shift
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
-  // Auth UI terms — auth postponed to v2; any re-appearance is a regression
-  { term: "ログイン",        reason: "→ 認証UI廃止(v1)。docs/Auth-Removed.md 参照" },
-  { term: "サインイン",      reason: "→ 認証UI廃止(v1)" },
-  { term: "ログアウト",      reason: "→ 認証UI廃止(v1)" },
-  { term: "新規登録",        reason: "→ 認証UI廃止(v1)" },
-  { term: "サインアップ",    reason: "→ 認証UI廃止(v1)" },
+  // Auth UI terms were forbidden when auth was postponed to v2.
+  // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
+  // with NextAuth (GitHub/Google) + DEV bypass button. Terms below are now permitted.
   { term: "JPYC",           reason: "→ デジタル円 または ¥ に置換" },
   { term: "ステーブルコイン", reason: "→ デジタル円 に置換" },
   { term: "Stablecoin",     reason: "→ デジタル円 に置換" },

@@ -55,15 +55,20 @@ describe("mock-auth", () => {
   });
 });
 
-// ─── Auth removal: /login and /signup pages must not exist ───────────────────
+// ─── Auth restored (2026-04-30): /login is back, /signup replaced by /welcome ──
 
-describe("auth removal: login and signup pages deleted", () => {
-  it("/login page.tsx does not exist (route returns 404)", () => {
+describe("auth restored: login + welcome routes exist", () => {
+  it("/login page.tsx exists (NextAuth + DEV bypass)", () => {
     const loginPage = resolve(__dirname, "../../app/login/page.tsx");
-    expect(existsSync(loginPage)).toBe(false);
+    expect(existsSync(loginPage)).toBe(true);
   });
 
-  it("/signup page.tsx does not exist (route returns 404)", () => {
+  it("/welcome page.tsx exists (post-OAuth profile bootstrap)", () => {
+    const welcomePage = resolve(__dirname, "../../app/welcome/page.tsx");
+    expect(existsSync(welcomePage)).toBe(true);
+  });
+
+  it("/signup page.tsx remains absent (replaced by /welcome)", () => {
     const signupPage = resolve(__dirname, "../../app/signup/page.tsx");
     expect(existsSync(signupPage)).toBe(false);
   });

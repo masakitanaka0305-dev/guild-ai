@@ -22,6 +22,7 @@ export const agentInstanceStatusEnum = pgEnum("agent_instance_status", ["running
 export const claimStatusEnum         = pgEnum("claim_status", ["unclaimed", "verifying", "claimed"]);
 export const verifyChallengeTypeEnum = pgEnum("verify_challenge_type", ["commit", "file"]);
 export const genderEnum              = pgEnum("gender", ["male", "female", "other", "prefer_not_to_say"]);
+export const profileStatusEnum       = pgEnum("profile_status", ["provisional", "official"]);
 
 // ─── users ───────────────────────────────────────────────────────────────────
 // 個人情報をメインに保持する。auth は email + password (scrypt-hashed) のシンプル構成。
@@ -64,6 +65,36 @@ export const sessions = pgTable("sessions", {
 }, (t) => [
   index("sessions_user_idx").on(t.userId),
 ]);
+
+// ─── profiles ────────────────────────────────────────────────────────────────
+// エンジニアのプロファイル — 入力ゼロを目指すマッチング用。
+// 姓名/都道府県/生年は本人入力（オンボーディング画面の3項目）。残りは GitHub から自動抽出。
+// status: "provisional" = Google ログインのみ / GitHub 未連携。"official" = GitHub 連携済み + 解析完了。
+export const profiles = pgTable("profiles", {
+  userId:             text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+  // 本人入力（最小）
+  lastName:           text("last_name"),
+  firstName:          text("first_name"),
+  prefecture:         text("prefecture"),
+  birthYear:          integer("birth_year"),
+  // GitHub 自動抽出
+  primarySkills:      jsonb("primary_skills").$type<string[]>(),                 // 上位3言語/フレームワーク
+  aiGeneratedSummary: text("ai_generated_summary"),                              // 20文字キャッチコピー
+  githubStats:        jsonb("github_stats").$type<{
+    stars:           number;
+    contributions:   number;
+    activeYears:     number;
+    publicRepos:     number;
+    pinnedRepoNames: string[];
+  }>(),
+  // 鑑定ランク（GitHub 連携後に確定）
+  rank:               rankEnum("rank"),
+  status:             profileStatusEnum("status").notNull().default("provisional"),
+  // 最終活動 — GitHub 最終 commit 同期時刻
+  lastActiveAt:       timestamp("last_active_at", { withTimezone: true }),
+  createdAt:          timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt:          timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
 
 // ─── listings ────────────────────────────────────────────────────────────────
 // rank / floor_price are cached at write time (autoList in lib/marketplace).
@@ -508,6 +539,8 @@ export type ValuePoolEntryRow         = typeof valuePoolEntries.$inferSelect;
 export type UserRow                   = typeof users.$inferSelect;
 export type UserInsert                = typeof users.$inferInsert;
 export type SessionRow                = typeof sessions.$inferSelect;
+export type ProfileRow                = typeof profiles.$inferSelect;
+export type ProfileInsert             = typeof profiles.$inferInsert;
 export type AuditPolicyRow            = typeof auditPolicies.$inferSelect;
 export type AuditResultHistoryRow     = typeof auditResultsHistory.$inferSelect;
 export type MdMarketMetricsRow        = typeof mdMarketMetrics.$inferSelect;
@@ -528,8 +561,9 @@ export type AuthorReputationRow       = typeof authorReputation.$inferSelect;
 // insert rows referring to ad-hoc userIds (smoke-creator, fixture-creator, etc.).
 // FK enforcement is a follow-up: requires updating each test fixture to seed a
 // user row before inserting referencing rows.
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   sessions:           many(sessions),
+  profile:            one(profiles, { fields: [users.id], references: [profiles.userId] }),
   ownedListings:      many(listings),
   ownershipRecords:   many(ownershipRecords),
   checkoutSessions:   many(checkoutSessions),
@@ -538,6 +572,10 @@ export const usersRelations = relations(users, ({ many }) => ({
   trustScoreInputs:   many(trustScoreInputs),
   discordEvents:      many(discordEvents),
   royaltyDistributions: many(royaltyDistributions),
+}));
+
+export const profilesRelations = relations(profiles, ({ one }) => ({
+  user: one(users, { fields: [profiles.userId], references: [users.id] }),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
