@@ -13,7 +13,20 @@ import {
 } from "@/lib/express-path";
 import { simulateOnboarding, type OnboardingResult } from "@/lib/github-onboarding";
 import { recordExpressRun } from "@/lib/metrics/express";
+import { splitJapaneseName } from "@/lib/name-split";
 import type { Rank } from "@/types";
+
+// ─── OAuth pre-fill (mock) ────────────────────────────────────────
+// Auth is stubbed in v1, but the confirmation UI is wired to the
+// shape OAuth would return. Swap MOCK_OAUTH_PROFILE for the real
+// session payload when GitHub/Google auth lands.
+const MOCK_OAUTH_PROFILE = {
+  fullName: "田中 雅基",
+  email: "masaki.tanaka.0305@gmail.com",
+  githubHandle: "masaki-tanaka",
+  githubUrl: "https://github.com/masaki-tanaka/water-guild-demo",
+  avatarHexFill: "#22D3EE",
+} as const;
 
 // ─── Timer Bar ───────────────────────────────────────────────────────────────
 
@@ -86,8 +99,12 @@ function OnboardingContent() {
   const fastMode = searchParams.get("fast") === "1";
 
   const [phase, setPhase] = useState<"form" | "running" | "done">("form");
-  const [githubUrl, setGithubUrl] = useState("");
-  const [handle, setHandle] = useState("demo-user");
+  const prefillName = splitJapaneseName(MOCK_OAUTH_PROFILE.fullName);
+  const [familyName, setFamilyName] = useState<string>(prefillName.familyName);
+  const [givenName, setGivenName] = useState<string>(prefillName.givenName);
+  const [email, setEmail] = useState<string>(MOCK_OAUTH_PROFILE.email);
+  const [githubUrl, setGithubUrl] = useState<string>(MOCK_OAUTH_PROFILE.githubUrl);
+  const [handle, setHandle] = useState<string>(MOCK_OAUTH_PROFILE.githubHandle);
   const [currentStepIdx, setCurrentStepIdx] = useState(-1);
   const [result, setResult] = useState<OnboardingResult | null>(null);
   const [royaltyJpy, setRoyaltyJpy] = useState(0);
@@ -162,45 +179,127 @@ function OnboardingContent() {
       </div>
 
       {phase === "form" && (
-        <section className="section-card p-6 space-y-4">
+        <section
+          className="section-card p-6 space-y-5"
+          aria-labelledby="confirm-heading"
+        >
+          {/* Smart pre-fill summary — confirmation, not entry */}
+          <header className="flex items-center gap-4">
+            <span aria-hidden className="shrink-0">
+              <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden>
+                <polygon
+                  points="50,4 92,27 92,73 50,96 8,73 8,27"
+                  fill="#162035"
+                  stroke="#22D3EE"
+                  strokeWidth={2}
+                />
+                <text
+                  x="50"
+                  y="55"
+                  textAnchor="middle"
+                  fontFamily="inherit"
+                  fontWeight={900}
+                  fontSize={32}
+                  fill="#22D3EE"
+                >
+                  {familyName.slice(0, 1) || "G"}
+                </text>
+              </svg>
+            </span>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#22D3EE)]">
+                Smart Pre-fill
+              </p>
+              <h2 id="confirm-heading" className="text-base font-black text-[var(--water-text,#E2E8F0)]">
+                内容を確認してください
+              </h2>
+              <p className="text-[11px] text-[var(--water-muted,#94A3B8)] mt-0.5">
+                OAuth から取得した情報を反映しています。修正があれば編集してください。
+              </p>
+            </div>
+          </header>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="family-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                姓
+              </label>
+              <input
+                id="family-name"
+                type="text"
+                defaultValue={familyName}
+                onChange={(e) => setFamilyName(e.target.value)}
+                className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+              />
+            </div>
+            <div>
+              <label htmlFor="given-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                名
+              </label>
+              <input
+                id="given-name"
+                type="text"
+                defaultValue={givenName}
+                onChange={(e) => setGivenName(e.target.value)}
+                className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+              />
+            </div>
+          </div>
+
           <div>
-            <label htmlFor="github-url" className="block text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
+            <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+              メールアドレス
+            </label>
+            <input
+              id="email"
+              type="email"
+              defaultValue={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="handle" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+              GitHub ハンドル
+            </label>
+            <input
+              id="handle"
+              type="text"
+              defaultValue={handle}
+              onChange={(e) => setHandle(e.target.value)}
+              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="github-url" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
               GitHub リポジトリ URL
             </label>
             <input
               id="github-url"
               type="url"
-              value={githubUrl}
+              defaultValue={githubUrl}
               onChange={(e) => setGithubUrl(e.target.value)}
               placeholder="https://github.com/username/repo"
-              className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)]"
+              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
             />
           </div>
-          <div>
-            <label htmlFor="handle" className="block text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
-              ハンドル
-            </label>
-            <input
-              id="handle"
-              type="text"
-              value={handle}
-              onChange={(e) => setHandle(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)]"
-            />
-          </div>
-          <p className="text-[10px] text-[var(--n-muted,#6B6456)] leading-relaxed">
-            出品前に
-            <Link href="/legal/terms" className="text-[var(--n-primary,#E64545)] underline mx-0.5">利用規約</Link>
+
+          <p className="text-[10px] text-[var(--water-muted,#94A3B8)] leading-relaxed">
+            登記の前に
+            <Link href="/legal/terms" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">利用規約</Link>
             と
-            <Link href="/legal/transfer" className="text-[var(--n-primary,#E64545)] underline mx-0.5">権利譲渡条件</Link>
+            <Link href="/legal/transfer" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">権利譲渡条件</Link>
             に同意してください。
           </p>
+
           <button
             onClick={runOnboarding}
             disabled={!githubUrl.startsWith("https://github.com/")}
-            className="w-full py-3 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#22D3EE)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
           >
-            3 分で利益確定まで → Express 開始
+            確認して進む — 登記（Sync）開始
           </button>
         </section>
       )}
