@@ -18,7 +18,7 @@ function isActive(pathname: string, href: string) {
 }
 
 function TabIcon({ type, active }: { type: string; active: boolean }) {
-  const cls = `w-5 h-5 ${active ? "stroke-[var(--n-primary,#E64545)]" : "stroke-[var(--n-muted,#6B6456)]"}`;
+  const cls = `w-5 h-5 ${active ? "stroke-[var(--primary,#06B6D4)]" : "stroke-[var(--n-muted,#6B6456)]"}`;
   if (type === "search") return (
     <svg className={cls} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -56,7 +56,7 @@ export function SidebarNav() {
             aria-selected={active}
             className={`w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-all duration-220 active:scale-[0.98] rounded-2xl ${
               active
-                ? "bg-[var(--n-primary,#E64545)]/10 text-[var(--n-primary,#E64545)] font-bold"
+                ? "bg-[var(--primary,#06B6D4)]/10 text-[var(--primary,#06B6D4)] font-bold"
                 : "text-[var(--n-muted,#6B6456)] hover:bg-[var(--n-surface-2,#F5F3EE)] hover:text-[var(--n-text,#1A1714)]"
             }`}
           >
@@ -69,7 +69,7 @@ export function SidebarNav() {
       {/* Primary action: 出す — standalone highlighted card */}
       <Link
         href={PRIMARY_ACTION.href}
-        className={`w-full flex items-center gap-2.5 px-3 py-2.5 mt-1 text-[13px] font-bold rounded-2xl bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 ${
+        className={`w-full flex items-center gap-2.5 px-3 py-2.5 mt-1 text-[13px] font-bold rounded-2xl bg-[var(--primary,#06B6D4)] text-white hover:bg-[#0891B2] active:scale-[0.98] transition-all duration-220 ${
           isActive(pathname, PRIMARY_ACTION.href) ? "opacity-90" : ""
         }`}
       >
@@ -87,7 +87,7 @@ export function SidebarNav() {
           href="/marketplace/pro"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/marketplace/pro")
-              ? "text-[var(--n-primary,#E64545)]"
+              ? "text-[var(--primary,#06B6D4)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
@@ -97,7 +97,7 @@ export function SidebarNav() {
           href="/disputes"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/disputes")
-              ? "text-[var(--n-primary,#E64545)]"
+              ? "text-[var(--primary,#06B6D4)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
@@ -107,7 +107,7 @@ export function SidebarNav() {
           href="/scout"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/scout")
-              ? "text-[var(--n-primary,#E64545)]"
+              ? "text-[var(--primary,#06B6D4)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
@@ -127,7 +127,7 @@ export function BottomNav() {
       <Link
         href={PRIMARY_ACTION.href}
         aria-label="出す"
-        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 w-14 h-14 rounded-full bg-[var(--n-primary,#E64545)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#D03A3A] active:scale-[0.95] transition-all duration-220"
+        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 w-14 h-14 rounded-full bg-[var(--primary,#06B6D4)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#0891B2] active:scale-[0.95] transition-all duration-220"
       >
         ＋
       </Link>
@@ -145,13 +145,13 @@ export function BottomNav() {
               role="tab"
               aria-selected={active}
               className={`relative flex flex-col items-center justify-center gap-0.5 py-1 active:scale-[0.97] transition-colors ${
-                active ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-muted,#6B6456)]"
+                active ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-muted,#6B6456)]"
               }`}
             >
               <TabIcon type={item.icon} active={active} />
               <span className="text-[10px] font-medium">{item.label}</span>
               {active && (
-                <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--n-primary,#E64545)]" />
+                <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--primary,#06B6D4)]" />
               )}
             </Link>
           );

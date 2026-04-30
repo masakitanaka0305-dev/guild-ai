@@ -96,7 +96,7 @@ function PipelineModal({ onClose }: { onClose: () => void }) {
                       done
                         ? "bg-[var(--n-positive,#0E9F4F)] text-white"
                         : active
-                        ? "bg-[var(--n-primary,#E64545)] text-white animate-pulse"
+                        ? "bg-[var(--primary,#06B6D4)] text-white animate-pulse"
                         : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
                     }`}
                     aria-label={done ? `${label} 完了` : label}
@@ -123,7 +123,7 @@ function PipelineModal({ onClose }: { onClose: () => void }) {
             type="button"
             onClick={handleRun}
             disabled={running}
-            className="w-full h-12 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50"
+            className="w-full h-12 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50"
           >
             {running ? "実行中…" : output ? "再実行" : "今すぐ試す"}
           </button>
@@ -149,12 +149,12 @@ export default function SdkPage() {
       {/* Hero */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-1 h-6 rounded-full bg-[var(--n-primary,#E64545)]" />
+          <div className="w-1 h-6 rounded-full bg-[var(--primary,#06B6D4)]" />
           <h2 className="text-2xl font-extrabold text-[var(--n-text,#1A1714)]">パイプライン SDK</h2>
         </div>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed mb-1">
           複数のノートを<span className="text-[var(--n-text,#1A1714)] font-semibold">直列・並列</span>につないで、
-          ひとつの大きな<span className="text-[var(--n-primary,#E64545)] font-semibold">知能の集合体</span>として動作させる開発キット。
+          ひとつの大きな<span className="text-[var(--primary,#06B6D4)] font-semibold">知能の集合体</span>として動作させる開発キット。
         </p>
         <p className="text-xs text-[var(--n-muted,#6B6456)]">現在プレビュー版 — モック実装です。</p>
       </div>
@@ -177,7 +177,7 @@ export default function SdkPage() {
       {/* Code sample */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)]" />
+          <div className="w-1 h-5 rounded-full bg-[var(--primary,#06B6D4)]" />
           <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">サンプルコード</p>
         </div>
         <div className="overflow-x-auto rounded-2xl bg-[#1A1714]">
@@ -191,7 +191,7 @@ export default function SdkPage() {
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="w-full h-12 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
+        className="w-full h-12 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold text-base hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
       >
         今すぐ試す
       </button>
@@ -202,7 +202,7 @@ export default function SdkPage() {
         <ol className="flex flex-wrap gap-2">
           {PIPELINE_STEPS.map((step, i) => (
             <li key={step} className="flex items-center gap-1.5 text-xs text-[var(--n-text,#1A1714)]">
-              <span className="w-4 h-4 rounded-full bg-[var(--n-primary,#E64545)] text-white text-[9px] flex items-center justify-center font-bold">{i+1}</span>
+              <span className="w-4 h-4 rounded-full bg-[var(--primary,#06B6D4)] text-white text-[9px] flex items-center justify-center font-bold">{i+1}</span>
               {step}
               {i < PIPELINE_STEPS.length - 1 && <span className="text-[var(--n-muted,#6B6456)] ml-1">→</span>}
             </li>

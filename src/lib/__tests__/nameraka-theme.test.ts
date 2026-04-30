@@ -9,16 +9,12 @@ const root = process.cwd();
 describe("nameraka-theme.tokens", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("globals.css defines [data-theme='nameraka'] selector", () => {
-    expect(css).toContain('[data-theme="nameraka"]');
+  it("globals.css defines Water theme --primary token (#06B6D4)", () => {
+    expect(css).toContain("--primary: #06B6D4");
   });
 
-  it("globals.css defines --n-bg token (#FAFAF7)", () => {
-    expect(css).toContain("--n-bg: #FAFAF7");
-  });
-
-  it("globals.css defines --n-gold token (#D4AF37)", () => {
-    expect(css).toContain("--n-gold: #D4AF37");
+  it("globals.css defines Water theme --bg token (#020617)", () => {
+    expect(css).toContain("--bg: #020617");
   });
 
   it("globals.css does NOT define pro or kawaii themes (deleted)", () => {
@@ -156,8 +152,8 @@ describe("nameraka-theme.light-repaint", () => {
                + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("nameraka --n-bg is light (#FAFAF7)", () => {
-    expect(css).toContain("--n-bg: #FAFAF7");
+  it("water theme --bg is dark (#020617) replacing old nameraka light bg", () => {
+    expect(css).toContain("--bg: #020617");
   });
 
   it("bottom nav has 2 core tabs (探す/稼ぐ) + center FAB (出す) with role=tablist", () => {

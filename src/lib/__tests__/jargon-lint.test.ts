@@ -51,6 +51,8 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Intelligence Ledger + Export Hub #90/#94): 権利の系譜 / 自動分配履歴 / 為替対応 / AI向け翻訳 / Blackbox / 実行専用 / ドル建て / ダイナミック・プライシング
 // Explicitly PERMITTED (Strategic Moat #95): Encapsulated Intelligence / クローラー検知 / rate limit / オリジン署名 / オリジン認証 / JP発祥 / Global Scout
 // Explicitly PERMITTED (Intelligence Marketplace #105): Validation Score / Matching Score / Asset Ledger / Escrow Reserve / Ownership Attestation / Terms of Service / Liability Shift
+// Explicitly PERMITTED (Water Guild — Hexagonal Robustness #115): 登記（Sync） / 精製（Mint） / 確認して進む / Water Guild / Hexagon / Wave / 資産台帳 / コードベース
+// Explicitly PERMITTED (Water Guild v2 — UX/UI refinements #116): 資産運用者 / 自動でおすすめを選択 / もっと見る / 資産で応募する / AI Pre-select / 1-Tap Mint / Sticky Action / ClampDescription
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -76,6 +78,12 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "stealth-employer",       reason: "→ 反検知機能は非実装方針" },
   { term: "企業隠蔽",               reason: "→ 反検知機能は非実装方針" },
   { term: "会社にバレない",          reason: "→ 反検知機能は非実装方針" },
+  // ─── Water Guild — Hexagonal Robustness (#115) ───────────────────
+  { term: "リポジトリ",              reason: "→ コードベース に置換（Water Guild v1）" },
+  { term: "エンドポイント",          reason: "→ おしごと窓口 に置換（Water Guild v1 / Endpoint UI 表記禁止）" },
+  { term: "squirtle",               reason: "→ 特定キャラ画像/名は禁止（Water Guild は幾何学のみ）" },
+  { term: "shimaenaga",             reason: "→ マスコット禁止（Water Guild は幾何学のみ）" },
+  { term: "kawaii",                 reason: "→ プロ向けトーンに統一（Water Guild v1）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

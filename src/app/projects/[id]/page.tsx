@@ -4,6 +4,8 @@ import { MOCK_PROJECTS, getProject } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
 import { calcNet, formatJpy } from "@/lib/payout-sim";
 import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
+import { PlugInApply } from "@/components/PlugInApply";
+import { ClampDescription } from "@/components/ui/ClampDescription";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -21,40 +23,14 @@ const STATUS_LABEL: Record<string, string> = {
   settled:   "完了",
 };
 
-function MatchingDonut({ score, matchedReqs, totalReqs }: {
+function MatchScore({ score, matchedReqs, totalReqs }: {
   score: number; matchedReqs: number; totalReqs: number;
 }) {
-  const r = 30;
-  const circ = 2 * Math.PI * r;
-  const dash = (score / 100) * circ;
-  const gap = circ - dash;
-  const color = score >= 80 ? "#0E9F4F" : score >= 50 ? "#F59E0B" : "#E64545";
-
+  const color = score >= 80 ? "text-cyan-400" : score >= 50 ? "text-amber-400" : "text-slate-300";
   return (
-    <div
-      role="img"
-      aria-label={`マッチ率 ${score}%`}
-      className="flex flex-col items-center gap-1"
-    >
-      <svg width="80" height="80" viewBox="0 0 80 80">
-        <circle cx="40" cy="40" r={r} fill="none" stroke="#E5E7EB" strokeWidth="8" />
-        <circle
-          cx="40" cy="40" r={r}
-          fill="none"
-          stroke={color}
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeDasharray={`${dash} ${gap}`}
-          strokeDashoffset={circ / 4}
-          style={{ transition: "stroke-dasharray 0.6s ease" }}
-        />
-        <text x="40" y="44" textAnchor="middle" fontSize="14" fontWeight="900" fill={color}>
-          {score}%
-        </text>
-      </svg>
-      <p className="text-[10px] text-[var(--n-muted,#6B6456)]">
-        マッチ {matchedReqs} / {totalReqs} 件
-      </p>
+    <div role="img" aria-label={`マッチ率 ${score}%`} className="flex flex-col items-center gap-1">
+      <span className={`text-3xl font-black tabular-nums ${color}`}>{score}%</span>
+      <p className="text-[10px] text-slate-400">マッチ {matchedReqs} / {totalReqs} 件</p>
     </div>
   );
 }
@@ -71,23 +47,23 @@ function ProjectTimeline({ currentStep }: { currentStep: number }) {
           <li key={label} className="flex-1 flex flex-col items-center gap-1">
             <div className="flex items-center w-full">
               {i > 0 && (
-                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--n-primary,#E64545)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--primary,#06B6D4)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
               <div
                 aria-current={active ? "step" : undefined}
                 className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[9px] font-black transition-colors ${
-                  done ? "bg-[var(--n-primary,#E64545)] text-white"
-                  : active ? "bg-[var(--n-primary,#E64545)] text-white ring-2 ring-[var(--n-primary,#E64545)] ring-offset-1"
+                  done ? "bg-[var(--primary,#06B6D4)] text-white"
+                  : active ? "bg-[var(--primary,#06B6D4)] text-white ring-2 ring-[var(--primary,#06B6D4)] ring-offset-1"
                   : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
                 }`}
               >
                 {done ? "✓" : i + 1}
               </div>
               {i < TIMELINE_STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--n-primary,#E64545)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--primary,#06B6D4)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
             </div>
-            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-muted,#6B6456)]"}`}>
+            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-muted,#6B6456)]"}`}>
               {label}
             </span>
           </li>
@@ -119,7 +95,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   const timelineStep = 0; // "応募中" — demo shows first step
 
   return (
-    <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-4xl mx-auto">
+    <main className="px-4 sm:px-6 lg:px-8 py-8 pb-44 md:pb-8 max-w-4xl mx-auto">
       {/* Back */}
       <Link href="/projects" className="text-xs text-[var(--n-muted,#6B6456)] hover:underline">
         ← 案件一覧に戻る
@@ -138,9 +114,11 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         <h1 className="text-xl font-black text-[var(--n-text,#1A1714)] leading-snug">
           {project.title}
         </h1>
-        <p className="mt-2 text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
-          {project.description}
-        </p>
+        <ClampDescription
+          text={project.description}
+          maxLines={3}
+          className="mt-2"
+        />
       </div>
 
       {/* Main 2-column layout (mobile: stacked, PC: left+right) */}
@@ -153,10 +131,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">技術スタック</p>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-text,#1A1714)] border border-[var(--n-divider,rgba(0,0,0,0.08))]"
-                >
+                <span key={t} className="chip-tech font-mono">
                   {t}
                 </span>
               ))}
@@ -179,7 +154,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   <span className={matched ? "text-[var(--n-text,#1A1714)]" : "text-[var(--n-muted,#6B6456)]"}>
                     {req.label}
                     {matched && ownedRank && (
-                      <span className="ml-1 font-bold text-[var(--n-primary,#E64545)]">[{ownedRank}]</span>
+                      <span className="ml-1 font-bold text-[var(--primary,#06B6D4)]">[{ownedRank}]</span>
                     )}
                     {!matched && (
                       <span className="ml-1 text-[var(--n-muted,#6B6456)]">（未所持 — 要 {req.rankMin}+）</span>
@@ -199,9 +174,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
                 現場課題
               </p>
-              <p className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
-                {project.sesChallenge}
-              </p>
+              <ClampDescription text={project.sesChallenge} maxLines={3} />
             </div>
           )}
 
@@ -215,16 +188,25 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         {/* ── Right: sidebar ── */}
         <div className="w-full lg:w-72 space-y-4">
 
-          {/* Matching Score Donut */}
+          {/* Matching Score */}
           <div className="section-card p-5 flex flex-col items-center gap-2">
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] self-start">
               Matching Score
             </p>
-            <MatchingDonut
+            <MatchScore
               score={matching.score}
               matchedReqs={matching.matchedReqs}
               totalReqs={matching.totalReqs}
             />
+          </div>
+
+          {/* Plug-in Apply — fixed on mobile (thumb zone), regular card on md+ */}
+          <div className="hidden md:block section-card p-5">
+            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Apply</p>
+            <PlugInApply projectId={project.id} />
+          </div>
+          <div className="md:hidden">
+            <PlugInApply projectId={project.id} sticky />
           </div>
 
           {/* Net Payout Simulation */}
@@ -245,71 +227,14 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                 <span>Platform Fee ({project.platformFeePct}%)</span>
                 <span className="text-[var(--n-muted,#6B6456)] font-bold">−{formatJpy(payout.platformFeeJpy)}</span>
               </div>
-              <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex justify-between">
+              <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex items-baseline justify-between">
                 <span className="font-bold text-[var(--n-text,#1A1714)]">手取り</span>
-                <span className="text-base font-black text-[var(--n-positive,#0E9F4F)]">
+                <span className="metric-prime">
                   {formatJpy(payout.netJpy)}
                 </span>
               </div>
             </div>
           </div>
-
-          {/* Rental Required */}
-          {matching.missingMds.length > 0 && (
-            <div className="section-card p-5">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">Rental Required</p>
-                <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                  未所持 {matching.missingMds.length} 件
-                </span>
-              </div>
-              <div className="space-y-3">
-                {matching.missingMds.map((md) => (
-                  <div key={md.id} className="rounded-xl bg-[var(--n-surface-2,#F5F3EE)] p-3">
-                    <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1">{md.label}</p>
-                    <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-2">
-                      要 {md.rankMin}+ ・重要度 {"★".repeat(md.weight)}{"☆".repeat(3 - md.weight)}
-                    </p>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg border border-[var(--n-primary,#E64545)] text-[var(--n-primary,#E64545)] hover:bg-[var(--n-primary,#E64545)] hover:text-white transition-colors"
-                      >
-                        Rent ¥{project.rentalFeeHourlyJpy.toLocaleString("ja-JP")}/h
-                      </button>
-                      <button
-                        type="button"
-                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border border-[var(--n-divider,rgba(0,0,0,0.12))] hover:bg-[var(--n-divider,rgba(0,0,0,0.08))] transition-colors"
-                      >
-                        Buy
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button
-                type="button"
-                className="mt-3 w-full rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold py-3 hover:opacity-90 transition-opacity"
-              >
-                レンタルして応募
-              </button>
-              <Link
-                href="/onboarding?fast=1"
-                className="mt-2 flex items-center justify-center gap-1 w-full text-xs font-bold text-[var(--n-primary,#E64545)] hover:underline py-1"
-              >
-                この案件用の Express Path で開始 →
-              </Link>
-            </div>
-          )}
-
-          {matching.missingMds.length === 0 && (
-            <button
-              type="button"
-              className="w-full section-card p-4 bg-[var(--n-primary,#E64545)] text-white text-sm font-bold rounded-xl hover:opacity-90 transition-opacity"
-            >
-              この案件に応募する
-            </button>
-          )}
 
           {/* Competition */}
           <div className="section-card p-5">

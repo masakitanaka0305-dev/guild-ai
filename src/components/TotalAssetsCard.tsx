@@ -104,7 +104,7 @@ export function TotalAssetsCard() {
     <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl shadow-sm p-6 sm:p-8 mb-6 sm:mb-8">
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+        <div className="w-1 h-5 rounded-full bg-[var(--primary,#06B6D4)] flex-shrink-0" />
         <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">総資産</p>
         <div className="relative">
           <button
@@ -130,11 +130,13 @@ export function TotalAssetsCard() {
 
       {/* Main balance */}
       <div className="mb-5">
-        <p className="text-sm text-gray-500 mb-1">現在の残高</p>
+        <p className="text-sm text-slate-400 mb-1">現在の残高</p>
         <p
           aria-live="polite"
           aria-atomic="true"
-          className="text-4xl sm:text-5xl font-extrabold tabular-nums text-[#1F1B16] leading-none"
+          data-testid="balance-prime"
+          className="metric-prime-white"
+          style={{ fontSize: "2.25rem", lineHeight: 1.05 }}
         >
           ¥{balance.toLocaleString("ja-JP")}
         </p>
@@ -142,21 +144,25 @@ export function TotalAssetsCard() {
 
       {/* Sub metrics — responsive: stacked on mobile, 3-col on sm+ */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-        <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl px-4 py-3">
-          <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-1">累計報酬</p>
-          <p className="text-xl font-bold tabular-nums text-[var(--n-text,#1A1714)]">
+        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+          <p className="text-[10px] text-slate-400 mb-1">累計報酬</p>
+          <p className="metric-prime" style={{ fontSize: "1.25rem" }}>
             ¥{portfolio.lifetimeEarningsJpy.toLocaleString("ja-JP")}
           </p>
         </div>
-        <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl px-4 py-3">
-          <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-1">運用資産の評価額</p>
-          <p className="text-xl font-bold tabular-nums text-[var(--n-gold,#D4AF37)]">
+        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+          <p className="text-[10px] text-slate-400 mb-1">運用資産の評価額</p>
+          <p className="metric-prime" style={{ fontSize: "1.25rem" }}>
             ¥{portfolio.runningAssetValueJpy.toLocaleString("ja-JP")}
           </p>
         </div>
-        <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl px-4 py-3">
-          <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-1">今月の伸び</p>
-          <p className={`text-xl font-bold tabular-nums ${isPositive ? "text-[#0E9F4F]" : "text-[#E64545]"}`}>
+        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+          <p className="text-[10px] text-slate-400 mb-1">今月の伸び</p>
+          <p
+            className={`text-xl font-semibold tabular-nums tracking-tight ${
+              isPositive ? "text-[#22D3EE]" : "text-[#F87171]"
+            }`}
+          >
             {isPositive ? "+" : ""}¥{portfolio.monthlyChangeJpy.toLocaleString("ja-JP")}
             <span className="text-sm ml-1">
               ({isPositive ? "+" : ""}{portfolio.monthlyChangePct}%)

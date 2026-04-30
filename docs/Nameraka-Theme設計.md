@@ -38,8 +38,8 @@
 | `--n-divider` | `rgba(0,0,0,0.08)` | 区切り線 |
 | `--n-text` | `#1A1714` | 主テキスト（濃いブラウン） |
 | `--n-muted` | `#6B6456` | 補助テキスト |
-| `--n-primary` | `#E64545` | **メルカリ赤** Primary CTA |
-| `--n-primary-hover` | `#D03A3A` | ホバー状態 |
+| `--n-primary` | `#0000CC` | **ディープブルー** Primary CTA（ブランド再定義に伴うトーン変更）|
+| `--n-primary-hover` | `#0000A8` | ホバー状態 |
 | `--n-gold` | `#D4AF37` | 格付・重要指標（ゴールド） |
 | `--n-gold-soft` | `#F2DFA0` | ゴールドのソフト版 |
 | `--n-positive` | `#0E9F4F` | 加算・成功（緑） |
@@ -282,3 +282,13 @@ bg-white border border-black/5 rounded-2xl shadow-sm active:scale-[0.99] transit
 ### royalty-stream
 - `useRoyaltyStream(true)` → 28〜32s 間隔で RoyaltyEvent
 - `ROYALTY_EVENTS_PER_MINUTE = 2`
+
+## Primary Color Migration（メルカリ赤 → ディープブルー）
+
+ブランド再定義に伴い、プライマリカラーを `#E64545`（メルカリ赤）から `#0000CC`（ディープブルー）に変更。
+
+| Token | 旧値 | 新値 |
+|-------|------|------|
+| `--n-primary` | `#E64545` | `#0000CC` |
+| `--n-primary-hover` | `#D03A3A` | `#0000A8` |
+| `n-negative`（エラー） | `#E64545` | `#E64545`（変更なし） |

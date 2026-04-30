@@ -20,7 +20,7 @@ export async function GET(
   const seed = djb2(id);
   const ranks = ["S", "A", "A", "B"] as const;
   const rank = ranks[seed % ranks.length];
-  const rankColor = rank === "S" ? "#D4AF37" : rank === "A" ? "#E64545" : "#6B6456";
+  const rankColor = rank === "S" ? "#D4AF37" : rank === "A" ? "#06B6D4" : "#6B6456";
   const monthlyMin = 1200 + (seed % 28800);
   const monthlyMax = monthlyMin + 3600 + (seed % 7200);
 
@@ -64,7 +64,7 @@ export async function GET(
               width: "36px",
               height: "36px",
               borderRadius: "10px",
-              background: "#E64545",
+              background: "#06B6D4",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -124,7 +124,7 @@ export async function GET(
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <div
             style={{
-              background: "#E64545",
+              background: "#06B6D4",
               borderRadius: "12px",
               padding: "12px 24px",
               color: "white",

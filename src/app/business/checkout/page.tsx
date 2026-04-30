@@ -94,7 +94,7 @@ export default function BusinessCheckoutPage() {
           </p>
           <Link
             href="/guild"
-            className="inline-block rounded-xl bg-[var(--n-primary,#E64545)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+            className="inline-block rounded-xl bg-[var(--primary,#06B6D4)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
           >
             ダッシュボードへ →
           </Link>
@@ -118,7 +118,7 @@ export default function BusinessCheckoutPage() {
             key={p.id}
             className={`flex flex-col rounded-xl border-2 p-3 cursor-pointer transition-all ${
               plan === p.id
-                ? "border-[var(--n-primary,#E64545)] bg-red-50"
+                ? "border-[var(--primary,#06B6D4)] bg-red-50"
                 : "border-kuroko/10 bg-white hover:border-kaki/30"
             }`}
           >
@@ -132,7 +132,7 @@ export default function BusinessCheckoutPage() {
               aria-label={p.name}
             />
             {p.highlight && (
-              <span className="text-[9px] font-bold text-[var(--n-primary,#E64545)] mb-1">人気</span>
+              <span className="text-[9px] font-bold text-[var(--primary,#06B6D4)] mb-1">人気</span>
             )}
             <p className="text-xs font-bold text-kuroko">{p.name}</p>
             <p className="text-[10px] text-[#9890A8] mt-0.5">{p.price}</p>
@@ -215,7 +215,7 @@ export default function BusinessCheckoutPage() {
         <button
           type="submit"
           disabled={processing}
-          className="w-full rounded-xl bg-[#E64545] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
+          className="w-full rounded-xl bg-[#06B6D4] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
         >
           {processing ? "処理中…" : `${selected.name} プランで始める`}
         </button>

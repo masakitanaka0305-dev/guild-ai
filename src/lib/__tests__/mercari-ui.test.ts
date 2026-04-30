@@ -31,18 +31,19 @@ describe("catchphrase: hero", () => {
 // / now redirects to /projects; onboarding has quick listing CTA.
 
 describe("catchphrase: minimal home", () => {
-  it("onboarding page has 3-step quick listing UI", () => {
+  it("onboarding page is the Smart Pre-fill confirmation flow (Water Guild v1)", () => {
+    // Repo-picker UI moved to /onboarding/repos. /onboarding is now the
+    // confirmation form per the Water Guild Hexagonal Robustness MVP spec.
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("Quick Listing");
-    expect(src).toContain("コンテンツ投入");
-    expect(src).toContain("AI 鑑定");
-    expect(src).toContain("出品完了");
+    expect(src).toContain("Smart Pre-fill");
+    expect(src).toContain("確認して進む");
+    expect(src).toContain("MOCK_OAUTH_PROFILE");
   });
 
-  it("onboarding page has consent and input cards", () => {
+  it("onboarding page wires the express run state machine", () => {
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("INPUT_CARDS");
-    expect(src).toContain("consented");
+    expect(src).toContain("runOnboarding");
+    expect(src).toContain("currentStepIdx");
   });
 
   it("projects page has cases/jobs content", () => {
@@ -75,17 +76,17 @@ describe("catchphrase: metadata", () => {
   });
 });
 
-// ─── 3. Primary red #E64545 in globals.css ────────────────────────────────────
+// ─── 3. Primary blue #06B6D4 in globals.css ────────────────────────────────────
 
 describe("mercari-ui: primary color token", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("--n-primary is #E64545", () => {
-    expect(src).toContain("--n-primary: #E64545");
+  it("--primary is #06B6D4", () => {
+    expect(src).toContain("--primary: #06B6D4");
   });
 
-  it("--n-primary-hover is #D03A3A", () => {
-    expect(src).toContain("--n-primary-hover: #D03A3A");
+  it("--primary-hover is #0891B2", () => {
+    expect(src).toContain("--primary-hover: #0891B2");
   });
 });
 
@@ -155,7 +156,7 @@ describe("sell: MD file input", () => {
 
   it("dragging state class switches on drag-over", () => {
     expect(src).toContain("isDragging");
-    expect(src).toContain("border-[#E64545]");
+    expect(src).toContain("border-[#06B6D4]");
     expect(src).toContain("bg-red-50");
   });
 
@@ -175,11 +176,10 @@ describe("home: unified how-block", () => {
     expect(src).toContain("/projects");
   });
 
-  it("onboarding quick listing has 3-step flow + CTA", () => {
+  it("onboarding page surfaces the Express Path with Smart Pre-fill (Water Guild v1)", () => {
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("Quick Listing");
-    expect(src).toContain("3 ステップ");
-    expect(src).toContain("コンテンツを投入して開始");
+    expect(src).toContain("Express Path");
+    expect(src).toContain("登記");
   });
 
   it("no UI file contains the removed 'いますぐ ¥30,000 から' chip", () => {
@@ -206,11 +206,11 @@ describe("home: unified how-block", () => {
 describe("onboarding: banner and modal", () => {
   const modalSrc  = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
 
-  it("onboarding quick listing page has consent checkbox and legal links", () => {
-    const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+  it("onboarding draft page has consent checkbox and legal agreement", () => {
+    // Consent moved to draft/Mint page in Water theme
+    const src = readFileSync(resolve(root, "src/app/onboarding/draft/[owner]/[repo]/page.tsx"), "utf8");
     expect(src).toContain("consented");
-    expect(src).toContain("legal/terms");
-    expect(src).toContain("legal/transfer");
+    expect(src).toContain("利用規約");
   });
 
   it("modal contains 4 steps in <ol>", () => {
@@ -309,9 +309,10 @@ describe("tone: 18y/o-friendly copy", () => {
     expect(navSrc).toContain('"稼ぐ"');
   });
 
-  it("onboarding page has CTA text (投稿 / 開始)", () => {
+  it("onboarding CTA is 「確認して進む — 登記（Sync）開始」 (Water Guild v1)", () => {
     const onboardSrc = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(onboardSrc).toContain("開始");
+    expect(onboardSrc).toContain("確認して進む");
+    expect(onboardSrc).toContain("登記");
   });
 
   it("/guild hero contains 報酬, 資産, 推定時給", () => {
@@ -387,9 +388,11 @@ describe("total-assets: hero card", () => {
     expect(a.monthlyChangePct).toBe(b.monthlyChangePct);
   });
 
-  it("monthlyChangePct positive → green class, negative → red class in source", () => {
-    expect(cardSrc).toContain("text-[#0E9F4F]");
-    expect(cardSrc).toContain("text-[#E64545]");
+  it("monthlyChangePct positive → cyan accent, negative → coral red (Water Guild v2)", () => {
+    // Water Guild v2 swaps the legacy emerald + crimson pair for cyan + coral
+    // to align with the deep-sea palette and stay AA-readable on #0B1121.
+    expect(cardSrc).toContain("text-[#22D3EE]");
+    expect(cardSrc).toContain("text-[#F87171]");
     expect(cardSrc).toContain("isPositive");
   });
 

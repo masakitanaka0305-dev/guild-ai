@@ -91,7 +91,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               { label: "最終実行", value: report.backtest.lastRunAt.slice(0, 10) },
             ].map(({ label, value, highlight }) => (
               <div key={label} className="section-card p-4 text-center print:border print:border-gray-200">
-                <p className={`text-lg font-black ${highlight ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-text,#1A1714)]"}`}>
+                <p className={`text-lg font-black ${highlight ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-text,#1A1714)]"}`}>
                   {value}
                 </p>
                 <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">{label}</p>
@@ -110,7 +110,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                   <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
                     <div
                       style={{ height: `${heightPct}%` }}
-                      className="w-full rounded-t bg-[var(--n-primary,#E64545)] opacity-70"
+                      className="w-full rounded-t bg-[var(--primary,#06B6D4)] opacity-70"
                     />
                   </div>
                 );
@@ -164,7 +164,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       item.status === "適合" ? "bg-emerald-50 text-emerald-700" :
                       item.status === "条件付き適合" ? "bg-amber-50 text-amber-700" :
-                      "bg-gray-100 text-gray-500"
+                      "bg-gray-100 text-slate-400"
                     }`}>
                       {item.status}
                     </span>

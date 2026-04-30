@@ -73,7 +73,7 @@ export function BulkDepositSection() {
               onClick={handleScan}
               disabled={scanning}
               aria-busy={scanning}
-              className="flex-shrink-0 rounded-xl bg-[#E64545] px-4 py-2 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
+              className="flex-shrink-0 rounded-xl bg-[#06B6D4] px-4 py-2 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
             >
               {scanning ? "…" : "スキャン開始"}
             </button>
@@ -118,7 +118,7 @@ export function BulkDepositSection() {
                     </div>
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
                       a.rank === "S" ? "bg-yellow-100 text-yellow-700" :
-                      a.rank === "A" ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-600"
+                      a.rank === "A" ? "bg-red-100 text-red-600" : "bg-gray-100 text-slate-400"
                     }`}>
                       {a.rank}
                     </span>
@@ -129,7 +129,7 @@ export function BulkDepositSection() {
               <button
                 onClick={handleDeposit}
                 disabled={chosenCount === 0}
-                className="w-full rounded-xl bg-[#E64545] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-40"
+                className="w-full rounded-xl bg-[#06B6D4] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-40"
               >
                 選んだ {chosenCount} 件の資産をまとめて預ける
               </button>

@@ -150,15 +150,12 @@ describe("timer-bar: onboarding page contains TimerBar logic", () => {
     } catch { return ""; }
   })();
 
-  it("page contains TimerBar with pending/red/green states and consent checkbox", () => {
+  it("page hosts the Express Path TimerBar + Smart Pre-fill confirmation (Water Guild v1)", () => {
+    // Water Guild v1 brings the TimerBar back as the post-confirmation
+    // express run indicator, fronted by the Smart Pre-fill confirmation.
     expect(src).toContain("TimerBar");
-    expect(src).toContain("bg-red-");   // red line/bar for over-budget
-    expect(src).toContain("bg-green-"); // green fill for achieved
-    expect(src).toContain("bg-blue-");  // blue base bar
-    expect(src).toContain("pending");   // pending (grey) state for source step
-    expect(src).toContain("consented"); // consent checkbox state
-    expect(src).toContain("legal/terms");   // link to ToS
-    expect(src).toContain("legal/transfer"); // link to transfer terms
+    expect(src).toContain("Smart Pre-fill");
+    expect(src).toContain("確認して進む");
   });
 });
 

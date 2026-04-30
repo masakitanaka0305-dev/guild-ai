@@ -18,7 +18,7 @@ interface MonthBar {
   segments: { value: number; color: string }[];
 }
 
-const SEGMENT_COLORS = ["#E64545", "#D4AF37", "#0E9F4F", "#2563EB", "#9B59B6"];
+const SEGMENT_COLORS = ["#06B6D4", "#D4AF37", "#0E9F4F", "#2563EB", "#9B59B6"];
 
 function getStackingChartData(seedStr: string): MonthBar[] {
   let seed = djb2(seedStr + "stacking-chart");
@@ -52,7 +52,7 @@ const H = 280;
 const CX = W / 2;
 const CY = H / 2 - 10;
 
-const RANK_COLORS: Record<string, string> = { S: "#D4AF37", A: "#E64545", B: "#2563EB" };
+const RANK_COLORS: Record<string, string> = { S: "#D4AF37", A: "#06B6D4", B: "#2563EB" };
 
 interface NetworkNode {
   x: number;
@@ -145,8 +145,8 @@ export default function StackingPage() {
       </div>
 
       {/* Summary */}
-      <div className="mb-6 rounded-2xl border border-[var(--n-primary,#E64545)]/20 bg-[var(--n-primary,#E64545)]/5 p-5 text-center">
-        <p className="text-lg font-black text-[var(--n-primary,#E64545)] leading-snug">
+      <div className="mb-6 rounded-2xl border border-[var(--primary,#06B6D4)]/20 bg-[var(--primary,#06B6D4)]/5 p-5 text-center">
+        <p className="text-lg font-black text-[var(--primary,#06B6D4)] leading-snug">
           {totalDescendants} 件の知恵が、{uniquePeople} 人の創造を支えています
         </p>
         <p className="text-xs text-[#9890A8] mt-1">直近30日のデータをもとに算出（モック）</p>
@@ -196,7 +196,7 @@ export default function StackingPage() {
               </g>
             ))}
             {/* Self node (center) */}
-            <circle cx={CX} cy={CY} r={20} fill="#E64545" opacity="0.95" />
+            <circle cx={CX} cy={CY} r={20} fill="#06B6D4" opacity="0.95" />
             <text x={CX} y={CY + 1} textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">
               あなた
             </text>
@@ -285,7 +285,7 @@ export default function StackingPage() {
       <div className="mt-6 grid grid-cols-2 gap-3">
         <Link
           href="/sell"
-          className="rounded-xl bg-[var(--n-primary,#E64545)] px-4 py-3 text-sm font-bold text-white text-center hover:opacity-90 transition-opacity"
+          className="rounded-xl bg-[var(--primary,#06B6D4)] px-4 py-3 text-sm font-bold text-white text-center hover:opacity-90 transition-opacity"
         >
           新しいノートを追加 →
         </Link>

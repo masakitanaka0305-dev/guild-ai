@@ -25,7 +25,7 @@ const STATUS_STYLE: Record<string, string> = {
   "open":          "bg-yellow-50 text-yellow-700 border-yellow-200",
   "auto-resolved": "bg-green-50 text-green-700 border-green-200",
   "escalated":     "bg-red-50 text-red-600 border-red-200",
-  "closed":        "bg-gray-50 text-gray-600 border-gray-200",
+  "closed":        "bg-gray-50 text-slate-400 border-gray-200",
 };
 
 const DEMO_HANDLE = "demo-user";
@@ -142,7 +142,7 @@ export default function DisputesPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl bg-[#E64545] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
+            className="w-full rounded-xl bg-[#06B6D4] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
           >
             {submitting ? "審査中…" : "申請する（AI が即時審査）"}
           </button>
@@ -181,7 +181,7 @@ export default function DisputesPage() {
                 {d.status === "open" && (
                   <button
                     onClick={() => handleResolve(d.id)}
-                    className="mt-2 text-xs text-[var(--n-primary,#E64545)] font-semibold hover:underline"
+                    className="mt-2 text-xs text-[var(--primary,#06B6D4)] font-semibold hover:underline"
                   >
                     今すぐ審査 →
                   </button>
