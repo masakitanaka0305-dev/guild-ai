@@ -39,9 +39,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja" className={notoSansJP.variable} data-theme="nameraka">
+    <html lang="ja" data-anim="off" className={`${notoSansJP.variable} bg-slate-950 text-slate-100`}>
       <head />
-      <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased">
+      <body className="bg-slate-950 text-slate-100 min-h-screen h-screen h-dvh flex overflow-hidden font-sans antialiased">
         <SessionProvider>
           <AuthProvider>
             {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}

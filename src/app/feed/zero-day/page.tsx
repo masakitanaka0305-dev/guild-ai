@@ -9,7 +9,7 @@ const PRIORITY_LABEL: Record<string, string> = {
 };
 
 const PRIORITY_COLOR: Record<string, string> = {
-  critical: "bg-[var(--n-primary,#0000CC)] text-white",
+  critical: "bg-[var(--primary,#06B6D4)] text-white",
   high:     "bg-amber-500 text-white",
   medium:   "bg-blue-500 text-white",
 };
@@ -45,7 +45,7 @@ function EventCard({ event }: { event: ZeroDayEvent }) {
               <p className="text-[10px] font-semibold text-green-700 mb-1">対応MDあり</p>
               <Link
                 href={`/asset/${event.coveredBy.guildId}`}
-                className="text-xs font-semibold text-[var(--n-primary,#0000CC)] hover:underline"
+                className="text-xs font-semibold text-[var(--primary,#06B6D4)] hover:underline"
               >
                 {event.coveredBy.title} →
               </Link>
@@ -59,7 +59,7 @@ function EventCard({ event }: { event: ZeroDayEvent }) {
             {!isCovered && (
               <Link
                 href={`/sell?topic=${encodeURIComponent(event.topic)}`}
-                className="rounded-lg bg-[var(--n-primary,#0000CC)] px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 transition-opacity"
+                className="rounded-lg bg-[var(--primary,#06B6D4)] px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 transition-opacity"
               >
                 対応MDを出品する →
               </Link>
@@ -98,7 +98,7 @@ export default function ZeroDayFeedPage() {
         <div className="flex items-center gap-2 mb-1">
           <h1 className="text-2xl font-bold text-kuroko">ゼロデイフィード</h1>
           {recruitingCount > 0 && (
-            <span className="rounded-full bg-[var(--n-primary,#0000CC)] px-2.5 py-0.5 text-xs font-bold text-white">
+            <span className="rounded-full bg-[var(--primary,#06B6D4)] px-2.5 py-0.5 text-xs font-bold text-white">
               {recruitingCount} 件 募集中
             </span>
           )}
@@ -123,7 +123,7 @@ export default function ZeroDayFeedPage() {
         </div>
         <div className="section-card p-3 text-center">
           <p className="text-[10px] text-[#9890A8] mb-0.5">募集中</p>
-          <p className="text-lg font-extrabold tabular-nums text-[var(--n-primary,#0000CC)]">
+          <p className="text-lg font-extrabold tabular-nums text-[var(--primary,#06B6D4)]">
             {recruitingCount}
           </p>
         </div>

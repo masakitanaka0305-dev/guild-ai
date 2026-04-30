@@ -41,7 +41,7 @@ export default function ProjectsPage() {
                       {project.industry}
                     </span>
                   </div>
-                  <h2 className="text-sm font-bold text-[var(--n-text,#1A1714)] leading-snug group-hover:text-[var(--n-primary,#0000CC)] transition-colors">
+                  <h2 className="text-sm font-bold text-[var(--n-text,#1A1714)] leading-snug group-hover:text-[var(--primary,#06B6D4)] transition-colors">
                     {project.title}
                   </h2>
                   <p className="text-xs text-[var(--n-muted,#6B6456)] mt-1 line-clamp-2 leading-relaxed">
@@ -59,7 +59,7 @@ export default function ProjectsPage() {
                   </div>
                 </div>
                 <div className="shrink-0 text-right">
-                  <p className="text-base font-black text-[var(--n-primary,#0000CC)]">
+                  <p className="text-base font-black text-[var(--primary,#06B6D4)]">
                     ¥{project.grossRewardJpy.toLocaleString("ja-JP")}
                   </p>
                   <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">

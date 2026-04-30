@@ -9,31 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        kuroko: "#1A1628",
-        kaki: "#1A6BB5",
-        "accent-green": "#0FA968",
-        kami: "#FAFAFA",
-        "surface-inset": "#F4F4F5",
-        // ─── Nameraka Theme (なめらか ライト — デフォルト) ─────────────
-        "n-bg": "#FAFAF7",
-        "n-surface": "#FFFFFF",
-        "n-surface-2": "#F5F3EE",
-        "n-divider": "#EBEBEB",
-        "n-text": "#1A1714",
-        "n-muted": "#6B6456",
-        "n-primary": "#0000CC",
-        "n-primary-hover": "#0000A8",
-        "n-gold": "#D4AF37",
-        "n-gold-soft": "#F2DFA0",
-        "n-positive": "#0E9F4F",
-        "n-negative": "#E64545",
-        // ─── Primary token (deep blue) ────────────────────────────────
         primary: {
-          DEFAULT: "#0000CC",
-          hover: "#0000A8",
-          soft: "#E5E5FA",
-          foreground: "#FFFFFF",
+          DEFAULT: "#06B6D4",  // cyan-500
+          hover: "#0891B2",    // cyan-600
+          soft: "#164E63",     // cyan-950 dark
+          foreground: "#020617",  // slate-950
         },
+        // retain for negative indicators only
+        negative: "#E64545",
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],

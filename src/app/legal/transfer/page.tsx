@@ -59,7 +59,7 @@ export default function TransferPage() {
           <h2 className="font-bold mb-2">第5条（削除要求と差止対応）</h2>
           <p>
             クリエイターは、登録した投稿物の削除を {" "}
-            <Link href="/disputes" className="text-[var(--n-primary,#0000CC)] underline">
+            <Link href="/disputes" className="text-[var(--primary,#06B6D4)] underline">
               /disputes
             </Link>{" "}
             から申請できます。削除が承認された場合、以後の新規提供は停止されますが、
@@ -88,7 +88,7 @@ export default function TransferPage() {
         <div className="pt-4 border-t border-[var(--n-divider,rgba(0,0,0,0.08))]">
           <p className="text-xs text-[var(--n-muted,#6B6456)]">
             詳細な利用条件は{" "}
-            <Link href="/legal/terms" className="text-[var(--n-primary,#0000CC)] underline">
+            <Link href="/legal/terms" className="text-[var(--primary,#06B6D4)] underline">
               利用規約
             </Link>
             {" "}をあわせてご確認ください。

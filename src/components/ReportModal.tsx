@@ -48,7 +48,7 @@ export function ReportModal({ guildId, onClose }: ReportModalProps) {
             <div className="text-3xl mb-3">✅</div>
             <p className="text-sm font-bold text-[var(--n-text,#1A1714)] mb-1">レポートを受け付けました</p>
             <p className="text-xs text-[var(--n-muted,#6B6456)] mb-4">運営チームが確認します。ご協力ありがとうございます。</p>
-            <button onClick={onClose} className="text-sm font-semibold text-[var(--n-primary,#0000CC)] hover:underline">
+            <button onClick={onClose} className="text-sm font-semibold text-[var(--primary,#06B6D4)] hover:underline">
               閉じる
             </button>
           </div>
@@ -69,7 +69,7 @@ export function ReportModal({ guildId, onClose }: ReportModalProps) {
                   ref={firstFocusRef}
                   value={reason}
                   onChange={(e) => setReason(e.target.value as ReportReason)}
-                  className="w-full rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-sm text-[var(--n-text,#1A1714)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)]"
+                  className="w-full rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-sm text-[var(--n-text,#1A1714)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)]"
                 >
                   {REASONS.map((r) => (
                     <option key={r} value={r}>{REASON_LABEL[r]}</option>
@@ -83,7 +83,7 @@ export function ReportModal({ guildId, onClose }: ReportModalProps) {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="具体的な問題点をご記入ください"
                   rows={3}
-                  className="w-full rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] resize-none"
+                  className="w-full rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)] resize-none"
                 />
               </div>
               <div className="flex gap-3">
@@ -96,7 +96,7 @@ export function ReportModal({ guildId, onClose }: ReportModalProps) {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 rounded-lg bg-[var(--n-primary,#0000CC)] py-2 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+                  className="flex-1 rounded-lg bg-[var(--primary,#06B6D4)] py-2 text-sm font-bold text-white hover:opacity-90 transition-opacity"
                 >
                   送信する
                 </button>

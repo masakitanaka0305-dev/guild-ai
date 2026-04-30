@@ -29,7 +29,7 @@ function DayChart({ data }: { data: number[] }) {
       <polyline
         points={pts}
         fill="none"
-        stroke="#0000CC"
+        stroke="#06B6D4"
         strokeWidth="1.5"
         strokeLinejoin="round"
         strokeLinecap="round"
@@ -76,11 +76,11 @@ export function RevenueSimulatorCard({ rank, floorPrice, title = "" }: Props) {
       {/* Main range */}
       <div className="flex items-baseline gap-1 mb-1">
         <span className="text-[10px] text-[var(--n-muted,#6B6456)]">月</span>
-        <span className="text-2xl font-black tabular-nums text-[var(--n-primary,#0000CC)]">
+        <span className="text-2xl font-black tabular-nums text-[var(--primary,#06B6D4)]">
           ¥{sim.p10Jpy.toLocaleString("ja-JP")}
         </span>
         <span className="text-sm text-[var(--n-muted,#6B6456)] font-semibold">〜</span>
-        <span className="text-2xl font-black tabular-nums text-[var(--n-primary,#0000CC)]">
+        <span className="text-2xl font-black tabular-nums text-[var(--primary,#06B6D4)]">
           ¥{sim.p90Jpy.toLocaleString("ja-JP")}
         </span>
       </div>

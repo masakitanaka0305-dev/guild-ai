@@ -218,26 +218,26 @@ describe("footer: enterprise CTA pinned in AppShell", () => {
 
 // ─── Theme: Deep Blue Primary ──────────────────────────────────────────────────
 
-describe("theme: primary color is deep blue #0000CC", () => {
+describe("theme: primary color is deep blue #06B6D4", () => {
   const root = process.cwd();
 
-  it("tailwind.config.ts defines primary DEFAULT as #0000CC", () => {
+  it("tailwind.config.ts defines primary DEFAULT as #06B6D4", () => {
     const src = readFileSync(join(root, "tailwind.config.ts"), "utf8");
-    expect(src).toContain("#0000CC");
+    expect(src).toContain("#06B6D4");
     expect(src).toContain("primary");
   });
 
-  it("globals.css defines --primary: #0000CC", () => {
+  it("globals.css defines --primary: #06B6D4", () => {
     const src = readFileSync(join(root, "src/app/globals.css"), "utf8");
-    expect(src).toContain("--primary: #0000CC");
-    expect(src).toContain("--n-primary: #0000CC");
+    expect(src).toContain("--primary: #06B6D4");
+    expect(src).toContain("--primary: #06B6D4");
   });
 
-  it("main CTAs use primary blue — FAB and sidebar action have #0000CC or var(--n-primary", () => {
+  it("main CTAs use primary blue — FAB and sidebar action have #06B6D4 or var(--primary", () => {
     const fab = readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
     const nav = readFileSync(join(root, "src/components/SidebarNav.tsx"), "utf8");
     const combined = fab + nav;
-    expect(combined).toContain("bg-[var(--n-primary,#0000CC)]");
+    expect(combined).toContain("bg-[var(--primary,#06B6D4)]");
     expect(combined).toContain("aria-label=\"出す\"");
   });
 });

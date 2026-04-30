@@ -12,7 +12,7 @@ const SVG_H = 540;
 const CX = SVG_W / 2;
 const CY = SVG_H / 2;
 const NODE_R: Record<string, number> = { self: 28, parent: 18, child: 14 };
-const RANK_COLOR: Record<string, string> = { S: "#D4AF37", A: "#0000CC", B: "#9890A8" };
+const RANK_COLOR: Record<string, string> = { S: "#D4AF37", A: "#06B6D4", B: "#9890A8" };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -318,8 +318,8 @@ export default function LineagePage({ params }: { params: { guildId: string } })
               onClick={() => setLayoutMode(mode)}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                 layoutMode === mode
-                  ? "bg-[var(--n-primary,#0000CC)] text-white"
-                  : "bg-white border border-gray-200 text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#0000CC)]"
+                  ? "bg-[var(--primary,#06B6D4)] text-white"
+                  : "bg-white border border-gray-200 text-[var(--n-muted,#6B6456)] hover:border-[var(--primary,#06B6D4)]"
               }`}
             >
               {mode === "tree" ? "ツリー表示" : "力学表示"}
@@ -331,7 +331,7 @@ export default function LineagePage({ params }: { params: { guildId: string } })
       {/* Legend */}
       <div className="flex flex-wrap gap-4 mb-4 text-xs text-[var(--n-muted,#6B6456)]">
         {[
-          { label: "自分のノート", color: "border-[#0000CC]", bg: "bg-[#FAFAF7]" },
+          { label: "自分のノート", color: "border-[#06B6D4]", bg: "bg-[#FAFAF7]" },
           { label: "親（依存元）", color: "border-black/20", bg: "bg-white" },
           { label: "子（引用先）", color: "border-black/20", bg: "bg-white" },
         ].map((item) => (

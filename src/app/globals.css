@@ -3,49 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  /* Water theme — dark base */
   :root {
-    color-scheme: light;
-  }
-
-  /* ── Nameraka Theme (ライト — デフォルト) ──────────────────── */
-  [data-theme="nameraka"] {
-    color-scheme: light;
-    --n-bg: #FAFAF7;
-    --n-surface: #FFFFFF;
-    --n-surface-2: #F5F3EE;
-    --n-divider: rgba(0,0,0,0.08);
-    --n-text: #1A1714;
-    --n-muted: #6B6456;
-    --n-primary: #0000CC;
-    --n-primary-hover: #0000A8;
-    --n-gold: #D4AF37;
-    --n-gold-soft: #F2DFA0;
-    --n-positive: #0E9F4F;
-    --n-negative: #E64545;
-    --primary: #0000CC;
-    --primary-hover: #0000A8;
-    --primary-soft: #E5E5FA;
-    --primary-foreground: #FFFFFF;
-    --radius-md: 16px;
-    --radius-sm: 8px;
-    --radius-lg: 24px;
-    font-family: -apple-system, BlinkMacSystemFont, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-  }
-
-  [data-theme="nameraka"] body,
-  [data-theme="nameraka"] .n-bg {
-    background-color: var(--n-bg);
-    color: var(--n-text);
-  }
-
-  /* nameraka section card */
-  [data-theme="nameraka"] .section-card {
-    background-color: var(--n-surface);
-    border-color: var(--n-divider);
-    border-radius: 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+    --primary: #06B6D4;
+    --primary-hover: #0891B2;
+    --primary-soft: #164E63;
+    --negative: #E64545;
+    --bg: #020617;
+    --surface: #0F172A;
+    --surface-2: #1E293B;
+    --divider: rgba(255,255,255,0.08);
+    --text: #F1F5F9;
+    --muted: #94A3B8;
   }
 
   body {
@@ -53,6 +22,11 @@
     -moz-osx-font-smoothing: grayscale;
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
+}
+
+[data-anim="off"] * {
+  transition: none !important;
+  animation: none !important;
 }
 
 @layer components {
@@ -117,13 +91,7 @@
   }
 }
 
-/* Nameraka: smooth transitions */
-[data-theme="nameraka"] * {
-  transition-duration: 220ms;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Nameraka: scan line for bank assessment */
+/* Scan line for bank assessment */
 @keyframes scanLine {
   0%   { transform: translateX(-100%); opacity: 1; }
   100% { transform: translateX(100%);  opacity: 0; }

@@ -10,7 +10,7 @@ export function ReportButtonSection({ guildId }: { guildId: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-[10px] text-[var(--n-muted,#6B6456)] hover:text-[var(--n-primary,#0000CC)] underline transition-colors"
+        className="text-[10px] text-[var(--n-muted,#6B6456)] hover:text-[var(--primary,#06B6D4)] underline transition-colors"
       >
         不適切なコンテンツを報告
       </button>
