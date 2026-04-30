@@ -16,17 +16,20 @@
     --water-muted:        #94A3B8;
     --water-divider:      rgba(226,232,240,0.10);
 
-    /* Legacy aliases retained for components that still reference them */
-    --primary:       var(--water-accent);
-    --primary-hover: var(--water-accent-hover);
-    --primary-soft:  #164E63;
-    --negative:      #F87171;
-    --bg:            var(--water-bg);
-    --surface:       var(--water-surface);
-    --surface-2:     var(--water-surface-2);
-    --divider:       var(--water-divider);
-    --text:          var(--water-text);
-    --muted:         var(--water-muted);
+    /* Legacy aliases retained for components that still reference them.
+       --primary keeps its cyan-500 tone to avoid disturbing pre-Water-Guild
+       components (FAB, sidebar). New Water Guild surfaces use
+       --water-accent (#22D3EE) directly. */
+    --primary: #06B6D4;
+    --primary-hover: #0891B2;
+    --primary-soft: #164E63;
+    --negative: #F87171;
+    --bg: #020617;
+    --surface: var(--water-surface);
+    --surface-2: var(--water-surface-2);
+    --divider: var(--water-divider);
+    --text: var(--water-text);
+    --muted: var(--water-muted);
   }
 
   [data-theme="water"] {

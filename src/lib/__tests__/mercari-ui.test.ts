@@ -31,17 +31,19 @@ describe("catchphrase: hero", () => {
 // / now redirects to /projects; onboarding has quick listing CTA.
 
 describe("catchphrase: minimal home", () => {
-  it("onboarding page has deploy table UI (Water theme)", () => {
+  it("onboarding page is the Smart Pre-fill confirmation flow (Water Guild v1)", () => {
+    // Repo-picker UI moved to /onboarding/repos. /onboarding is now the
+    // confirmation form per the Water Guild Hexagonal Robustness MVP spec.
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("Deploy");
-    expect(src).toContain("Analyze");
-    expect(src).toContain("repos");
+    expect(src).toContain("Smart Pre-fill");
+    expect(src).toContain("確認して進む");
+    expect(src).toContain("MOCK_OAUTH_PROFILE");
   });
 
-  it("onboarding page has repo list and analyze flow", () => {
+  it("onboarding page wires the express run state machine", () => {
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("analyzing");
-    expect(src).toContain("setRepos");
+    expect(src).toContain("runOnboarding");
+    expect(src).toContain("currentStepIdx");
   });
 
   it("projects page has cases/jobs content", () => {
@@ -174,10 +176,10 @@ describe("home: unified how-block", () => {
     expect(src).toContain("/projects");
   });
 
-  it("onboarding deploy table has GitHub repos list + Analyze CTA (Water theme)", () => {
+  it("onboarding page surfaces the Express Path with Smart Pre-fill (Water Guild v1)", () => {
     const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(src).toContain("Deploy");
-    expect(src).toContain("Analyze");
+    expect(src).toContain("Express Path");
+    expect(src).toContain("登記");
   });
 
   it("no UI file contains the removed 'いますぐ ¥30,000 から' chip", () => {
@@ -307,9 +309,10 @@ describe("tone: 18y/o-friendly copy", () => {
     expect(navSrc).toContain('"稼ぐ"');
   });
 
-  it("onboarding page has CTA text (Analyze)", () => {
+  it("onboarding CTA is 「確認して進む — 登記（Sync）開始」 (Water Guild v1)", () => {
     const onboardSrc = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
-    expect(onboardSrc).toContain("Analyze");
+    expect(onboardSrc).toContain("確認して進む");
+    expect(onboardSrc).toContain("登記");
   });
 
   it("/guild hero contains 報酬, 資産, 推定時給", () => {

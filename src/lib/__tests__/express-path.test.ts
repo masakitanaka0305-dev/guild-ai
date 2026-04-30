@@ -150,10 +150,12 @@ describe("timer-bar: onboarding page contains TimerBar logic", () => {
     } catch { return ""; }
   })();
 
-  it("page contains deploy table with Analyze button (Water theme onboarding)", () => {
-    // Old TimerBar onboarding replaced by Water theme GitHub repo table
-    expect(src).toContain("Analyze");
-    expect(src).toContain("repos");
+  it("page hosts the Express Path TimerBar + Smart Pre-fill confirmation (Water Guild v1)", () => {
+    // Water Guild v1 brings the TimerBar back as the post-confirmation
+    // express run indicator, fronted by the Smart Pre-fill confirmation.
+    expect(src).toContain("TimerBar");
+    expect(src).toContain("Smart Pre-fill");
+    expect(src).toContain("確認して進む");
   });
 });
 

@@ -5,16 +5,18 @@ import { resolve } from "path";
 const root = process.cwd();
 
 describe("water-theme: color tokens", () => {
-  it("tailwind.config.ts defines primary DEFAULT as #06B6D4 (cyan-500)", () => {
+  it("tailwind.config.ts defines the cyan-500 hover hue (#06B6D4) and the Water Guild accent (#22D3EE)", () => {
     const src = readFileSync(resolve(root, "tailwind.config.ts"), "utf8");
     expect(src).toContain("#06B6D4");
+    expect(src).toContain("#22D3EE");
     expect(src).toContain("primary");
   });
 
-  it("globals.css defines --primary: #06B6D4 and --bg: #020617 (slate-950)", () => {
+  it("globals.css uses the Water Guild palette (#0B1121 / #22D3EE)", () => {
+    // Water Guild v1 supersedes the earlier slate-950 base with deep-sea navy.
     const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
-    expect(src).toContain("--primary: #06B6D4");
-    expect(src).toContain("#020617");
+    expect(src).toMatch(/--water-bg:\s*#0B1121/i);
+    expect(src).toMatch(/--water-accent:\s*#22D3EE/i);
   });
 });
 
