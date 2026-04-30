@@ -1,13 +1,18 @@
 # GUILD AI — Brand Token 最終版
 
-## プライマリトークン（深青系）
+## プライマリトークン（Water Theme — 現行）
 
 | Token | 値 | 用途 |
 |-------|----|------|
-| `--primary` / `n-primary` | `#0000CC` | 全 Primary CTA、FAB、アクティブ状態 |
-| `--primary-hover` | `#0000A8` | ホバー・プレス状態 |
-| `--primary-soft` | `#E5E5FA` | 背景帯・ソフト強調 |
-| `--primary-foreground` | `#FFFFFF` | Primary 上の文字色 |
+| `--primary` | `#06B6D4` (cyan-500) | Current (Water theme) — 全 Primary CTA、FAB、アクティブ状態 |
+| `--primary-hover` | `#0891B2` (cyan-600) | ホバー・プレス状態 |
+| `--primary-soft` | `#164E63` (cyan-950) | 背景帯・ソフト強調 |
+| `--primary-foreground` | `#020617` (slate-950) | Primary 上の文字色 |
+
+## History
+| Token | 値 | 備考 |
+|-------|----|------|
+| `--primary` | `#0000CC` → `#E64545` | Previous blue/red (deprecated) |
 
 ## ネガティブ／エラートークン（赤系）
 
