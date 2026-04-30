@@ -2,10 +2,18 @@ import { describe, it, expect } from "vitest";
 import { autoList, sortListings, filterListings, MOCK_MARKETPLACE } from "../index";
 
 const S_MD = `
+# Engine — Implementation Guide
+
+なぜ async を使うか（why）: 非同期 IO が必要。
+制約 constraint: Node.js 18+、TypeScript 5.
+落とし穴 gotcha: null チェック漏れに注意。
+パフォーマンス performance latency: O(n) 処理。
+テスト test example: expect(result).toBe(42). output: { result: 42 }
+フォールバック fallback: catch(e) で retry と error handling。
+
 async function process(input: string) { }
 function validate(data: unknown) { }
 class Engine { }
-// test example: output: { result: 42 }
 `;
 
 const SAMPLE: Parameters<typeof autoList>[0] = {

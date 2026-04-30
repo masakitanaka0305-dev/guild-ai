@@ -1,8 +1,9 @@
 // GUILD AI — ai-auditor (知能鑑定士)
 // Decides S/A/B rank from CCAF + Vercel uptime + running code evidence.
-// Quality-Gate (Shima-Final): S rank requires hasRunningCode + test evidence.
+// Quality-Gate (Genesis-Final): S rank additionally requires contextDepth >= 4.
 
 import type { AuditResult, CCAF, Rank } from "@/types";
+import { computeContextDepth, S_RANK_CONTEXT_DEPTH_MIN } from "@/lib/context-depth";
 
 export interface AuditInput {
   ccaf: CCAF;
@@ -49,6 +50,7 @@ export function audit(input: AuditInput): AuditResult {
 
   const hasIntent = ccaf.intentSignals.length >= S_THRESHOLD.intentSignals;
   const { hasRunningCode, hasTestEvidence } = evaluateDepth(mdContent);
+  const contextDepth = mdContent ? computeContextDepth(mdContent).score : 0;
 
   // D-rank gate: reject low-quality or generic submissions
   const isDRank =
@@ -75,19 +77,21 @@ export function audit(input: AuditInput): AuditResult {
     vercelUptimeDays >= S_THRESHOLD.uptime &&
     hasIntent &&
     hasRunningCode &&
-    hasTestEvidence
+    hasTestEvidence &&
+    contextDepth >= S_RANK_CONTEXT_DEPTH_MIN
   ) {
     rank = "S";
-    reasons.push("魂の登記: thoughtDensity ≥ 70, uptime ≥ 30d, intentSignals ≥ 3, 実稼働コード ✓, テスト証跡 ✓");
+    reasons.push(`魂の登記: thoughtDensity ≥ 70, uptime ≥ 30d, intentSignals ≥ 3, 実稼働コード ✓, テスト証跡 ✓, contextDepth ${contextDepth} ≥ ${S_RANK_CONTEXT_DEPTH_MIN} ✓`);
   } else if (
     ccaf.thoughtDensity >= S_THRESHOLD.density &&
     vercelUptimeDays >= S_THRESHOLD.uptime &&
     hasIntent &&
-    (!hasRunningCode || !hasTestEvidence)
+    (!hasRunningCode || !hasTestEvidence || contextDepth < S_RANK_CONTEXT_DEPTH_MIN)
   ) {
     rank = "A";
     if (!hasRunningCode) reasons.push("実稼働コード ✗：S ランク条件を満たしません");
     if (!hasTestEvidence) reasons.push("テスト証跡 ✗：S ランク条件を満たしません");
+    if (contextDepth < S_RANK_CONTEXT_DEPTH_MIN) reasons.push(`コンテキスト深度 ${contextDepth} < ${S_RANK_CONTEXT_DEPTH_MIN}：S ランク条件を満たしません（why・制約・落とし穴・性能・テスト・失敗時の記述が不足）`);
   } else if (
     ccaf.thoughtDensity >= A_THRESHOLD.density &&
     vercelUptimeDays >= A_THRESHOLD.uptime

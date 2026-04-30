@@ -68,8 +68,14 @@ describe("quality-gate: S rank conditions", () => {
     createdAt: "2026-01-01T00:00:00Z",
   };
   const fullMd = `
-# My Tool
-This is a test example with output: { result: 42 }
+# My Tool — Implementation Guide
+
+なぜこの実装か（why）: 非同期処理が必要なため。
+制約 constraint: TypeScript 5.0+、Node.js 18+。
+落とし穴 gotcha: null チェックを忘れると実行時エラー。
+パフォーマンス performance latency: O(n) で処理。
+テスト test example: expect(result).toBe(42). output: { result: 42 }
+フォールバック fallback: catch(e) で retry と error handling。
 
 \`\`\`typescript
 async function processData(input: string) {
