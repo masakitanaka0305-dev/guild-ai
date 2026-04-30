@@ -7,20 +7,35 @@ import { Suspense } from "react";
 import {
   EXPRESS_STEPS,
   BUDGET_MS,
-  TOTAL_DURATION_MS,
   getFirstRoyaltyJpy,
-  type ExpressStepId,
+  analyzeContent,
+  validateExpressInput,
+  type ExpressInput,
+  type ContentAnalysis,
 } from "@/lib/express-path";
-import { simulateOnboarding, type OnboardingResult } from "@/lib/github-onboarding";
+import { simulateOnboarding } from "@/lib/github-onboarding";
 import { recordExpressRun } from "@/lib/metrics/express";
 import type { Rank } from "@/types";
 
+// Steps run automatically after source (source is user-driven, excluded from timing)
+const RUNNING_STEPS = EXPRESS_STEPS.filter((s) => s.id !== "source");
+
 // ─── Timer Bar ───────────────────────────────────────────────────────────────
 
-function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolean }) {
+function TimerBar({
+  elapsedMs,
+  achieved,
+  pending = false,
+}: {
+  elapsedMs: number;
+  achieved: boolean;
+  pending?: boolean;
+}) {
   const pct = Math.min(100, (elapsedMs / BUDGET_MS) * 100);
-  const overBudget = elapsedMs > BUDGET_MS;
-  const barColor = achieved
+  const overBudget = !pending && elapsedMs > BUDGET_MS;
+  const barColor = pending
+    ? "bg-[var(--n-surface-2,#F5F3EE)]"
+    : achieved
     ? "bg-green-500"
     : overBudget
     ? "bg-red-500"
@@ -30,7 +45,13 @@ function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolea
     <div className="mb-5">
       <div className="flex items-center justify-between mb-1">
         <span className="text-[10px] font-bold text-[var(--n-muted,#6B6456)]">
-          {achieved ? "完了 ✓" : overBudget ? "3分超過" : `${Math.floor(elapsedMs / 1000)}s / 180s`}
+          {pending
+            ? "入力待ち"
+            : achieved
+            ? "完了 ✓"
+            : overBudget
+            ? "3分超過"
+            : `${Math.floor(elapsedMs / 1000)}s / 180s`}
         </span>
         <span className="text-[10px] text-[var(--n-muted,#6B6456)]">3 分以内</span>
       </div>
@@ -39,7 +60,7 @@ function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolea
         <div className="absolute top-0 bottom-0 right-0 w-px bg-red-400 opacity-60" />
         <div
           className={`h-full rounded-full transition-all duration-500 ${barColor}`}
-          style={{ width: `${pct}%` }}
+          style={{ width: pending ? "0%" : `${pct}%` }}
         />
       </div>
     </div>
@@ -59,7 +80,6 @@ function Confetti() {
     { x: 90, delay: 0,   color: "#0E9F4F" },
     { x: 5,  delay: 0.4, color: "#3B82F6" },
   ];
-
   return (
     <div className="relative h-8 overflow-hidden mb-3" aria-hidden>
       {particles.map((p, i) => (
@@ -79,70 +99,289 @@ function Confetti() {
   );
 }
 
+// ─── Source Step ─────────────────────────────────────────────────────────────
+
+type InputKind = "url" | "file" | "text";
+
+const INPUT_CARDS: { id: InputKind; icon: string; label: string; hint: string }[] = [
+  { id: "url",  icon: "🔗", label: "GitHub URL",   hint: "リポジトリ URL を貼り付け" },
+  { id: "file", icon: "📄", label: "ファイル投入", hint: ".md / .txt ドロップ" },
+  { id: "text", icon: "✏️", label: "直接書く",     hint: "本文をペースト or 入力" },
+];
+
+function SourceStep({
+  onComplete,
+  fastMode,
+}: {
+  onComplete: (input: ExpressInput) => void;
+  fastMode: boolean;
+}) {
+  const [consented, setConsented] = useState(false);
+  const [kind, setKind] = useState<InputKind>("url");
+  const [urlValue, setUrlValue] = useState("");
+  const [textValue, setTextValue] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [fileContent, setFileContent] = useState("");
+  const [fileSize, setFileSize] = useState(0);
+  const [error, setError] = useState("");
+  const [dragOver, setDragOver] = useState(false);
+
+  // fast=1: auto-fill URL + auto-proceed after 300ms
+  useEffect(() => {
+    if (!fastMode) return;
+    setConsented(true);
+    setKind("url");
+    const demoUrl = "https://github.com/demo/express-demo";
+    setUrlValue(demoUrl);
+    const t = setTimeout(() => onComplete({ kind: "url", content: demoUrl }), 300);
+    return () => clearTimeout(t);
+  // onComplete is stable (useCallback), fastMode won't change after mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fastMode]);
+
+  function readFile(file: File) {
+    if (file.size > 200 * 1024) {
+      setError("ファイルサイズは 200KB 以下にしてください");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = (e.target?.result as string) ?? "";
+      setFileContent(text);
+      setFileName(file.name);
+      setFileSize(file.size);
+      setError("");
+    };
+    reader.readAsText(file, "utf-8");
+  }
+
+  function handleSubmit() {
+    let input: ExpressInput;
+    if (kind === "url") {
+      input = { kind: "url", content: urlValue };
+    } else if (kind === "file") {
+      input = { kind: "file", content: fileContent, meta: { fileName, fileSize } };
+    } else {
+      input = { kind: "text", content: textValue };
+    }
+    const v = validateExpressInput(input);
+    if (!v.ok) {
+      setError(v.error ?? "入力エラー");
+      return;
+    }
+    setError("");
+    onComplete(input);
+  }
+
+  return (
+    <section className="space-y-5">
+      {/* Consent checkbox */}
+      <label className="flex items-start gap-3 p-3 rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.1))] bg-[var(--n-surface-2,#F5F3EE)] cursor-pointer">
+        <input
+          type="checkbox"
+          checked={consented}
+          onChange={(e) => setConsented(e.target.checked)}
+          className="mt-0.5 h-4 w-4 accent-[var(--n-primary,#E64545)]"
+        />
+        <span className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
+          <Link href="/legal/terms" className="text-[var(--n-primary,#E64545)] underline">利用規約</Link>
+          {" "}と{" "}
+          <Link href="/legal/transfer" className="text-[var(--n-primary,#E64545)] underline">権利譲渡条件</Link>
+          {" "}に同意します（MD コンテンツの IP は GUILD AI に帰属します）
+        </span>
+      </label>
+
+      {/* Input kind selector */}
+      <div className="grid grid-cols-3 gap-2" role="group" aria-label="入力方法を選択">
+        {INPUT_CARDS.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            disabled={!consented}
+            onClick={() => { setKind(c.id); setError(""); }}
+            className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all text-center disabled:opacity-30 disabled:cursor-not-allowed ${
+              kind === c.id
+                ? "border-[var(--n-primary,#E64545)] bg-red-50"
+                : "border-[var(--n-divider,rgba(0,0,0,0.1))] bg-white hover:border-[var(--n-primary,#E64545)] hover:bg-red-50"
+            }`}
+          >
+            <span className="text-xl">{c.icon}</span>
+            <span className="text-[11px] font-bold text-[var(--n-text,#1A1714)]">{c.label}</span>
+            <span className="text-[9px] text-[var(--n-muted,#6B6456)] leading-tight">{c.hint}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* URL input */}
+      {kind === "url" && (
+        <fieldset className="border-0 p-0 m-0">
+          <legend className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
+            GitHub リポジトリ URL
+          </legend>
+          <input
+            type="url"
+            value={urlValue}
+            onChange={(e) => { setUrlValue(e.target.value); setError(""); }}
+            disabled={!consented}
+            placeholder="https://github.com/username/repo"
+            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] disabled:opacity-40"
+          />
+        </fieldset>
+      )}
+
+      {/* File drop zone */}
+      {kind === "file" && (
+        <fieldset className="border-0 p-0 m-0">
+          <legend className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
+            MD / テキストファイル
+          </legend>
+          <div
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              const file = e.dataTransfer.files?.[0];
+              if (file) readFile(file);
+            }}
+            onDragOver={(e) => { e.preventDefault(); if (consented) setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            role="region"
+            aria-label="MD ファイルをここにドロップ"
+            className={`relative flex flex-col items-center justify-center gap-2 p-6 rounded-xl border-2 border-dashed transition-colors ${
+              !consented
+                ? "opacity-30 cursor-not-allowed border-[var(--n-divider,rgba(0,0,0,0.1))]"
+                : dragOver
+                ? "border-[var(--n-primary,#E64545)] bg-red-50"
+                : fileContent
+                ? "border-green-400 bg-green-50"
+                : "border-[var(--n-divider,rgba(0,0,0,0.15))] bg-[var(--n-surface-2,#F5F3EE)] hover:border-[var(--n-primary,#E64545)]"
+            }`}
+          >
+            {fileContent ? (
+              <>
+                <span className="text-2xl">✅</span>
+                <p className="text-xs font-bold text-green-700">{fileName}</p>
+                <p className="text-[10px] text-[var(--n-muted,#6B6456)]">
+                  {Math.round(fileSize / 1024)} KB 読み込み済み
+                </p>
+              </>
+            ) : (
+              <>
+                <span className="text-2xl">📄</span>
+                <p className="text-xs text-[var(--n-muted,#6B6456)]">.md / .txt をここにドロップ</p>
+              </>
+            )}
+            <input
+              type="file"
+              accept=".md,.txt,.markdown"
+              onChange={(e) => { const f = e.target.files?.[0]; if (f) readFile(f); }}
+              disabled={!consented}
+              className="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
+              aria-label="ファイルを選択"
+            />
+          </div>
+        </fieldset>
+      )}
+
+      {/* Text paste */}
+      {kind === "text" && (
+        <fieldset className="border-0 p-0 m-0">
+          <legend className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
+            MD テキストを直接入力
+          </legend>
+          <textarea
+            value={textValue}
+            onChange={(e) => { setTextValue(e.target.value); setError(""); }}
+            disabled={!consented}
+            rows={6}
+            placeholder={"# タイトル\n\nここに Markdown を貼り付けてください..."}
+            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] disabled:opacity-40 font-mono"
+          />
+          <p className="text-[10px] text-[var(--n-muted,#6B6456)] text-right mt-0.5">
+            {textValue.trim().length} 文字（100 文字以上）
+          </p>
+        </fieldset>
+      )}
+
+      {/* Error */}
+      {error && (
+        <p role="alert" className="text-xs text-red-600 font-bold px-1">
+          ⚠ {error}
+        </p>
+      )}
+
+      {/* Submit */}
+      <button
+        type="button"
+        onClick={handleSubmit}
+        disabled={!consented}
+        className="w-full py-3 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        コンテンツを投入して Express 開始 →
+      </button>
+    </section>
+  );
+}
+
 // ─── Main page content ────────────────────────────────────────────────────────
 
 function OnboardingContent() {
   const searchParams = useSearchParams();
   const fastMode = searchParams.get("fast") === "1";
 
-  const [phase, setPhase] = useState<"form" | "running" | "done">("form");
-  const [githubUrl, setGithubUrl] = useState("");
-  const [handle, setHandle] = useState("demo-user");
+  const [phase, setPhase] = useState<"source" | "running" | "done">("source");
+  const [expressInput, setExpressInput] = useState<ExpressInput | null>(null);
+  const [analysis, setAnalysis] = useState<ContentAnalysis | null>(null);
   const [currentStepIdx, setCurrentStepIdx] = useState(-1);
-  const [result, setResult] = useState<OnboardingResult | null>(null);
   const [royaltyJpy, setRoyaltyJpy] = useState(0);
+  const [endpointSlug, setEndpointSlug] = useState("");
   const [elapsedMs, setElapsedMs] = useState(0);
   const startTimeRef = useRef(0);
 
-  const runOnboarding = useCallback(() => {
-    if (!githubUrl.startsWith("https://github.com/")) return;
+  const handleSourceComplete = useCallback((input: ExpressInput) => {
+    const a = analyzeContent(input);
+    setExpressInput(input);
+    setAnalysis(a);
     setPhase("running");
-    setCurrentStepIdx(0);
+    setCurrentStepIdx(0); // 0 = connect (first automated step)
     startTimeRef.current = Date.now();
-  }, [githubUrl]);
+  }, []);
 
-  // Auto-start in fast mode with demo URL
-  useEffect(() => {
-    if (fastMode && phase === "form") {
-      setGithubUrl("https://github.com/demo/express-demo");
-      setTimeout(() => {
-        setPhase("running");
-        setCurrentStepIdx(0);
-        startTimeRef.current = Date.now();
-      }, 300);
-    }
-  }, [fastMode, phase]);
-
-  // Advance steps sequentially
+  // Advance automated steps
   useEffect(() => {
     if (phase !== "running" || currentStepIdx < 0) return;
-    if (currentStepIdx >= EXPRESS_STEPS.length) {
+    if (currentStepIdx >= RUNNING_STEPS.length) {
       const elapsed = Date.now() - startTimeRef.current;
       setElapsedMs(elapsed);
       setPhase("done");
-      const onboardResult = simulateOnboarding(handle, githubUrl || "https://github.com/demo/express-demo");
-      setResult(onboardResult);
-      const rank = (onboardResult.scanResult.suggestedAssets[0]?.rank ?? "B") as Rank;
+      const repoUrl =
+        expressInput?.kind === "url"
+          ? expressInput.content
+          : "https://github.com/demo/express-demo";
+      const onboardResult = simulateOnboarding("demo-user", repoUrl);
+      setEndpointSlug(onboardResult.endpointSlug);
+      const rank = (analysis?.rank ?? "B") as Rank;
       setRoyaltyJpy(getFirstRoyaltyJpy(rank));
-      recordExpressRun(handle, Math.round(elapsed / 1000));
+      recordExpressRun("demo-user", Math.round(elapsed / 1000));
       return;
     }
-    const step = EXPRESS_STEPS[currentStepIdx];
-    // Accelerate first-royalty in fast mode (demo: 3s instead of 40s)
+    const step = RUNNING_STEPS[currentStepIdx];
     const duration = fastMode && step.id === "first-royalty" ? 3000 : step.durationMs;
     const t = setTimeout(() => setCurrentStepIdx((i) => i + 1), duration);
     return () => clearTimeout(t);
-  }, [phase, currentStepIdx, githubUrl, handle, fastMode]);
+  }, [phase, currentStepIdx, expressInput, fastMode, analysis]);
 
-  // Elapsed timer
+  // Elapsed timer during running
   useEffect(() => {
     if (phase !== "running") return;
-    const interval = setInterval(() => setElapsedMs(Date.now() - startTimeRef.current), 500);
+    const interval = setInterval(
+      () => setElapsedMs(Date.now() - startTimeRef.current),
+      500,
+    );
     return () => clearInterval(interval);
   }, [phase]);
 
-  const budgetPct = Math.min(100, Math.round((elapsedMs / TOTAL_DURATION_MS) * 100));
   const achieved = phase === "done" && elapsedMs < BUDGET_MS;
+  const validationScore = analysis?.validationScore ?? 72;
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-xl mx-auto">
@@ -157,60 +396,41 @@ function OnboardingContent() {
           Onboarding Express
         </h1>
         <p className="mt-0.5 text-sm text-[var(--n-muted,#6B6456)]">
-          GitHub リポジトリ → Asset Ledger 登記 → First Royalty まで 7 ステップ
+          MD コンテンツ投入 → Asset Ledger 登記 → First Royalty まで 8 ステップ
         </p>
       </div>
 
-      {phase === "form" && (
-        <section className="section-card p-6 space-y-4">
-          <div>
-            <label htmlFor="github-url" className="block text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
-              GitHub リポジトリ URL
-            </label>
-            <input
-              id="github-url"
-              type="url"
-              value={githubUrl}
-              onChange={(e) => setGithubUrl(e.target.value)}
-              placeholder="https://github.com/username/repo"
-              className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)]"
-            />
-          </div>
-          <div>
-            <label htmlFor="handle" className="block text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
-              ハンドル
-            </label>
-            <input
-              id="handle"
-              type="text"
-              value={handle}
-              onChange={(e) => setHandle(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white text-[var(--n-text,#1A1714)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)]"
-            />
-          </div>
-          <p className="text-[10px] text-[var(--n-muted,#6B6456)] leading-relaxed">
-            出品前に
-            <Link href="/legal/terms" className="text-[var(--n-primary,#E64545)] underline mx-0.5">利用規約</Link>
-            と
-            <Link href="/legal/transfer" className="text-[var(--n-primary,#E64545)] underline mx-0.5">権利譲渡条件</Link>
-            に同意してください。
-          </p>
-          <button
-            onClick={runOnboarding}
-            disabled={!githubUrl.startsWith("https://github.com/")}
-            className="w-full py-3 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            3 分で利益確定まで → Express 開始
-          </button>
-        </section>
+      {/* Source phase */}
+      {phase === "source" && (
+        <>
+          <TimerBar elapsedMs={0} achieved={false} pending />
+          <SourceStep onComplete={handleSourceComplete} fastMode={fastMode} />
+        </>
       )}
 
+      {/* Running phase */}
       {phase === "running" && (
         <section aria-live="polite" role="status">
           <TimerBar elapsedMs={elapsedMs} achieved={false} />
-
           <ol className="space-y-2">
-            {EXPRESS_STEPS.map((step, idx) => {
+            {/* Source step: always shown as completed */}
+            <li className="flex items-center gap-3 p-3 rounded-lg border border-green-200 bg-green-50">
+              <span className="shrink-0 w-6 h-6 flex items-center justify-center text-green-600 text-xs font-bold">
+                ✓
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">コンテンツ投入</p>
+                {analysis && (
+                  <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5 truncate">
+                    「{analysis.title}」— {analysis.rank} ランク
+                  </p>
+                )}
+              </div>
+              <span className="text-[10px] text-green-600 shrink-0 font-bold">完了</span>
+            </li>
+
+            {/* Automated steps */}
+            {RUNNING_STEPS.map((step, idx) => {
               const isDone = idx < currentStepIdx;
               const isActive = idx === currentStepIdx;
               return (
@@ -231,7 +451,7 @@ function OnboardingContent() {
                     ) : isActive ? (
                       <span className="text-[var(--n-primary,#E64545)] animate-pulse">●</span>
                     ) : (
-                      <span className="text-[var(--n-muted,#6B6456)]">{idx + 1}</span>
+                      <span className="text-[var(--n-muted,#6B6456)]">{idx + 2}</span>
                     )}
                   </span>
                   <div className="flex-1 min-w-0">
@@ -254,11 +474,18 @@ function OnboardingContent() {
         </section>
       )}
 
-      {phase === "done" && result && (
+      {/* Done phase */}
+      {phase === "done" && (
         <section className="space-y-4">
           {achieved && <Confetti />}
 
-          <div className={`section-card p-5 border-2 ${achieved ? "border-green-400 bg-green-50" : "border-[var(--n-divider,rgba(0,0,0,0.1))]"}`}>
+          <div
+            className={`section-card p-5 border-2 ${
+              achieved
+                ? "border-green-400 bg-green-50"
+                : "border-[var(--n-divider,rgba(0,0,0,0.1))]"
+            }`}
+          >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xl">{achieved ? "🎉" : "✅"}</span>
               <h2 className="text-base font-black text-[var(--n-text,#1A1714)]">
@@ -269,6 +496,14 @@ function OnboardingContent() {
             <TimerBar elapsedMs={elapsedMs} achieved={achieved} />
 
             <dl className="space-y-2 mt-3">
+              {analysis && (
+                <div className="flex items-center justify-between">
+                  <dt className="text-xs text-[var(--n-muted,#6B6456)]">コンテンツ</dt>
+                  <dd className="text-xs font-bold text-[var(--n-text,#1A1714)] truncate max-w-[160px]">
+                    {analysis.title}
+                  </dd>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">所要時間</dt>
                 <dd className="text-sm font-black text-[var(--n-text,#1A1714)]">
@@ -284,25 +519,29 @@ function OnboardingContent() {
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">Validation Score</dt>
                 <dd className="text-sm font-black text-[var(--n-text,#1A1714)]">
-                  {result.validationScore}
+                  {validationScore}
                 </dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">エンドポイント</dt>
                 <dd className="text-[10px] font-mono font-bold text-[var(--n-text,#1A1714)] truncate max-w-[160px]">
-                  guild-ai.vercel.app/{result.endpointSlug}
+                  guild-ai.vercel.app/{endpointSlug}
                 </dd>
               </div>
             </dl>
 
-            {/* First Royalty payout toast style */}
+            {/* First Royalty payout toast */}
             <div className="mt-4 flex items-center gap-3 p-3 rounded-xl bg-white border border-green-200">
               <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0 text-sm">
                 💴
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">AtoA 取引 — First Royalty</p>
-                <p className="text-[10px] text-[var(--n-muted,#6B6456)]">初回エージェント購入が発火しました</p>
+                <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">
+                  AtoA 取引 — First Royalty
+                </p>
+                <p className="text-[10px] text-[var(--n-muted,#6B6456)]">
+                  初回エージェント購入が発火しました
+                </p>
               </div>
               <span className="text-sm font-black text-green-600 shrink-0">
                 +¥{royaltyJpy.toLocaleString("ja-JP")}
