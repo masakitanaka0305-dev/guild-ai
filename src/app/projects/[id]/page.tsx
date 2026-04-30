@@ -4,6 +4,7 @@ import { MOCK_PROJECTS, getProject } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
 import { calcNet, formatJpy } from "@/lib/payout-sim";
 import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
+import { PlugInApply } from "@/components/PlugInApply";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -21,40 +22,14 @@ const STATUS_LABEL: Record<string, string> = {
   settled:   "完了",
 };
 
-function MatchingDonut({ score, matchedReqs, totalReqs }: {
+function MatchScore({ score, matchedReqs, totalReqs }: {
   score: number; matchedReqs: number; totalReqs: number;
 }) {
-  const r = 30;
-  const circ = 2 * Math.PI * r;
-  const dash = (score / 100) * circ;
-  const gap = circ - dash;
-  const color = score >= 80 ? "#0E9F4F" : score >= 50 ? "#F59E0B" : "#06B6D4";
-
+  const color = score >= 80 ? "text-cyan-400" : score >= 50 ? "text-amber-400" : "text-slate-300";
   return (
-    <div
-      role="img"
-      aria-label={`マッチ率 ${score}%`}
-      className="flex flex-col items-center gap-1"
-    >
-      <svg width="80" height="80" viewBox="0 0 80 80">
-        <circle cx="40" cy="40" r={r} fill="none" stroke="#E5E7EB" strokeWidth="8" />
-        <circle
-          cx="40" cy="40" r={r}
-          fill="none"
-          stroke={color}
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeDasharray={`${dash} ${gap}`}
-          strokeDashoffset={circ / 4}
-          style={{ transition: "stroke-dasharray 0.6s ease" }}
-        />
-        <text x="40" y="44" textAnchor="middle" fontSize="14" fontWeight="900" fill={color}>
-          {score}%
-        </text>
-      </svg>
-      <p className="text-[10px] text-[var(--n-muted,#6B6456)]">
-        マッチ {matchedReqs} / {totalReqs} 件
-      </p>
+    <div role="img" aria-label={`マッチ率 ${score}%`} className="flex flex-col items-center gap-1">
+      <span className={`text-3xl font-black tabular-nums ${color}`}>{score}%</span>
+      <p className="text-[10px] text-slate-400">マッチ {matchedReqs} / {totalReqs} 件</p>
     </div>
   );
 }
@@ -215,16 +190,22 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         {/* ── Right: sidebar ── */}
         <div className="w-full lg:w-72 space-y-4">
 
-          {/* Matching Score Donut */}
+          {/* Matching Score */}
           <div className="section-card p-5 flex flex-col items-center gap-2">
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] self-start">
               Matching Score
             </p>
-            <MatchingDonut
+            <MatchScore
               score={matching.score}
               matchedReqs={matching.matchedReqs}
               totalReqs={matching.totalReqs}
             />
+          </div>
+
+          {/* Plug-in Apply */}
+          <div className="section-card p-5">
+            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Apply</p>
+            <PlugInApply projectId={project.id} />
           </div>
 
           {/* Net Payout Simulation */}
@@ -253,63 +234,6 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               </div>
             </div>
           </div>
-
-          {/* Rental Required */}
-          {matching.missingMds.length > 0 && (
-            <div className="section-card p-5">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-bold text-[var(--n-text,#1A1714)]">Rental Required</p>
-                <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                  未所持 {matching.missingMds.length} 件
-                </span>
-              </div>
-              <div className="space-y-3">
-                {matching.missingMds.map((md) => (
-                  <div key={md.id} className="rounded-xl bg-[var(--n-surface-2,#F5F3EE)] p-3">
-                    <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1">{md.label}</p>
-                    <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-2">
-                      要 {md.rankMin}+ ・重要度 {"★".repeat(md.weight)}{"☆".repeat(3 - md.weight)}
-                    </p>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg border border-[var(--primary,#06B6D4)] text-[var(--primary,#06B6D4)] hover:bg-[var(--primary,#06B6D4)] hover:text-white transition-colors"
-                      >
-                        Rent ¥{project.rentalFeeHourlyJpy.toLocaleString("ja-JP")}/h
-                      </button>
-                      <button
-                        type="button"
-                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border border-[var(--n-divider,rgba(0,0,0,0.12))] hover:bg-[var(--n-divider,rgba(0,0,0,0.08))] transition-colors"
-                      >
-                        Buy
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button
-                type="button"
-                className="mt-3 w-full rounded-xl bg-[var(--primary,#06B6D4)] text-white text-sm font-bold py-3 hover:opacity-90 transition-opacity"
-              >
-                レンタルして応募
-              </button>
-              <Link
-                href="/onboarding?fast=1"
-                className="mt-2 flex items-center justify-center gap-1 w-full text-xs font-bold text-[var(--primary,#06B6D4)] hover:underline py-1"
-              >
-                この案件用の Express Path で開始 →
-              </Link>
-            </div>
-          )}
-
-          {matching.missingMds.length === 0 && (
-            <button
-              type="button"
-              className="w-full section-card p-4 bg-[var(--primary,#06B6D4)] text-white text-sm font-bold rounded-xl hover:opacity-90 transition-opacity"
-            >
-              この案件に応募する
-            </button>
-          )}
 
           {/* Competition */}
           <div className="section-card p-5">
