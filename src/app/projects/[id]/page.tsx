@@ -94,7 +94,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   const timelineStep = 0; // "応募中" — demo shows first step
 
   return (
-    <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-4xl mx-auto">
+    <main className="px-4 sm:px-6 lg:px-8 py-8 pb-44 md:pb-8 max-w-4xl mx-auto">
       {/* Back */}
       <Link href="/projects" className="text-xs text-[var(--n-muted,#6B6456)] hover:underline">
         ← 案件一覧に戻る
@@ -128,10 +128,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">技術スタック</p>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-text,#1A1714)] border border-[var(--n-divider,rgba(0,0,0,0.08))]"
-                >
+                <span key={t} className="chip-tech font-mono">
                   {t}
                 </span>
               ))}
@@ -202,10 +199,13 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
             />
           </div>
 
-          {/* Plug-in Apply */}
-          <div className="section-card p-5">
+          {/* Plug-in Apply — fixed on mobile (thumb zone), regular card on md+ */}
+          <div className="hidden md:block section-card p-5">
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Apply</p>
             <PlugInApply projectId={project.id} />
+          </div>
+          <div className="md:hidden">
+            <PlugInApply projectId={project.id} sticky />
           </div>
 
           {/* Net Payout Simulation */}
@@ -226,9 +226,9 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                 <span>Platform Fee ({project.platformFeePct}%)</span>
                 <span className="text-[var(--n-muted,#6B6456)] font-bold">−{formatJpy(payout.platformFeeJpy)}</span>
               </div>
-              <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex justify-between">
+              <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex items-baseline justify-between">
                 <span className="font-bold text-[var(--n-text,#1A1714)]">手取り</span>
-                <span className="text-base font-black text-[var(--n-positive,#0E9F4F)]">
+                <span className="metric-prime">
                   {formatJpy(payout.netJpy)}
                 </span>
               </div>
