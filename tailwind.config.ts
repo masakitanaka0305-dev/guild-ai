@@ -21,12 +21,19 @@ const config: Config = {
         "n-divider": "#EBEBEB",
         "n-text": "#1A1714",
         "n-muted": "#6B6456",
-        "n-primary": "#E64545",
-        "n-primary-hover": "#CC3A3A",
+        "n-primary": "#0000CC",
+        "n-primary-hover": "#0000A8",
         "n-gold": "#D4AF37",
         "n-gold-soft": "#F2DFA0",
         "n-positive": "#0E9F4F",
         "n-negative": "#E64545",
+        // ─── Primary token (deep blue) ────────────────────────────────
+        primary: {
+          DEFAULT: "#0000CC",
+          hover: "#0000A8",
+          soft: "#E5E5FA",
+          foreground: "#FFFFFF",
+        },
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],

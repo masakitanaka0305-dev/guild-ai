@@ -84,11 +84,11 @@ function TimerBar({
 
 function Confetti() {
   const particles = [
-    { x: 12, delay: 0,   color: "#E64545" },
+    { x: 12, delay: 0,   color: "#0000CC" },
     { x: 25, delay: 0.1, color: "#F59E0B" },
     { x: 40, delay: 0.2, color: "#0E9F4F" },
     { x: 55, delay: 0.1, color: "#3B82F6" },
-    { x: 68, delay: 0.3, color: "#E64545" },
+    { x: 68, delay: 0.3, color: "#0000CC" },
     { x: 80, delay: 0.2, color: "#F59E0B" },
     { x: 90, delay: 0,   color: "#0E9F4F" },
     { x: 5,  delay: 0.4, color: "#3B82F6" },
@@ -177,11 +177,11 @@ function SourceStep({
     <section className="space-y-5">
       <label className="flex items-start gap-3 p-3 rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.1))] bg-[var(--n-surface-2,#F5F3EE)] cursor-pointer">
         <input type="checkbox" checked={consented} onChange={(e) => setConsented(e.target.checked)}
-          className="mt-0.5 h-4 w-4 accent-[var(--n-primary,#E64545)]" />
+          className="mt-0.5 h-4 w-4 accent-[var(--n-primary,#0000CC)]" />
         <span className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
-          <Link href="/legal/terms" className="text-[var(--n-primary,#E64545)] underline">利用規約</Link>
+          <Link href="/legal/terms" className="text-[var(--n-primary,#0000CC)] underline">利用規約</Link>
           {" "}と{" "}
-          <Link href="/legal/transfer" className="text-[var(--n-primary,#E64545)] underline">権利譲渡条件</Link>
+          <Link href="/legal/transfer" className="text-[var(--n-primary,#0000CC)] underline">権利譲渡条件</Link>
           {" "}に同意します（MD コンテンツの IP は GUILD AI に帰属します）
         </span>
       </label>
@@ -192,8 +192,8 @@ function SourceStep({
             onClick={() => { setKind(c.id); setError(""); }}
             className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all text-center disabled:opacity-30 disabled:cursor-not-allowed ${
               kind === c.id
-                ? "border-[var(--n-primary,#E64545)] bg-red-50"
-                : "border-[var(--n-divider,rgba(0,0,0,0.1))] bg-white hover:border-[var(--n-primary,#E64545)] hover:bg-red-50"
+                ? "border-[var(--n-primary,#0000CC)] bg-red-50"
+                : "border-[var(--n-divider,rgba(0,0,0,0.1))] bg-white hover:border-[var(--n-primary,#0000CC)] hover:bg-red-50"
             }`}
           >
             <span className="text-xl">{c.icon}</span>
@@ -221,7 +221,7 @@ function SourceStep({
           <input type="url" value={urlValue} disabled={!consented}
             onChange={(e) => { setUrlValue(e.target.value); setError(""); }}
             placeholder="https://github.com/username/repo"
-            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white placeholder-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] disabled:opacity-40"
+            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white placeholder-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] disabled:opacity-40"
           />
         </fieldset>
       )}
@@ -236,7 +236,7 @@ function SourceStep({
             role="region" aria-label="MD ファイルをここにドロップ"
             className={`relative flex flex-col items-center justify-center gap-2 p-6 rounded-xl border-2 border-dashed transition-colors ${
               !consented ? "opacity-30 cursor-not-allowed border-[var(--n-divider,rgba(0,0,0,0.1))]"
-              : dragOver ? "border-[var(--n-primary,#E64545)] bg-red-50"
+              : dragOver ? "border-[var(--n-primary,#0000CC)] bg-red-50"
               : fileContent ? "border-green-400 bg-green-50"
               : "border-[var(--n-divider,rgba(0,0,0,0.15))] bg-[var(--n-surface-2,#F5F3EE)]"
             }`}
@@ -259,7 +259,7 @@ function SourceStep({
           <textarea value={textValue} disabled={!consented} rows={6}
             onChange={(e) => { setTextValue(e.target.value); setError(""); }}
             placeholder={"# タイトル\n\nここに Markdown を貼り付けてください..."}
-            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white placeholder-[var(--n-muted,#6B6456)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] disabled:opacity-40 font-mono"
+            className="w-full px-3 py-2 text-sm border border-[var(--n-divider,rgba(0,0,0,0.1))] rounded-lg bg-white placeholder-[var(--n-muted,#6B6456)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] disabled:opacity-40 font-mono"
           />
           <p className="text-[10px] text-[var(--n-muted,#6B6456)] text-right mt-0.5">
             {textValue.trim().length} 文字（100 文字以上）
@@ -270,7 +270,7 @@ function SourceStep({
       {error && <p role="alert" className="text-xs text-red-600 font-bold px-1">⚠ {error}</p>}
 
       <button type="button" onClick={handleSubmit} disabled={!consented}
-        className="w-full py-3 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-3 text-sm font-bold rounded-lg bg-[var(--n-primary,#0000CC)] text-white hover:bg-[#0000A8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         コンテンツを投入して開始 →
       </button>
@@ -332,7 +332,7 @@ function QuickContent() {
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-xl mx-auto">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-bold text-[var(--n-primary,#E64545)] bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+          <span className="text-xs font-bold text-[var(--n-primary,#0000CC)] bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
             Quick Listing
           </span>
           <span className="text-xs text-[var(--n-muted,#6B6456)]">3 ステップ・10 秒以内</span>
@@ -357,7 +357,7 @@ function QuickContent() {
             {["コンテンツ投入", "AI 鑑定", "出品完了"].map((label, i) => (
               <div key={label} className="flex items-center gap-1">
                 <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  i === 0 ? "bg-[var(--n-primary,#E64545)] text-white" : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
+                  i === 0 ? "bg-[var(--n-primary,#0000CC)] text-white" : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
                 }`}>{i + 1}</span>
                 <span className={`text-[10px] font-medium ${i === 0 ? "text-[var(--n-text,#1A1714)]" : "text-[var(--n-muted,#6B6456)]"}`}>
                   {label}
@@ -390,13 +390,13 @@ function QuickContent() {
                   aria-current={isActive ? "step" : undefined}
                   className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-300 ${
                     isDone ? "border-green-200 bg-green-50"
-                    : isActive ? "border-[var(--n-primary,#E64545)] bg-red-50"
+                    : isActive ? "border-[var(--n-primary,#0000CC)] bg-red-50"
                     : "border-[var(--n-divider,rgba(0,0,0,0.08))] bg-white opacity-40"
                   }`}
                 >
                   <span className="shrink-0 w-6 h-6 flex items-center justify-center text-xs font-bold">
                     {isDone ? <span className="text-green-600">✓</span>
-                    : isActive ? <span className="text-[var(--n-primary,#E64545)] animate-pulse">●</span>
+                    : isActive ? <span className="text-[var(--n-primary,#0000CC)] animate-pulse">●</span>
                     : <span className="text-[var(--n-muted,#6B6456)]">{idx + 2}</span>}
                   </span>
                   <div className="flex-1">
@@ -429,7 +429,7 @@ function QuickContent() {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">ランク</dt>
-                <dd className="text-sm font-black text-[var(--n-primary,#E64545)]">{quickResult.rank} ランク</dd>
+                <dd className="text-sm font-black text-[var(--n-primary,#0000CC)]">{quickResult.rank} ランク</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">Validation Score</dt>
@@ -444,7 +444,7 @@ function QuickContent() {
             </dl>
           </div>
           <div className="flex gap-3">
-            <Link href="/projects" className="flex-1 py-2.5 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white text-center hover:bg-[#D03A3A] transition-colors">
+            <Link href="/projects" className="flex-1 py-2.5 text-sm font-bold rounded-lg bg-[var(--n-primary,#0000CC)] text-white text-center hover:bg-[#0000A8] transition-colors">
               案件を探す
             </Link>
             <Link href="/guild" className="flex-1 py-2.5 text-sm font-bold rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.1))] text-center hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors">
@@ -514,7 +514,7 @@ function ExpressContent() {
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-xl mx-auto">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-bold text-[var(--n-primary,#E64545)] bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+          <span className="text-xs font-bold text-[var(--n-primary,#0000CC)] bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
             Express Path
           </span>
           <span className="text-xs text-[var(--n-muted,#6B6456)]">3 分以内に初回利益確定</span>
@@ -553,13 +553,13 @@ function ExpressContent() {
                 <li key={step.id} aria-current={isActive ? "step" : undefined}
                   className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-300 ${
                     isDone ? "border-green-200 bg-green-50"
-                    : isActive ? "border-[var(--n-primary,#E64545)] bg-red-50"
+                    : isActive ? "border-[var(--n-primary,#0000CC)] bg-red-50"
                     : "border-[var(--n-divider,rgba(0,0,0,0.08))] bg-white opacity-40"
                   }`}
                 >
                   <span className="shrink-0 w-6 h-6 flex items-center justify-center text-xs font-bold">
                     {isDone ? <span className="text-green-600">✓</span>
-                    : isActive ? <span className="text-[var(--n-primary,#E64545)] animate-pulse">●</span>
+                    : isActive ? <span className="text-[var(--n-primary,#0000CC)] animate-pulse">●</span>
                     : <span className="text-[var(--n-muted,#6B6456)]">{idx + 2}</span>}
                   </span>
                   <div className="flex-1 min-w-0">
@@ -596,7 +596,7 @@ function ExpressContent() {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">First Royalty</dt>
-                <dd className="text-base font-black text-[var(--n-primary,#E64545)]">+¥{royaltyJpy.toLocaleString("ja-JP")}</dd>
+                <dd className="text-base font-black text-[var(--n-primary,#0000CC)]">+¥{royaltyJpy.toLocaleString("ja-JP")}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-xs text-[var(--n-muted,#6B6456)]">Validation Score</dt>
@@ -617,7 +617,7 @@ function ExpressContent() {
             </div>
           </div>
           <div className="flex gap-3">
-            <Link href="/projects" className="flex-1 py-2.5 text-sm font-bold rounded-lg bg-[var(--n-primary,#E64545)] text-white text-center hover:bg-[#D03A3A] transition-colors">
+            <Link href="/projects" className="flex-1 py-2.5 text-sm font-bold rounded-lg bg-[var(--n-primary,#0000CC)] text-white text-center hover:bg-[#0000A8] transition-colors">
               案件を探す
             </Link>
             <Link href="/guild" className="flex-1 py-2.5 text-sm font-bold rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.1))] text-center hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors">

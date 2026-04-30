@@ -77,7 +77,7 @@ export default function ReposPage() {
           <p className="text-sm mt-1">{error}</p>
           <button
             onClick={() => { setError(null); setLoading(true); fetch("/api/repos/list").then(r => r.json()).then(d => { setRepos(d.repos ?? []); setLoading(false); }).catch(e => { setError(e.message); setLoading(false); }); }}
-            className="mt-4 px-4 py-2 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold"
+            className="mt-4 px-4 py-2 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold"
           >
             再試行
           </button>
@@ -99,12 +99,12 @@ export default function ReposPage() {
                 key={repo.id}
                 className={`relative flex flex-col p-5 rounded-2xl border transition-shadow hover:shadow-md ${
                   repo.recommended
-                    ? "border-[var(--n-primary,#E64545)] bg-[var(--n-surface,#FFFFFF)]"
+                    ? "border-[var(--n-primary,#0000CC)] bg-[var(--n-surface,#FFFFFF)]"
                     : "border-[var(--n-border,#E8E4DE)] bg-[var(--n-surface,#FFFFFF)]"
                 }`}
               >
                 {repo.recommended && (
-                  <span className="absolute top-3 right-3 text-xs font-bold text-[var(--n-primary,#E64545)] bg-red-50 px-2 py-0.5 rounded-full">
+                  <span className="absolute top-3 right-3 text-xs font-bold text-[var(--n-primary,#0000CC)] bg-red-50 px-2 py-0.5 rounded-full">
                     おすすめ
                   </span>
                 )}
@@ -141,7 +141,7 @@ export default function ReposPage() {
 
                 <Link
                   href={`/onboarding/draft/${owner}/${repo.name}`}
-                  className="block text-center py-2 px-4 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-xs font-bold hover:bg-[#D03A3A] transition-colors"
+                  className="block text-center py-2 px-4 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-xs font-bold hover:bg-[#0000A8] transition-colors"
                 >
                   このリポジトリを解析
                 </Link>

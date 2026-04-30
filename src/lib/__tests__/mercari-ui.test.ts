@@ -75,17 +75,17 @@ describe("catchphrase: metadata", () => {
   });
 });
 
-// ─── 3. Primary red #E64545 in globals.css ────────────────────────────────────
+// ─── 3. Primary blue #0000CC in globals.css ────────────────────────────────────
 
 describe("mercari-ui: primary color token", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("--n-primary is #E64545", () => {
-    expect(src).toContain("--n-primary: #E64545");
+  it("--n-primary is #0000CC", () => {
+    expect(src).toContain("--n-primary: #0000CC");
   });
 
-  it("--n-primary-hover is #D03A3A", () => {
-    expect(src).toContain("--n-primary-hover: #D03A3A");
+  it("--n-primary-hover is #0000A8", () => {
+    expect(src).toContain("--n-primary-hover: #0000A8");
   });
 });
 
@@ -155,7 +155,7 @@ describe("sell: MD file input", () => {
 
   it("dragging state class switches on drag-over", () => {
     expect(src).toContain("isDragging");
-    expect(src).toContain("border-[#E64545]");
+    expect(src).toContain("border-[#0000CC]");
     expect(src).toContain("bg-red-50");
   });
 

@@ -40,7 +40,19 @@
       "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae add /Users/tanakamasaki/Documents/GUILD_AI/package.json /Users/tanakamasaki/Documents/GUILD_AI/package-lock.json)",
       "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae status --short)",
       "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae log --oneline -6)",
-      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae rev-parse HEAD)"
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae rev-parse HEAD)",
+      "Bash(git grep *)",
+      "Bash(xargs sed *)",
+      "Bash(sed -i '' 's/--n-negative: #0000CC/--n-negative: #E64545/' src/app/globals.css)",
+      "Bash(sed -i '' 's/\"text-\\\\[#0E9F4F\\\\]\" : \"text-\\\\[#0000CC\\\\]\"/\"text-[#0E9F4F]\" : \"text-[#E64545]\"/' src/components/TotalAssetsCard.tsx)",
+      "Bash(sed -i '' 's/expect\\(cardSrc\\).toContain\\(\"text-\\\\[#0000CC\\\\]\"\\);/expect\\(cardSrc\\).toContain\\(\"text-[#E64545]\"\\);/' src/lib/__tests__/mercari-ui.test.ts)",
+      "Bash(sed -i '' 's/Primary red #0000CC/Primary blue #0000CC/' src/lib/__tests__/mercari-ui.test.ts)",
+      "Bash(sed -i '' 's/Genesis Final Tests \\(14\\)/Genesis Final Tests \\(17\\)/' src/lib/__tests__/genesis-final.test.ts)",
+      "Bash(sed -i '' 's/nav-2tab+fab\\(3\\) + og\\(2\\) + skeleton\\(1\\) + sw\\(1\\) + footer\\(1\\)/nav-2tab+fab\\(3\\) + og\\(2\\) + skeleton\\(1\\) + sw\\(1\\) + footer\\(1\\) + theme-blue\\(3\\)/' src/lib/__tests__/genesis-final.test.ts)",
+      "Bash(sed -i '' 's/| `--n-primary` | `#E64545` | \\\\*\\\\*メルカリ赤\\\\*\\\\* Primary CTA |/| `--n-primary` | `#0000CC` | **ディープブルー** Primary CTA（ブランド再定義に伴うトーン変更）|/' docs/Nameraka-Theme設計.md)",
+      "Bash(sed -i '' 's/| `--n-primary-hover` | `#D03A3A` | ホバー状態 |/| `--n-primary-hover` | `#0000A8` | ホバー状態 |/' docs/Nameraka-Theme設計.md)",
+      "Bash(sed -i '' 's/**Primary CTA**：`#E64545`（メルカリ赤）、ホバーで `#D03A3A`/**Primary CTA**：`#0000CC`（ディープブルー）、ホバーで `#0000A8`/' docs/Nameraka-Theme設計.md)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

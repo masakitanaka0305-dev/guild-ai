@@ -1,5 +1,5 @@
-// GUILD AI — Genesis Final Tests (14)
-// quick-listing(3) + context-depth(3) + nav-2tab+fab(3) + og(2) + skeleton(1) + sw(1) + footer(1)
+// GUILD AI — Genesis Final Tests (17)
+// quick-listing(3) + context-depth(3) + nav-2tab+fab(3) + og(2) + skeleton(1) + sw(1) + footer(1) + theme-blue(3)
 
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "fs";
@@ -213,5 +213,31 @@ describe("footer: enterprise CTA pinned in AppShell", () => {
     const src = readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
     expect(src).toContain("/business/checkout");
     expect(src).toContain("企業");
+  });
+});
+
+// ─── Theme: Deep Blue Primary ──────────────────────────────────────────────────
+
+describe("theme: primary color is deep blue #0000CC", () => {
+  const root = process.cwd();
+
+  it("tailwind.config.ts defines primary DEFAULT as #0000CC", () => {
+    const src = readFileSync(join(root, "tailwind.config.ts"), "utf8");
+    expect(src).toContain("#0000CC");
+    expect(src).toContain("primary");
+  });
+
+  it("globals.css defines --primary: #0000CC", () => {
+    const src = readFileSync(join(root, "src/app/globals.css"), "utf8");
+    expect(src).toContain("--primary: #0000CC");
+    expect(src).toContain("--n-primary: #0000CC");
+  });
+
+  it("main CTAs use primary blue — FAB and sidebar action have #0000CC or var(--n-primary", () => {
+    const fab = readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
+    const nav = readFileSync(join(root, "src/components/SidebarNav.tsx"), "utf8");
+    const combined = fab + nav;
+    expect(combined).toContain("bg-[var(--n-primary,#0000CC)]");
+    expect(combined).toContain("aria-label=\"出す\"");
   });
 });

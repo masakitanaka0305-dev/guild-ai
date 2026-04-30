@@ -35,7 +35,7 @@ function PulseIndicator() {
 function SectionBand({ title, tip }: { title: string; tip?: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+      <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#0000CC)] flex-shrink-0" />
       <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">{title}</p>
       {tip && <Tip text={tip} />}
     </div>
@@ -163,13 +163,13 @@ export default function GuildPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/projects"
-            className="flex-1 py-2.5 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold text-center hover:bg-[#D03A3A] transition-colors"
+            className="flex-1 py-2.5 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold text-center hover:bg-[#0000A8] transition-colors"
           >
             さらに稼ぐ →
           </Link>
           <Link
             href="/profile"
-            className="px-4 py-2.5 rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.1))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
+            className="px-4 py-2.5 rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.1))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--n-primary,#0000CC)] hover:text-[var(--n-primary,#0000CC)] transition-colors"
           >
             プロフィール
           </Link>
@@ -336,7 +336,7 @@ export default function GuildPage() {
             <button
               type="button"
               onClick={() => setShowAllTx(true)}
-              className="mt-2 w-full text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--n-primary,#E64545)] transition-colors py-2"
+              className="mt-2 w-full text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--n-primary,#0000CC)] transition-colors py-2"
             >
               もっと見る ↓
             </button>
@@ -371,7 +371,7 @@ export default function GuildPage() {
           <p className="text-[var(--n-muted,#6B6456)] mb-4">まだノートがありません</p>
           <Link
             href="/bank"
-            className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
+            className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#0000CC)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
           >
             はじめて投稿する →
           </Link>
@@ -381,7 +381,7 @@ export default function GuildPage() {
           {weapons.map((w) => (
             <li
               key={w.id}
-              className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--n-primary,#E64545)]/30 hover:shadow-sm transition-all"
+              className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--n-primary,#0000CC)]/30 hover:shadow-sm transition-all"
             >
               <RankBadge rank={w.rank} />
               <div className="flex-1 min-w-0">

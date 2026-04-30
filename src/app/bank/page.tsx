@@ -30,7 +30,7 @@ function ErrorToast({ msg }: { msg: string }) {
     <div
       role="alert"
       aria-live="assertive"
-      className="fixed bottom-24 right-4 z-50 bg-[var(--n-primary,#E64545)] text-white text-sm font-bold px-4 py-3 rounded-2xl shadow-lg animate-[slideInToast_220ms_ease-out]"
+      className="fixed bottom-24 right-4 z-50 bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold px-4 py-3 rounded-2xl shadow-lg animate-[slideInToast_220ms_ease-out]"
     >
       {msg}
     </div>
@@ -186,7 +186,7 @@ export default function BankPage() {
                 onClick={() => setInputMode(mode)}
                 className={`min-h-[44px] px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-220 ${
                   inputMode === mode
-                    ? "bg-[var(--n-primary,#E64545)] text-white"
+                    ? "bg-[var(--n-primary,#0000CC)] text-white"
                     : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
                 }`}
               >
@@ -206,8 +206,8 @@ export default function BankPage() {
               data-dragging={isDragging}
               className={`border-2 border-dashed rounded-2xl p-6 sm:p-10 flex flex-col items-center gap-4 transition-all duration-220 cursor-pointer ${
                 isDragging
-                  ? "border-[#E64545] bg-red-50"
-                  : "border-gray-300 bg-[var(--n-surface,#FFFFFF)] hover:border-[#E64545] hover:bg-red-50/30"
+                  ? "border-[#0000CC] bg-red-50"
+                  : "border-gray-300 bg-[var(--n-surface,#FFFFFF)] hover:border-[#0000CC] hover:bg-red-50/30"
               }`}
               onClick={() => fileInputRef.current?.click()}
             >
@@ -232,9 +232,9 @@ export default function BankPage() {
 
           {/* ── Text mode (also shown after file load) ─────────── */}
           {inputMode === "text" && (
-            <div className="bg-[var(--n-surface,#FFFFFF)] border-2 border-dashed border-[var(--n-divider,rgba(0,0,0,0.12))] rounded-2xl p-4 hover:border-[var(--n-primary,#E64545)]/40 transition-colors">
+            <div className="bg-[var(--n-surface,#FFFFFF)] border-2 border-dashed border-[var(--n-divider,rgba(0,0,0,0.12))] rounded-2xl p-4 hover:border-[var(--n-primary,#0000CC)]/40 transition-colors">
               {fileName && (
-                <p className="text-xs text-[var(--n-primary,#E64545)] font-semibold mb-2">📎 {fileName}</p>
+                <p className="text-xs text-[var(--n-primary,#0000CC)] font-semibold mb-2">📎 {fileName}</p>
               )}
               <textarea
                 className="w-full h-52 bg-transparent resize-none text-sm text-[var(--n-text,#1A1714)] placeholder-[var(--n-muted,#6B6456)] focus:outline-none"
@@ -246,10 +246,10 @@ export default function BankPage() {
               <div className="flex items-center justify-between mt-2 text-xs text-[var(--n-muted,#6B6456)]">
                 <span>
                   {noteContent.length.toLocaleString("ja-JP")} 文字
-                  {remaining > 0 && <span className="ml-2 text-[var(--n-primary,#E64545)]">（あと {remaining.toLocaleString("ja-JP")} 文字）</span>}
+                  {remaining > 0 && <span className="ml-2 text-[var(--n-primary,#0000CC)]">（あと {remaining.toLocaleString("ja-JP")} 文字）</span>}
                 </span>
                 {noteContent.length > 50 && (
-                  <span className="text-[var(--n-primary,#E64545)] font-semibold">● Sランク候補</span>
+                  <span className="text-[var(--n-primary,#0000CC)] font-semibold">● Sランク候補</span>
                 )}
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function BankPage() {
             type="button"
             onClick={handleScore}
             disabled={noteContent.trim().length < 10}
-            className="w-full py-3.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-md"
+            className="w-full py-3.5 rounded-full bg-[var(--n-primary,#0000CC)] text-white font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#0000A8] active:scale-[0.98] transition-all duration-220 shadow-md"
             aria-label="ノートを提出して鑑定する"
           >
             のこす →
@@ -278,8 +278,8 @@ export default function BankPage() {
 
       {step === "scoring" && (
         <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl p-8 text-center relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--n-primary,#E64545)] to-transparent animate-[scanLine_0.4s_ease-in-out_forwards]" aria-hidden />
-          <p className="text-[var(--n-primary,#E64545)] font-bold text-lg">鑑定中…</p>
+          <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--n-primary,#0000CC)] to-transparent animate-[scanLine_0.4s_ease-in-out_forwards]" aria-hidden />
+          <p className="text-[var(--n-primary,#0000CC)] font-bold text-lg">鑑定中…</p>
           <p className="text-xs text-[var(--n-muted,#6B6456)] mt-2">AIが思考密度を解析しています</p>
         </div>
       )}
@@ -339,7 +339,7 @@ export default function BankPage() {
             <button type="button" onClick={handleReset} className="flex-1 py-3 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-gold,#D4AF37)] transition-colors">
               やり直す
             </button>
-            <button type="button" onClick={handleMint} className="flex-1 py-3 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:bg-[#D03A3A] active:scale-[0.98] transition-all">
+            <button type="button" onClick={handleMint} className="flex-1 py-3 rounded-full bg-[var(--n-primary,#0000CC)] text-white font-bold hover:bg-[#0000A8] active:scale-[0.98] transition-all">
               のこす →
             </button>
           </div>
@@ -369,7 +369,7 @@ export default function BankPage() {
               <button
                 type="button"
                 onClick={() => router.push("/jobs")}
-                className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:bg-[#D03A3A]"
+                className="px-5 py-2.5 rounded-full bg-[var(--n-primary,#0000CC)] text-white font-bold hover:bg-[#0000A8]"
               >
                 かせぐ →
               </button>
@@ -391,7 +391,7 @@ export default function BankPage() {
                   type="button"
                   onClick={handleCopy}
                   aria-label="URLをコピー"
-                  className="shrink-0 px-3 py-1.5 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-xs font-bold hover:bg-[#D03A3A] active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] focus:ring-offset-1"
+                  className="shrink-0 px-3 py-1.5 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-xs font-bold hover:bg-[#0000A8] active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] focus:ring-offset-1"
                 >
                   {copied ? "コピー済み ✓" : "コピー"}
                 </button>
@@ -401,7 +401,7 @@ export default function BankPage() {
               </p>
               <details open={showCurl}>
                 <summary
-                  className="text-[10px] text-[var(--n-primary,#E64545)] font-semibold cursor-pointer select-none"
+                  className="text-[10px] text-[var(--n-primary,#0000CC)] font-semibold cursor-pointer select-none"
                   onClick={(e) => { e.preventDefault(); setShowCurl((v) => !v); }}
                 >
                   使い方を見る

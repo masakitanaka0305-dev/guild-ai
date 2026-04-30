@@ -148,7 +148,7 @@ export function AssetPortfolio() {
         <p className="text-[var(--n-muted,#6B6456)] mb-4">まだ投稿された資産はありません</p>
         <Link
           href="/sell"
-          className="inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
+          className="inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--n-primary,#0000CC)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
         >
           投稿する
         </Link>
@@ -174,7 +174,7 @@ export function AssetPortfolio() {
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
             aria-label="並び替え"
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-[var(--n-muted,#6B6456)] bg-white focus:outline-none focus:ring-1 focus:ring-[var(--n-primary,#E64545)]"
+            className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-[var(--n-muted,#6B6456)] bg-white focus:outline-none focus:ring-1 focus:ring-[var(--n-primary,#0000CC)]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -182,7 +182,7 @@ export function AssetPortfolio() {
           </select>
           <Link
             href="/sell"
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--n-primary,#E64545)] text-white text-xs font-bold hover:opacity-90 active:scale-[0.98] transition-all whitespace-nowrap"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--n-primary,#0000CC)] text-white text-xs font-bold hover:opacity-90 active:scale-[0.98] transition-all whitespace-nowrap"
           >
             ＋ 新しく投稿する
           </Link>
@@ -223,7 +223,7 @@ export function AssetPortfolio() {
                   <td className="px-4 py-3 font-mono text-[10px] text-[var(--n-muted,#6B6456)]">
                     /api/note/…{asset.endpointShort}
                   </td>
-                  <td className="px-4 py-3 text-right font-bold text-[var(--n-primary,#E64545)] tabular-nums">
+                  <td className="px-4 py-3 text-right font-bold text-[var(--n-primary,#0000CC)] tabular-nums">
                     {asset.monthlyJpy > 0 ? `¥${asset.monthlyJpy.toLocaleString("ja-JP")}` : "—"}
                   </td>
                   <td className="px-4 py-3">
@@ -244,7 +244,7 @@ export function AssetPortfolio() {
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={`/asset/${asset.guildId}`}
-                        className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
+                        className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#0000CC)] hover:text-[var(--n-primary,#0000CC)] transition-colors"
                       >
                         詳細
                       </Link>
@@ -289,7 +289,7 @@ export function AssetPortfolio() {
               <div className="flex items-end justify-between gap-2">
                 <div>
                   <p className="text-[10px] text-[var(--n-muted,#6B6456)] mb-0.5">今月の報酬</p>
-                  <p className="text-sm font-bold text-[var(--n-primary,#E64545)] tabular-nums">
+                  <p className="text-sm font-bold text-[var(--n-primary,#0000CC)] tabular-nums">
                     {asset.monthlyJpy > 0 ? `¥${asset.monthlyJpy.toLocaleString("ja-JP")}` : "—"}
                   </p>
                 </div>
@@ -321,7 +321,7 @@ export function AssetPortfolio() {
                 </Link>
                 <Link
                   href={`/asset/${asset.guildId}`}
-                  className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-xs text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
+                  className="px-3 py-1 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-xs text-[var(--n-muted,#6B6456)] hover:border-[var(--n-primary,#0000CC)] hover:text-[var(--n-primary,#0000CC)] transition-colors"
                 >
                   詳細
                 </Link>

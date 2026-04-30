@@ -14,7 +14,7 @@ const CX = SVG_W / 2;
 const CY = SVG_H / 2;
 
 const EDGE_COLOR: Record<string, string> = {
-  citation: "#E64545",
+  citation: "#0000CC",
   fork: "#D4AF37",
 };
 
@@ -73,7 +73,7 @@ function RespectModal({ handle, onClose }: { handle: string; onClose: () => void
             <button
               type="button"
               onClick={handleRespect}
-              className="flex-1 h-10 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 transition-all"
+              className="flex-1 h-10 rounded-full bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold hover:opacity-90 transition-all"
             >
               尊敬する
             </button>
@@ -113,7 +113,7 @@ export default function CitationsPage() {
       </Link>
 
       <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 rounded-full bg-[var(--n-primary,#E64545)]" />
+        <div className="w-1 h-6 rounded-full bg-[var(--n-primary,#0000CC)]" />
         <h2 className="text-xl font-extrabold text-[var(--n-text,#1A1714)]">引用ネットワーク</h2>
       </div>
 
@@ -153,7 +153,7 @@ export default function CitationsPage() {
               {positions.map((pos) => {
                 const r = nodeRadius(pos.node);
                 const isHovered = hovered?.id === pos.node.id;
-                const rankColor = pos.node.rank === "S" ? "#D4AF37" : pos.node.rank === "A" ? "#E64545" : "#9890A8";
+                const rankColor = pos.node.rank === "S" ? "#D4AF37" : pos.node.rank === "A" ? "#0000CC" : "#9890A8";
                 return (
                   <g
                     key={pos.id}
@@ -192,7 +192,7 @@ export default function CitationsPage() {
             {/* Legend */}
             <div className="px-4 pb-3 flex items-center gap-4">
               <div className="flex items-center gap-1.5">
-                <div className="w-6 h-0.5 bg-[#E64545] rounded-full" />
+                <div className="w-6 h-0.5 bg-[#0000CC] rounded-full" />
                 <span className="text-[10px] text-[var(--n-muted,#6B6456)]">引用</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -228,7 +228,7 @@ export default function CitationsPage() {
                   <button
                     type="button"
                     onClick={() => setRespectTarget(m.handle)}
-                    className="shrink-0 text-[9px] font-semibold text-[var(--n-primary,#E64545)] border border-[var(--n-primary,#E64545)]/30 rounded-full px-2 py-0.5 hover:bg-[var(--n-primary,#E64545)]/5 transition-colors"
+                    className="shrink-0 text-[9px] font-semibold text-[var(--n-primary,#0000CC)] border border-[var(--n-primary,#0000CC)]/30 rounded-full px-2 py-0.5 hover:bg-[var(--n-primary,#0000CC)]/5 transition-colors"
                     aria-label={`@${m.handle} を師として尊敬する`}
                   >
                     尊敬

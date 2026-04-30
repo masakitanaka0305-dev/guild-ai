@@ -47,7 +47,7 @@ function PackageCard({ pkg }: { pkg: SolutionPackage }) {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-2 mt-auto pt-2 border-t border-[var(--n-divider,rgba(0,0,0,0.08))]">
         <div className="text-center">
-          <p className="text-xs font-black text-[var(--n-primary,#E64545)]">¥{roiM}M</p>
+          <p className="text-xs font-black text-[var(--n-primary,#0000CC)]">¥{roiM}M</p>
           <p className="text-[9px] text-[var(--n-muted,#6B6456)]">月次ROI</p>
         </div>
         <div className="text-center">
@@ -63,7 +63,7 @@ function PackageCard({ pkg }: { pkg: SolutionPackage }) {
       {/* CTA */}
       <Link
         href={`/business/presale?pkg=${pkg.id}`}
-        className="mt-1 w-full text-center rounded-lg bg-[var(--n-primary,#E64545)] text-white text-xs font-bold py-2 hover:opacity-90 transition-opacity"
+        className="mt-1 w-full text-center rounded-lg bg-[var(--n-primary,#0000CC)] text-white text-xs font-bold py-2 hover:opacity-90 transition-opacity"
       >
         見積もる →
       </Link>
@@ -111,7 +111,7 @@ export default function CatalogPage() {
         <p className="text-xs text-[var(--n-muted,#6B6456)] mb-4">自然言語で課題を入力するだけで、最適な MD バンドルと見積もりを提案します。</p>
         <Link
           href="/business/presale"
-          className="inline-block rounded-xl bg-[var(--n-primary,#E64545)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+          className="inline-block rounded-xl bg-[var(--n-primary,#0000CC)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
         >
           AI に相談する →
         </Link>

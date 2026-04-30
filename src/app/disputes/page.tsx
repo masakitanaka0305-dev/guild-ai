@@ -142,7 +142,7 @@ export default function DisputesPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl bg-[#E64545] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
+            className="w-full rounded-xl bg-[#0000CC] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
           >
             {submitting ? "審査中…" : "申請する（AI が即時審査）"}
           </button>
@@ -181,7 +181,7 @@ export default function DisputesPage() {
                 {d.status === "open" && (
                   <button
                     onClick={() => handleResolve(d.id)}
-                    className="mt-2 text-xs text-[var(--n-primary,#E64545)] font-semibold hover:underline"
+                    className="mt-2 text-xs text-[var(--n-primary,#0000CC)] font-semibold hover:underline"
                   >
                     今すぐ審査 →
                   </button>

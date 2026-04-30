@@ -28,7 +28,7 @@ function MatchingDonut({ score, matchedReqs, totalReqs }: {
   const circ = 2 * Math.PI * r;
   const dash = (score / 100) * circ;
   const gap = circ - dash;
-  const color = score >= 80 ? "#0E9F4F" : score >= 50 ? "#F59E0B" : "#E64545";
+  const color = score >= 80 ? "#0E9F4F" : score >= 50 ? "#F59E0B" : "#0000CC";
 
   return (
     <div
@@ -71,23 +71,23 @@ function ProjectTimeline({ currentStep }: { currentStep: number }) {
           <li key={label} className="flex-1 flex flex-col items-center gap-1">
             <div className="flex items-center w-full">
               {i > 0 && (
-                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--n-primary,#E64545)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--n-primary,#0000CC)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
               <div
                 aria-current={active ? "step" : undefined}
                 className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[9px] font-black transition-colors ${
-                  done ? "bg-[var(--n-primary,#E64545)] text-white"
-                  : active ? "bg-[var(--n-primary,#E64545)] text-white ring-2 ring-[var(--n-primary,#E64545)] ring-offset-1"
+                  done ? "bg-[var(--n-primary,#0000CC)] text-white"
+                  : active ? "bg-[var(--n-primary,#0000CC)] text-white ring-2 ring-[var(--n-primary,#0000CC)] ring-offset-1"
                   : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
                 }`}
               >
                 {done ? "✓" : i + 1}
               </div>
               {i < TIMELINE_STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--n-primary,#E64545)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--n-primary,#0000CC)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
             </div>
-            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-muted,#6B6456)]"}`}>
+            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--n-primary,#0000CC)]" : "text-[var(--n-muted,#6B6456)]"}`}>
               {label}
             </span>
           </li>
@@ -179,7 +179,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   <span className={matched ? "text-[var(--n-text,#1A1714)]" : "text-[var(--n-muted,#6B6456)]"}>
                     {req.label}
                     {matched && ownedRank && (
-                      <span className="ml-1 font-bold text-[var(--n-primary,#E64545)]">[{ownedRank}]</span>
+                      <span className="ml-1 font-bold text-[var(--n-primary,#0000CC)]">[{ownedRank}]</span>
                     )}
                     {!matched && (
                       <span className="ml-1 text-[var(--n-muted,#6B6456)]">（未所持 — 要 {req.rankMin}+）</span>
@@ -273,7 +273,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                     <div className="flex gap-2">
                       <button
                         type="button"
-                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg border border-[var(--n-primary,#E64545)] text-[var(--n-primary,#E64545)] hover:bg-[var(--n-primary,#E64545)] hover:text-white transition-colors"
+                        className="flex-1 text-[10px] font-bold py-1.5 rounded-lg border border-[var(--n-primary,#0000CC)] text-[var(--n-primary,#0000CC)] hover:bg-[var(--n-primary,#0000CC)] hover:text-white transition-colors"
                       >
                         Rent ¥{project.rentalFeeHourlyJpy.toLocaleString("ja-JP")}/h
                       </button>
@@ -289,13 +289,13 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               </div>
               <button
                 type="button"
-                className="mt-3 w-full rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold py-3 hover:opacity-90 transition-opacity"
+                className="mt-3 w-full rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold py-3 hover:opacity-90 transition-opacity"
               >
                 レンタルして応募
               </button>
               <Link
                 href="/onboarding?fast=1"
-                className="mt-2 flex items-center justify-center gap-1 w-full text-xs font-bold text-[var(--n-primary,#E64545)] hover:underline py-1"
+                className="mt-2 flex items-center justify-center gap-1 w-full text-xs font-bold text-[var(--n-primary,#0000CC)] hover:underline py-1"
               >
                 この案件用の Express Path で開始 →
               </Link>
@@ -305,7 +305,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
           {matching.missingMds.length === 0 && (
             <button
               type="button"
-              className="w-full section-card p-4 bg-[var(--n-primary,#E64545)] text-white text-sm font-bold rounded-xl hover:opacity-90 transition-opacity"
+              className="w-full section-card p-4 bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold rounded-xl hover:opacity-90 transition-opacity"
             >
               この案件に応募する
             </button>

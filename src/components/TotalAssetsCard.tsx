@@ -104,7 +104,7 @@ export function TotalAssetsCard() {
     <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl shadow-sm p-6 sm:p-8 mb-6 sm:mb-8">
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+        <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#0000CC)] flex-shrink-0" />
         <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">総資産</p>
         <div className="relative">
           <button

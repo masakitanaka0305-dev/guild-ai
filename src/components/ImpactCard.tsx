@@ -33,14 +33,14 @@ export function ImpactCard({
       aria-label="社会的インパクト"
     >
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+        <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#0000CC)] flex-shrink-0" />
         <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">社会インパクト</p>
       </div>
 
       {/* Main stats */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl px-4 py-4 text-center">
-          <p className="text-3xl font-extrabold tabular-nums text-[var(--n-primary,#E64545)] leading-none mb-1">
+          <p className="text-3xl font-extrabold tabular-nums text-[var(--n-primary,#0000CC)] leading-none mb-1">
             {savedProjects}
           </p>
           <p className="text-[11px] text-[var(--n-muted,#6B6456)] leading-tight">プロジェクトを救った</p>
@@ -61,7 +61,7 @@ export function ImpactCard({
       >
         <span className="text-xs text-[var(--n-muted,#6B6456)]">ランキング</span>
         <span className="text-xs font-bold text-[var(--n-text,#1A1714)]">
-          今月 <span className="text-[var(--n-primary,#E64545)]">#{thisMonthRank}</span>
+          今月 <span className="text-[var(--n-primary,#0000CC)]">#{thisMonthRank}</span>
         </span>
         <span className="text-[var(--n-divider,rgba(0,0,0,0.08))] text-xs">／</span>
         <span className="text-xs font-bold text-[var(--n-text,#1A1714)]">

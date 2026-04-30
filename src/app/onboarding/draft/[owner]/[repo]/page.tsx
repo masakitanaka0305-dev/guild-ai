@@ -107,7 +107,7 @@ export default function DraftPage() {
         <div className="text-5xl mb-4">🎉</div>
         <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)] mb-2">登記完了！</h1>
         <p className="text-[var(--n-muted,#6B6456)] mb-6">
-          ランク <strong className="text-[var(--n-primary,#E64545)]">{deposited.rank}</strong> で
+          ランク <strong className="text-[var(--n-primary,#0000CC)]">{deposited.rank}</strong> で
           フロア価格 <strong>¥{deposited.floorPrice.toLocaleString()}</strong> にて登記されました。
         </p>
         <div className="bg-[var(--n-surface-2,#F5F3EE)] rounded-2xl p-4 text-left text-sm mb-6 font-mono break-all">
@@ -117,7 +117,7 @@ export default function DraftPage() {
           <Link href="/onboarding/repos" className="px-4 py-2 rounded-xl border border-[var(--n-border,#E8E4DE)] text-sm">
             他のリポジトリを登記
           </Link>
-          <Link href="/" className="px-4 py-2 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold">
+          <Link href="/" className="px-4 py-2 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold">
             ホームへ
           </Link>
         </div>
@@ -145,7 +145,7 @@ export default function DraftPage() {
           </p>
           <div className="w-full max-w-xs mx-auto h-2 bg-[var(--n-surface-2,#F5F3EE)] rounded-full overflow-hidden">
             <div
-              className="h-full bg-[var(--n-primary,#E64545)] rounded-full transition-all duration-300"
+              className="h-full bg-[var(--n-primary,#0000CC)] rounded-full transition-all duration-300"
               style={{ width: `${Math.min(100, progress)}%` }}
             />
           </div>
@@ -159,7 +159,7 @@ export default function DraftPage() {
           <p className="text-sm text-[var(--n-muted,#6B6456)] mb-4">{error}</p>
           <button
             onClick={startAnalysis}
-            className="px-4 py-2 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold"
+            className="px-4 py-2 rounded-xl bg-[var(--n-primary,#0000CC)] text-white text-sm font-bold"
           >
             再解析する
           </button>
@@ -198,7 +198,7 @@ export default function DraftPage() {
               value={title}
               onChange={e => setTitle(e.target.value)}
               maxLength={40}
-              className="w-full px-3 py-2 rounded-xl border border-[var(--n-border,#E8E4DE)] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] bg-white"
+              className="w-full px-3 py-2 rounded-xl border border-[var(--n-border,#E8E4DE)] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] bg-white"
             />
           </div>
 
@@ -219,7 +219,7 @@ export default function DraftPage() {
               <div key={key} className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-border,#E8E4DE)] rounded-2xl p-4">
                 <label
                   htmlFor={`section-${key}`}
-                  className="block text-xs font-bold text-[var(--n-primary,#E64545)] uppercase tracking-wide mb-1"
+                  className="block text-xs font-bold text-[var(--n-primary,#0000CC)] uppercase tracking-wide mb-1"
                 >
                   {label}
                 </label>
@@ -229,7 +229,7 @@ export default function DraftPage() {
                   rows={3}
                   value={draft[key]}
                   onChange={e => setDraft(prev => prev ? { ...prev, [key]: e.target.value } : prev)}
-                  className="w-full text-sm text-[var(--n-text,#1A1714)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)] rounded-lg p-1 bg-transparent"
+                  className="w-full text-sm text-[var(--n-text,#1A1714)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#0000CC)] rounded-lg p-1 bg-transparent"
                 />
               </div>
             ))}
@@ -241,7 +241,7 @@ export default function DraftPage() {
               type="checkbox"
               checked={consent}
               onChange={e => setConsent(e.target.checked)}
-              className="mt-0.5 w-4 h-4 accent-[var(--n-primary,#E64545)]"
+              className="mt-0.5 w-4 h-4 accent-[var(--n-primary,#0000CC)]"
             />
             <span className="text-sm text-[var(--n-muted,#6B6456)]">
               この内容を GUILD AI Intelligence Marketplace に登記することに同意します。登記後は公開されます。
@@ -252,7 +252,7 @@ export default function DraftPage() {
           <button
             onClick={handleDeposit}
             disabled={!consent || depositing}
-            className="w-full py-3 rounded-2xl bg-[var(--n-primary,#E64545)] text-white font-bold text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#D03A3A] transition-colors"
+            className="w-full py-3 rounded-2xl bg-[var(--n-primary,#0000CC)] text-white font-bold text-base disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0000A8] transition-colors"
           >
             {depositing ? "登記中..." : "承認して登記する"}
           </button>

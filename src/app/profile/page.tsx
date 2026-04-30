@@ -151,7 +151,7 @@ export default function ProfilePage() {
           const o2 = circ / 4 - hobbyLen - proLen;
           const rows = [
             { label: "Hobby",      color: "#0E9F4F", calls: hobby },
-            { label: "Pro Indie",  color: "#E64545", calls: proIndie },
+            { label: "Pro Indie",  color: "#0000CC", calls: proIndie },
             { label: "Enterprise", color: "#D4AF37", calls: enterprise },
           ];
           return (
@@ -161,7 +161,7 @@ export default function ProfilePage() {
                 <circle cx="44" cy="44" r={r} fill="none" stroke="#E9E7E1" strokeWidth="16" />
                 <circle cx="44" cy="44" r={r} fill="none" stroke="#0E9F4F" strokeWidth="16"
                   strokeDasharray={`${hobbyLen} ${circ - hobbyLen}`} strokeDashoffset={o0} />
-                <circle cx="44" cy="44" r={r} fill="none" stroke="#E64545" strokeWidth="16"
+                <circle cx="44" cy="44" r={r} fill="none" stroke="#0000CC" strokeWidth="16"
                   strokeDasharray={`${proLen} ${circ - proLen}`} strokeDashoffset={o1} />
                 <circle cx="44" cy="44" r={r} fill="none" stroke="#D4AF37" strokeWidth="16"
                   strokeDasharray={`${entLen} ${circ - entLen}`} strokeDashoffset={o2} />
@@ -229,7 +229,7 @@ export default function ProfilePage() {
       {/* ── 2c. グローバル着金 ─────────────────────────────────────── */}
       <section className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+          <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#0000CC)] flex-shrink-0" />
           <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">グローバル着金</p>
           <span className="text-[10px] text-[var(--n-muted,#6B6456)]">直近24h</span>
         </div>
@@ -294,7 +294,7 @@ export default function ProfilePage() {
         return (
           <section className="mb-6 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#E64545)] flex-shrink-0" />
+              <div className="w-1 h-5 rounded-full bg-[var(--n-primary,#0000CC)] flex-shrink-0" />
               <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">オリジナリティ</p>
             </div>
 
@@ -304,7 +304,7 @@ export default function ProfilePage() {
                   <circle cx="32" cy="32" r="26" fill="none" stroke="#F0EDE8" strokeWidth="8" />
                   <circle
                     cx="32" cy="32" r="26" fill="none"
-                    stroke={originalityPct >= 80 ? "#0E9F4F" : originalityPct >= 50 ? "#D4AF37" : "#E64545"}
+                    stroke={originalityPct >= 80 ? "#0E9F4F" : originalityPct >= 50 ? "#D4AF37" : "#0000CC"}
                     strokeWidth="8"
                     strokeDasharray={`${(originalityPct / 100) * 163.4} 163.4`}
                   />
