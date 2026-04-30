@@ -21,6 +21,7 @@
     "@anthropic-ai/sdk": "^0.91.1",
     "@neondatabase/serverless": "^1.1.0",
     "@octokit/rest": "^22.0.1",
+    "@supabase/supabase-js": "^2.105.1",
     "d3-force": "^3.0.0",
     "d3-hierarchy": "^3.1.2",
     "d3-selection": "^3.0.0",
