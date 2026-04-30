@@ -147,14 +147,16 @@ export default function GuildPage() {
 
       {/* ── Mercari-style 売上金ヒーロー ───────────────────────────────── */}
       <section className="mb-5 sm:mb-6 bg-[var(--n-surface,#FFFFFF)] border-2 border-[var(--n-gold,#D4AF37)]/40 rounded-2xl px-5 py-5 shadow-sm">
-        <p className="text-[11px] font-bold text-[var(--n-muted,#6B6456)] mb-1 tracking-wider uppercase">
+        <p className="text-[11px] font-bold text-slate-400 mb-1 tracking-wider uppercase">
           稼ぐ — Asset Ledger
         </p>
-        <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-2">現在の合計売上</p>
+        <p className="text-[11px] text-slate-400 mb-2">現在の合計売上</p>
         <p
           aria-live="polite"
           aria-atomic="true"
-          className="text-[36px] sm:text-[48px] font-black tabular-nums leading-none text-[var(--n-gold,#D4AF37)] mb-4 tracking-tight"
+          data-testid="guild-total-sales"
+          className="metric-prime-white mb-4"
+          style={{ fontSize: "2.75rem", lineHeight: 1.05 }}
         >
           ¥{totalSalesJpy.toLocaleString("ja-JP")}
         </p>
@@ -162,16 +164,25 @@ export default function GuildPage() {
         {/* 3-pill stats row */}
         <div className="grid grid-cols-3 gap-2 mb-4">
           {[
-            { label: "今月の予想収益", value: `¥${monthlyEstJpy.toLocaleString("ja-JP")}` },
-            { label: "稼働中 MD",      value: `${activeMdCount} 件` },
-            { label: "累計コール",      value: `${totalCallCount} 回` },
+            { label: "今月の予想収益", value: `¥${monthlyEstJpy.toLocaleString("ja-JP")}`, prime: true },
+            { label: "稼働中 MD",      value: `${activeMdCount} 件`, prime: false },
+            { label: "累計コール",      value: `${totalCallCount} 回`, prime: false },
           ].map((stat) => (
             <div
               key={stat.label}
-              className="bg-[var(--n-surface-2,#F5F3EE)] rounded-xl px-3 py-2 text-center"
+              className="bg-[#1E293B] rounded-xl px-3 py-2 text-center"
             >
-              <p className="text-[9px] text-[var(--n-muted,#6B6456)] mb-0.5 leading-tight">{stat.label}</p>
-              <p className="text-sm font-black tabular-nums text-[var(--n-text,#1A1714)]">{stat.value}</p>
+              <p className="text-[9px] text-slate-400 mb-0.5 leading-tight">{stat.label}</p>
+              <p
+                className={
+                  stat.prime
+                    ? "metric-prime"
+                    : "text-base font-bold tabular-nums text-white"
+                }
+                style={stat.prime ? { fontSize: "1.05rem" } : undefined}
+              >
+                {stat.value}
+              </p>
             </div>
           ))}
         </div>

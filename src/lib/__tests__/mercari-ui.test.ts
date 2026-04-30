@@ -388,9 +388,11 @@ describe("total-assets: hero card", () => {
     expect(a.monthlyChangePct).toBe(b.monthlyChangePct);
   });
 
-  it("monthlyChangePct positive → green class, negative → red class in source", () => {
-    expect(cardSrc).toContain("text-[#0E9F4F]");
-    expect(cardSrc).toContain("text-[#E64545]");
+  it("monthlyChangePct positive → cyan accent, negative → coral red (Water Guild v2)", () => {
+    // Water Guild v2 swaps the legacy emerald + crimson pair for cyan + coral
+    // to align with the deep-sea palette and stay AA-readable on #0B1121.
+    expect(cardSrc).toContain("text-[#22D3EE]");
+    expect(cardSrc).toContain("text-[#F87171]");
     expect(cardSrc).toContain("isPositive");
   });
 
