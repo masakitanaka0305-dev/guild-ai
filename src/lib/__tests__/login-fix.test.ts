@@ -1,10 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 // ─── mock-auth unit tests ─────────────────────────────────────────────────────
 
-// Simulate browser globals so mock-auth localStorage/cookie branches run.
 function makeMockStorage() {
   const store: Record<string, string> = {};
   return {
@@ -56,47 +55,72 @@ describe("mock-auth", () => {
   });
 });
 
-// ─── login page source-code assertions ───────────────────────────────────────
+// ─── Auth removal: /login and /signup pages must not exist ───────────────────
 
-const loginPageSrc = readFileSync(
-  resolve(__dirname, "../../app/login/page.tsx"),
+describe("auth removal: login and signup pages deleted", () => {
+  it("/login page.tsx does not exist (route returns 404)", () => {
+    const loginPage = resolve(__dirname, "../../app/login/page.tsx");
+    expect(existsSync(loginPage)).toBe(false);
+  });
+
+  it("/signup page.tsx does not exist (route returns 404)", () => {
+    const signupPage = resolve(__dirname, "../../app/signup/page.tsx");
+    expect(existsSync(signupPage)).toBe(false);
+  });
+});
+
+// ─── GuestInit: layout sets localStorage.guild_authed = "1" ─────────────────
+
+const guestInitSrc = readFileSync(
+  resolve(__dirname, "../../components/GuestInit.tsx"),
   "utf8",
 );
 
-describe("login/page.tsx: routing fix assertions", () => {
-  it("imports useRouter from next/navigation (not next/router)", () => {
-    expect(loginPageSrc).toContain('from "next/navigation"');
-    expect(loginPageSrc).not.toContain('from "next/router"');
+describe("GuestInit component", () => {
+  it("sets guild_authed to '1' in localStorage", () => {
+    expect(guestInitSrc).toContain('localStorage.setItem("guild_authed", "1")');
   });
 
-  it("imports mockLogin, isMockAuthed (DB action removed)", () => {
-    expect(loginPageSrc).toContain("mockLogin");
-    expect(loginPageSrc).toContain("isMockAuthed");
-    expect(loginPageSrc).not.toContain("loginAction");
+  it("uses useEffect so it only runs on mount (not SSR)", () => {
+    expect(guestInitSrc).toContain("useEffect");
+  });
+});
+
+// ─── AuthBar: no login/signup links ──────────────────────────────────────────
+
+const authBarSrc = readFileSync(
+  resolve(__dirname, "../../components/AuthBar.tsx"),
+  "utf8",
+);
+
+describe("AuthBar: no auth-related links", () => {
+  it("does not link to /login", () => {
+    expect(authBarSrc).not.toContain('href="/login"');
   });
 
-  it("router.push is called after mockLogin in onSubmit", () => {
-    const mockLoginIdx = loginPageSrc.indexOf("mockLogin(");
-    const routerPushIdx = loginPageSrc.indexOf("router.push(");
-    expect(mockLoginIdx).toBeGreaterThan(-1);
-    expect(routerPushIdx).toBeGreaterThan(-1);
-    // router.push must appear after mockLogin call in source order
-    expect(routerPushIdx).toBeGreaterThan(mockLoginIdx);
+  it("does not link to /signup", () => {
+    expect(authBarSrc).not.toContain('href="/signup"');
   });
 
-  it("e.preventDefault is called before router.push", () => {
-    const preventIdx = loginPageSrc.indexOf("e.preventDefault()");
-    const routerPushIdx = loginPageSrc.indexOf("router.push(");
-    expect(preventIdx).toBeGreaterThan(-1);
-    expect(routerPushIdx).toBeGreaterThan(preventIdx);
+  it("does not render 新規登録 or ログイン text", () => {
+    expect(authBarSrc).not.toContain("新規登録");
+    expect(authBarSrc).not.toContain("ログイン");
+  });
+});
+
+// ─── Middleware: no auth redirect logic ──────────────────────────────────────
+
+const middlewareSrc = readFileSync(
+  resolve(__dirname, "../../middleware.ts"),
+  "utf8",
+);
+
+describe("middleware: auth guards disabled", () => {
+  it("matcher is empty — no routes intercepted", () => {
+    expect(middlewareSrc).toContain("matcher: []");
   });
 
-  it("submit button has aria-busy attribute", () => {
-    expect(loginPageSrc).toContain("aria-busy");
-  });
-
-  it("already-authed guard calls router.replace on mount", () => {
-    expect(loginPageSrc).toContain("router.replace(");
-    expect(loginPageSrc).toContain("isMockAuthed()");
+  it("always calls NextResponse.next()", () => {
+    expect(middlewareSrc).toContain("NextResponse.next()");
   });
 });

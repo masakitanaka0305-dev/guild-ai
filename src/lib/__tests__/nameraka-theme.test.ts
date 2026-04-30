@@ -38,7 +38,9 @@ describe("nameraka-theme.tokens", () => {
 // ─── 3. FAB (+のこす) ─────────────────────────────────────────────────────────
 
 describe("nameraka-theme.fab", () => {
-  const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+  // FAB lives in AppShell (extracted from layout for auth-path isolation)
+  const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
 
   it("layout has +のこす FAB linking to /bank", () => {
     expect(layout).toContain("href=\"/bank\"");
@@ -149,7 +151,9 @@ describe("nameraka-theme.royalty-stream", () => {
 
 describe("nameraka-theme.light-repaint", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
-  const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+  // FAB lives in AppShell (extracted from layout for auth-path isolation)
+  const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
   it("nameraka --n-bg is light (#FAFAF7)", () => {

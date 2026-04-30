@@ -103,7 +103,9 @@ describe("mercari-ui: bottom tabs", () => {
 // ─── 5. FAB href=/bank aria-label="のこす" ───────────────────────────────────
 
 describe("mercari-ui: FAB", () => {
-  const src = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+  // FAB lives in AppShell (extracted from layout for auth-path isolation)
+  const src = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
+            + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
 
   it('FAB links to /bank', () => {
     expect(src).toContain('href="/bank"');
