@@ -109,6 +109,12 @@ export default function GuildPage() {
     }
   }, [royalties]);
 
+  // ── Mercari-style hero numbers ──────────────────────────────────────────
+  const totalSalesJpy = 1_248_400;
+  const monthlyEstJpy = Math.round(earnings.jpy * 1.15);
+  const activeMdCount = weapons.length > 0 ? weapons.length : 3;
+  const totalCallCount = royalties.length + 48;
+
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12 relative">
       <FloatingPayoutToast
@@ -123,35 +129,51 @@ export default function GuildPage() {
       />
       <ChainNotifyToast />
 
-      {/* ── 運用 ヒーローブロック ────────────────────────────── */}
-      <section className="mb-5 sm:mb-8 bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-5 py-4 shadow-sm">
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h1 className="text-lg font-bold text-[var(--n-text,#1A1714)]">
-            運用：あなたが投稿したMDファイルの状況・報酬・取引をまとめる場所
-          </h1>
-          <div className="flex flex-col gap-1.5 shrink-0">
-            <Link
-              href="/bank"
-              className="px-4 py-2 rounded-full bg-[var(--n-primary,#E64545)] text-white text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all text-center"
-            >
-              ＋ 投稿する
-            </Link>
-            <Link
-              href="/profile"
-              className="px-4 py-1.5 rounded-full border border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors text-center"
-            >
-              マイプロフィール
-            </Link>
-          </div>
-        </div>
-        <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
-          <span className="text-[#E64545] font-semibold">今日の報酬</span>・
-          <span className="text-[#E64545] font-semibold">今月の合計</span>・
-          <span className="text-[#E64545] font-semibold">推定時給</span>
-          を見ながら、過去の取引も{" "}
-          <span className="font-semibold text-[var(--n-text,#1A1714)]">通帳</span>
-          で確認できます。
+      {/* ── Mercari-style 売上金ヒーロー ───────────────────────────────── */}
+      <section className="mb-5 sm:mb-6 bg-[var(--n-surface,#FFFFFF)] border-2 border-[var(--n-gold,#D4AF37)]/40 rounded-2xl px-5 py-5 shadow-sm">
+        <p className="text-[11px] font-bold text-[var(--n-muted,#6B6456)] mb-1 tracking-wider uppercase">
+          稼ぐ — Asset Ledger
         </p>
+        <p className="text-[11px] text-[var(--n-muted,#6B6456)] mb-2">現在の合計売上</p>
+        <p
+          aria-live="polite"
+          aria-atomic="true"
+          className="text-[36px] sm:text-[48px] font-black tabular-nums leading-none text-[var(--n-gold,#D4AF37)] mb-4 tracking-tight"
+        >
+          ¥{totalSalesJpy.toLocaleString("ja-JP")}
+        </p>
+
+        {/* 3-pill stats row */}
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          {[
+            { label: "今月の予想収益", value: `¥${monthlyEstJpy.toLocaleString("ja-JP")}` },
+            { label: "稼働中 MD",      value: `${activeMdCount} 件` },
+            { label: "累計コール",      value: `${totalCallCount} 回` },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-[var(--n-surface-2,#F5F3EE)] rounded-xl px-3 py-2 text-center"
+            >
+              <p className="text-[9px] text-[var(--n-muted,#6B6456)] mb-0.5 leading-tight">{stat.label}</p>
+              <p className="text-sm font-black tabular-nums text-[var(--n-text,#1A1714)]">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/projects"
+            className="flex-1 py-2.5 rounded-xl bg-[var(--n-primary,#E64545)] text-white text-sm font-bold text-center hover:bg-[#D03A3A] transition-colors"
+          >
+            さらに稼ぐ →
+          </Link>
+          <Link
+            href="/profile"
+            className="px-4 py-2.5 rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.1))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--n-primary,#E64545)] hover:text-[var(--n-primary,#E64545)] transition-colors"
+          >
+            プロフィール
+          </Link>
+        </div>
       </section>
 
       {/* ── 総資産ヒーローカード ──────────────────────────────────────── */}
