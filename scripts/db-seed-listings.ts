@@ -30,7 +30,7 @@ async function main() {
         ccaf: l.ccaf,
         vercelUptimeDays: l.vercelUptimeDays,
         basePrice: l.basePrice,
-        rank: l.rank,
+        rank: l.rank as "S" | "A" | "B",
         floorPrice: l.floorPrice,
         githubUrl: l.githubUrl,
         remixedFrom: l.remixedFrom,

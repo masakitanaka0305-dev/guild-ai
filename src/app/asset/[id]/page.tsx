@@ -24,6 +24,7 @@ import { translateForAgent } from "@/lib/translator";
 import { PublicModeSelector } from "@/components/PublicModeSelector";
 import { ALL_CURRENCIES, CURRENCY_SYMBOLS, CURRENCY_FLAGS } from "@/lib/dynamic-pricing";
 import { signOrigin } from "@/lib/origin-registry";
+import { ReportButtonSection } from "@/components/ReportButtonSection";
 
 const BASE_URL = "https://guild-ai.vercel.app";
 
@@ -664,6 +665,9 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           </p>
         </div>
       </section>
+
+      {/* 不適切コンテンツ報告 */}
+      <ReportButtonSection guildId={guildId} />
 
       {/* レビューセクション */}
       <AssetReview assetId={listing.id} />

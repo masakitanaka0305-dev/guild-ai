@@ -1,5 +1,7 @@
+import type { Rank } from "@/types";
+
 export interface SimulatorInput {
-  rank: "S" | "A" | "B";
+  rank: Rank;
   perCallJpy: number;
   category: string;
   ccafScore: number;

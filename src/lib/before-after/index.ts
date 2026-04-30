@@ -31,6 +31,7 @@ const RANK_COLORS: Record<Rank, { primary: string; secondary: string }> = {
   S: { primary: "#1A6BB5", secondary: "#0FA968" },
   A: { primary: "#6B6BB5", secondary: "#B56B1A" },
   B: { primary: "#B51A6B", secondary: "#6BB51A" },
+  D: { primary: "#9CA3AF", secondary: "#6B7280" },
 };
 
 export function generateBeforeAfterSpec(assetId: string, rank: Rank): BeforeAfterSpec {

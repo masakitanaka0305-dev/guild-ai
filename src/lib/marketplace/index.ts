@@ -42,7 +42,7 @@ export function sortListings(items: MarketplaceListing[], key: SortKey): Marketp
 }
 
 export interface FilterOptions {
-  ranks: ("S" | "A" | "B")[];
+  ranks: import("@/types").Rank[];
   minTrustScore: number;
 }
 

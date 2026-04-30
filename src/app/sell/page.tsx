@@ -657,6 +657,7 @@ function TextPath({
   const [githubUrl, setGithubUrl] = useState("");
   const [description, setDescription] = useState(remixFrom ? generateRemixDescription(remixFrom) : "");
   const [proofOfMakeNote, setProofOfMakeNote] = useState("");
+  const [consentChecked, setConsentChecked] = useState(false);
   const [ccaf, setCcaf] = useState<CCAF>(defaultCCAF);
   const [vercelUptimeDays, setUptime] = useState(30);
   const [basePrice, setBasePrice] = useState(5000);
@@ -834,7 +835,26 @@ function TextPath({
         </div>
       </div>
 
-      <button type="submit" aria-label="お店にならべる" className="btn-primary w-full !py-4 !text-base">
+      {/* Consent checkbox — required before submit */}
+      <div className="section-card p-4">
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={consentChecked}
+            onChange={(e) => setConsentChecked(e.target.checked)}
+            className="mt-0.5 w-4 h-4 accent-[var(--n-primary,#E64545)] flex-shrink-0"
+            aria-label="権利譲渡および API 利用規約への同意"
+          />
+          <span className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
+            <a href="/legal/transfer" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">権利譲渡規約</a>
+            {" "}および{" "}
+            <a href="/legal/terms" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">API 利用規約</a>
+            {" "}に同意します。本コンテンツの著作権・利用権を GUILD AI プラットフォームに許諾することを確認しました。
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" aria-label="お店にならべる" disabled={!consentChecked} className="btn-primary w-full !py-4 !text-base disabled:opacity-40 disabled:cursor-not-allowed">
         ✨ お店にならべる →
       </button>
     </form>

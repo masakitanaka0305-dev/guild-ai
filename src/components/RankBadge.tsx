@@ -21,6 +21,11 @@ const RANK_META: Record<Rank, {
     bg: "bg-amber-700 text-white border border-amber-800/40",
     Icon: LeafIcon,
   },
+  D: {
+    label: "非公開",
+    bg: "bg-gray-400 text-white border border-gray-500/40",
+    Icon: LeafIcon,
+  },
 };
 
 // Friendly mode: gold / silver / bronze with kawaii labels
@@ -50,6 +55,13 @@ const FRIENDLY_META: Record<Rank, {
     sublabel: "これから",
     bg: "bg-gradient-to-br from-[#F0C890] to-[#B87333]",
     textColor: "text-[#5A2D00]",
+    Icon: LeafIcon,
+  },
+  D: {
+    label: "—",
+    sublabel: "非公開",
+    bg: "bg-gray-300",
+    textColor: "text-gray-600",
     Icon: LeafIcon,
   },
 };

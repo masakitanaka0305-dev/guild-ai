@@ -14,6 +14,8 @@ import { autoList } from "./index";
  * (e.g., one of the seeded MOCK_MARKETPLACE entries), skip.
  */
 export async function persistListing(listing: Listing): Promise<void> {
+  if (listing.rank === "D") return; // D-rank items stay private, not in public DB
+  const safeRank = listing.rank as "S" | "A" | "B";
   await db
     .insert(listings)
     .values({
@@ -24,7 +26,7 @@ export async function persistListing(listing: Listing): Promise<void> {
       ccaf: listing.ccaf,
       vercelUptimeDays: listing.vercelUptimeDays,
       basePrice: listing.basePrice,
-      rank: listing.rank,
+      rank: safeRank,
       floorPrice: listing.floorPrice,
       githubUrl: listing.githubUrl,
       remixedFrom: listing.remixedFrom,
