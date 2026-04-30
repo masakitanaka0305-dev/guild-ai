@@ -25,6 +25,7 @@ export const PAGE_TITLES: Record<string, string> = {
   "/legal/transfer":     "権利譲渡規約",
   "/admin/reports":      "レポート管理",
   "/onboarding":         "Onboarding Express",
+  "/applications":       "Applications",
 };
 
 export const DEFAULT_TITLE = "GUILD AI";
