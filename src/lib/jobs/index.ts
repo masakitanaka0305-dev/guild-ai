@@ -68,7 +68,7 @@ export const MOCK_JOBS: Job[] = [
   },
 ];
 
-const RANK_ORDER: Record<Rank, number> = { S: 3, A: 2, B: 1 };
+const RANK_ORDER: Record<Rank, number> = { S: 3, A: 2, B: 1, D: 0 };
 
 export interface EligibilityResult {
   canApply: boolean;

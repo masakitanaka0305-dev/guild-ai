@@ -13,6 +13,14 @@ export interface AuditInput {
 // Quality-Gate Shima-Final: S rank tightened
 const S_THRESHOLD = { density: 70, uptime: 30, intentSignals: 3 } as const;
 const A_THRESHOLD = { density: 60, uptime: 7 } as const;
+// D-rank: low-quality submissions are hidden from marketplace
+const D_THRESHOLD = { maxDensity: 30 } as const;
+
+const D_FEEDBACK_TEMPLATES = [
+  "コードが不足しています。`function`／`class`／`async` を含む実行可能なブロックを 3 個以上含めてください。",
+  "具体性に欠けます。あなた独自の工夫・閾値・エラー処理の意図を 1〜2 段落で追記してください。",
+  "README の再録は別物です。実装ポイントの記述を増やしてください。",
+];
 
 // Running code keywords (execution declarations)
 const RUNNING_CODE_PATTERNS = [/\bfunction\b/, /\basync\b/, /\bdef\b/, /\bclass\b/, /\bfn\s/];
@@ -30,6 +38,7 @@ function buildJustification(ccaf: CCAF, vercelUptimeDays: number, rank: Rank): s
   return `思考密度${ccaf.thoughtDensity}、試行回数${ccaf.iterations}回、稼働実績${vercelUptimeDays}日、意思シグナル「${signals}個」により ${rank} ランクと判定。${
     rank === "S" ? "魂の登記基準を満たし最高格付けを付与。" :
     rank === "A" ? "高品質基準を満たす。意思シグナルを追加することでSランクへ昇格可能。" :
+    rank === "D" ? "品質基準を満たさないため非公開。改善アドバイスを確認してください。" :
     "基準値を下回るが最低保証ランクを付与。思考密度と稼働日数を改善することでランクアップできる。"
   }`;
 }
@@ -41,8 +50,27 @@ export function audit(input: AuditInput): AuditResult {
   const hasIntent = ccaf.intentSignals.length >= S_THRESHOLD.intentSignals;
   const { hasRunningCode, hasTestEvidence } = evaluateDepth(mdContent);
 
+  // D-rank gate: reject low-quality or generic submissions
+  const isDRank =
+    !hasRunningCode ||
+    ccaf.thoughtDensity < D_THRESHOLD.maxDensity;
+
   let rank: Rank = "B";
-  if (
+  if (isDRank && mdContent !== "") {
+    // D-rank: private, not shown in marketplace
+    rank = "D";
+    if (!hasRunningCode) reasons.push("実稼働コード不足: D ランク（非公開）");
+    if (ccaf.thoughtDensity < D_THRESHOLD.maxDensity) reasons.push(`思考密度 ${ccaf.thoughtDensity} < 30: D ランク（非公開）`);
+    const feedback = D_FEEDBACK_TEMPLATES.slice(hasRunningCode ? 1 : 0);
+    const composite = 0.6 * ccaf.thoughtDensity + 0.3 * (Math.min(vercelUptimeDays, 60) / 60 * 100);
+    return {
+      rank,
+      score: Math.round(composite * 100) / 100,
+      reasons,
+      justification: buildJustification(ccaf, vercelUptimeDays, rank),
+      feedback,
+    };
+  } else if (
     ccaf.thoughtDensity >= S_THRESHOLD.density &&
     vercelUptimeDays >= S_THRESHOLD.uptime &&
     hasIntent &&

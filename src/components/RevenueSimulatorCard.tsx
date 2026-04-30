@@ -41,8 +41,10 @@ function DayChart({ data }: { data: number[] }) {
 
 // ─── Simulator Card ───────────────────────────────────────────────────────────
 
+import type { Rank } from "@/types";
+
 interface Props {
-  rank: "S" | "A" | "B";
+  rank: Rank;
   floorPrice: number;
   title?: string;
 }

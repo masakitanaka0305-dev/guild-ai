@@ -1,7 +1,7 @@
 // GUILD AI — Shared types
 // Cross-referenced from docs/マスター設計図.md (Single Source of Truth).
 
-export type Rank = "S" | "A" | "B";
+export type Rank = "S" | "A" | "B" | "D";
 
 /**
  * CCAF = Cognitive Context Audit File.
@@ -69,6 +69,7 @@ export interface AuditResult {
   score: number; // composite score (0-100)
   reasons: string[];
   justification?: string; // AI解説サマリー
+  feedback?: string[];    // improvement advice (populated for D rank)
 }
 
 // ─── Marketplace ───────────────────────────────────────────────────────────

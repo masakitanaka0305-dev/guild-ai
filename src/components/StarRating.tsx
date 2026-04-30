@@ -1,6 +1,6 @@
 import type { Rank } from "@/types";
 
-const RANK_TO_STARS: Record<Rank, 5 | 4 | 3> = { S: 5, A: 4, B: 3 };
+const RANK_TO_STARS: Record<Rank, 5 | 4 | 3> = { S: 5, A: 4, B: 3, D: 3 };
 
 interface StarRatingProps {
   rank: Rank;

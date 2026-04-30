@@ -91,14 +91,15 @@ async function processData(input: string) {
     expect(result.reasons.some((r) => r.includes("✓"))).toBe(true);
   });
 
-  it("missing hasRunningCode → A rank max", () => {
+  it("missing hasRunningCode → D rank (non-public, anti-spam gate)", () => {
     const result = audit({
       ccaf: baseCcaf,
       vercelUptimeDays: 35,
       mdContent: "# Simple doc\ntest example output: x",
     });
-    expect(result.rank).not.toBe("S");
-    expect(result.reasons.some((r) => r.includes("実稼働コード ✗"))).toBe(true);
+    expect(result.rank).toBe("D");
+    expect(result.reasons.some((r) => r.includes("実稼働コード不足"))).toBe(true);
+    expect(result.feedback).toBeDefined();
   });
 
   it("evaluateDepth detects running code patterns", () => {
