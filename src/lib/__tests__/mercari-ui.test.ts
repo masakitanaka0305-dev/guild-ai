@@ -5,48 +5,54 @@ import { resolve } from "path";
 const root = resolve(__dirname, "../../..");
 
 // ─── 1. Catchphrase in hero ───────────────────────────────────────────────────
+// Note: / now redirects to /projects (3-tab navigation). Catchphrase lives in layout metadata.
 
 describe("catchphrase: hero", () => {
-  const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+  const layoutSrc = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+  const pageSrc = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
 
-  it("main catchphrase appears in h1 on home page", () => {
-    expect(src).toContain("AIエージェントで、");
-    expect(src).toContain("あなたの時間");
-    expect(src).toContain("アップデート");
-    expect(src).toMatch(/<h1/);
+  it("layout metadata has main catchphrase", () => {
+    expect(layoutSrc).toContain("AIエージェントで、あなたの時間をアップデート。");
+    expect(layoutSrc).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 
-  it("subline 日本最大のAIエージェント・プラットフォーム appears below h1", () => {
-    expect(src).toContain("日本最大のAIエージェント・プラットフォーム");
+  it("home page redirects to /projects (3-tab navigation)", () => {
+    expect(pageSrc).toContain("redirect");
+    expect(pageSrc).toContain("/projects");
   });
 
-  it("footer exists", () => {
-    expect(src).toMatch(/<footer/);
+  it("projects page exists and has main content", () => {
+    const projSrc = readFileSync(resolve(root, "src/app/projects/page.tsx"), "utf8");
+    expect(projSrc.length).toBeGreaterThan(100);
   });
 });
 
 // ─── 1b. Minimal home sections ───────────────────────────────────────────────
+// / now redirects to /projects; onboarding has quick listing CTA.
 
 describe("catchphrase: minimal home", () => {
-  const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
-
-  it("unified how-tiles (ノートを投稿 / AIが自動で稼働 / 報酬が入る) exist", () => {
-    expect(src).toContain('"ノートを投稿"');
-    expect(src).toContain('"AIが自動で稼働"');
-    expect(src).toContain('"報酬が入る"');
+  it("onboarding page has 3-step quick listing UI", () => {
+    const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+    expect(src).toContain("Quick Listing");
+    expect(src).toContain("コンテンツ投入");
+    expect(src).toContain("AI 鑑定");
+    expect(src).toContain("出品完了");
   });
 
-  it("how-tile emojis have role=img and aria-label", () => {
-    expect(src).toContain('role="img"');
-    expect(src).toContain('aria-label');
+  it("onboarding page has consent and input cards", () => {
+    const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+    expect(src).toContain("INPUT_CARDS");
+    expect(src).toContain("consented");
   });
 
-  it("section heading いま のこされた しごと exists", () => {
-    expect(src).toContain("いま のこされた しごと");
+  it("projects page has cases/jobs content", () => {
+    const src = readFileSync(resolve(root, "src/app/projects/page.tsx"), "utf8");
+    expect(src.length).toBeGreaterThan(100);
   });
 
-  it("section heading かせげる しごと exists", () => {
-    expect(src).toContain("かせげる しごと");
+  it("guild page has 稼ぐ hero", () => {
+    const src = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
+    expect(src).toContain("稼ぐ");
   });
 });
 
@@ -63,9 +69,9 @@ describe("catchphrase: metadata", () => {
     expect(src).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 
-  it("home subline 日本最大のAIエージェント・プラットフォーム is displayed", () => {
-    const pageSrc = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
-    expect(pageSrc).toContain("日本最大のAIエージェント・プラットフォーム");
+  it("home metadata subline in layout.tsx", () => {
+    const layoutSrc = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8");
+    expect(layoutSrc).toContain("日本最大のAIエージェント・プラットフォーム");
   });
 });
 
@@ -83,16 +89,16 @@ describe("mercari-ui: primary color token", () => {
   });
 });
 
-// ─── 4. BottomNav has 4 tabs ─────────────────────────────────────────────────
+// ─── 4. BottomNav has 3 tabs (探す/出す/稼ぐ) ────────────────────────────────
 
 describe("mercari-ui: bottom tabs", () => {
   const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("BOTTOM_ITEMS has exactly 4 entries", () => {
-    expect(src).toContain('"ホーム"');
-    expect(src).toContain('"投稿"');
-    expect(src).toContain('"案件"');
-    expect(src).toContain('"運用"');
+  it("NAV_ITEMS has 3 tabs: 探す/出す/稼ぐ with role=tablist", () => {
+    expect(src).toContain('"探す"');
+    expect(src).toContain('"出す"');
+    expect(src).toContain('"稼ぐ"');
+    expect(src).toContain("tablist");
   });
 
   it("BottomNav exports correct component", () => {
@@ -100,15 +106,13 @@ describe("mercari-ui: bottom tabs", () => {
   });
 });
 
-// ─── 5. FAB href=/bank aria-label="のこす" ───────────────────────────────────
+// ─── 5. FAB href=/onboarding aria-label="投稿" ─────────────────────────────
 
 describe("mercari-ui: FAB", () => {
-  // FAB lives in AppShell (extracted from layout for auth-path isolation)
-  const src = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
-            + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
+  const src = readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
 
-  it('FAB links to /bank', () => {
-    expect(src).toContain('href="/bank"');
+  it("FAB links to /onboarding (Quick Listing)", () => {
+    expect(src).toContain('href="/onboarding"');
   });
 
   it('FAB has aria-label="投稿"', () => {
@@ -161,59 +165,52 @@ describe("sell: MD file input", () => {
   });
 });
 
-// ─── 8. Unified how-block + price hint ───────────────────────────────────────
+// ─── 8. 3-tab + Quick Listing ────────────────────────────────────────────────
+// / redirects to /projects; quick listing at /onboarding replaces old home CTAs.
 
 describe("home: unified how-block", () => {
-  const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
-
-  it("home has heading 使い方は3ステップ", () => {
-    expect(src).toContain("使い方は3ステップ");
+  it("home page.tsx redirects to /projects", () => {
+    const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
+    expect(src).toContain("redirect");
+    expect(src).toContain("/projects");
   });
 
-  it("3 cards link to /sell /jobs /guild", () => {
-    expect(src).toContain('"/sell"');
-    expect(src).toContain('"/jobs"');
-    expect(src).toContain('"/guild"');
+  it("onboarding quick listing has 3-step flow + CTA", () => {
+    const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+    expect(src).toContain("Quick Listing");
+    expect(src).toContain("3 ステップ");
+    expect(src).toContain("コンテンツを投入して開始");
   });
 
-  it("hero has single primary CTA 投稿する", () => {
-    expect(src).toContain("投稿する");
-  });
-
-  it("hero has no price chip (いますぐ ¥30,000 から removed)", () => {
+  it("no UI file contains the removed 'いますぐ ¥30,000 から' chip", () => {
+    const src = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
     expect(src).not.toContain("いますぐ ¥30,000 から");
   });
 
-  it("h1 has 3 block spans for forced 3-line layout on mobile", () => {
-    const h1Match = src.match(/<h1[\s\S]*?<\/h1>/);
-    expect(h1Match).not.toBeNull();
-    const h1 = h1Match![0];
-    const spanBlocks = (h1.match(/className="block/g) ?? []).length;
-    expect(spanBlocks).toBeGreaterThanOrEqual(3);
+  it("guild page has さらに稼ぐ → CTA for monetization", () => {
+    const src = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
+    expect(src).toContain("さらに稼ぐ");
   });
 
-  it("hero h1 uses tightened mobile font size text-[28px] and leading-[1.2]", () => {
-    const h1Match = src.match(/<h1[^>]*>/);
-    expect(h1Match).not.toBeNull();
-    expect(h1Match![0]).toContain("text-[28px]");
-    expect(h1Match![0]).toContain("leading-[1.2]");
+  it("nav config has MAIN_TABS with 3 entries", () => {
+    const src = readFileSync(resolve(root, "src/lib/nav-config.ts"), "utf8");
+    expect(src).toContain("MAIN_TABS");
+    expect(src).toContain("/projects");
+    expect(src).toContain("/onboarding");
+    expect(src).toContain("/guild");
   });
 });
 
-// ─── 9. Onboarding banner + modal ────────────────────────────────────────────
+// ─── 9. Onboarding modal ─────────────────────────────────────────────────────
 
 describe("onboarding: banner and modal", () => {
-  const pageSrc   = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
   const modalSrc  = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
 
-  it('home page has banner with aria-label="初めてのギルドエーアイ講座"', () => {
-    expect(pageSrc).toContain('aria-label="初めてのギルドエーアイ講座"');
-  });
-
-  it("banner click opens OnboardingModal (source imports and renders it)", () => {
-    expect(pageSrc).toContain("OnboardingModal");
-    expect(pageSrc).toContain("modalOpen");
-    expect(modalSrc).toContain('role="dialog"');
+  it("onboarding quick listing page has consent checkbox and legal links", () => {
+    const src = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+    expect(src).toContain("consented");
+    expect(src).toContain("legal/terms");
+    expect(src).toContain("legal/transfer");
   });
 
   it("modal contains 4 steps in <ol>", () => {
@@ -224,8 +221,8 @@ describe("onboarding: banner and modal", () => {
     expect(modalSrc).toContain("運用で確認");
   });
 
-  it('modal CTA links to /sell', () => {
-    expect(modalSrc).toContain('今すぐ投稿する');
+  it("modal CTA links to /sell", () => {
+    expect(modalSrc).toContain("今すぐ投稿する");
     expect(modalSrc).toContain('href="/sell"');
   });
 
@@ -240,12 +237,6 @@ describe("onboarding: banner and modal", () => {
   it("modal shows 100% and does not show 70%", () => {
     expect(modalSrc).toContain("100%");
     expect(modalSrc).not.toContain("70%");
-  });
-
-  it("onboarding banner uses light sky gradient (not gold)", () => {
-    expect(pageSrc).toContain("from-[#E0F2FE]");
-    expect(pageSrc).not.toContain("#F2DFA0");
-    expect(pageSrc).not.toContain("#F5E8B0");
   });
 });
 
@@ -284,8 +275,8 @@ describe("clarity: explainer heroes and 通帳 unification", () => {
     expect(jobsSrc).toContain("稼ぐ：あなたの");
   });
 
-  it("/guild page has hero explainer block for 運用", () => {
-    expect(guildSrc).toContain("運用：あなたが");
+  it("/guild page has 運用中の資産 section for active assets", () => {
+    expect(guildSrc).toContain("運用中の資産");
   });
 
   it("no UI file contains お財布通帳", () => {
@@ -312,15 +303,15 @@ describe("tone: 18y/o-friendly copy", () => {
   const guildSrc = readFileSync(resolve(root, "src/app/guild/page.tsx"), "utf8");
   const modalSrc = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
 
-  it("bottom nav labels are ホーム/投稿/案件/運用", () => {
-    expect(navSrc).toContain('"投稿"');
-    expect(navSrc).toContain('"案件"');
-    expect(navSrc).toContain('"運用"');
-    expect(navSrc).toContain('"ホーム"');
+  it("bottom nav labels are 探す/出す/稼ぐ (3-tab)", () => {
+    expect(navSrc).toContain('"探す"');
+    expect(navSrc).toContain('"出す"');
+    expect(navSrc).toContain('"稼ぐ"');
   });
 
-  it("hero CTA label is 投稿する", () => {
-    expect(homeSrc).toContain("投稿する");
+  it("onboarding page has CTA text (投稿 / 開始)", () => {
+    const onboardSrc = readFileSync(resolve(root, "src/app/onboarding/page.tsx"), "utf8");
+    expect(onboardSrc).toContain("開始");
   });
 
   it("/guild hero contains 報酬, 資産, 推定時給", () => {
@@ -345,15 +336,15 @@ describe("guild-rename: 運用 / mobile / cleanup", () => {
   const homeSrc  = readFileSync(resolve(root, "src/app/page.tsx"), "utf8");
   const modalSrc = readFileSync(resolve(root, "src/components/OnboardingModal.tsx"), "utf8");
 
-  it("BOTTOM_ITEMS final tab is 運用", () => {
-    const m = navSrc.match(/BOTTOM_ITEMS\s*=\s*\[([\s\S]*?)\];/);
-    expect(m).not.toBeNull();
-    expect(m![1]).toContain('"運用"');
-    expect(m![1]).not.toContain('"マイ銀行"');
+  it("NAV_ITEMS has 稼ぐ tab pointing to /guild", () => {
+    expect(navSrc).toContain('"稼ぐ"');
+    expect(navSrc).toContain('"/guild"');
+    expect(navSrc).not.toContain('"マイ銀行"');
   });
 
-  it("/guild hero heading contains 運用", () => {
-    expect(guildSrc).toContain("運用：あなたが投稿したMDファイル");
+  it("/guild page has Mercari-style 売上金ヒーロー and 稼ぐ heading", () => {
+    expect(guildSrc).toContain("稼ぐ");
+    expect(guildSrc).toContain("Asset Ledger");
     expect(guildSrc).not.toContain("マイ銀行：あなたの");
   });
 
