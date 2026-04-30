@@ -174,8 +174,11 @@ function OnboardingContent() {
         <h1 className="text-2xl font-black text-[var(--n-text,#1A1714)] tracking-tight">
           Onboarding Express
         </h1>
-        <p className="mt-0.5 text-sm text-[var(--n-muted,#6B6456)]">
+        <p className="mt-0.5 text-sm text-slate-400">
           GitHub コードベース → Asset Ledger 登記 → First Royalty まで 7 ステップ
+        </p>
+        <p className="mt-1 text-[11px] text-slate-400 italic">
+          資産運用者として、あなたの資産を流通させる。
         </p>
       </div>
 
