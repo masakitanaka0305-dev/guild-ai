@@ -225,7 +225,7 @@ export default function BankPage() {
                   {isDragging ? "ここに放す" : "ファイルをドラッグ＆ドロップ"}
                 </p>
                 <p className="text-xs text-[var(--n-muted,#6B6456)] mt-1">または クリックして選ぶ</p>
-                <p className="text-xs text-gray-400 mt-1">.md / .markdown / .txt • 最大 1MB</p>
+                <p className="text-xs text-slate-400 mt-1">.md / .markdown / .txt • 最大 1MB</p>
               </div>
             </div>
           )}

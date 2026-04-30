@@ -101,7 +101,7 @@ export function OnboardingModal({ onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label="閉じる"
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)]"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)]"
         >
           ✕
         </button>
@@ -142,7 +142,7 @@ export function OnboardingModal({ onClose }: Props) {
               </span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-[#1F1B16]">{s.label}</p>
-                <p className="text-xs text-gray-500 mb-1">{s.sub}</p>
+                <p className="text-xs text-slate-400 mb-1">{s.sub}</p>
                 <p className="text-sm text-gray-700 leading-relaxed">{s.body}</p>
               </div>
             </li>

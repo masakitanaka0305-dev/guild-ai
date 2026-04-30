@@ -164,7 +164,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       item.status === "適合" ? "bg-emerald-50 text-emerald-700" :
                       item.status === "条件付き適合" ? "bg-amber-50 text-amber-700" :
-                      "bg-gray-100 text-gray-500"
+                      "bg-gray-100 text-slate-400"
                     }`}>
                       {item.status}
                     </span>

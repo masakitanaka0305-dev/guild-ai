@@ -144,7 +144,7 @@ export default function ScoutPage() {
                 </p>
                 <p className="text-3xl mb-3">{s.icon}</p>
                 <h3 className="text-lg font-bold mb-2">{s.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{s.body}</p>
+                <p className="text-sm text-slate-400 leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
@@ -157,7 +157,7 @@ export default function ScoutPage() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">
             How much could <span className="text-[#B5860A]">your stars</span> earn?
           </h2>
-          <p className="text-sm text-gray-400 mb-8">
+          <p className="text-sm text-slate-400 mb-8">
             Enter your GitHub star count and we&apos;ll estimate monthly royalties.
           </p>
           <ScoutCalculator />
@@ -179,7 +179,7 @@ export default function ScoutPage() {
                 <span className="text-3xl flex-shrink-0">{w.icon}</span>
                 <div>
                   <h3 className="font-bold mb-1">{w.title}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{w.body}</p>
+                  <p className="text-sm text-slate-400 leading-relaxed">{w.body}</p>
                 </div>
               </div>
             ))}
@@ -205,10 +205,10 @@ export default function ScoutPage() {
                   </div>
                   <div>
                     <p className="font-bold text-sm">{b.handle}</p>
-                    <p className="text-[11px] text-gray-500">{b.bio}</p>
+                    <p className="text-[11px] text-slate-400">{b.bio}</p>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 mb-1">{b.title}</p>
+                <p className="text-xs text-slate-400 mb-1">{b.title}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${b.rank === "S" ? "bg-yellow-500/20 text-yellow-400" : "bg-red-500/20 text-red-400"}`}>
                     {b.rank} Rank
@@ -218,7 +218,7 @@ export default function ScoutPage() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-center text-xs text-gray-600">
+          <p className="mt-6 text-center text-xs text-slate-400">
             * Handles are composites. Earnings are illustrative estimates based on simulator.
           </p>
         </div>
@@ -231,7 +231,7 @@ export default function ScoutPage() {
           <br />
           <span className="text-[#B5860A]">Make it pay you.</span>
         </h2>
-        <p className="text-gray-400 mb-8 max-w-xl mx-auto">
+        <p className="text-slate-400 mb-8 max-w-xl mx-auto">
           Join builders from 30+ countries who registered their knowledge with GUILD AI.
         </p>
         <Link

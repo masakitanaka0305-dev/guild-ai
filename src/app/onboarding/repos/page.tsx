@@ -26,7 +26,7 @@ function LanguageBadge({ lang }: { lang: string }) {
     Go: "bg-cyan-100 text-cyan-700",
     Rust: "bg-orange-100 text-orange-700",
   };
-  const cls = colors[lang] ?? "bg-gray-100 text-gray-600";
+  const cls = colors[lang] ?? "bg-gray-100 text-slate-400";
   return <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${cls}`}>{lang}</span>;
 }
 

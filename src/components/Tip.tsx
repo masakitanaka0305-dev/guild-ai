@@ -17,7 +17,7 @@ export function Tip({ text }: TipProps) {
         aria-describedby={id}
         onClick={() => setOpen((v) => !v)}
         onBlur={() => setOpen(false)}
-        className="w-4 h-4 rounded-full text-gray-400 text-[11px] flex items-center justify-center border border-gray-300 hover:text-gray-600 hover:border-gray-400 transition-colors leading-none ml-1 flex-shrink-0"
+        className="w-4 h-4 rounded-full text-slate-400 text-[11px] flex items-center justify-center border border-gray-300 hover:text-slate-400 hover:border-gray-400 transition-colors leading-none ml-1 flex-shrink-0"
       >
         ？
       </button>

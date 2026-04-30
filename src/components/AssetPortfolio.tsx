@@ -13,7 +13,7 @@ import { incomeStream } from "@/lib/income-stream";
 const ASSET_STATUS_CONFIG: Record<AssetStatus, { label: string; className: string }> = {
   active:    { label: "運用中", className: "bg-green-100 text-green-700" },
   reviewing: { label: "審査中", className: "bg-amber-100 text-amber-700" },
-  paused:    { label: "停止中", className: "bg-gray-100 text-gray-600" },
+  paused:    { label: "停止中", className: "bg-gray-100 text-slate-400" },
 };
 
 function AssetStatusBadge({ status }: { status: AssetStatus }) {
@@ -165,7 +165,7 @@ export function AssetPortfolio() {
           {" ／ "}
           <span className="font-semibold text-amber-700">審査中 {summary.reviewing} 件</span>
           {" ／ "}
-          <span className="font-semibold text-gray-500">停止中 {summary.paused} 件</span>
+          <span className="font-semibold text-slate-400">停止中 {summary.paused} 件</span>
           {" — "}
           <span className="font-semibold text-[var(--n-text,#1A1714)]">合計 {summary.total} 件</span>
         </p>

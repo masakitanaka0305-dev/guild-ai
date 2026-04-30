@@ -118,7 +118,7 @@ export function BulkDepositSection() {
                     </div>
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
                       a.rank === "S" ? "bg-yellow-100 text-yellow-700" :
-                      a.rank === "A" ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-600"
+                      a.rank === "A" ? "bg-red-100 text-red-600" : "bg-gray-100 text-slate-400"
                     }`}>
                       {a.rank}
                     </span>

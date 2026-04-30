@@ -55,7 +55,7 @@ export default function ApplicationsPage() {
                   </td>
                   <td className="py-3 pr-4 text-slate-400 text-xs font-mono">{app.mdGuildId}</td>
                   <td className="py-3 pr-4 text-slate-400 text-xs">{new Date(app.appliedAt).toLocaleDateString("ja-JP")}</td>
-                  <td className="py-3 text-slate-500 text-xs">{expanded === app.id ? "▲" : "▼"}</td>
+                  <td className="py-3 text-slate-400 text-xs">{expanded === app.id ? "▲" : "▼"}</td>
                 </tr>
                 {expanded === app.id && (
                   <tr key={`${app.id}-detail`} className="bg-slate-900">
@@ -67,13 +67,13 @@ export default function ApplicationsPage() {
                           return (
                             <span key={step} className="flex items-center gap-1">
                               <span className={`w-2 h-2 rounded-full ${done ? STATUS_COLOR[step] : "bg-slate-700"}`} />
-                              <span className={done ? "text-slate-100" : "text-slate-600"}>{step}</span>
-                              {i < STATUS_STEPS.length - 1 && <ArrowRight className="w-3 h-3 text-slate-600" />}
+                              <span className={done ? "text-slate-100" : "text-slate-400"}>{step}</span>
+                              {i < STATUS_STEPS.length - 1 && <ArrowRight className="w-3 h-3 text-slate-400" />}
                             </span>
                           );
                         })}
                       </div>
-                      <button className="mt-3 text-xs text-slate-500 hover:text-slate-300">取り消す（Cancel）</button>
+                      <button className="mt-3 text-xs text-slate-400 hover:text-slate-300">取り消す（Cancel）</button>
                     </td>
                   </tr>
                 )}

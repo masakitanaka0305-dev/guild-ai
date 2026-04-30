@@ -28,14 +28,14 @@ export default function AdminReportsPage() {
                     r.reason === "Illegal" ? "bg-red-100 text-red-700" :
                     r.reason === "Plagiarism" ? "bg-amber-100 text-amber-700" :
                     r.reason === "Spam" ? "bg-orange-100 text-orange-700" :
-                    "bg-gray-100 text-gray-600"
+                    "bg-gray-100 text-slate-400"
                   }`}>
                     {r.reason}
                   </span>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${
                     r.status === "pending" ? "bg-red-50 text-red-600 border border-red-200" :
                     r.status === "reviewed" ? "bg-amber-50 text-amber-600" :
-                    "bg-gray-50 text-gray-500"
+                    "bg-gray-50 text-slate-400"
                   }`}>
                     {r.status === "pending" ? "未処理" : r.status === "reviewed" ? "確認済" : "却下"}
                   </span>

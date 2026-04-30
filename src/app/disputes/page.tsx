@@ -25,7 +25,7 @@ const STATUS_STYLE: Record<string, string> = {
   "open":          "bg-yellow-50 text-yellow-700 border-yellow-200",
   "auto-resolved": "bg-green-50 text-green-700 border-green-200",
   "escalated":     "bg-red-50 text-red-600 border-red-200",
-  "closed":        "bg-gray-50 text-gray-600 border-gray-200",
+  "closed":        "bg-gray-50 text-slate-400 border-gray-200",
 };
 
 const DEMO_HANDLE = "demo-user";

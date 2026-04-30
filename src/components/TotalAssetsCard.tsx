@@ -130,7 +130,7 @@ export function TotalAssetsCard() {
 
       {/* Main balance */}
       <div className="mb-5">
-        <p className="text-sm text-gray-500 mb-1">現在の残高</p>
+        <p className="text-sm text-slate-400 mb-1">現在の残高</p>
         <p
           aria-live="polite"
           aria-atomic="true"

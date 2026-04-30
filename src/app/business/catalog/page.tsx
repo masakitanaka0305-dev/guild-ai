@@ -38,7 +38,7 @@ function PackageCard({ pkg }: { pkg: SolutionPackage }) {
       {/* Industries */}
       <div className="flex flex-wrap gap-1">
         {pkg.industries.map((ind) => (
-          <span key={ind} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${INDUSTRY_COLOR[ind] ?? "bg-gray-100 text-gray-600"}`}>
+          <span key={ind} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${INDUSTRY_COLOR[ind] ?? "bg-gray-100 text-slate-400"}`}>
             {ind}
           </span>
         ))}
