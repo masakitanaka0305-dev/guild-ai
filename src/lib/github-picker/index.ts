@@ -10,6 +10,8 @@ export interface MockRepo {
   language: string;
   stars: number;
   recommended: boolean;
+  isPrivate?: boolean;
+  updatedAt?: string;
 }
 
 const REPO_TEMPLATES: { name: string; desc: string }[] = [
@@ -89,6 +91,11 @@ function djb2(s: string): number {
   let h = 5381;
   for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
   return Math.abs(h);
+}
+
+/** Alias for listRepos — used by GitHub Integration routes in mock mode. */
+export function getMockRepos(username: string): MockRepo[] {
+  return listRepos(username);
 }
 
 export function listRepos(user: string): MockRepo[] {
