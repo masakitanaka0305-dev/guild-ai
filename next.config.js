@@ -4,6 +4,11 @@ const nextConfig = {
   experimental: {
     typedRoutes: false
   },
+  async redirects() {
+    return [
+      { source: "/jobs", destination: "/projects", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
