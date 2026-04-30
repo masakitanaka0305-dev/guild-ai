@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { Check } from "lucide-react";
 import {
   EXPRESS_STEPS,
   BUDGET_MS,
@@ -100,6 +101,8 @@ function OnboardingContent() {
   const fastMode = searchParams.get("fast") === "1";
 
   const [phase, setPhase] = useState<"form" | "running" | "done">("form");
+  const [editMode, setEditMode] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const prefillName = splitJapaneseName(MOCK_OAUTH_PROFILE.fullName);
   const [familyName, setFamilyName] = useState<string>(prefillName.familyName);
   const [givenName, setGivenName] = useState<string>(prefillName.givenName);
@@ -188,7 +191,7 @@ function OnboardingContent() {
           aria-labelledby="confirm-heading"
         >
           {/* Smart pre-fill summary — confirmation, not entry */}
-          <header className="flex items-center gap-4">
+          <header className="flex items-start gap-4">
             <span aria-hidden className="shrink-0">
               <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden>
                 <polygon
@@ -210,97 +213,166 @@ function OnboardingContent() {
                 </text>
               </svg>
             </span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#22D3EE)]">
-                Smart Pre-fill
+                SMART PRE-FILL — OAuth から取得した情報です
               </p>
               <h2 id="confirm-heading" className="text-base font-black text-[var(--water-text,#E2E8F0)]">
                 内容を確認してください
               </h2>
-              <p className="text-[11px] text-[var(--water-muted,#94A3B8)] mt-0.5">
-                OAuth から取得した情報を反映しています。修正があれば編集してください。
-              </p>
             </div>
+            {!editMode ? (
+              <button
+                type="button"
+                onClick={() => setEditMode(true)}
+                className="shrink-0 text-xs text-cyan-400 underline-offset-4 hover:underline focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+                aria-label="プリフィル内容を編集する"
+              >
+                編集する
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setEditMode(false)}
+                className="shrink-0 text-xs text-slate-400 underline-offset-4 hover:underline hover:text-white focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+              >
+                キャンセル
+              </button>
+            )}
           </header>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label htmlFor="family-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-                姓
-              </label>
-              <input
-                id="family-name"
-                type="text"
-                defaultValue={familyName}
-                onChange={(e) => setFamilyName(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
-              />
+          {!editMode ? (
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
+              <div>
+                <dt className="text-slate-400 text-xs uppercase tracking-wide">姓</dt>
+                <dd className="mt-1 flex items-center gap-1.5">
+                  <span className="text-white font-semibold text-base">{familyName || "—"}</span>
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                </dd>
+              </div>
+              <div>
+                <dt className="text-slate-400 text-xs uppercase tracking-wide">名</dt>
+                <dd className="mt-1 flex items-center gap-1.5">
+                  <span className="text-white font-semibold text-base">{givenName || "—"}</span>
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                </dd>
+              </div>
+              <div className="col-span-2">
+                <dt className="text-slate-400 text-xs uppercase tracking-wide">メールアドレス</dt>
+                <dd className="mt-1 flex items-center gap-1.5 min-w-0">
+                  <span className="text-white font-semibold text-base truncate">{email || "—"}</span>
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400 shrink-0" />
+                </dd>
+              </div>
+              <div className="col-span-2">
+                <dt className="text-slate-400 text-xs uppercase tracking-wide">GitHub ハンドル</dt>
+                <dd className="mt-1 flex items-center gap-1.5">
+                  <span className="text-white font-semibold text-base font-mono">@{handle || "—"}</span>
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                </dd>
+              </div>
+              <div className="col-span-2">
+                <dt className="text-slate-400 text-xs uppercase tracking-wide">GitHub コードベース URL</dt>
+                <dd className="mt-1 flex items-center gap-1.5 min-w-0">
+                  <span className="text-white font-semibold text-sm font-mono truncate">{githubUrl || "—"}</span>
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400 shrink-0" />
+                </dd>
+              </div>
+            </dl>
+          ) : (
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="family-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                    姓
+                  </label>
+                  <input
+                    id="family-name"
+                    type="text"
+                    defaultValue={familyName}
+                    onChange={(e) => setFamilyName(e.target.value)}
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="given-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                    名
+                  </label>
+                  <input
+                    id="given-name"
+                    type="text"
+                    defaultValue={givenName}
+                    onChange={(e) => setGivenName(e.target.value)}
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                  メールアドレス
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  defaultValue={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="handle" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                  GitHub ハンドル
+                </label>
+                <input
+                  id="handle"
+                  type="text"
+                  defaultValue={handle}
+                  onChange={(e) => setHandle(e.target.value)}
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="github-url" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
+                  GitHub コードベース URL
+                </label>
+                <input
+                  id="github-url"
+                  type="url"
+                  defaultValue={githubUrl}
+                  onChange={(e) => setGithubUrl(e.target.value)}
+                  placeholder="https://github.com/username/repo"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="given-name" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-                名
-              </label>
-              <input
-                id="given-name"
-                type="text"
-                defaultValue={givenName}
-                onChange={(e) => setGivenName(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-              メールアドレス
-            </label>
-            <input
-              id="email"
-              type="email"
-              defaultValue={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="handle" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-              GitHub ハンドル
-            </label>
-            <input
-              id="handle"
-              type="text"
-              defaultValue={handle}
-              onChange={(e) => setHandle(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="github-url" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-              GitHub コードベース URL
-            </label>
-            <input
-              id="github-url"
-              type="url"
-              defaultValue={githubUrl}
-              onChange={(e) => setGithubUrl(e.target.value)}
-              placeholder="https://github.com/username/repo"
-              className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
-            />
-          </div>
+          )}
 
           <p className="text-[10px] text-[var(--water-muted,#94A3B8)] leading-relaxed">
-            登記の前に
+            修正があれば「編集する」を押してください。登記の前に
             <Link href="/legal/terms" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">利用規約</Link>
             と
             <Link href="/legal/transfer" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">権利譲渡条件</Link>
             に同意してください。
           </p>
 
+          <label className="flex items-start gap-2 text-[11px] text-[var(--water-text,#E2E8F0)] cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-[#162035] accent-cyan-400 focus:outline focus:outline-2 focus:outline-cyan-400"
+            />
+            <span>
+              利用規約と権利譲渡条件に同意します
+            </span>
+          </label>
+
           <button
             onClick={runOnboarding}
-            disabled={!githubUrl.startsWith("https://github.com/")}
+            disabled={!agreed || !githubUrl.startsWith("https://github.com/")}
             className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#22D3EE)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
           >
             確認して進む — 登記（Sync）開始
