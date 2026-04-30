@@ -18,6 +18,7 @@ import { ChainNotifyToast } from "@/components/ChainNotifyToast";
 import { getRecentSettlements, seedDemoSettlements } from "@/lib/global-settlement";
 import { useUserId } from "@/components/AuthProvider";
 import { WaveLine } from "@/components/ui/WaveLine";
+import { EmptyState } from "@/components/ui/EmptyState";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -392,17 +393,14 @@ export default function GuildPage() {
 
       {/* ── 登記済みノート一覧 ────────────────────────────────────────── */}
       {!mounted ? (
-        <p className="text-sm text-[var(--n-muted,#6B6456)]">読み込み中…</p>
+        <p className="text-sm text-[#22D3EE]">読み込み中...</p>
       ) : weapons.length === 0 ? (
-        <div className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-3xl p-8 text-center">
-          <p className="text-[var(--n-muted,#6B6456)] mb-4">まだノートがありません</p>
-          <Link
-            href="/bank"
-            className="px-5 py-2.5 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all"
-          >
-            はじめて投稿する →
-          </Link>
-        </div>
+        <EmptyState
+          title="まだ知能を登記していません"
+          description="GitHub のコードベースから 3 分で資産化を始められます。"
+          ctaLabel="GitHub から始める"
+          ctaHref="/onboarding"
+        />
       ) : (
         <ul className="space-y-3">
           {weapons.map((w) => (
