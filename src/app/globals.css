@@ -139,3 +139,40 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─── Print styles — compliance report ─────────────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  body {
+    font-size: 12pt;
+    background: white !important;
+    color: black !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  aside,
+  nav,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  .section-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: none !important;
+  }
+
+  h1, h2, h3 { page-break-after: avoid; }
+  table { page-break-inside: avoid; }
+  section { page-break-inside: avoid; }
+}

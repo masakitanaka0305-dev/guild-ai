@@ -29,6 +29,36 @@ export default function BusinessPage() {
         ← ホームに戻る
       </Link>
 
+      {/* B2B Solution CTA — カタログ + 事前提案 */}
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <Link
+          href="/business/catalog"
+          className="section-card p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
+        >
+          <div className="w-10 h-10 rounded-xl bg-[var(--n-primary,#E64545)] flex items-center justify-center flex-shrink-0 text-white text-lg">
+            📦
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">ソリューションカタログ</p>
+            <p className="text-xs text-[var(--n-muted,#6B6456)] mt-0.5">業種別 AI パッケージ 10 種、ROI 試算付き</p>
+          </div>
+          <span className="text-[var(--n-muted,#6B6456)] text-sm">→</span>
+        </Link>
+        <Link
+          href="/business/presale"
+          className="section-card p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
+        >
+          <div className="w-10 h-10 rounded-xl bg-[#1A3A6B] flex items-center justify-center flex-shrink-0 text-white text-lg">
+            🤖
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">AI 事前提案</p>
+            <p className="text-xs text-[var(--n-muted,#6B6456)] mt-0.5">課題を入力 → MD バンドル + 見積もりを自動生成</p>
+          </div>
+          <span className="text-[var(--n-muted,#6B6456)] text-sm">→</span>
+        </Link>
+      </div>
+
       {/* Hero */}
       <div
         className="mt-6 rounded-2xl p-8 text-center"

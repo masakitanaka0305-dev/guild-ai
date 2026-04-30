@@ -268,6 +268,12 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <h1 className="text-2xl font-bold leading-tight text-kuroko">{listing.title}</h1>
           <div className="mt-2 flex items-center gap-2 flex-wrap">
             <TryItNowButton guildId={guildId} />
+            <Link
+              href={`/asset/${listing.id}/report`}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[var(--n-divider,rgba(0,0,0,0.12))] text-[var(--n-muted,#6B6456)] hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors"
+            >
+              品質保証書を見る →
+            </Link>
           </div>
           {/* Persistence badge — shown for all listed assets */}
           <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1">
