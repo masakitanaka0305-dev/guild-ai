@@ -14,6 +14,7 @@ import {
 import { simulateOnboarding, type OnboardingResult } from "@/lib/github-onboarding";
 import { recordExpressRun } from "@/lib/metrics/express";
 import { splitJapaneseName } from "@/lib/name-split";
+import { HexagonSteps } from "@/components/ui/HexagonSteps";
 import type { Rank } from "@/types";
 
 // ─── OAuth pre-fill (mock) ────────────────────────────────────────
@@ -34,7 +35,7 @@ function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolea
   const pct = Math.min(100, (elapsedMs / BUDGET_MS) * 100);
   const overBudget = elapsedMs > BUDGET_MS;
   const barColor = achieved
-    ? "bg-green-500"
+    ? "bg-emerald-500"
     : overBudget
     ? "bg-red-500"
     : "bg-blue-500";
@@ -42,16 +43,16 @@ function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolea
   return (
     <div className="mb-5">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[10px] font-bold text-[var(--n-muted,#6B6456)]">
+        <span className="text-[10px] font-bold text-slate-400">
           {achieved ? "完了 ✓" : overBudget ? "3分超過" : `${Math.floor(elapsedMs / 1000)}s / 180s`}
         </span>
-        <span className="text-[10px] text-[var(--n-muted,#6B6456)]">3 分以内</span>
+        <span className="text-[10px] text-slate-400">3 分以内</span>
       </div>
-      <div className="w-full h-2 bg-[var(--n-surface-2,#F5F3EE)] rounded-full overflow-hidden relative">
+      <div className="w-full h-2 bg-[#162035] rounded-full overflow-hidden relative">
         {/* 3-min red deadline marker */}
         <div className="absolute top-0 bottom-0 right-0 w-px bg-red-400 opacity-60" />
         <div
-          className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+          className={`h-full rounded-full ${barColor}`}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -308,7 +309,15 @@ function OnboardingContent() {
         <section aria-live="polite" role="status">
           <TimerBar elapsedMs={elapsedMs} achieved={false} />
 
-          <ol className="space-y-2">
+          {/* Static hexagon strip — shows progress at a glance */}
+          <HexagonSteps
+            total={EXPRESS_STEPS.length}
+            currentIdx={Math.min(currentStepIdx, EXPRESS_STEPS.length - 1)}
+            labels={EXPRESS_STEPS.map(s => s.label)}
+            size={48}
+          />
+
+          <ol className="mt-4 space-y-2">
             {EXPRESS_STEPS.map((step, idx) => {
               const isDone = idx < currentStepIdx;
               const isActive = idx === currentStepIdx;
@@ -316,34 +325,34 @@ function OnboardingContent() {
                 <li
                   key={step.id}
                   aria-current={isActive ? "step" : undefined}
-                  className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-300 ${
+                  className={
                     isDone
-                      ? "border-green-200 bg-green-50"
+                      ? "flex items-center gap-3 p-3 rounded-lg bg-emerald-600/10 border-l-4 border-[#22D3EE]"
                       : isActive
-                      ? "border-[var(--n-primary,#E64545)] bg-red-50"
-                      : "border-[var(--n-divider,rgba(0,0,0,0.08))] bg-white opacity-40"
-                  }`}
+                      ? "flex items-center gap-3 p-3 rounded-lg bg-[#162035] border-l-4 border-[#22D3EE]"
+                      : "flex items-center gap-3 p-3 rounded-lg bg-[#0B1121] border-l-4 border-transparent opacity-60"
+                  }
                 >
                   <span className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold">
                     {isDone ? (
-                      <span className="text-green-600">✓</span>
+                      <span className="text-[#22D3EE]">✓</span>
                     ) : isActive ? (
-                      <span className="text-[var(--n-primary,#E64545)] animate-pulse">●</span>
+                      <span className="text-[#22D3EE]">●</span>
                     ) : (
-                      <span className="text-[var(--n-muted,#6B6456)]">{idx + 1}</span>
+                      <span className="text-slate-400">{idx + 1}</span>
                     )}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-bold text-[var(--n-text,#1A1714)] leading-none">
+                    <p className="text-xs font-bold text-[#E2E8F0] leading-none">
                       {step.label}
                     </p>
                     {isActive && (
-                      <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">
+                      <p className="text-[10px] text-slate-400 mt-0.5">
                         {step.description}
                       </p>
                     )}
                   </div>
-                  <span className="text-[10px] text-[var(--n-muted,#6B6456)] shrink-0">
+                  <span className="text-[10px] text-slate-400 shrink-0">
                     ~{Math.round(step.durationMs / 1000)}s
                   </span>
                 </li>
