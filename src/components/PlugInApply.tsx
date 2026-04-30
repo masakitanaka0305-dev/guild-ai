@@ -53,7 +53,7 @@ export function PlugInApply({ projectId, sticky = false }: Props) {
     <div className={wrapperClass} role={wrapperRole} aria-label={wrapperLabel}>
       <div>
         <label htmlFor="md-select" className="text-xs text-[#E2E8F0] block mb-1">
-          資産で応募する — Select MD
+          この知能で応募 — 知能資産を選ぶ
         </label>
         <select
           id="md-select"
@@ -79,10 +79,14 @@ export function PlugInApply({ projectId, sticky = false }: Props) {
       <button
         onClick={handleApply}
         disabled={!selectedMd || applying}
+        aria-label="この案件に応募する"
         className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
       >
-        {applying ? "Applying…" : "資産で応募する — Apply"}
+        {applying ? "応募中..." : "この案件に応募する"}
       </button>
+      <p className="mt-1 text-[11px] text-slate-400 text-center">
+        選んだ知能資産があなたのスキル証明になります
+      </p>
     </div>
   );
 }
