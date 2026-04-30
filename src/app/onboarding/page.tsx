@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 import {
   EXPRESS_STEPS,
   BUDGET_MS,
@@ -22,6 +22,11 @@ import {
 import { simulateOnboarding } from "@/lib/github-onboarding";
 import { recordExpressRun } from "@/lib/metrics/express";
 import type { Rank } from "@/types";
+
+const ConnectGithubButton = dynamic(
+  () => import("@/components/ConnectGithubButton").then(m => ({ default: m.ConnectGithubButton })),
+  { ssr: false, loading: () => <div className="h-10 w-44 animate-pulse rounded-2xl bg-gray-100" /> }
+);
 
 // Steps for Express (detail) mode — all except source
 const EXPRESS_RUNNING_STEPS = EXPRESS_STEPS.filter((s) => s.id !== "source");
@@ -200,7 +205,19 @@ function SourceStep({
 
       {kind === "url" && (
         <fieldset className="border-0 p-0 m-0">
-          <legend className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">GitHub リポジトリ URL</legend>
+          <legend className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">GitHub から始める</legend>
+          {/* GitHub OAuth integration — direct repo picker */}
+          <div className="mb-3">
+            <ConnectGithubButton />
+            <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-1.5">
+              GitHub 連携でリポジトリを選択 → AI が自動解析します
+            </p>
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="flex-1 h-px bg-[var(--n-divider,rgba(0,0,0,0.1))]" />
+            <span className="text-[10px] text-[var(--n-muted,#6B6456)]">または URL を直接入力</span>
+            <div className="flex-1 h-px bg-[var(--n-divider,rgba(0,0,0,0.1))]" />
+          </div>
           <input type="url" value={urlValue} disabled={!consented}
             onChange={(e) => { setUrlValue(e.target.value); setError(""); }}
             placeholder="https://github.com/username/repo"
