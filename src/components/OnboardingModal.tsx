@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Hexagon } from "@/components/ui/Hexagon";
 
 function Hi({ children }: { children: React.ReactNode }) {
   return (
@@ -108,13 +108,16 @@ export function OnboardingModal({ onClose }: Props) {
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-5">
-          <Image
-            src="/onboarding/guild-ai-mascot.png"
-            alt="Guild AI マスコット"
-            width={48}
-            height={48}
-            className="object-contain flex-shrink-0"
-          />
+          <span aria-hidden className="flex-shrink-0">
+            <Hexagon
+              size={48}
+              fill="rgba(34,211,238,0.10)"
+              stroke="#22D3EE"
+              strokeWidth={2}
+              label="G"
+              labelColor="#22D3EE"
+            />
+          </span>
           <h2
             id={titleId}
             className="text-lg font-extrabold text-[#1F1B16] leading-tight"

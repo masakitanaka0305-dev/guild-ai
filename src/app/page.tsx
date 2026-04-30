@@ -2,10 +2,10 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { MOCK_JOBS } from "@/lib/jobs";
 import { OnboardingModal } from "@/components/OnboardingModal";
 import { AuthBar } from "@/components/AuthBar";
+import { Hexagon } from "@/components/ui/Hexagon";
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
@@ -109,15 +109,17 @@ export default function HomePage() {
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openModal(); }}
             className="relative flex items-center gap-4 sm:gap-5 rounded-3xl shadow-sm ring-1 ring-sky-100/60 hover:shadow-md active:scale-[0.99] transition-all duration-220 cursor-pointer overflow-hidden px-5 py-4 sm:px-6 sm:py-5 bg-gradient-to-br from-[#E0F2FE] to-[#BAE6FD]"
           >
-            {/* Mascot left */}
-            <Image
-              src="/onboarding/guild-ai-mascot.png"
-              alt="Guild AI マスコット"
-              width={80}
-              height={80}
-              className="object-contain flex-shrink-0 w-[72px] h-[72px] sm:w-[88px] sm:h-[88px]"
-              priority
-            />
+            {/* Hex motif left (Water Guild — geometry only, no character) */}
+            <span aria-hidden className="flex-shrink-0">
+              <Hexagon
+                size={72}
+                fill="rgba(34,211,238,0.10)"
+                stroke="#22D3EE"
+                strokeWidth={2}
+                label="G"
+                labelColor="#22D3EE"
+              />
+            </span>
 
             {/* Text center */}
             <div className="flex-1 min-w-0">
@@ -131,15 +133,10 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Mascot right (PC only) */}
-            <Image
-              src="/onboarding/guild-ai-mascot.png"
-              alt=""
-              aria-hidden
-              width={56}
-              height={56}
-              className="object-contain hidden sm:block flex-shrink-0 opacity-40 w-[52px] h-[52px]"
-            />
+            {/* Hex motif right (PC only) */}
+            <span aria-hidden className="hidden sm:block flex-shrink-0 opacity-40">
+              <Hexagon size={52} stroke="#22D3EE" strokeWidth={1.5} />
+            </span>
 
             {/* Dismiss × */}
             <button
