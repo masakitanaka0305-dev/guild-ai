@@ -37,11 +37,13 @@ describe("friendly-bank.useTactile", () => {
 describe("friendly-bank.rank-badge", () => {
   const src = readFileSync(resolve(root, "src/components/RankBadge.tsx"), "utf8");
 
-  it("RankBadge has friendly prop", () => {
+  it("RankBadge keeps the friendly prop in its API surface (back-compat)", () => {
     expect(src).toContain("friendly");
   });
 
-  it("RankBadge includes aria-label with badge name", () => {
-    expect(src).toContain("バッジ");
+  it("RankBadge includes a rank-aware aria-label (Water Guild hex)", () => {
+    // Water Guild repaint: the badge is a static hexagon labelled
+    // 「ランク {rank} — {sublabel}」 instead of the legacy 「バッジ」 wording.
+    expect(src).toMatch(/aria-label=\{`ランク \$\{rank\}/);
   });
 });
