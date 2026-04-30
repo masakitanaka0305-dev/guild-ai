@@ -228,3 +228,102 @@ CTA は **必ず `rounded-xl`**。Flat ＋ 静的 `shadow-water-glow`。
 | no-anim-global | 4 | `src/lib/__tests__/no-anim-global.test.ts` |
 
 合計 **31 件** の新規テスト。
+
+---
+
+# Water Guild v2 — UX/UI Refinements
+
+> v1 で世界観の骨組みを敷いた。v2 はその骨組みに **読みやすさ** と **入力レス** を流し込む工程。
+
+## 11. 可読性トークン
+
+| 役割 | クラス／トークン | 値 | 使い所 |
+|------|------------------|----|--------|
+| Body silver | `text-[#E2E8F0]` | `#E2E8F0` | 標準本文／ラベル |
+| Muted | `text-slate-400` | `#94A3B8` | 補助ラベル／キャプション／breadcrumb |
+| Strong | `text-white` | `#FFFFFF` | 重要見出し／メイン数値 |
+| Tag ink | `text-[#F1F5F9]` | `#F1F5F9` | tech-stack chip 文字 |
+
+低コントラストの `text-slate-{500,600}` / `text-zinc-{400,500}` / `text-gray-{400,500,600}` は **src/ 配下から全廃**。`water-utility-classes.test.ts` がリグレッションを検出する。
+
+## 12. ユーティリティクラス
+
+### 12.1 `metric-prime` / `metric-prime-white`
+
+```css
+.metric-prime {
+  @apply text-[#22D3EE] font-semibold tabular-nums tracking-tight;
+  font-size: 1.5rem;        /* sm: 1.875rem */
+  line-height: 1.15;
+}
+.metric-prime-white { @apply text-white font-semibold tabular-nums tracking-tight; … }
+```
+
+**用途**: 売上 / 手取り / Match % など「これが事実」と言い切る数値。
+
+### 12.2 `chip-tech`
+
+```css
+.chip-tech {
+  @apply inline-flex items-center bg-[#1E293B] text-[#F1F5F9]
+         rounded-full px-3 py-1 text-xs font-medium;
+  border: 1px solid rgba(34,211,238,0.18);
+}
+```
+
+**用途**: tech-stack タグ。深海ベースに浮く陶器のような pill。
+
+## 13. AI Pre-select（入力レス・応募）
+
+`src/lib/md-pickfit/index.ts` の `pickBestFitMd(ownedMds, project)`:
+
+1. **Covered count**: 案件 requirements を最も多く満たす MD を最優先。
+2. **Weighted rank score**: 同点なら weight × ownedRank の合算が大きい方。
+3. **Tie-break**: それでも同点なら id の lexicographic 順（決定論担保）。
+4. **Fallback**: 一致 0 件なら所有 MD の最高ランクを返し、UI に「完全一致なし — ランク最上位を選択」と表示。
+
+`<PlugInApply>` が `<select defaultValue=...>` でプリセレクトし、下に「**自動でおすすめを選択しました — N 件の要件に合致**」のキャプションを置く。
+
+## 14. Sticky Action
+
+`<PlugInApply sticky />` のとき：
+
+```
+md:static fixed bottom-16 md:bottom-auto left-0 right-0 z-30
+px-4 py-3 bg-[#0B1121]/95 backdrop-blur border-t border-white/10
+md:border-0 md:bg-transparent md:backdrop-blur-0 md:p-0
+```
+
+モバイルのみ親指ゾーンに固定。`role="region" aria-label="主要アクション"` で支援技術にも届く。デスクトップではカード内に戻る。
+
+`/projects/[id]` のメインは `pb-44 md:pb-8` でスティッキーバーと衝突しない。
+
+## 15. ClampDescription
+
+```
+<ClampDescription text={…} maxLines={3} />
+```
+
+`-webkit-line-clamp` で行数制限。トグルは `<button aria-expanded>`。`Esc` で折り畳み。アニメ無し（`data-anim="off"` の契約に従う）。
+
+## 16. Hexagon Steps（進捗インジケータ）
+
+`<HexagonSteps total={N} currentIdx={i} labels={...} />` が hex 列を生成：
+
+- **complete**: fill `#22D3EE` / stroke `#22D3EE` / center `✓` (`#0B1121`)
+- **active**: fill `#1E293B` / stroke `#22D3EE` / center 番号 (`#22D3EE`)
+- **pending**: fill `#162035` / stroke `#94A3B8` / center 番号 (`#94A3B8`)
+
+完了行のステップカードは `bg-emerald-600/10` ＋ `border-l-4 border-[#22D3EE]` で達成感を与える。アニメ無し。`aria-current="step"` を active に付与。
+
+## 17. テスト一覧（v2 追加分）
+
+| テスト | 件数 | 場所 |
+|--------|------|------|
+| md-pickfit | 4 | `src/lib/md-pickfit/__tests__/md-pickfit.test.ts` |
+| sticky-action | 2 | `src/lib/__tests__/sticky-action.test.ts` |
+| clamp-description | 1 | `src/lib/__tests__/clamp-description.test.ts` |
+| hexagon-steps | 4 | `src/lib/__tests__/hexagon-steps.test.ts` |
+| water-utility-classes | 6 | `src/lib/__tests__/water-utility-classes.test.ts` |
+
+合計 **17 件** の v2 新規テスト。
