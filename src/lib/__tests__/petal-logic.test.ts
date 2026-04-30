@@ -41,11 +41,10 @@ describe("playPoyon in sound module", () => {
 describe("Guardian branding in nav", () => {
   const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("nav has exactly 4 clean items (ホーム/投稿/案件/運用)", () => {
-    expect(src).toContain('"ホーム"');
-    expect(src).toContain('"投稿"');
-    expect(src).toContain('"案件"');
-    expect(src).toContain('"運用"');
+  it("nav has 3 tabs (探す/出す/稼ぐ) and does not use old jargon", () => {
+    expect(src).toContain('"探す"');
+    expect(src).toContain('"出す"');
+    expect(src).toContain('"稼ぐ"');
     expect(src).not.toContain("おさいふ通帳");
     expect(src).not.toContain("はじめての提出");
   });

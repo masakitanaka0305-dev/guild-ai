@@ -44,6 +44,13 @@ export function getPageTitle(pathname: string): string {
 
 /** Returns true when the back button should be shown (not on root pages). */
 export function showBackButton(pathname: string): boolean {
-  const rootPaths = ["/", "/bank", "/jobs", "/projects", "/guild", "/marketplace", "/showcase"];
+  const rootPaths = ["/", "/projects", "/onboarding", "/guild", "/bank", "/jobs", "/marketplace", "/showcase"];
   return !rootPaths.includes(pathname);
 }
+
+// ── 3-tab main navigation ────────────────────────────────────────────────────
+export const MAIN_TABS = [
+  { href: "/projects",   label: "探す", description: "AI 案件を探す" },
+  { href: "/onboarding", label: "出す", description: "MD を 3 ステップで出品" },
+  { href: "/guild",      label: "稼ぐ", description: "Asset Ledger・運用状況" },
+] as const;
