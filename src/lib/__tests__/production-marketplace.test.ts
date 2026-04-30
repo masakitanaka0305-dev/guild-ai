@@ -64,6 +64,19 @@ describe("competitor-stats: getCompetition", () => {
     const sum = byRank.S + byRank.A + byRank.B;
     expect(sum).toBe(totalApplicants);
   });
+
+  it("byRank counts are non-negative across 100 seeded inputs", () => {
+    for (let i = 0; i < 100; i++) {
+      const seed = `seed_${i}`;
+      // total applicants in [0, 30] including very small numbers that
+      // previously could push bCount below zero
+      const total = i % 31;
+      const { byRank } = getCompetition(seed, total);
+      expect(byRank.S, `S non-negative for ${seed}/${total}`).toBeGreaterThanOrEqual(0);
+      expect(byRank.A, `A non-negative for ${seed}/${total}`).toBeGreaterThanOrEqual(0);
+      expect(byRank.B, `B non-negative for ${seed}/${total}`).toBeGreaterThanOrEqual(0);
+    }
+  });
 });
 
 // ─── Payout Simulation ───────────────────────────────────────────────────────

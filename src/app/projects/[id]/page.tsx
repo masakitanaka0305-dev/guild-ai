@@ -274,7 +274,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                     {rank}
                   </span>
                   <span className="text-xs font-bold text-[var(--n-text,#1A1714)]">
-                    {competition.byRank[rank]}
+                    {Math.max(0, competition.byRank[rank])}
                   </span>
                 </div>
               ))}

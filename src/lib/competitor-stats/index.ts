@@ -22,18 +22,20 @@ function djb2(s: string): number {
 export function getCompetition(projectId: string, totalApplicants: number): CompetitionStats {
   const seed = djb2(projectId);
 
-  // Distribute applicants across ranks deterministically
-  const sCount = 1 + (seed % 5);               // 1-5
-  const aCount = 3 + ((seed >> 4) % 10);        // 3-12
+  // Distribute applicants across ranks deterministically.
+  // Clamp every count to ≥ 0 — totalApplicants may be smaller than the
+  // seeded sCount + aCount, in which case bCount would otherwise go negative.
+  const sCount = Math.max(0, Math.min(totalApplicants, 1 + (seed % 5)));
+  const aCount = Math.max(0, Math.min(totalApplicants - sCount, 3 + ((seed >> 4) % 10)));
   const bCount = Math.max(0, totalApplicants - sCount - aCount);
 
   const byRank: Record<"S" | "A" | "B", number> = {
-    S: sCount,
-    A: aCount,
-    B: bCount,
+    S: Math.max(0, sCount),
+    A: Math.max(0, aCount),
+    B: Math.max(0, bCount),
   };
 
-  const leadingRank: "S" | "A" | "B" = sCount > 0 ? "S" : aCount > 0 ? "A" : "B";
+  const leadingRank: "S" | "A" | "B" = byRank.S > 0 ? "S" : byRank.A > 0 ? "A" : "B";
 
   return { totalApplicants, byRank, leadingRank };
 }
