@@ -53,13 +53,13 @@ export default function ReposPage() {
         <nav className="flex items-center gap-2 text-sm text-[var(--n-muted,#6B6456)] mb-4">
           <Link href="/onboarding" className="hover:underline">オンボーディング</Link>
           <span>›</span>
-          <span aria-current="step" className="text-[var(--n-text,#1A1714)] font-medium">リポジトリ選択</span>
+          <span aria-current="step" className="text-[var(--n-text,#1A1714)] font-medium">コードベース選択</span>
         </nav>
         <h1 className="text-2xl font-bold text-[var(--n-text,#1A1714)] mb-2">
-          リポジトリを選択
+          コードベースを選択
         </h1>
         <p className="text-[var(--n-muted,#6B6456)] text-sm">
-          GUILD AI に登記するリポジトリを選んでください。AI が内容を解析して知能資産の草稿を生成します。
+          GUILD AI に登記するコードベースを選んでください。AI が内容を解析して知能資産の草稿を生成します。
         </p>
       </div>
 
@@ -86,7 +86,7 @@ export default function ReposPage() {
 
       {!loading && !error && repos.length === 0 && (
         <div className="text-center py-12 text-[var(--n-muted,#6B6456)]">
-          <p>リポジトリが見つかりませんでした。</p>
+          <p>コードベースが見つかりませんでした。</p>
         </div>
       )}
 
@@ -141,9 +141,9 @@ export default function ReposPage() {
 
                 <Link
                   href={`/onboarding/draft/${owner}/${repo.name}`}
-                  className="block text-center py-2 px-4 rounded-xl bg-[var(--primary,#06B6D4)] text-white text-xs font-bold hover:bg-[#0891B2] transition-colors"
+                  className="block text-center py-2 px-4 rounded-full bg-[#22D3EE] text-[#0B1121] text-xs font-bold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
                 >
-                  このリポジトリを解析
+                  Analyze — このコードベースを解析
                 </Link>
               </article>
             );

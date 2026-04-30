@@ -13,11 +13,11 @@ export default function ProjectsPage() {
 
   return (
     <main className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-xl font-bold text-slate-100 mb-4">Projects</h1>
+      <h1 className="text-xl font-semibold tracking-tight text-white mb-4">Projects</h1>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead>
-            <tr className="border-b border-slate-700 text-slate-400 text-xs uppercase">
+            <tr className="border-b border-slate-700 text-[#E2E8F0] text-xs uppercase">
               <th className="pb-3 pr-4">Title</th>
               <th className="pb-3 pr-4">Industry</th>
               <th className="pb-3 pr-4">Match</th>
@@ -32,28 +32,28 @@ export default function ProjectsPage() {
               return (
                 <tr
                   key={row.id}
-                  className={`border-b border-slate-800 hover:bg-slate-900 ${isRecommended ? "border-l-4 border-l-cyan-500" : "border-l-4 border-l-transparent"}`}
+                  className={`border-b border-slate-800 hover:bg-slate-900 ${isRecommended ? "border-l-4 border-l-[#22D3EE]" : "border-l-4 border-l-transparent"}`}
                 >
                   <td className="py-3 pr-4">
-                    <p className="font-medium text-slate-100">{row.title}</p>
+                    <p className="font-medium text-white">{row.title}</p>
                     {isRecommended && (
-                      <span className="text-[10px] text-cyan-400 font-bold uppercase">Recommended</span>
+                      <span className="text-[10px] text-[#22D3EE] font-bold uppercase">Recommended</span>
                     )}
                   </td>
-                  <td className="py-3 pr-4 text-slate-400 text-xs">{row.industry}</td>
+                  <td className="py-3 pr-4 text-[#E2E8F0] text-xs">{row.industry}</td>
                   <td className="py-3 pr-4">
-                    <span className={`font-bold tabular-nums ${isRecommended ? "text-cyan-400" : "text-slate-300"}`}>
+                    <span className="font-semibold tabular-nums text-[#22D3EE]">
                       {row.matchScore}%
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-slate-300 tabular-nums">
+                  <td className="py-3 pr-4 text-[#E2E8F0] tabular-nums">
                     ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
                   </td>
-                  <td className="py-3 pr-4 text-slate-400 text-xs">{row.deadline}</td>
+                  <td className="py-3 pr-4 text-[#E2E8F0] text-xs">{row.deadline}</td>
                   <td className="py-3">
                     <Link
                       href={`/projects/${row.id}`}
-                      className="px-3 py-1.5 bg-cyan-500 text-slate-950 text-xs font-bold rounded-md hover:bg-cyan-400 min-h-[44px] inline-flex items-center"
+                      className="px-4 py-1.5 bg-[#22D3EE] text-[#0B1121] text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
                     >
                       Apply
                     </Link>
