@@ -178,7 +178,7 @@ function OnboardingContent() {
           GitHub コードベース → Asset Ledger 登記 → First Royalty まで 7 ステップ
         </p>
         <p className="mt-1 text-[11px] text-slate-400 italic">
-          資産運用者として、あなたの資産を流通させる。
+          あなたの知能を資産化する場所です。
         </p>
       </div>
 
