@@ -27,6 +27,7 @@ import { useUserId } from "@/components/AuthProvider";
 import { generateSchemas } from "@/lib/schema-generator";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
 import { BulkDepositSection } from "@/components/BulkDepositSection";
+import { recordConsent, CURRENT_TERMS_VERSION } from "@/lib/consent-log";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -672,6 +673,8 @@ function TextPath({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consentChecked) return;
+    recordConsent(userId || "anonymous", CURRENT_TERMS_VERSION);
     const finalTitle = title.trim() || "新しいスキル資産";
     const newId = `listing_${Date.now()}`;
 
@@ -843,13 +846,13 @@ function TextPath({
             checked={consentChecked}
             onChange={(e) => setConsentChecked(e.target.checked)}
             className="mt-0.5 w-4 h-4 accent-[var(--n-primary,#E64545)] flex-shrink-0"
-            aria-label="権利譲渡および API 利用規約への同意"
+            aria-label="利用規約と権利譲渡条件に同意します"
           />
           <span className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
-            <a href="/legal/transfer" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">権利譲渡規約</a>
-            {" "}および{" "}
-            <a href="/legal/terms" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">API 利用規約</a>
-            {" "}に同意します。本コンテンツの著作権・利用権を GUILD AI プラットフォームに許諾することを確認しました。
+            <a href="/legal/terms" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">利用規約</a>
+            {" "}と{" "}
+            <a href="/legal/transfer" target="_blank" className="text-[var(--n-primary,#E64545)] hover:underline font-semibold">権利譲渡条件</a>
+            {" "}に同意します。
           </span>
         </label>
       </div>
