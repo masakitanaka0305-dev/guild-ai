@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Check, AlertCircle } from "lucide-react";
 import { MOCK_PROJECTS, getProject } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
 import { calcNet, formatJpy } from "@/lib/payout-sim";
@@ -7,6 +8,7 @@ import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
 import { PlugInApply } from "@/components/PlugInApply";
 import { ClampDescription } from "@/components/ui/ClampDescription";
 import { BackArrow } from "@/components/ui/BackArrow";
+import { SectionCard } from "@/components/ui/SectionCard";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -139,8 +141,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         <div className="flex-1 space-y-5">
 
           {/* Tech stack */}
-          <div className="section-card p-5">
-            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">技術スタック</p>
+          <SectionCard id="tech-stack" title="技術スタック">
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((t) => (
                 <span key={t} className="chip-tech font-mono">
@@ -148,53 +149,52 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                 </span>
               ))}
             </div>
-          </div>
+          </SectionCard>
 
           {/* Why you match */}
-          <div className="section-card p-5">
-            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">
-              なぜマッチしているか
-            </p>
+          <SectionCard id="why-match" title="なぜマッチしているか">
             <ul className="space-y-2">
               {matching.matchDetails.map(({ req, matched, ownedRank }) => (
                 <li key={req.id} className="flex items-center gap-2 text-xs">
-                  <span className={`flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black ${
-                    matched ? "bg-emerald-100 text-emerald-700" : "bg-red-50 text-red-400"
-                  }`}>
-                    {matched ? "✓" : "✗"}
-                  </span>
-                  <span className={matched ? "text-[var(--n-text,#1A1714)]" : "text-[var(--n-muted,#6B6456)]"}>
+                  {matched ? (
+                    <Check
+                      aria-hidden
+                      className="flex-shrink-0 w-4 h-4 stroke-cyan-400"
+                    />
+                  ) : (
+                    <AlertCircle
+                      aria-hidden
+                      className="flex-shrink-0 w-4 h-4 stroke-amber-300"
+                    />
+                  )}
+                  <span className={matched ? "text-white" : "text-slate-400"}>
                     {req.label}
                     {matched && ownedRank && (
-                      <span className="ml-1 font-bold text-[var(--primary,#06B6D4)]">[{ownedRank}]</span>
+                      <span className="ml-1 font-bold text-cyan-400">[{ownedRank}]</span>
                     )}
                     {!matched && (
-                      <span className="ml-1 text-[var(--n-muted,#6B6456)]">（未所持 — 要 {req.rankMin}+）</span>
+                      <span className="ml-1 text-slate-400">（未所持 — 要 {req.rankMin}+）</span>
                     )}
                   </span>
                   {req.weight === 3 && (
-                    <span className="text-[9px] font-bold text-amber-600 bg-amber-50 px-1 rounded">必須</span>
+                    <span className="text-[9px] font-bold text-amber-300 bg-amber-900/40 ring-1 ring-amber-400/30 px-1 rounded">必須</span>
                   )}
                 </li>
               ))}
             </ul>
-          </div>
+          </SectionCard>
 
           {/* SES Challenge */}
           {project.sesChallenge && (
-            <div className="section-card p-5 border-l-4 border-amber-400">
-              <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
-                現場課題
-              </p>
+            <SectionCard id="ses-challenge" title="現場課題">
               <ClampDescription text={project.sesChallenge} maxLines={3} />
-            </div>
+            </SectionCard>
           )}
 
           {/* Timeline */}
-          <div className="section-card p-5">
-            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-4">進捗タイムライン</p>
+          <SectionCard id="progress-timeline" title="進捗タイムライン">
             <ProjectTimeline currentStep={timelineStep} />
-          </div>
+          </SectionCard>
         </div>
 
         {/* ── Right: sidebar ── */}
@@ -222,8 +222,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
           </div>
 
           {/* Net Payout Simulation */}
-          <div className="section-card p-5">
-            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Net Payout</p>
+          <SectionCard id="net-payout" title="Net Payout">
             {isUnderwater && (
               <div
                 role="alert"
@@ -233,13 +232,13 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               </div>
             )}
             <div className="space-y-1.5 text-xs">
-              <div className="flex justify-between text-[var(--n-muted,#6B6456)]">
+              <div className="flex justify-between text-slate-400">
                 <span>Gross 報酬</span>
-                <span className="font-bold">{formatJpy(payout.grossJpy)}</span>
+                <span className="font-bold text-white">{formatJpy(payout.grossJpy)}</span>
               </div>
-              <div className="flex justify-between text-[var(--n-muted,#6B6456)]">
+              <div className="flex justify-between text-slate-400">
                 <span>Platform Fee ({project.platformFeePct}%)</span>
-                <span className="text-[var(--n-muted,#6B6456)] font-bold">−{formatJpy(payout.platformFeeJpy)}</span>
+                <span className="font-bold text-slate-300">−{formatJpy(payout.platformFeeJpy)}</span>
               </div>
               {rentalCovered ? (
                 <div className="flex justify-between text-emerald-300">
@@ -252,21 +251,20 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   <span className="font-bold">−{formatJpy(payout.totalRentalJpy)}</span>
                 </div>
               )}
-              <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex items-baseline justify-between">
-                <span className="font-bold text-[var(--n-text,#1A1714)]">手取り</span>
+              <div className="border-t border-white/10 pt-1.5 flex items-baseline justify-between">
+                <span className="font-bold text-white">手取り</span>
                 <span className={isUnderwater ? "metric-prime text-rose-300" : "metric-prime"}>
                   {formatJpy(payout.netJpy)}
                 </span>
               </div>
             </div>
-          </div>
+          </SectionCard>
 
           {/* Competition */}
-          <div className="section-card p-5">
-            <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Competition</p>
-            <p className="text-2xl font-black text-[var(--n-text,#1A1714)]">
+          <SectionCard id="competition" title="Competition">
+            <p className="text-2xl font-black text-white">
               {competition.totalApplicants}
-              <span className="text-xs font-bold text-[var(--n-muted,#6B6456)] ml-1">名応募中</span>
+              <span className="text-xs font-bold text-slate-400 ml-1">名応募中</span>
             </p>
             <div className="flex gap-3 mt-3">
               {(["S", "A", "B"] as const).map((rank) => (
@@ -277,16 +275,16 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   >
                     {rank}
                   </span>
-                  <span className="text-xs font-bold text-[var(--n-text,#1A1714)]">
+                  <span className="text-xs font-bold text-white">
                     {Math.max(0, competition.byRank[rank])}
                   </span>
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-2">
-              競合上位: <span className="font-bold">{competition.leadingRank}ランク</span>
+            <p className="text-[10px] text-slate-400 mt-2">
+              競合上位: <span className="font-bold text-white">{competition.leadingRank}ランク</span>
             </p>
-          </div>
+          </SectionCard>
 
           {/* Key stats */}
           <div className="section-card p-5">
