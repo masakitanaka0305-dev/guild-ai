@@ -150,3 +150,10 @@ export function _resetZeroDay(): void {
 // ─── Opt-out key (localStorage) ──────────────────────────────────────────────
 
 export const ZERO_DAY_OPTOUT_KEY = "guild_zero_day_optout";
+export const ZERO_DAY_BANNER_DISMISSED_KEY = "guild_zero_day_dismissed_until";
+
+/** Returns the highest-priority active event, or null if none */
+export function getActivePriorityEvent(): ZeroDayEvent | null {
+  const events = getZeroDayEvents(true);
+  return events.find((e) => e.priority === "critical" || e.priority === "high") ?? null;
+}

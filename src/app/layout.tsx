@@ -7,6 +7,7 @@ import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 import { ZeroDayToast } from "@/components/ZeroDayToast";
 import { SupportChat } from "@/components/SupportChat";
 import { MainHeader } from "@/components/MainHeader";
+import { ZeroDayBanner } from "@/components/ZeroDayBanner";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -63,6 +64,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* ── Right column ──────────────────────────────────── */}
         <div className="flex-1 flex flex-col min-h-0 overflow-hidden relative">
+          {/* Zero-Day glowing banner — above header, priority events only */}
+          <ZeroDayBanner />
+
           {/* Mobile header — タイミー型中央タイトル */}
           <MainHeader />
 
