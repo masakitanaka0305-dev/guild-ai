@@ -1,14 +1,14 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { loginAction } from "@/app/actions/auth";
+import { mockLogin, isMockAuthed } from "@/lib/mock-auth";
 
 // Only allow same-origin paths (defense against open-redirect)
 function safeRedirect(target: string | null): string {
-  if (!target) return "/wallet";
-  if (!target.startsWith("/") || target.startsWith("//")) return "/wallet";
+  if (!target) return "/";
+  if (!target.startsWith("/") || target.startsWith("//")) return "/";
   return target;
 }
 
@@ -17,24 +17,21 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const redirectTo = safeRedirect(searchParams.get("redirect"));
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  // Already-authed guard: skip the form for returning visitors
+  useEffect(() => {
+    if (isMockAuthed()) router.replace(redirectTo);
+  }, [redirectTo, router]);
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
-    setError(null);
 
     const fd = new FormData(e.currentTarget);
-    const result = await loginAction({
-      email: String(fd.get("email") ?? ""),
-      password: String(fd.get("password") ?? ""),
-    });
-
-    setSubmitting(false);
-    if (!result.ok) {
-      setError(result.error);
-      return;
-    }
+    mockLogin(
+      String(fd.get("email") ?? ""),
+      String(fd.get("password") ?? ""),
+    );
 
     router.push(redirectTo);
     router.refresh();
@@ -75,15 +72,10 @@ function LoginForm() {
           />
         </label>
 
-        {error && (
-          <div role="alert" className="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
-
         <button
           type="submit"
           disabled={submitting}
+          aria-busy={submitting}
           className="btn-primary w-full !py-3 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {submitting ? "ログイン中…" : "ログイン"}
