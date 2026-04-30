@@ -85,7 +85,7 @@ export function checkJobEligibility(weapons: Weapon[], job: Job): EligibilityRes
       matchedWeapon: null,
       missingRank: true,
       missingTags: job.requiredTags,
-      hint: "シマエナガ銀行でノートを預けると武器が手に入ります",
+      hint: "Asset Ledger にノートを登録するとスキルが認定されます",
     };
   }
 
@@ -114,7 +114,7 @@ export function checkJobEligibility(weapons: Weapon[], job: Job): EligibilityRes
       matchedWeapon: null,
       missingRank: true,
       missingTags: job.requiredTags,
-      hint: `銀行で${job.requiredRank}ランクのノートを預けると装備できます`,
+      hint: `Asset Ledger で${job.requiredRank}ランクのノートを登録すると応募できます`,
     };
   }
 
@@ -126,7 +126,7 @@ export function checkJobEligibility(weapons: Weapon[], job: Job): EligibilityRes
     matchedWeapon: tagMatch ?? null,
     missingRank: false,
     missingTags,
-    hint: `銀行で「${missingTags[0] ?? job.requiredTags[0]}」タグのノートを預けると装備できます`,
+    hint: `Asset Ledger で「${missingTags[0] ?? job.requiredTags[0]}」タグのノートを登録すると応募できます`,
   };
 }
 

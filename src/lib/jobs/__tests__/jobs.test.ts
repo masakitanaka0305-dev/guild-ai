@@ -20,7 +20,7 @@ describe("jobs.checkJobEligibility", () => {
   it("returns canApply=false with hint when no weapons", () => {
     const result = checkJobEligibility([], MOCK_JOBS[0]);
     expect(result.canApply).toBe(false);
-    expect(result.hint).toContain("銀行");
+    expect(result.hint).toContain("Asset Ledger");
   });
 
   it("allows B-rank job with matching B weapon + matching tag", () => {

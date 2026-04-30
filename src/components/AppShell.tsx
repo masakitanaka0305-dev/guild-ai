@@ -4,7 +4,6 @@ import Link from "next/link";
 import { SidebarNav, BottomNav } from "@/components/SidebarNav";
 import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 import { ZeroDayToast } from "@/components/ZeroDayToast";
-import { SupportChat } from "@/components/SupportChat";
 import { MainHeader } from "@/components/MainHeader";
 import { ZeroDayBanner } from "@/components/ZeroDayBanner";
 
@@ -37,7 +36,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <BottomNav />
         <IncomeStreamBar />
         <ZeroDayToast />
-        <SupportChat />
         <Link
           href="/bank"
           aria-label="投稿"

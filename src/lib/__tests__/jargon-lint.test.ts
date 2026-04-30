@@ -50,6 +50,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Competitive Moat v1): 実行エビデンス / プロの工夫 / 価値のデルタ / ゼロデイ / 未学習 / 対応MD / 募集中
 // Explicitly PERMITTED (Intelligence Ledger + Export Hub #90/#94): 権利の系譜 / 自動分配履歴 / 為替対応 / AI向け翻訳 / Blackbox / 実行専用 / ドル建て / ダイナミック・プライシング
 // Explicitly PERMITTED (Strategic Moat #95): Encapsulated Intelligence / クローラー検知 / rate limit / オリジン署名 / オリジン認証 / JP発祥 / Global Scout
+// Explicitly PERMITTED (Intelligence Marketplace #105): Validation Score / Matching Score / Asset Ledger / Escrow Reserve / Ownership Attestation / Terms of Service / Liability Shift
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms — auth postponed to v2; any re-appearance is a regression
   { term: "ログイン",        reason: "→ 認証UI廃止(v1)。docs/Auth-Removed.md 参照" },
@@ -72,6 +73,12 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "おたから",        reason: "→ 資産 に置換（18y/o tone v2）" },
   { term: "ぶき",            reason: "→ スキル / ノート に置換（18y/o tone v2）" },
   { term: "シマエナガ通帳",   reason: "→ UI 上は「端数残高」に置換（内部モジュール名は shima-ledger で維持）" },
+  { term: "シマエナガ",             reason: "→ マスコット削除（Asset Ledger brand v1）。docs/Asset-Ledger-Brand設計.md 参照" },
+  { term: "かわいい",               reason: "→ プロ向けトーンに統一（Asset Ledger brand v1）" },
+  { term: "shadow-for-employer",    reason: "→ 反検知機能は非実装方針。ToS で個人責任明確化に留める" },
+  { term: "stealth-employer",       reason: "→ 反検知機能は非実装方針" },
+  { term: "企業隠蔽",               reason: "→ 反検知機能は非実装方針" },
+  { term: "会社にバレない",          reason: "→ 反検知機能は非実装方針" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

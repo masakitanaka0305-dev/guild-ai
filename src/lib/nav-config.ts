@@ -6,6 +6,7 @@ export const PAGE_TITLES: Record<string, string> = {
   "/sell":             "出品",
   "/guild":            "マイ銀行",
   "/jobs":             "案件",
+  "/projects":         "案件一覧",
   "/marketplace":      "マーケット",
   "/marketplace/pro":  "法人検索",
   "/profile":          "プロフィール",
@@ -23,6 +24,7 @@ export const PAGE_TITLES: Record<string, string> = {
   "/legal/terms":        "利用規約",
   "/legal/transfer":     "権利譲渡規約",
   "/admin/reports":      "レポート管理",
+  "/onboarding":         "Onboarding Express",
 };
 
 export const DEFAULT_TITLE = "GUILD AI";
@@ -33,6 +35,7 @@ export function getPageTitle(pathname: string): string {
   // Match prefix segments (e.g. /asset/xxx → "アセット詳細")
   if (pathname.startsWith("/asset/") && pathname.endsWith("/report")) return "品質保証書";
   if (pathname.startsWith("/asset/")) return "アセット詳細";
+  if (pathname.startsWith("/projects/")) return "案件詳細";
   if (pathname.startsWith("/lineage/")) return "家系図";
   if (pathname.startsWith("/feed/")) return "フィード";
   if (pathname.startsWith("/profile/")) return "プロフィール";
@@ -41,6 +44,6 @@ export function getPageTitle(pathname: string): string {
 
 /** Returns true when the back button should be shown (not on root pages). */
 export function showBackButton(pathname: string): boolean {
-  const rootPaths = ["/", "/bank", "/jobs", "/guild", "/marketplace", "/showcase"];
+  const rootPaths = ["/", "/bank", "/jobs", "/projects", "/guild", "/marketplace", "/showcase"];
   return !rootPaths.includes(pathname);
 }
