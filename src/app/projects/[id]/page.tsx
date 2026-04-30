@@ -5,6 +5,7 @@ import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
 import { calcNet, formatJpy } from "@/lib/payout-sim";
 import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
 import { PlugInApply } from "@/components/PlugInApply";
+import { ClampDescription } from "@/components/ui/ClampDescription";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -113,9 +114,11 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         <h1 className="text-xl font-black text-[var(--n-text,#1A1714)] leading-snug">
           {project.title}
         </h1>
-        <p className="mt-2 text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
-          {project.description}
-        </p>
+        <ClampDescription
+          text={project.description}
+          maxLines={3}
+          className="mt-2"
+        />
       </div>
 
       {/* Main 2-column layout (mobile: stacked, PC: left+right) */}
@@ -171,9 +174,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-1.5">
                 現場課題
               </p>
-              <p className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
-                {project.sesChallenge}
-              </p>
+              <ClampDescription text={project.sesChallenge} maxLines={3} />
             </div>
           )}
 
