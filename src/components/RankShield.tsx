@@ -5,7 +5,7 @@ interface Props {
 
 const RANK_COLOR: Record<string, { stroke: string; fill: string; text: string }> = {
   S: { stroke: "#D4AF37", fill: "#1A1714", text: "#D4AF37" },
-  A: { stroke: "#E64545", fill: "#1A1714", text: "#E64545" },
+  A: { stroke: "#06B6D4", fill: "#1A1714", text: "#06B6D4" },
   B: { stroke: "#9890A8", fill: "#1A1714", text: "#9890A8" },
 };
 

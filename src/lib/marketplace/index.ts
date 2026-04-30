@@ -80,10 +80,18 @@ const MOCK_RAW: Array<{
       basePrice: 50000,
       githubUrl: "https://github.com/guild-ai/code-complete-beta",
       mdContent: `
+# Code Complete Beta — Implementation Guide
+
+なぜ async を使うか（why）: LSP の非同期 IO を活用するため。
+制約 constraint: TypeScript 5.0+、Node.js 18+。
+落とし穴 gotcha: null チェック漏れで実行時エラーになる。
+パフォーマンス performance latency: O(n) で補完候補を生成。
+テスト test example: expect(result).toBe("ok"). output: { result: "ok" }
+フォールバック fallback: catch(e) で retry と error handling。
+
 async function complete(input: string) { }
 function validate(data: unknown) { }
 class CompletionEngine { }
-// test example: output: { result: "ok" }
 `,
     },
     trustInput: { qualityHistory: 88, discordContribution: 75, xAmplification: 60 },

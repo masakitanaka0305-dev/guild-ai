@@ -166,7 +166,7 @@ export default function TermsPage() {
           {lang === "ja"
             ? "本規約は日本法を準拠法とします。権利譲渡の詳細は"
             : "These Terms are governed by the laws of Japan. For IP transfer details, see "}
-          <Link href="/legal/transfer" className="text-[var(--n-primary,#E64545)] underline">
+          <Link href="/legal/transfer" className="text-[var(--primary,#06B6D4)] underline">
             {lang === "ja" ? "権利譲渡規約" : "Transfer Terms"}
           </Link>
           {lang === "ja" ? "をご確認ください。" : "."}

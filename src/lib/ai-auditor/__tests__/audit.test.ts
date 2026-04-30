@@ -11,13 +11,21 @@ const baseCCAF = (overrides: Partial<CCAF> = {}): CCAF => ({
   ...overrides
 });
 
-// S rank requires mdContent with running code + test evidence
+// S rank requires mdContent with running code + test evidence + contextDepth >= 4
 const S_MD = `
+# Invoice Processor — Implementation Guide
+
+なぜこの実装を選んだか（why）: 非同期処理が必要なため async を使用。
+制約条件 constraint: TypeScript 5.0 以上、Node.js 18+。
+落とし穴 gotcha: null チェックを忘れると実行時エラー。
+パフォーマンス performance: O(n) で処理、latency を最小化。
+テスト test example: expect(result).toBe(42) でアサート。output: { result: 42 }
+フォールバック fallback: catch(e) で retry、error handling を実装。
+
 async function processInvoice(input: string) { }
 function validate(data: unknown) { }
 class InvoiceProcessor { }
 def run(x): pass
-// test example: output: { result: 42 }
 `;
 
 describe("ai-auditor.audit", () => {

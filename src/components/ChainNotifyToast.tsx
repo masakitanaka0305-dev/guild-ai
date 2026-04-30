@@ -46,16 +46,6 @@ export function ChainNotifyToast() {
             background: "linear-gradient(135deg, #D4AF37 0%, #9B59B6 100%)",
           }}
         >
-          {/* Confetti dots (8 particles) */}
-          <div className="flex gap-0.5 mt-0.5 motion-reduce:hidden" aria-hidden="true">
-            {["#FFE57F","#E8C4FF","#FFD700","#DA9FFF","#FFF9C4","#C39BD3","#FFEC8B","#BB8FCE"].map((c, i) => (
-              <span
-                key={i}
-                className="inline-block w-1 h-1 rounded-full"
-                style={{ backgroundColor: c }}
-              />
-            ))}
-          </div>
           <div className="flex-1 min-w-0">
             <p className="text-white font-bold text-xs leading-snug">
               {t.event.depth} 段階先で引用されました

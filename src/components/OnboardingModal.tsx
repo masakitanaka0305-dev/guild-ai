@@ -6,7 +6,7 @@ import { Hexagon } from "@/components/ui/Hexagon";
 
 function Hi({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[#E64545] font-semibold">{children}</span>
+    <span className="text-[#06B6D4] font-semibold">{children}</span>
   );
 }
 
@@ -101,7 +101,7 @@ export function OnboardingModal({ onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label="閉じる"
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--n-primary,#E64545)]"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)]"
         >
           ✕
         </button>
@@ -153,7 +153,7 @@ export function OnboardingModal({ onClose }: Props) {
         <Link
           href="/sell"
           onClick={onClose}
-          className="block w-full h-12 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base text-center leading-[3rem] hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm"
+          className="block w-full h-12 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold text-base text-center leading-[3rem] hover:bg-[#0891B2] active:scale-[0.98] transition-all duration-220 shadow-sm"
         >
           今すぐ投稿する
         </Link>

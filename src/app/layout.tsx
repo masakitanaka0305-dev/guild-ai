@@ -4,6 +4,8 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { AppShell } from "@/components/AppShell";
 import { GuestInit } from "@/components/GuestInit";
+import { SwRegister } from "@/components/SwRegister";
+import { SessionProvider } from "@/components/SessionProviderWrapper";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -37,14 +39,18 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja" className={notoSansJP.variable} data-theme="water" data-anim="off">
+    <html lang="ja" data-theme="water" data-anim="off" className={`${notoSansJP.variable} bg-water-bg text-water-text`}>
       <head />
-      <body className="h-screen h-dvh flex bg-[var(--water-bg,#0B1121)] overflow-hidden text-[var(--water-text,#E2E8F0)] font-sans antialiased">
-        <AuthProvider>
-          {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
-          <GuestInit />
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
+      <body className="bg-water-bg text-water-text min-h-screen h-screen h-dvh flex overflow-hidden font-sans antialiased">
+        <SessionProvider>
+          <AuthProvider>
+            {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
+            <GuestInit />
+            {/* Registers /sw.js in idle time for offline support */}
+            <SwRegister />
+            <AppShell>{children}</AppShell>
+          </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

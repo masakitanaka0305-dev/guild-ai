@@ -25,6 +25,7 @@ export const PAGE_TITLES: Record<string, string> = {
   "/legal/transfer":     "権利譲渡規約",
   "/admin/reports":      "レポート管理",
   "/onboarding":         "Onboarding Express",
+  "/applications":       "Applications",
 };
 
 export const DEFAULT_TITLE = "GUILD AI";
@@ -44,6 +45,18 @@ export function getPageTitle(pathname: string): string {
 
 /** Returns true when the back button should be shown (not on root pages). */
 export function showBackButton(pathname: string): boolean {
-  const rootPaths = ["/", "/bank", "/jobs", "/projects", "/guild", "/marketplace", "/showcase"];
+  const rootPaths = ["/", "/projects", "/onboarding", "/guild", "/bank", "/jobs", "/marketplace", "/showcase"];
   return !rootPaths.includes(pathname);
 }
+
+// ── 2-tab main navigation + primary action (center FAB) ──────────────────────
+export const MAIN_TABS = [
+  { href: "/projects", label: "探す", description: "AI 案件を探す" },
+  { href: "/guild",    label: "稼ぐ", description: "Asset Ledger・運用状況" },
+] as const;
+
+export const PRIMARY_ACTION = {
+  href: "/onboarding",
+  label: "出す",
+  description: "MD を 3 ステップで出品",
+} as const;

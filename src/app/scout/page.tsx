@@ -94,7 +94,7 @@ export default function ScoutPage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/sell"
-              className="inline-flex items-center justify-center rounded-2xl bg-[#E64545] px-8 py-4 text-base font-bold text-white hover:bg-red-600 transition-colors active:scale-95"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#06B6D4] px-8 py-4 text-base font-bold text-white hover:bg-red-600 transition-colors active:scale-95"
             >
               Open My Account
             </Link>
@@ -236,7 +236,7 @@ export default function ScoutPage() {
         </p>
         <Link
           href="/sell"
-          className="inline-flex items-center justify-center rounded-2xl bg-[#E64545] px-10 py-5 text-lg font-bold text-white hover:bg-red-600 transition-colors active:scale-95"
+          className="inline-flex items-center justify-center rounded-2xl bg-[#06B6D4] px-10 py-5 text-lg font-bold text-white hover:bg-red-600 transition-colors active:scale-95"
         >
           Open My Account →
         </Link>

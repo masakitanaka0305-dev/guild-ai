@@ -9,16 +9,12 @@ const root = process.cwd();
 describe("nameraka-theme.tokens", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("globals.css defines [data-theme='nameraka'] selector", () => {
-    expect(css).toContain('[data-theme="nameraka"]');
+  it("globals.css defines Water theme --primary token (#06B6D4)", () => {
+    expect(css).toContain("--primary: #06B6D4");
   });
 
-  it("globals.css defines --n-bg token (#FAFAF7)", () => {
-    expect(css).toContain("--n-bg: #FAFAF7");
-  });
-
-  it("globals.css defines --n-gold token (#D4AF37)", () => {
-    expect(css).toContain("--n-gold: #D4AF37");
+  it("globals.css defines Water theme --bg token (#020617)", () => {
+    expect(css).toContain("--bg: #020617");
   });
 
   it("globals.css does NOT define pro or kawaii themes (deleted)", () => {
@@ -42,13 +38,13 @@ describe("nameraka-theme.fab", () => {
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
                + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
 
-  it("layout has +のこす FAB linking to /bank", () => {
-    expect(layout).toContain("href=\"/bank\"");
+  it("layout has FAB (＋) linking to /onboarding", () => {
+    expect(layout).toContain("href=\"/onboarding\"");
     expect(layout).toContain("＋");
   });
 
   it("FAB has aria-label for accessibility", () => {
-    expect(layout).toContain('aria-label="投稿"');
+    expect(layout).toContain('aria-label="出す"');
   });
 });
 
@@ -156,21 +152,20 @@ describe("nameraka-theme.light-repaint", () => {
                + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("nameraka --n-bg is light (#FAFAF7)", () => {
-    expect(css).toContain("--n-bg: #FAFAF7");
+  it("water theme --bg is dark (#020617) replacing old nameraka light bg", () => {
+    expect(css).toContain("--bg: #020617");
   });
 
-  it("bottom nav has 4 core tabs (ホーム/投稿/案件/運用)", () => {
-    expect(nav).toContain("BOTTOM_ITEMS");
-    expect(nav).toContain('"ホーム"');
-    expect(nav).toContain('"投稿"');
-    expect(nav).toContain('"案件"');
-    expect(nav).toContain('"運用"');
+  it("bottom nav has 2 core tabs (探す/稼ぐ) + center FAB (出す) with role=tablist", () => {
+    expect(nav).toContain('"探す"');
+    expect(nav).toContain('"稼ぐ"');
+    expect(nav).toContain("tablist");
+    expect(nav).toContain('"出す"');
   });
 
-  it("FAB links to /bank (knowledge registration)", () => {
-    expect(layout).toContain('href="/bank"');
-    expect(layout).toContain('aria-label="投稿"');
+  it("FAB links to /onboarding (Quick Listing) with aria-label", () => {
+    expect(layout).toContain('href="/onboarding"');
+    expect(layout).toContain('aria-label="出す"');
   });
 
   it("fitLabel returns ぴったり/もう少し/これから at correct thresholds", async () => {
@@ -186,11 +181,11 @@ describe("nameraka-theme.light-repaint", () => {
 // ─── 10. Jargon lint (nameraka) ──────────────────────────────────────────────
 
 describe("nameraka-theme.jargon-lint-v2", () => {
-  it("SidebarNav has mature nameraka labels", () => {
+  it("SidebarNav has 3-tab labels (探す/出す/稼ぐ)", () => {
     const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
-    expect(src).toContain("投稿");
-    expect(src).toContain("案件");
-    expect(src).toContain("運用");
+    expect(src).toContain("探す");
+    expect(src).toContain("出す");
+    expect(src).toContain("稼ぐ");
   });
 
   it("nameraka nav does not show English technical terms in labels", () => {
