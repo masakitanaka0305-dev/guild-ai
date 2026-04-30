@@ -37,8 +37,8 @@ function PulseIndicator() {
 function SectionBand({ title, tip }: { title: string; tip?: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <div className="w-1 h-5 rounded-full bg-[var(--primary,#06B6D4)] flex-shrink-0" />
-      <p className="text-sm font-bold text-[var(--n-text,#1A1714)]">{title}</p>
+      <div className="w-1 h-6 rounded-full bg-[var(--primary,#06B6D4)] flex-shrink-0" />
+      <h2 className="text-base sm:text-lg font-semibold text-white tracking-tight">{title}</h2>
       {tip && <Tip text={tip} />}
     </div>
   );
