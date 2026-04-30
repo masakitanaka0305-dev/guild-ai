@@ -5,6 +5,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { AppShell } from "@/components/AppShell";
 import { GuestInit } from "@/components/GuestInit";
 import { SwRegister } from "@/components/SwRegister";
+import { SessionProvider } from "@/components/SessionProviderWrapper";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -41,13 +42,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ja" className={notoSansJP.variable} data-theme="nameraka">
       <head />
       <body className="h-screen h-dvh flex bg-[var(--n-bg,#FAFAF7)] overflow-hidden text-[var(--n-text,#1A1714)] font-sans antialiased">
-        <AuthProvider>
-          {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
-          <GuestInit />
-          {/* Registers /sw.js in idle time for offline support */}
-          <SwRegister />
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
+        <SessionProvider>
+          <AuthProvider>
+            {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
+            <GuestInit />
+            {/* Registers /sw.js in idle time for offline support */}
+            <SwRegister />
+            <AppShell>{children}</AppShell>
+          </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );
