@@ -27,11 +27,15 @@ const STATUS_LABEL: Record<string, string> = {
 function MatchScore({ score, matchedReqs, totalReqs }: {
   score: number; matchedReqs: number; totalReqs: number;
 }) {
-  const color = score >= 80 ? "text-cyan-400" : score >= 50 ? "text-amber-400" : "text-slate-300";
   return (
-    <div role="img" aria-label={`マッチ率 ${score}%`} className="flex flex-col items-center gap-1">
-      <span className={`text-3xl font-black tabular-nums ${color}`}>{score}%</span>
-      <p className="text-[10px] text-slate-400">マッチ {matchedReqs} / {totalReqs} 件</p>
+    <div
+      role="img"
+      aria-label={`マッチ率 ${score}%`}
+      data-testid="matching-score"
+      className="flex flex-col items-center gap-1"
+    >
+      <span className="text-cyan-400 metric-prime">{score}%</span>
+      <p className="text-slate-400 text-xs">マッチ {matchedReqs} / {totalReqs} 件</p>
     </div>
   );
 }
