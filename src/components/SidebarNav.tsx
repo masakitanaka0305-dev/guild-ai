@@ -18,7 +18,7 @@ function isActive(pathname: string, href: string) {
 }
 
 function TabIcon({ type, active }: { type: string; active: boolean }) {
-  const cls = `w-5 h-5 ${active ? "stroke-[var(--primary,#06B6D4)]" : "stroke-[var(--n-muted,#6B6456)]"}`;
+  const cls = `w-5 h-5 ${active ? "stroke-cyan-400" : "stroke-slate-400"}`;
   if (type === "search") return (
     <svg className={cls} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -144,14 +144,15 @@ export function BottomNav() {
               href={item.href}
               role="tab"
               aria-selected={active}
+              data-active={active ? "true" : "false"}
               className={`relative flex flex-col items-center justify-center gap-0.5 py-1 min-h-[44px] active:scale-[0.97] transition-colors ${
-                active ? "text-[var(--primary,#06B6D4)]" : "text-slate-400"
+                active ? "text-cyan-400" : "text-slate-400"
               }`}
             >
               <TabIcon type={item.icon} active={active} />
               <span className="text-[10px] font-medium">{item.label}</span>
               {active && (
-                <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--primary,#06B6D4)]" />
+                <span aria-hidden className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-cyan-400" />
               )}
             </Link>
           );

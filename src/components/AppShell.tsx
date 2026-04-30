@@ -7,17 +7,19 @@ import { ZeroDayToast } from "@/components/ZeroDayToast";
 import { MainHeader } from "@/components/MainHeader";
 import { ZeroDayBanner } from "@/components/ZeroDayBanner";
 
-// ─── Enterprise CTA banner (pinned above bottom nav) ─────────────────────────
+// ─── Enterprise CTA banner — shared footer band, sticks above bottom nav ─────
 
 function EnterpriseCTA() {
   return (
-    <div className="lg:hidden flex-shrink-0 bg-[var(--primary,#06B6D4)] text-white">
+    <div
+      data-testid="enterprise-cta-mobile"
+      className="lg:hidden flex-shrink-0 sticky bottom-16 z-30 bg-[#162035] border-t border-cyan-400/20"
+    >
       <Link
         href="/business/checkout"
-        className="flex items-center justify-between px-4 py-2 text-[11px] font-bold hover:bg-[#0891B2] transition-colors"
+        className="flex items-center justify-between px-4 py-2.5 text-[12px] font-semibold text-cyan-400 underline-offset-4 hover:underline hover:bg-cyan-400/5 transition-colors"
       >
-        <span>🏢 提携・案件提供をご検討の企業様へ</span>
-        <span className="opacity-80">→</span>
+        <span>🏢 提携・案件提供をご検討の企業様へ →</span>
       </Link>
     </div>
   );
@@ -25,13 +27,15 @@ function EnterpriseCTA() {
 
 function EnterpriseCTADesktop() {
   return (
-    <div className="flex-shrink-0 border-t border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--primary,#06B6D4)]/10">
+    <div
+      data-testid="enterprise-cta-desktop"
+      className="flex-shrink-0 border-t border-white/10 bg-[#162035]"
+    >
       <Link
         href="/business/checkout"
-        className="flex items-center gap-1.5 px-3 py-2 text-[10px] font-bold text-[var(--primary,#06B6D4)] hover:bg-[var(--primary,#06B6D4)]/20 transition-colors"
+        className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-semibold text-cyan-400 underline-offset-4 hover:underline hover:bg-cyan-400/5 transition-colors"
       >
-        <span>🏢</span>
-        <span>企業様のご提携はこちら</span>
+        <span>🏢 提携・案件提供をご検討の企業様へ →</span>
       </Link>
     </div>
   );

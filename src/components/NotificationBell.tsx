@@ -43,9 +43,12 @@ export function NotificationBell({ notifications, unreadCount }: NotificationBel
       >
         <span className="text-xl">🔔</span>
         {effectiveUnread > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-kaki text-[10px] font-bold text-white">
-            {effectiveUnread}
-          </span>
+          <>
+            <span aria-hidden className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-400 text-[10px] font-bold text-[#0B1121]">
+              {effectiveUnread}
+            </span>
+          </>
         )}
       </button>
 
