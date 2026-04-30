@@ -122,12 +122,12 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <div className="lg:hidden flex-shrink-0 relative">
+    <div className="lg:hidden flex-shrink-0 relative pb-[env(safe-area-inset-bottom)]">
       {/* Center FAB — absolutely positioned, protruding above the bar */}
       <Link
         href={PRIMARY_ACTION.href}
         aria-label="出す"
-        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 w-14 h-14 rounded-full bg-[var(--primary,#06B6D4)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#0891B2] active:scale-[0.95] transition-all duration-220"
+        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 min-w-[44px] min-h-[44px] w-14 h-14 rounded-full bg-[var(--primary,#06B6D4)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#0891B2] active:scale-[0.95] transition-all duration-220"
       >
         ＋
       </Link>
@@ -144,8 +144,8 @@ export function BottomNav() {
               href={item.href}
               role="tab"
               aria-selected={active}
-              className={`relative flex flex-col items-center justify-center gap-0.5 py-1 active:scale-[0.97] transition-colors ${
-                active ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-muted,#6B6456)]"
+              className={`relative flex flex-col items-center justify-center gap-0.5 py-1 min-h-[44px] active:scale-[0.97] transition-colors ${
+                active ? "text-[var(--primary,#06B6D4)]" : "text-slate-400"
               }`}
             >
               <TabIcon type={item.icon} active={active} />

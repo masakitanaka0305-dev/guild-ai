@@ -44,7 +44,7 @@ export function PlugInApply({ projectId, sticky = false }: Props) {
   }
 
   const wrapperClass = sticky
-    ? "md:static fixed bottom-16 md:bottom-auto left-0 right-0 z-30 px-4 py-3 bg-[#0B1121]/95 backdrop-blur border-t border-white/10 md:border-0 md:bg-transparent md:backdrop-blur-0 md:p-0 space-y-3"
+    ? "md:static fixed bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-auto left-0 right-0 z-30 px-4 py-3 bg-[#0B1121]/95 backdrop-blur border-t border-white/10 md:border-0 md:bg-transparent md:backdrop-blur-0 md:p-0 space-y-3"
     : "space-y-3";
   const wrapperRole = sticky ? "region" : undefined;
   const wrapperLabel = sticky ? "主要アクション" : undefined;
