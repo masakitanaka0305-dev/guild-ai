@@ -31,7 +31,6 @@ export function ZeroDayBanner() {
       style={{
         background: "linear-gradient(to right, #FEF3C7, #FECACA)",
         boxShadow: "0 0 8px rgba(255,200,80,0.4)",
-        animation: "bannerPulse 2.4s ease-in-out infinite",
       }}
     >
       <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -57,15 +56,6 @@ export function ZeroDayBanner() {
         </button>
       </div>
 
-      <style>{`
-        @keyframes bannerPulse {
-          0%, 100% { box-shadow: 0 0 8px rgba(255,200,80,0.4); }
-          50%       { box-shadow: 0 0 16px rgba(255,100,60,0.5); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .banner-pulse { animation: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

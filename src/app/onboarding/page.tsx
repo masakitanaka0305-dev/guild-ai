@@ -80,37 +80,7 @@ function TimerBar({
   );
 }
 
-// ─── Confetti ────────────────────────────────────────────────────────────────
-
-function Confetti() {
-  const particles = [
-    { x: 12, delay: 0,   color: "#06B6D4" },
-    { x: 25, delay: 0.1, color: "#F59E0B" },
-    { x: 40, delay: 0.2, color: "#0E9F4F" },
-    { x: 55, delay: 0.1, color: "#3B82F6" },
-    { x: 68, delay: 0.3, color: "#06B6D4" },
-    { x: 80, delay: 0.2, color: "#F59E0B" },
-    { x: 90, delay: 0,   color: "#0E9F4F" },
-    { x: 5,  delay: 0.4, color: "#3B82F6" },
-  ];
-  return (
-    <div className="relative h-8 overflow-hidden mb-3" aria-hidden>
-      {particles.map((p, i) => (
-        <div
-          key={i}
-          className="absolute w-2 h-2 rounded-sm animate-bounce motion-reduce:animate-none motion-reduce:opacity-0"
-          style={{
-            left: `${p.x}%`,
-            top: `${(i % 3) * 8}px`,
-            backgroundColor: p.color,
-            animationDelay: `${p.delay}s`,
-            animationDuration: "0.8s",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+// Confetti removed — animations disabled via [data-anim="off"]
 
 // ─── Source Step (shared between quick and detail modes) ─────────────────────
 
@@ -413,7 +383,6 @@ function QuickContent() {
 
       {phase === "done" && quickResult && (
         <section className="space-y-4">
-          <Confetti />
           <div className="section-card p-5 border-2 border-green-400 bg-green-50">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xl">🎉</span>
@@ -576,7 +545,7 @@ function ExpressContent() {
 
       {phase === "done" && (
         <section className="space-y-4">
-          {achieved && <Confetti />}
+          {/* confetti removed */}
           <div className={`section-card p-5 border-2 ${achieved ? "border-green-400 bg-green-50" : "border-[var(--n-divider,rgba(0,0,0,0.1))]"}`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xl">{achieved ? "🎉" : "✅"}</span>
