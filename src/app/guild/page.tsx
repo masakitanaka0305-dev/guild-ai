@@ -17,6 +17,7 @@ import { MicroWalletPanel } from "@/components/MicroWalletPanel";
 import { ChainNotifyToast } from "@/components/ChainNotifyToast";
 import { getRecentSettlements, seedDemoSettlements } from "@/lib/global-settlement";
 import { useUserId } from "@/components/AuthProvider";
+import { WaveLine } from "@/components/ui/WaveLine";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -111,6 +112,21 @@ export default function GuildPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12 relative">
+      {/* ── Water Guild — dashboard hairline header ─────────────────── */}
+      <header className="mb-3" aria-labelledby="ledger-title">
+        <div className="flex items-baseline justify-between">
+          <h1
+            id="ledger-title"
+            className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--water-muted,#94A3B8)]"
+          >
+            資産台帳 — Asset Ledger
+          </h1>
+          <span className="text-[10px] font-mono text-[var(--water-muted,#94A3B8)] opacity-60">
+            Water Guild
+          </span>
+        </div>
+        <WaveLine ariaLabel="水の意匠 — 静的波線" />
+      </header>
       <FloatingPayoutToast
         deltaJpy={earnings.lastDelta}
         bumpCount={earnings.bumpCount}
