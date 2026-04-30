@@ -83,15 +83,16 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   const matching = computeMatchingScore(ownedMds, project);
   const competition = getCompetition(project.id, project.applicantCount);
 
-  // Net payout calculation (demo: assume all missing MDs rented for 40h)
-  const rentalFees = matching.missingMds.map(
-    (m) => project.rentalFeeHourlyJpy * 40 * m.weight,
-  );
+  // Net payout calculation — owned MDs get rentalFee=0; only missing MDs incur rental.
   const payout = calcNet({
     grossJpy: project.grossRewardJpy,
-    rentalFees,
+    ownedMds,
+    requiredMds: project.requiredMdInterfaces,
+    rentalFeeHourlyJpy: project.rentalFeeHourlyJpy,
     platformFeePct: project.platformFeePct,
   });
+  const rentalCovered = payout.rentalFees.length === 0;
+  const isUnderwater = payout.warning === "underwater";
 
   const timelineStep = 0; // "応募中" — demo shows first step
 
@@ -210,33 +211,46 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
           {/* Plug-in Apply — fixed on mobile (thumb zone), regular card on md+ */}
           <div className="hidden md:block section-card p-5">
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Apply</p>
-            <PlugInApply projectId={project.id} />
+            <PlugInApply projectId={project.id} underwater={isUnderwater} />
           </div>
           <div className="md:hidden">
-            <PlugInApply projectId={project.id} sticky />
+            <PlugInApply projectId={project.id} sticky underwater={isUnderwater} />
           </div>
 
           {/* Net Payout Simulation */}
           <div className="section-card p-5">
             <p className="text-xs font-bold text-[var(--n-text,#1A1714)] mb-3">Net Payout</p>
+            {isUnderwater && (
+              <div
+                role="alert"
+                className="mb-3 rounded-lg border border-rose-400/40 bg-rose-900/30 px-3 py-2 text-[11px] text-rose-200"
+              >
+                この組み合わせでは手取りがマイナスになります。別の知能を選びましょう。
+              </div>
+            )}
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-[var(--n-muted,#6B6456)]">
                 <span>Gross 報酬</span>
                 <span className="font-bold">{formatJpy(payout.grossJpy)}</span>
               </div>
-              {payout.totalRentalJpy > 0 && (
-                <div className="flex justify-between text-[var(--n-muted,#6B6456)]">
-                  <span>Rental Required</span>
-                  <span className="text-amber-600 font-bold">−{formatJpy(payout.totalRentalJpy)}</span>
-                </div>
-              )}
               <div className="flex justify-between text-[var(--n-muted,#6B6456)]">
                 <span>Platform Fee ({project.platformFeePct}%)</span>
                 <span className="text-[var(--n-muted,#6B6456)] font-bold">−{formatJpy(payout.platformFeeJpy)}</span>
               </div>
+              {rentalCovered ? (
+                <div className="flex justify-between text-emerald-300">
+                  <span>Rental ¥0（あなたのMDで充足）</span>
+                  <span className="font-bold">¥0</span>
+                </div>
+              ) : (
+                <div className="flex justify-between text-rose-300">
+                  <span>Rental（不足分 {payout.rentalFees.length} 件）</span>
+                  <span className="font-bold">−{formatJpy(payout.totalRentalJpy)}</span>
+                </div>
+              )}
               <div className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] pt-1.5 flex items-baseline justify-between">
                 <span className="font-bold text-[var(--n-text,#1A1714)]">手取り</span>
-                <span className="metric-prime">
+                <span className={isUnderwater ? "metric-prime text-rose-300" : "metric-prime"}>
                   {formatJpy(payout.netJpy)}
                 </span>
               </div>

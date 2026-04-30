@@ -10,9 +10,11 @@ interface Props {
   projectId: string;
   /** When true, the section becomes a fixed mobile bottom bar (md+ stays static). */
   sticky?: boolean;
+  /** When true, the Apply button is disabled — Net Payout is negative. */
+  underwater?: boolean;
 }
 
-export function PlugInApply({ projectId, sticky = false }: Props) {
+export function PlugInApply({ projectId, sticky = false, underwater = false }: Props) {
   const router = useRouter();
   const ownedMds = useMemo(() => getDemoOwnedMds("demo-user"), []);
   const project = getProject(projectId);
@@ -78,9 +80,9 @@ export function PlugInApply({ projectId, sticky = false }: Props) {
       </div>
       <button
         onClick={handleApply}
-        disabled={!selectedMd || applying}
+        disabled={!selectedMd || applying || underwater}
         aria-label="この案件に応募する"
-        className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+        className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
       >
         {applying ? "応募中..." : "この案件に応募する"}
       </button>

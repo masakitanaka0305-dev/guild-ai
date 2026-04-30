@@ -85,6 +85,58 @@ describe("payout-sim: calcNet", () => {
   it("formatJpy includes ¥ and comma-separated digits", () => {
     expect(formatJpy(420_000)).toMatch(/¥420,000/);
   });
+
+  it("rentalFees=[] when ownedMds satisfy every required MD (rank ≥ rankMin)", () => {
+    const result = calcNet({
+      grossJpy: 420_000,
+      ownedMds: [
+        { id: "md_observability", rank: "S" }, // req: A
+        { id: "md_infra_go",      rank: "A" }, // req: A
+        { id: "md_slo_policy",    rank: "B" }, // req: B
+      ],
+      requiredMds: [
+        { id: "md_observability", rankMin: "A", weight: 3 },
+        { id: "md_infra_go",      rankMin: "A", weight: 2 },
+        { id: "md_slo_policy",    rankMin: "B", weight: 1 },
+      ],
+      rentalFeeHourlyJpy: 3_500,
+      platformFeePct: 5,
+    });
+    expect(result.rentalFees).toEqual([]);
+    expect(result.totalRentalJpy).toBe(0);
+    expect(result.warning).toBeUndefined();
+  });
+
+  it("rentalFees contains only the missing MDs when some requirements are unmet", () => {
+    const result = calcNet({
+      grossJpy: 420_000,
+      ownedMds: [{ id: "md_observability", rank: "A" }],
+      requiredMds: [
+        { id: "md_observability", rankMin: "A", weight: 3 }, // owned
+        { id: "md_infra_go",      rankMin: "A", weight: 2 }, // missing
+      ],
+      rentalFeeHourlyJpy: 3_500,
+      platformFeePct: 5,
+    });
+    const ids = result.rentalFees.map((r) => r.mdId);
+    expect(ids).toEqual(["md_infra_go"]);
+    expect(result.rentalFees[0].jpy).toBeGreaterThan(0);
+  });
+
+  it('flags warning="underwater" when net is negative', () => {
+    const result = calcNet({
+      grossJpy: 50_000,
+      ownedMds: [],
+      requiredMds: [
+        { id: "md_a", rankMin: "S", weight: 3 },
+        { id: "md_b", rankMin: "A", weight: 3 },
+      ],
+      rentalFeeHourlyJpy: 5_000,
+      platformFeePct: 5,
+    });
+    expect(result.netJpy).toBeLessThan(0);
+    expect(result.warning).toBe("underwater");
+  });
 });
 
 // ─── Escrow Reserve ──────────────────────────────────────────────────────────
