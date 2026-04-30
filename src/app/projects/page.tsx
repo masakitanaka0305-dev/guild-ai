@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ListChecks } from "lucide-react";
 import { MOCK_PROJECTS } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
 
@@ -13,7 +14,16 @@ export default function ProjectsPage() {
 
   return (
     <main className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-xl font-semibold tracking-tight text-white mb-4">Projects</h1>
+      <div className="flex items-center justify-between mb-4 gap-3">
+        <h1 className="text-xl font-semibold tracking-tight text-white">Projects</h1>
+        <Link
+          href="/applications"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 underline-offset-4 hover:underline"
+        >
+          <ListChecks className="w-4 h-4 stroke-cyan-400" aria-hidden />
+          応募状況を見る →
+        </Link>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead>
