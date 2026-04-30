@@ -48,7 +48,7 @@ describe("nameraka-theme.fab", () => {
   });
 
   it("FAB has aria-label for accessibility", () => {
-    expect(layout).toContain('aria-label="投稿"');
+    expect(layout).toContain('aria-label="出す"');
   });
 });
 
@@ -160,16 +160,16 @@ describe("nameraka-theme.light-repaint", () => {
     expect(css).toContain("--n-bg: #FAFAF7");
   });
 
-  it("bottom nav has 3 core tabs (探す/出す/稼ぐ) with role=tablist", () => {
+  it("bottom nav has 2 core tabs (探す/稼ぐ) + center FAB (出す) with role=tablist", () => {
     expect(nav).toContain('"探す"');
-    expect(nav).toContain('"出す"');
     expect(nav).toContain('"稼ぐ"');
     expect(nav).toContain("tablist");
+    expect(nav).toContain('"出す"');
   });
 
   it("FAB links to /onboarding (Quick Listing) with aria-label", () => {
     expect(layout).toContain('href="/onboarding"');
-    expect(layout).toContain('aria-label="投稿"');
+    expect(layout).toContain('aria-label="出す"');
   });
 
   it("fitLabel returns ぴったり/もう少し/これから at correct thresholds", async () => {

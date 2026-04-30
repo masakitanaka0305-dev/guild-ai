@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// ── 3-tab navigation: 探す / 出す / 稼ぐ ────────────────────────────────────
+// ── 2-tab navigation: 探す / 稼ぐ  +  center FAB: 出す ───────────────────────
 
 const NAV_ITEMS = [
-  { href: "/projects",   label: "探す", icon: "search" },
-  { href: "/onboarding", label: "出す", icon: "plus"   },
-  { href: "/guild",      label: "稼ぐ", icon: "bank"   },
+  { href: "/projects", label: "探す", icon: "search" },
+  { href: "/guild",    label: "稼ぐ", icon: "bank"   },
 ];
+
+const PRIMARY_ACTION = { href: "/onboarding", label: "出す", icon: "plus" };
 
 function isActive(pathname: string, href: string) {
   if (href === "/projects") return pathname === "/" || pathname === "/projects" || pathname.startsWith("/projects/");
@@ -24,8 +25,8 @@ function TabIcon({ type, active }: { type: string; active: boolean }) {
     </svg>
   );
   if (type === "plus") return (
-    <svg className={cls} viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+    <svg className="w-6 h-6 stroke-white" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
     </svg>
   );
   // bank / 稼ぐ
@@ -64,6 +65,22 @@ export function SidebarNav() {
           </Link>
         );
       })}
+
+      {/* Primary action: 出す — standalone highlighted card */}
+      <Link
+        href={PRIMARY_ACTION.href}
+        className={`w-full flex items-center gap-2.5 px-3 py-2.5 mt-1 text-[13px] font-bold rounded-2xl bg-[var(--n-primary,#E64545)] text-white hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 ${
+          isActive(pathname, PRIMARY_ACTION.href) ? "opacity-90" : ""
+        }`}
+      >
+        <span className="w-5 h-5 flex items-center justify-center">
+          <svg className="w-4 h-4 stroke-white" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </span>
+        {PRIMARY_ACTION.label}
+      </Link>
+
       {/* Sub-navigation: enterprise + scout */}
       <div className="mt-auto pt-4 border-t border-[var(--n-divider,rgba(0,0,0,0.08))] mx-1 flex flex-col gap-1">
         <Link
@@ -105,43 +122,41 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav
-      role="tablist"
-      aria-label="メインナビゲーション"
-      className="lg:hidden border-t border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-bg,#FAFAF7)] grid grid-cols-3 h-16 flex-shrink-0"
-    >
-      {NAV_ITEMS.map((item) => {
-        const active = isActive(pathname, item.href);
-        const isMid = item.href === "/onboarding";
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            role="tab"
-            aria-selected={active}
-            className={`relative flex flex-col items-center justify-center gap-0.5 py-1 min-h-[52px] active:scale-[0.97] transition-colors ${
-              active ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-muted,#6B6456)]"
-            } ${isMid ? "relative" : ""}`}
-          >
-            {/* Center tab (出す) has elevated pill */}
-            {item.href === "/onboarding" ? (
-              <span className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                active ? "bg-[var(--n-primary,#E64545)]" : "bg-[var(--n-primary,#E64545)]"
-              } shadow-md`}>
-                <TabIcon type={item.icon} active />
-              </span>
-            ) : (
+    <div className="lg:hidden flex-shrink-0 relative">
+      {/* Center FAB — absolutely positioned, protruding above the bar */}
+      <Link
+        href={PRIMARY_ACTION.href}
+        aria-label="出す"
+        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 w-14 h-14 rounded-full bg-[var(--n-primary,#E64545)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#D03A3A] active:scale-[0.95] transition-all duration-220"
+      >
+        ＋
+      </Link>
+      <nav
+        role="tablist"
+        aria-label="メインナビゲーション"
+        className="border-t border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-bg,#FAFAF7)] grid grid-cols-2 h-16"
+      >
+        {NAV_ITEMS.map((item) => {
+          const active = isActive(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              role="tab"
+              aria-selected={active}
+              className={`relative flex flex-col items-center justify-center gap-0.5 py-1 active:scale-[0.97] transition-colors ${
+                active ? "text-[var(--n-primary,#E64545)]" : "text-[var(--n-muted,#6B6456)]"
+              }`}
+            >
               <TabIcon type={item.icon} active={active} />
-            )}
-            <span className={`text-[10px] font-medium ${item.href === "/onboarding" ? "text-[var(--n-primary,#E64545)] font-bold" : ""}`}>
-              {item.label}
-            </span>
-            {active && item.href !== "/onboarding" && (
-              <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--n-primary,#E64545)]" />
-            )}
-          </Link>
-        );
-      })}
-    </nav>
+              <span className="text-[10px] font-medium">{item.label}</span>
+              {active && (
+                <span className="absolute bottom-1 w-4 h-0.5 rounded-full bg-[var(--n-primary,#E64545)]" />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
   );
 }

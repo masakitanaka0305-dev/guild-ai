@@ -48,9 +48,14 @@ export function showBackButton(pathname: string): boolean {
   return !rootPaths.includes(pathname);
 }
 
-// ── 3-tab main navigation ────────────────────────────────────────────────────
+// ── 2-tab main navigation + primary action (center FAB) ──────────────────────
 export const MAIN_TABS = [
-  { href: "/projects",   label: "探す", description: "AI 案件を探す" },
-  { href: "/onboarding", label: "出す", description: "MD を 3 ステップで出品" },
-  { href: "/guild",      label: "稼ぐ", description: "Asset Ledger・運用状況" },
+  { href: "/projects", label: "探す", description: "AI 案件を探す" },
+  { href: "/guild",    label: "稼ぐ", description: "Asset Ledger・運用状況" },
 ] as const;
+
+export const PRIMARY_ACTION = {
+  href: "/onboarding",
+  label: "出す",
+  description: "MD を 3 ステップで出品",
+} as const;

@@ -94,11 +94,11 @@ describe("mercari-ui: primary color token", () => {
 describe("mercari-ui: bottom tabs", () => {
   const src = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("NAV_ITEMS has 3 tabs: 探す/出す/稼ぐ with role=tablist", () => {
+  it("NAV_ITEMS has 2 tabs (探す/稼ぐ) + PRIMARY_ACTION (出す) with role=tablist", () => {
     expect(src).toContain('"探す"');
-    expect(src).toContain('"出す"');
     expect(src).toContain('"稼ぐ"');
     expect(src).toContain("tablist");
+    expect(src).toContain('"出す"');
   });
 
   it("BottomNav exports correct component", () => {
@@ -115,8 +115,8 @@ describe("mercari-ui: FAB", () => {
     expect(src).toContain('href="/onboarding"');
   });
 
-  it('FAB has aria-label="投稿"', () => {
-    expect(src).toContain('aria-label="投稿"');
+  it('FAB has aria-label="出す"', () => {
+    expect(src).toContain('aria-label="出す"');
   });
 });
 

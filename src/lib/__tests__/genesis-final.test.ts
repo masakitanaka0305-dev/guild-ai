@@ -1,5 +1,5 @@
-// GUILD AI — Genesis Final Tests (12)
-// quick-listing(3) + context-depth(3) + nav-3tab(1) + og(2) + skeleton(1) + sw(1) + footer(1)
+// GUILD AI — Genesis Final Tests (14)
+// quick-listing(3) + context-depth(3) + nav-2tab+fab(3) + og(2) + skeleton(1) + sw(1) + footer(1)
 
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "fs";
@@ -107,15 +107,20 @@ describe("context-depth: 6-criterion scoring", () => {
 
 // ─── 3-Tab Navigation ─────────────────────────────────────────────────────────
 
-describe("nav: 3-tab structure (探す/出す/稼ぐ)", () => {
+describe("nav: 2-tab + center FAB structure (探す/稼ぐ + 出す FAB)", () => {
   const root = process.cwd();
   const navSrc = (() => {
     try {
       return readFileSync(join(root, "src/components/SidebarNav.tsx"), "utf8");
     } catch { return ""; }
   })();
+  const appShellSrc = (() => {
+    try {
+      return readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
+    } catch { return ""; }
+  })();
 
-  it("SidebarNav has exactly 3 main tabs: /projects, /onboarding, /guild with role=tablist", () => {
+  it("SidebarNav has 2 main tabs (探す/稼ぐ) + primary action (出す) with role=tablist", () => {
     expect(navSrc).toContain("/projects");
     expect(navSrc).toContain("/onboarding");
     expect(navSrc).toContain("/guild");
@@ -123,6 +128,17 @@ describe("nav: 3-tab structure (探す/出す/稼ぐ)", () => {
     expect(navSrc).toContain("探す");
     expect(navSrc).toContain("出す");
     expect(navSrc).toContain("稼ぐ");
+  });
+
+  it("BottomNav uses grid-cols-2 (not grid-cols-3) — 出す is FAB only", () => {
+    expect(navSrc).toContain("grid-cols-2");
+    expect(navSrc).not.toContain("grid-cols-3");
+  });
+
+  it("center FAB links to /onboarding with aria-label='出す'", () => {
+    const combined = navSrc + appShellSrc;
+    expect(combined).toContain('href="/onboarding"');
+    expect(combined).toContain('aria-label="出す"');
   });
 });
 
