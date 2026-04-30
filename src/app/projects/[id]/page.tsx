@@ -293,6 +293,12 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               >
                 レンタルして応募
               </button>
+              <Link
+                href="/onboarding?fast=1"
+                className="mt-2 flex items-center justify-center gap-1 w-full text-xs font-bold text-[var(--n-primary,#E64545)] hover:underline py-1"
+              >
+                この案件用の Express Path で開始 →
+              </Link>
             </div>
           )}
 

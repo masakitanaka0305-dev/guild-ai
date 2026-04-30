@@ -74,12 +74,20 @@ export default function HomePage() {
         <p className="text-base sm:text-lg font-semibold text-[#4A4458] mt-3 mb-5">
           日本最大のAIエージェント・プラットフォーム
         </p>
-        <Link
-          href="/bank"
-          className="h-14 px-8 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm inline-flex items-center justify-center"
-        >
-          投稿する
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/bank"
+            className="h-14 px-8 min-w-[200px] rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold text-base hover:bg-[#D03A3A] active:scale-[0.98] transition-all duration-220 shadow-sm inline-flex items-center justify-center"
+          >
+            投稿する
+          </Link>
+          <Link
+            href="/onboarding?fast=1"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--n-primary,#E64545)] hover:underline"
+          >
+            <span>3 分で利益確定まで →</span>
+          </Link>
+        </div>
         <p className="mt-3 text-sm text-gray-500">ノートを投稿するだけ</p>
         {/* 稼げる目安バッジ */}
         <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--n-positive,#0E9F4F)]/10 border border-[var(--n-positive,#0E9F4F)]/25 px-4 py-1.5">
