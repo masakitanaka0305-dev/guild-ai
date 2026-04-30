@@ -19,10 +19,10 @@ export default function ErrorPage({
   return (
     <main className="flex min-h-[60vh] flex-col items-center justify-center px-6 py-16 text-center">
       <div className="text-5xl mb-6" aria-hidden>🌧️</div>
-      <h1 className="text-2xl font-bold text-kuroko leading-snug max-w-sm">
+      <h1 className="text-2xl font-bold text-white leading-snug max-w-sm">
         {messages.serverError.heading}
       </h1>
-      <p className="mt-3 text-sm text-[#9890A8] leading-relaxed max-w-xs">
+      <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-xs">
         {messages.serverError.body}
       </p>
       <div className="mt-8 flex flex-col sm:flex-row gap-3">

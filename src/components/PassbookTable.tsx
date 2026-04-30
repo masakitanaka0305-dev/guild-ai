@@ -9,27 +9,27 @@ interface PassbookTableProps {
 export function PassbookTable({ transactions }: PassbookTableProps) {
   if (transactions.length === 0) {
     return (
-      <div className="py-6 text-center text-sm text-[#9890A8]">
+      <div className="py-6 text-center text-sm text-slate-400">
         取引履歴がありません
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-kuroko/10" style={{ background: "#FEFCF6" }}>
+    <div className="overflow-x-auto rounded-xl border border-white/10" style={{ background: "#FEFCF6" }}>
       <table className="w-full text-xs border-collapse">
         <thead>
           <tr style={{ background: "#F3EDD9", borderBottom: "2px solid rgba(26,22,40,0.18)" }}>
-            <th className="py-2 px-3 text-left font-bold text-kuroko/60 whitespace-nowrap" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
+            <th className="py-2 px-3 text-left font-bold text-white/60 whitespace-nowrap" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
               年月
             </th>
-            <th className="py-2 px-3 text-left font-bold text-kuroko/60 whitespace-nowrap" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
+            <th className="py-2 px-3 text-left font-bold text-white/60 whitespace-nowrap" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
               区分
             </th>
-            <th className="py-2 px-3 text-left font-bold text-kuroko/60 min-w-[120px]" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
+            <th className="py-2 px-3 text-left font-bold text-white/60 min-w-[120px]" style={{ borderRight: "1px solid rgba(26,22,40,0.12)" }}>
               お名前（たからもの）
             </th>
-            <th className="py-2 px-3 text-right font-bold text-kuroko/60 whitespace-nowrap">
+            <th className="py-2 px-3 text-right font-bold text-white/60 whitespace-nowrap">
               お受け取り
             </th>
           </tr>
@@ -44,7 +44,7 @@ export function PassbookTable({ transactions }: PassbookTableProps) {
               }}
             >
               <td
-                className="py-2 px-3 text-[#9890A8] whitespace-nowrap tabular-nums"
+                className="py-2 px-3 text-slate-400 whitespace-nowrap tabular-nums"
                 style={{ borderRight: "1px solid rgba(26,22,40,0.08)" }}
               >
                 {tx.at.slice(0, 7)}
@@ -64,7 +64,7 @@ export function PassbookTable({ transactions }: PassbookTableProps) {
                 </span>
               </td>
               <td
-                className="py-2 px-3 text-kuroko truncate max-w-[160px]"
+                className="py-2 px-3 text-white truncate max-w-[160px]"
                 style={{ borderRight: "1px solid rgba(26,22,40,0.08)" }}
                 title={tx.assetTitle}
               >

@@ -14,7 +14,7 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
 
   return (
     <section className="mt-4 section-card p-5">
-      <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-4">
+      <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-4">
         公開モード
       </h2>
 
@@ -31,7 +31,7 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
                 ? info.mode === "encapsulated"
                   ? "border-red-400 bg-red-50 ring-1 ring-red-200"
                   : "border-kaki bg-kaki/5 ring-1 ring-kaki/20"
-                : "border-kuroko/10 bg-white hover:border-kaki/20"
+                : "border-white/10 bg-white hover:border-kaki/20"
             }`}
           >
             <input
@@ -47,11 +47,11 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
               <p className={`text-sm font-semibold ${
                 mode === info.mode
                   ? info.mode === "encapsulated" ? "text-red-600" : "text-kaki"
-                  : "text-kuroko"
+                  : "text-white"
               }`}>
                 {info.label}
               </p>
-              <p className="text-xs text-[#9890A8] mt-0.5 leading-relaxed">{info.description}</p>
+              <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">{info.description}</p>
             </div>
           </label>
         ))}
@@ -69,7 +69,7 @@ export function PublicModeSelector({ initialMode = "open" }: Props) {
         </div>
       )}
 
-      <p className="mt-3 text-[10px] text-[#9890A8] leading-relaxed">
+      <p className="mt-3 text-[10px] text-slate-400 leading-relaxed">
         ※ モックです。実際の API 応答フィルタリングは `/api/note/[guildId]` で制御されます。
       </p>
     </section>

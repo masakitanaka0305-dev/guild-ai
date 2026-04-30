@@ -22,7 +22,7 @@ export function ValuationSection({
 }: ValuationSectionProps) {
   return (
     <section className="mt-4 section-card p-5">
-      <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8]">
+      <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
         知能の品質ランク
       </h2>
 
@@ -35,11 +35,11 @@ export function ValuationSection({
         />
         <div className="flex-1 space-y-3">
           {justification && (
-            <p className="text-sm text-[#4A4464] leading-relaxed">{justification}</p>
+            <p className="text-sm text-[#E2E8F0] leading-relaxed">{justification}</p>
           )}
           <div className="flex items-baseline gap-2">
-            <span className="text-xs text-[#9890A8]">お値段の目安</span>
-            <span className="text-2xl font-bold tabular-nums text-kuroko">
+            <span className="text-xs text-slate-400">お値段の目安</span>
+            <span className="text-2xl font-bold tabular-nums text-white">
               ¥{floorPrice.toLocaleString()}
             </span>
           </div>

@@ -88,8 +88,8 @@ export default function BusinessCheckoutPage() {
       <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-lg mx-auto">
         <div className="section-card p-8 text-center space-y-4">
           <div className="text-5xl">🎉</div>
-          <h1 className="text-xl font-bold text-kuroko">{selected.name} プランへようこそ！</h1>
-          <p className="text-sm text-[#9890A8]">
+          <h1 className="text-xl font-bold text-white">{selected.name} プランへようこそ！</h1>
+          <p className="text-sm text-slate-400">
             ご登録が完了しました。API キーを発行しダッシュボードで確認できます。
           </p>
           <Link
@@ -105,11 +105,11 @@ export default function BusinessCheckoutPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-lg mx-auto pb-24">
-      <Link href="/business" className="text-xs text-[#9890A8] hover:underline mb-4 inline-block">
+      <Link href="/business" className="text-xs text-slate-400 hover:underline mb-4 inline-block">
         ← プラン一覧に戻る
       </Link>
 
-      <h1 className="text-xl font-bold text-kuroko mb-6">プランを選んで始める</h1>
+      <h1 className="text-xl font-bold text-white mb-6">プランを選んで始める</h1>
 
       {/* Plan selector */}
       <div className="grid grid-cols-3 gap-2 mb-6" role="radiogroup" aria-label="プラン選択">
@@ -118,8 +118,8 @@ export default function BusinessCheckoutPage() {
             key={p.id}
             className={`flex flex-col rounded-xl border-2 p-3 cursor-pointer transition-all ${
               plan === p.id
-                ? "border-[var(--primary,#06B6D4)] bg-red-50"
-                : "border-kuroko/10 bg-white hover:border-kaki/30"
+                ? "border-[#22D3EE] bg-[#1E293B]"
+                : "border-white/10 bg-[#162035] hover:border-[#22D3EE]/40"
             }`}
           >
             <input
@@ -134,8 +134,8 @@ export default function BusinessCheckoutPage() {
             {p.highlight && (
               <span className="text-[9px] font-bold text-[var(--primary,#06B6D4)] mb-1">人気</span>
             )}
-            <p className="text-xs font-bold text-kuroko">{p.name}</p>
-            <p className="text-[10px] text-[#9890A8] mt-0.5">{p.price}</p>
+            <p className="text-xs font-bold text-white">{p.name}</p>
+            <p className="text-[10px] text-slate-400 mt-0.5">{p.price}</p>
             <p className="text-[10px] text-kaki font-semibold mt-1">{p.calls}</p>
           </label>
         ))}
@@ -143,10 +143,10 @@ export default function BusinessCheckoutPage() {
 
       {/* Features */}
       <div className="section-card p-4 mb-6">
-        <p className="text-xs font-semibold text-kuroko mb-2">{selected.name} の特典</p>
+        <p className="text-xs font-semibold text-white mb-2">{selected.name} の特典</p>
         <ul className="space-y-1">
           {selected.features.map((f) => (
-            <li key={f} className="flex gap-2 text-xs text-[#3A3664]">
+            <li key={f} className="flex gap-2 text-xs text-[#E2E8F0]">
               <span className="text-accent-green">✓</span>{f}
             </li>
           ))}
@@ -155,9 +155,9 @@ export default function BusinessCheckoutPage() {
 
       {/* CC form */}
       <form onSubmit={handleSubmit} className="section-card p-5 space-y-4">
-        <h2 className="text-sm font-bold text-kuroko">お支払い情報（モック）</h2>
+        <h2 className="text-sm font-bold text-white">お支払い情報（モック）</h2>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+        <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
           カード番号
           <input
             type="text"
@@ -166,13 +166,13 @@ export default function BusinessCheckoutPage() {
             placeholder="4242 4242 4242 4242"
             inputMode="numeric"
             maxLength={19}
-            className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono tracking-wider"
+            className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono tracking-wider"
             aria-label="カード番号"
           />
         </label>
 
         <div className="grid grid-cols-2 gap-3">
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
             有効期限
             <input
               type="text"
@@ -180,11 +180,11 @@ export default function BusinessCheckoutPage() {
               onChange={(e) => handleExpiryInput(e.target.value)}
               placeholder="MM/YY"
               maxLength={5}
-              className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
+              className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
               aria-label="有効期限"
             />
           </label>
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
             CVC
             <input
               type="text"
@@ -192,20 +192,20 @@ export default function BusinessCheckoutPage() {
               onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 3))}
               placeholder="123"
               maxLength={3}
-              className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
+              className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
               aria-label="CVC"
             />
           </label>
         </div>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+        <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
           カード名義
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="TARO YAMADA"
-            className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30 uppercase"
+            className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 uppercase"
             aria-label="カード名義"
           />
         </label>
@@ -219,7 +219,7 @@ export default function BusinessCheckoutPage() {
         >
           {processing ? "処理中…" : `${selected.name} プランで始める`}
         </button>
-        <p className="text-[10px] text-[#9890A8] text-center">
+        <p className="text-[10px] text-slate-400 text-center">
           ※ モックのため実際の決済は行われません
         </p>
       </form>

@@ -34,11 +34,11 @@ function EventCard({ event }: { event: ZeroDayEvent }) {
             }`}>
               {isCovered ? "対応MD公開中" : "未学習 — 募集中"}
             </span>
-            <span className="text-[10px] text-[#9890A8] tabular-nums">{dateStr}</span>
+            <span className="text-[10px] text-slate-400 tabular-nums">{dateStr}</span>
           </div>
 
-          <h2 className="text-sm font-bold text-kuroko leading-snug mb-1">{event.title}</h2>
-          <p className="text-xs text-[#4A4464] leading-relaxed mb-3">{event.description}</p>
+          <h2 className="text-sm font-bold text-white leading-snug mb-1">{event.title}</h2>
+          <p className="text-xs text-[#E2E8F0] leading-relaxed mb-3">{event.description}</p>
 
           {isCovered && event.coveredBy && (
             <div className="rounded-xl border border-green-100 bg-green-50/60 p-3 mb-3">
@@ -49,7 +49,7 @@ function EventCard({ event }: { event: ZeroDayEvent }) {
               >
                 {event.coveredBy.title} →
               </Link>
-              <p className="text-[10px] text-[#9890A8] mt-0.5">
+              <p className="text-[10px] text-slate-400 mt-0.5">
                 登録から {Math.floor(event.coveredBy.registeredAgoSec / 3600)}時間{Math.floor((event.coveredBy.registeredAgoSec % 3600) / 60)}分
               </p>
             </div>
@@ -90,20 +90,20 @@ export default function ZeroDayFeedPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-3xl mx-auto">
-      <Link href="/" className="text-xs text-[#9890A8] hover:text-kaki transition-colors">
+      <Link href="/" className="text-xs text-slate-400 hover:text-kaki transition-colors">
         ← ホームに戻る
       </Link>
 
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <h1 className="text-2xl font-bold text-kuroko">ゼロデイフィード</h1>
+          <h1 className="text-2xl font-bold text-white">ゼロデイフィード</h1>
           {recruitingCount > 0 && (
             <span className="rounded-full bg-[var(--primary,#06B6D4)] px-2.5 py-0.5 text-xs font-bold text-white">
               {recruitingCount} 件 募集中
             </span>
           )}
         </div>
-        <p className="text-sm text-[#9890A8]">
+        <p className="text-sm text-slate-400">
           エンジニアが今すぐ知るべき未対応の技術変化。
           対応MDを出品して、最速回答者になろう。
         </p>
@@ -112,17 +112,17 @@ export default function ZeroDayFeedPage() {
       {/* Stats bar */}
       <div className="mb-5 grid grid-cols-3 gap-2">
         <div className="section-card p-3 text-center">
-          <p className="text-[10px] text-[#9890A8] mb-0.5">合計</p>
-          <p className="text-lg font-extrabold tabular-nums text-kuroko">{events.length}</p>
+          <p className="text-[10px] text-slate-400 mb-0.5">合計</p>
+          <p className="text-lg font-extrabold tabular-nums text-white">{events.length}</p>
         </div>
         <div className="section-card p-3 text-center">
-          <p className="text-[10px] text-[#9890A8] mb-0.5">対応済み</p>
+          <p className="text-[10px] text-slate-400 mb-0.5">対応済み</p>
           <p className="text-lg font-extrabold tabular-nums text-green-600">
             {events.filter((e) => e.status === "covered").length}
           </p>
         </div>
         <div className="section-card p-3 text-center">
-          <p className="text-[10px] text-[#9890A8] mb-0.5">募集中</p>
+          <p className="text-[10px] text-slate-400 mb-0.5">募集中</p>
           <p className="text-lg font-extrabold tabular-nums text-[var(--primary,#06B6D4)]">
             {recruitingCount}
           </p>

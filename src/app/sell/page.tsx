@@ -69,7 +69,7 @@ function TimerBar({ startAt }: { startAt: number }) {
 
   return (
     <div className="mt-3 space-y-1">
-      <div className="flex justify-between text-xs text-[#9890A8]">
+      <div className="flex justify-between text-xs text-slate-400">
         <span>3分以内に完了</span>
         <span className={isOver ? "text-red-500 font-semibold" : ""}>
           {isOver ? "目安の3分を超えました" : `残り ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`}
@@ -125,7 +125,7 @@ function AutoProgress({
         </div>
       )}
       {overlay && (
-        <p className="text-base font-bold text-kuroko mb-4 text-center">
+        <p className="text-base font-bold text-white mb-4 text-center">
           AIが中身を丁寧にチェックしています...
         </p>
       )}
@@ -135,9 +135,9 @@ function AutoProgress({
             ? <span className="text-accent-green font-bold text-lg">✓</span>
             : i === currentStep
             ? <span className="text-kaki animate-pulse font-bold text-lg">⟳</span>
-            : <span className="text-kuroko/20 font-bold text-lg">○</span>
+            : <span className="text-slate-400 font-bold text-lg">○</span>
           }
-          <span className={`text-sm ${i === currentStep ? "text-kaki font-semibold" : i < currentStep ? "text-accent-green" : "text-[#9890A8]"}`}>
+          <span className={`text-sm ${i === currentStep ? "text-kaki font-semibold" : i < currentStep ? "text-accent-green" : "text-slate-400"}`}>
             {step}
           </span>
         </div>
@@ -178,10 +178,10 @@ function CompletionCard({ data }: { data: CompletionData }) {
         <div className="flex justify-center mb-2 gap-3 items-center">
           <div className="text-4xl">🎉</div>
         </div>
-        <h2 className="text-xl font-bold text-kuroko">あなたの たからもの として登録されました</h2>
-        <p className="mt-1 text-sm text-[#9890A8]">
+        <h2 className="text-xl font-bold text-white">あなたの たからもの として登録されました</h2>
+        <p className="mt-1 text-sm text-slate-400">
           ランク <RankBadge rank={data.rank} /> ·
-          お値段 <span className="font-bold text-kuroko">¥{data.floorPrice.toLocaleString("ja-JP")}</span>
+          お値段 <span className="font-bold text-white">¥{data.floorPrice.toLocaleString("ja-JP")}</span>
         </p>
       </div>
 
@@ -195,9 +195,9 @@ function CompletionCard({ data }: { data: CompletionData }) {
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-kuroko">写真でも見せる（任意）</p>
-          <p className="text-xs text-[#9890A8] mt-0.5">顔写真や作品画像を追加できます</p>
-          <label className="mt-2 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-kuroko/20 px-3 py-1.5 text-xs font-medium text-[#3A3664] hover:border-kaki/40 transition-colors">
+          <p className="text-sm font-semibold text-white">写真でも見せる（任意）</p>
+          <p className="text-xs text-slate-400 mt-0.5">顔写真や作品画像を追加できます</p>
+          <label className="mt-2 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-[#E2E8F0] hover:border-kaki/40 transition-colors">
             📷 画像を選ぶ
             <input type="file" accept="image/*" className="sr-only" onChange={handlePhotoChange} aria-label="写真をアップロード" />
           </label>
@@ -218,7 +218,7 @@ function CompletionCard({ data }: { data: CompletionData }) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {/* Public URL */}
         <div className="section-card p-4">
-          <p className="text-xs text-[#9890A8] font-semibold mb-2">公開URL</p>
+          <p className="text-xs text-slate-400 font-semibold mb-2">公開URL</p>
           <p className="font-mono text-xs text-kaki truncate">{data.deployUrl.slice(0, 40)}…</p>
           <button
             type="button"
@@ -232,7 +232,7 @@ function CompletionCard({ data }: { data: CompletionData }) {
 
         {/* Reception desk */}
         <div className="section-card p-4">
-          <p className="text-xs text-[#9890A8] font-semibold mb-2">おしごと窓口</p>
+          <p className="text-xs text-slate-400 font-semibold mb-2">おしごと窓口</p>
           <p className="font-mono text-xs text-kaki truncate">{data.apiEndpoint.slice(0, 40)}…</p>
           <button
             type="button"
@@ -246,8 +246,8 @@ function CompletionCard({ data }: { data: CompletionData }) {
 
         {/* Management */}
         <div className="section-card p-4 flex flex-col">
-          <p className="text-xs text-[#9890A8] font-semibold mb-2">💴 運用</p>
-          <p className="text-sm text-kuroko leading-relaxed flex-1">報酬・資産・取引履歴を確認できます</p>
+          <p className="text-xs text-slate-400 font-semibold mb-2">💴 運用</p>
+          <p className="text-sm text-white leading-relaxed flex-1">報酬・資産・取引履歴を確認できます</p>
           <button
             type="button"
             onClick={() => router.push("/guild")}
@@ -261,7 +261,7 @@ function CompletionCard({ data }: { data: CompletionData }) {
 
       {/* Share listing */}
       <div className="section-card p-5">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#9890A8] mb-3">登録をシェアする</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">登録をシェアする</p>
         <ShareButton
           context={{ type: "listing_published", title: data.title, rank: data.rank }}
           url={`https://guild-ai.vercel.app/asset/${data.listingId}`}
@@ -377,8 +377,8 @@ function AiPath({
             </svg>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-kuroko">GitHubアカウントを連携</h2>
-            <p className="mt-1 text-sm text-[#9890A8]">あなたの作品を選ぶだけ。URLコピペ不要。</p>
+            <h2 className="text-lg font-bold text-white">GitHubアカウントを連携</h2>
+            <p className="mt-1 text-sm text-slate-400">あなたの作品を選ぶだけ。URLコピペ不要。</p>
           </div>
           <div className="w-full max-w-xs space-y-2">
             <input
@@ -405,9 +405,9 @@ function AiPath({
         <div className="space-y-3">
           <div className="flex items-center gap-2 rounded-xl border border-accent-green/30 bg-accent-green/5 px-4 py-2.5">
             <span className="text-accent-green font-bold">✓</span>
-            <span className="text-sm font-medium text-kuroko">{username} — 連携完了</span>
+            <span className="text-sm font-medium text-white">{username} — 連携完了</span>
           </div>
-          <p className="text-sm font-semibold text-[#3A3664]">あなたの作品を選ぶ</p>
+          <p className="text-sm font-semibold text-[#E2E8F0]">あなたの作品を選ぶ</p>
 
           <ul className="grid gap-2 sm:grid-cols-2">
             {repos.map((repo, idx) => (
@@ -423,14 +423,14 @@ function AiPath({
                   className={`w-full text-left rounded-xl border p-3 min-h-[56px] transition-all active:scale-[0.98] ${
                     repo.recommended
                       ? "border-amber-300 bg-amber-50 hover:border-amber-400"
-                      : "border-kuroko/10 bg-white hover:border-kaki/30"
+                      : "border-white/10 bg-white hover:border-kaki/30"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <RepoIconBadge name={repo.name} idx={idx} />
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-kuroko truncate">{repo.name}</p>
-                      <p className="mt-0.5 text-xs text-[#9890A8] line-clamp-1">{repo.description}</p>
+                      <p className="text-sm font-semibold text-white truncate">{repo.name}</p>
+                      <p className="mt-0.5 text-xs text-slate-400 line-clamp-1">{repo.description}</p>
                     </div>
                   </div>
                 </button>
@@ -445,7 +445,7 @@ function AiPath({
         <div className="space-y-3">
           <div className="flex items-center gap-3 rounded-xl border border-kaki/30 bg-kaki/5 px-4 py-2.5">
             <RepoIconBadge name={selectedRepo.name} idx={0} />
-            <span className="text-sm font-medium text-kuroko">{selectedRepo.name}</span>
+            <span className="text-sm font-medium text-white">{selectedRepo.name}</span>
             <span className="ml-auto text-xs bg-accent-green/10 text-accent-green rounded-full px-2 py-0.5 font-semibold">
               作品の情報を自動で取得しました
             </span>
@@ -460,7 +460,7 @@ function AiPath({
                 <p className="text-xs font-semibold text-kaki mb-2">✨ AIが抽出した「売れる部品」</p>
                 <ul className="space-y-1">
                   {sp.sellingPoints.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs text-[#3A3664]">
+                    <li key={pt} className="flex gap-2 text-xs text-[#E2E8F0]">
                       <span className="text-accent-green shrink-0">✓</span>{pt}
                     </li>
                   ))}
@@ -477,7 +477,7 @@ function AiPath({
             ✨ AIにおまかせ — お店にならべる
           </button>
 
-          <button type="button" onClick={() => setSelectedRepo(null)} className="text-sm text-[#9890A8] underline w-full text-center">
+          <button type="button" onClick={() => setSelectedRepo(null)} className="text-sm text-slate-400 underline w-full text-center">
             別の作品を選ぶ
           </button>
         </div>
@@ -582,13 +582,13 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
       <div className="space-y-4">
         <div className="rounded-xl border border-kaki/30 bg-kaki/5 p-4">
           <p className="text-xs font-semibold text-kaki mb-2">✨ AIが作成した商品説明文</p>
-          <p className="text-sm text-kuroko leading-relaxed">{pitch.description}</p>
+          <p className="text-sm text-white leading-relaxed">{pitch.description}</p>
         </div>
         <div className="rounded-xl border border-accent-green/20 bg-accent-green/5 p-4">
           <p className="text-xs font-semibold text-accent-green mb-2">📋 マニュアル（自動作成）</p>
           <ul className="space-y-1">
             {pitch.manual.map((item, i) => (
-              <li key={i} className="flex gap-2 text-sm text-[#3A3664]">
+              <li key={i} className="flex gap-2 text-sm text-[#E2E8F0]">
                 <span className="text-accent-green shrink-0">{i + 1}.</span>
                 {item}
               </li>
@@ -598,7 +598,7 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
         <button type="button" onClick={handleProcess} className="btn-primary w-full !py-3 !text-base">
           この内容でお店に並べる →
         </button>
-        <button type="button" onClick={() => setStep("record")} className="text-sm text-[#9890A8] underline w-full text-center">
+        <button type="button" onClick={() => setStep("record")} className="text-sm text-slate-400 underline w-full text-center">
           録音し直す
         </button>
       </div>
@@ -608,8 +608,8 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
   return (
     <div className="flex flex-col items-center space-y-4 py-4">
       <div className="text-center">
-        <h2 className="text-lg font-bold text-kuroko">この作品の自慢を教えてください</h2>
-        <p className="mt-1 text-sm text-[#9890A8]">声で話すだけでAIがプロレベルの紹介文を作ります</p>
+        <h2 className="text-lg font-bold text-white">この作品の自慢を教えてください</h2>
+        <p className="mt-1 text-sm text-slate-400">声で話すだけでAIがプロレベルの紹介文を作ります</p>
       </div>
 
       <button
@@ -620,7 +620,7 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
         {isRecording ? "⏹" : "🎙️"}
       </button>
 
-      <p className="text-sm text-[#9890A8]">{isRecording ? "録音中… タップで停止" : hasSpeechApi ? "タップして録音開始" : "ブラウザが音声入力非対応です"}</p>
+      <p className="text-sm text-slate-400">{isRecording ? "録音中… タップで停止" : hasSpeechApi ? "タップして録音開始" : "ブラウザが音声入力非対応です"}</p>
 
       <textarea
         rows={4} value={transcript}
@@ -702,18 +702,18 @@ function TextPath({
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Basic info */}
       <div className="section-card p-5 space-y-3">
-        <h2 className="text-base font-bold text-kuroko">基本情報</h2>
-        <label className="flex flex-col gap-1 text-sm text-[#3A3664]">
+        <h2 className="text-base font-bold text-white">基本情報</h2>
+        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
           タイトル
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
             placeholder="あなたの作品のタイトル" aria-label="タイトル" className="input-base" />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-[#3A3664]">
+        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
           GitHub URL（任意）
           <input type="url" value={githubUrl} onChange={(e) => setGithubUrl(e.target.value)}
             placeholder="https://github.com/owner/repo" aria-label="GitHub URL" className="input-base" />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-[#3A3664]">
+        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
           説明文
           <textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)}
             placeholder="この作品が解決する課題と特徴" aria-label="説明文" className="input-base resize-none" />
@@ -722,21 +722,21 @@ function TextPath({
 
       {/* 制作の証明 */}
       <div className="section-card p-5 space-y-3">
-        <h2 className="text-base font-bold text-kuroko">こだわり（実績ログ）</h2>
+        <h2 className="text-base font-bold text-white">こだわり（実績ログ）</h2>
         <div className="grid grid-cols-2 gap-3">
-          <label className="flex flex-col gap-1 text-sm text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
             考えの深さ (0–100)
             <input type="number" value={ccaf.thoughtDensity} min={0} max={100}
               onChange={(e) => setCcaf({ ...ccaf, thoughtDensity: Number(e.target.value) })}
               aria-label="考えの深さ" className="input-base" />
           </label>
-          <label className="flex flex-col gap-1 text-sm text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
             試みた回数
             <input type="number" value={ccaf.iterations} min={0}
               onChange={(e) => setCcaf({ ...ccaf, iterations: Number(e.target.value) })}
               aria-label="試みた回数" className="input-base" />
           </label>
-          <label className="col-span-2 flex flex-col gap-1 text-sm text-[#3A3664]">
+          <label className="col-span-2 flex flex-col gap-1 text-sm text-[#E2E8F0]">
             稼働日数
             <input type="number" value={vercelUptimeDays} min={0}
               onChange={(e) => setUptime(Number(e.target.value))}
@@ -747,7 +747,7 @@ function TextPath({
 
       {/* 知能の品質ランク + Radar */}
       <div className="section-card p-5">
-        <h2 className="text-base font-bold text-kuroko mb-4 flex items-center gap-1.5"><SearchIcon size={16} className="text-kaki" />クオリティ・スコア</h2>
+        <h2 className="text-base font-bold text-white mb-4 flex items-center gap-1.5"><SearchIcon size={16} className="text-kaki" />クオリティ・スコア</h2>
         <div className="flex flex-col items-center sm:flex-row gap-6">
           <div className="relative">
             {/* Magical audit animation overlay */}
@@ -758,11 +758,11 @@ function TextPath({
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
               <RankBadge rank={auditResult.rank} large />
-              <span className="text-base text-[#3A3664]">スコア {auditResult.score}</span>
+              <span className="text-base text-[#E2E8F0]">スコア {auditResult.score}</span>
             </div>
             <ul className="space-y-1">
               {auditResult.reasons.map((r) => (
-                <li key={r} className="flex gap-2 text-sm text-[#3A3664]">
+                <li key={r} className="flex gap-2 text-sm text-[#E2E8F0]">
                   <span className="text-kaki mt-0.5">·</span>{r}
                 </li>
               ))}
@@ -770,7 +770,7 @@ function TextPath({
             {auditResult.justification && (
               <div className="rounded-xl border border-kaki/20 bg-kaki/5 px-3 py-2.5">
                 <p className="text-xs font-semibold text-kaki mb-1">💬 AIの解説</p>
-                <p className="text-sm text-[#3A3664] leading-relaxed">{auditResult.justification}</p>
+                <p className="text-sm text-[#E2E8F0] leading-relaxed">{auditResult.justification}</p>
               </div>
             )}
           </div>
@@ -779,9 +779,9 @@ function TextPath({
 
       {/* 価格設定 — slider */}
       <div className="section-card p-5 space-y-3">
-        <h2 className="text-base font-bold text-kuroko">値段を決める</h2>
-        <p className="text-sm text-[#9890A8]">
-          類似のスキルは <span className="font-semibold text-kuroko">¥{MARKET_REFERENCE_PRICE.toLocaleString()}</span> で取引されています
+        <h2 className="text-base font-bold text-white">値段を決める</h2>
+        <p className="text-sm text-slate-400">
+          類似のスキルは <span className="font-semibold text-white">¥{MARKET_REFERENCE_PRICE.toLocaleString()}</span> で取引されています
         </p>
         <div className="flex items-center gap-4">
           <input
@@ -792,14 +792,14 @@ function TextPath({
             aria-label="お値段スライダー"
             className="flex-1 accent-kaki"
           />
-          <span className="text-2xl font-bold text-kuroko tabular-nums w-28 text-right">
+          <span className="text-2xl font-bold text-white tabular-nums w-28 text-right">
             {formatJPY(floor)}
           </span>
         </div>
-        <div className="flex justify-between text-xs text-[#9890A8]">
+        <div className="flex justify-between text-xs text-slate-400">
           <span>¥500</span><span>¥10,000</span>
         </div>
-        <p className="text-xs text-[#9890A8]">
+        <p className="text-xs text-slate-400">
           ※ 最低価格の目安です。信用スコアにより自動調整されます。
         </p>
         {/* Two-Way Pricing derived values */}
@@ -808,30 +808,30 @@ function TextPath({
           const pricing = computeBundlePricing(monthly);
           return (
             <div className="rounded-xl bg-kaki/5 border border-kaki/10 p-3 space-y-1.5">
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-[#9890A8]">自動計算される料金プラン</p>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">自動計算される料金プラン</p>
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A4464]">月額（目安）</span>
-                <span className="font-semibold tabular-nums text-kuroko">¥{pricing.monthlyJpy.toLocaleString("ja-JP")} / 月</span>
+                <span className="text-[#E2E8F0]">月額（目安）</span>
+                <span className="font-semibold tabular-nums text-white">¥{pricing.monthlyJpy.toLocaleString("ja-JP")} / 月</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A4464]">買い切り（目安）</span>
-                <span className="font-semibold tabular-nums text-kuroko">¥{pricing.oneoffJpy.toLocaleString("ja-JP")}</span>
+                <span className="text-[#E2E8F0]">買い切り（目安）</span>
+                <span className="font-semibold tabular-nums text-white">¥{pricing.oneoffJpy.toLocaleString("ja-JP")}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#4A4464]">リクエスト単価</span>
+                <span className="text-[#E2E8F0]">リクエスト単価</span>
                 <span className="font-semibold tabular-nums text-kaki">{pricing.perCallJpyc} デジタル円</span>
               </div>
             </div>
           );
         })()}
         <div>
-          <p className="text-sm font-semibold text-[#3A3664] mb-2">売上の受け取り方</p>
+          <p className="text-sm font-semibold text-[#E2E8F0] mb-2">売上の受け取り方</p>
           <div className="flex gap-4">
             {(["JPY", "JPYC"] as Currency[]).map((c) => (
               <label key={c} className="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="payoutCurrency" value={c} checked={payoutCurrency === c}
                   onChange={() => setPayoutCurrency(c)} className="accent-kaki" aria-label={`${CURRENCY_LABELS[c]}で受け取る`} />
-                <span className="text-base font-medium text-kuroko">{CURRENCY_LABELS[c]}</span>
+                <span className="text-base font-medium text-white">{CURRENCY_LABELS[c]}</span>
               </label>
             ))}
           </div>
@@ -961,7 +961,7 @@ function SellContent() {
       {remixFrom && (
         <div className="mt-3 inline-flex items-center gap-2 rounded-lg border border-kaki/30 bg-kaki/10 px-3 py-2">
           <span className="text-sm text-kaki font-medium">組み合わせ元:</span>
-          <span className="text-sm text-kuroko font-semibold truncate max-w-[240px]">{remixFrom}</span>
+          <span className="text-sm text-white font-semibold truncate max-w-[240px]">{remixFrom}</span>
         </div>
       )}
 
@@ -1000,12 +1000,12 @@ function SellContent() {
                 className={`rounded-xl border p-3 text-center transition-all active:scale-[0.97] ${
                   activePath === id
                     ? "border-kaki bg-kaki/5 ring-1 ring-kaki/20"
-                    : "border-kuroko/15 bg-white hover:border-kaki/30"
+                    : "border-white/10 bg-white hover:border-kaki/30"
                 }`}
               >
-                <p className={`text-sm font-bold ${activePath === id ? "text-kaki" : "text-kuroko"}`}>{label}</p>
+                <p className={`text-sm font-bold ${activePath === id ? "text-kaki" : "text-white"}`}>{label}</p>
                 <p className="text-xs text-accent-green font-semibold">{time}</p>
-                <p className="text-xs text-[#9890A8] mt-0.5 hidden sm:block">{desc}</p>
+                <p className="text-xs text-slate-400 mt-0.5 hidden sm:block">{desc}</p>
               </button>
             ))}
           </div>
@@ -1038,7 +1038,7 @@ export default function SellPage() {
     <Suspense fallback={
       <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-3xl mx-auto">
         <div className="mt-12 section-card p-8 text-center">
-          <p className="text-base text-[#9890A8]">読み込み中…</p>
+          <p className="text-base text-slate-400">読み込み中…</p>
         </div>
       </main>
     }>

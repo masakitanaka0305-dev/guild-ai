@@ -22,12 +22,12 @@ export function RawDataPanel({ data }: RawDataPanelProps) {
         } catch { /* ignore */ }
       }}
     >
-      <summary className="flex items-center gap-1.5 text-[12px] text-[#9890A8] cursor-pointer hover:text-kaki transition-colors list-none select-none w-fit ml-auto">
+      <summary className="flex items-center gap-1.5 text-[12px] text-slate-400 cursor-pointer hover:text-kaki transition-colors list-none select-none w-fit ml-auto">
         <CodeIcon size={12} />
         技術的な詳細を見る
       </summary>
-      <div className="mt-3 rounded-xl border border-kuroko/10 bg-surface-inset p-4 text-xs font-mono">
-        <pre className="overflow-x-auto whitespace-pre-wrap leading-relaxed text-[#4A4464]">
+      <div className="mt-3 rounded-xl border border-white/10 bg-[#162035] p-4 text-xs font-mono">
+        <pre className="overflow-x-auto whitespace-pre-wrap leading-relaxed text-[#E2E8F0]">
           {json}
         </pre>
         <button
@@ -35,7 +35,7 @@ export function RawDataPanel({ data }: RawDataPanelProps) {
           onClick={() => {
             navigator.clipboard.writeText(json).catch(() => {});
           }}
-          className="mt-3 text-[11px] border border-kuroko/20 rounded px-2 py-1 hover:bg-kuroko/5 transition-colors"
+          className="mt-3 text-[11px] border border-white/10 rounded px-2 py-1 hover:bg-kuroko/5 transition-colors"
         >
           JSONをコピー
         </button>

@@ -67,7 +67,7 @@ function StarPicker({ value, onChange }: { value: number; onChange: (n: number) 
           onMouseEnter={() => setHovered(n)}
           onMouseLeave={() => setHovered(0)}
           className={`text-2xl transition-transform active:scale-90 ${
-            n <= (hovered || value) ? "text-kaki" : "text-kuroko/20"
+            n <= (hovered || value) ? "text-kaki" : "text-slate-400"
           }`}
         >
           ★
@@ -111,35 +111,35 @@ export function AssetReview({ assetId }: AssetReviewProps) {
   return (
     <section className="mt-4 section-card p-5" aria-label="ピアレビュー">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8]">
+        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           ★ レビュー
         </h2>
         <div className="flex items-center gap-2">
           <span className="text-kaki font-bold text-sm">{"★".repeat(Math.round(avgStars))}</span>
-          <span className="text-xs text-[#9890A8]">{avgStars.toFixed(1)} · {commentCount}件のコメント</span>
+          <span className="text-xs text-slate-400">{avgStars.toFixed(1)} · {commentCount}件のコメント</span>
         </div>
       </div>
 
       {/* Existing reviews */}
       <ul className="space-y-3 mb-5">
         {allReviews.map((r, i) => (
-          <li key={i} className="rounded-xl border border-kuroko/10 bg-surface-inset px-4 py-3">
+          <li key={i} className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-semibold text-kuroko">{r.reviewer}</span>
+              <span className="text-xs font-semibold text-white">{r.reviewer}</span>
               <span className="text-kaki text-xs">{"★".repeat(r.stars)}{"☆".repeat(5 - r.stars)}</span>
             </div>
             {r.comment && (
-              <p className="text-xs text-[#4A4464] leading-relaxed">{r.comment}</p>
+              <p className="text-xs text-[#E2E8F0] leading-relaxed">{r.comment}</p>
             )}
-            <p className="text-[10px] text-[#9890A8] mt-1">{r.date}</p>
+            <p className="text-[10px] text-slate-400 mt-1">{r.date}</p>
           </li>
         ))}
       </ul>
 
       {/* Submit form */}
       {!submitted ? (
-        <div className="border-t border-kuroko/10 pt-4 space-y-3">
-          <p className="text-xs font-semibold text-[#4A4464]">★ を投じる</p>
+        <div className="border-t border-white/10 pt-4 space-y-3">
+          <p className="text-xs font-semibold text-[#E2E8F0]">★ を投じる</p>
           <StarPicker value={myStars} onChange={setMyStars} />
           <textarea
             rows={3}
@@ -151,7 +151,7 @@ export function AssetReview({ assetId }: AssetReviewProps) {
             className="input-base resize-none w-full text-sm"
           />
           <div className="flex items-center justify-between">
-            <span className="text-[10px] text-[#9890A8]">{myComment.length} / 140</span>
+            <span className="text-[10px] text-slate-400">{myComment.length} / 140</span>
             <button
               type="button"
               onClick={handleSubmit}
@@ -164,9 +164,9 @@ export function AssetReview({ assetId }: AssetReviewProps) {
           </div>
         </div>
       ) : (
-        <div className="border-t border-kuroko/10 pt-4">
+        <div className="border-t border-white/10 pt-4">
           <p className="text-xs text-accent-green font-semibold">✓ レビューを投稿しました。ありがとうございます。</p>
-          <p className="text-[10px] text-[#9890A8] mt-1">あなたの評価が信用スコアに反映されます。</p>
+          <p className="text-[10px] text-slate-400 mt-1">あなたの評価が信用スコアに反映されます。</p>
         </div>
       )}
     </section>

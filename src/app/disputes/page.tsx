@@ -72,27 +72,27 @@ export default function DisputesPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-2xl mx-auto pb-24">
-      <Link href="/" className="text-xs text-[#9890A8] hover:underline mb-4 inline-block">
+      <Link href="/" className="text-xs text-slate-400 hover:underline mb-4 inline-block">
         ← ホームに戻る
       </Link>
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-kuroko">紛争解決センター</h1>
-        <p className="text-sm text-[#9890A8] mt-1">
+        <h1 className="text-2xl font-bold text-white">紛争解決センター</h1>
+        <p className="text-sm text-slate-400 mt-1">
           AI が自動審査。多くの案件は24時間以内に解決されます。
         </p>
       </div>
 
       {/* New dispute form */}
       <section className="section-card p-5 mb-6">
-        <h2 className="text-sm font-bold text-kuroko mb-4">新規申請</h2>
+        <h2 className="text-sm font-bold text-white mb-4">新規申請</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="text-xs font-semibold text-[#3A3664] block mb-1">クレームの種類</label>
+            <label className="text-xs font-semibold text-[#E2E8F0] block mb-1">クレームの種類</label>
             <select
               value={claimType}
               onChange={(e) => setClaimType(e.target.value as ClaimType)}
-              className="w-full rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
+              className="w-full rounded-xl border border-white/10 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
               aria-label="クレームの種類"
             >
               {(Object.entries(CLAIM_TYPE_LABELS) as [ClaimType, string][]).map(([k, v]) => (
@@ -101,38 +101,38 @@ export default function DisputesPage() {
             </select>
           </div>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
             対象 GUILD-ID
             <input
               type="text"
               value={guildId}
               onChange={(e) => setGuildId(e.target.value)}
               placeholder="GUILD:XXXX-XXXX-XXXX"
-              className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
+              className="rounded-xl border border-white/10 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
               aria-label="対象 GUILD-ID"
             />
           </label>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
             相手方のハンドル名
             <input
               type="text"
               value={respondent}
               onChange={(e) => setRespondent(e.target.value)}
               placeholder="@username"
-              className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
+              className="rounded-xl border border-white/10 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
               aria-label="相手方のハンドル名"
             />
           </label>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#3A3664]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
             詳細
             <textarea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="トラブルの詳細を記入してください"
-              className="rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-kaki/30"
+              className="rounded-xl border border-white/10 bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-kaki/30"
               aria-label="詳細"
             />
           </label>
@@ -151,17 +151,17 @@ export default function DisputesPage() {
 
       {/* Dispute history */}
       <section>
-        <h2 className="text-sm font-bold text-kuroko mb-3">申請履歴 ({disputes.length}件)</h2>
+        <h2 className="text-sm font-bold text-white mb-3">申請履歴 ({disputes.length}件)</h2>
         {disputes.length === 0 ? (
-          <p className="text-sm text-[#9890A8] text-center py-8">申請履歴はありません</p>
+          <p className="text-sm text-slate-400 text-center py-8">申請履歴はありません</p>
         ) : (
           <div className="space-y-3">
             {disputes.map((d) => (
               <div key={d.id} className="section-card p-4">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
-                    <p className="text-xs font-semibold text-kuroko">{CLAIM_TYPE_LABELS[d.claim.claimType]}</p>
-                    <p className="text-[10px] text-[#9890A8] font-mono mt-0.5">{d.id} · {d.claim.guildId}</p>
+                    <p className="text-xs font-semibold text-white">{CLAIM_TYPE_LABELS[d.claim.claimType]}</p>
+                    <p className="text-[10px] text-slate-400 font-mono mt-0.5">{d.id} · {d.claim.guildId}</p>
                   </div>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex-shrink-0 ${STATUS_STYLE[d.status]}`}>
                     {d.status === "open" ? "審査中" :
@@ -169,14 +169,14 @@ export default function DisputesPage() {
                      d.status === "escalated" ? "エスカレ" : "完了"}
                   </span>
                 </div>
-                <p className="text-xs text-[#4A4464] line-clamp-2 mb-2">{d.claim.description}</p>
+                <p className="text-xs text-[#E2E8F0] line-clamp-2 mb-2">{d.claim.description}</p>
                 {d.verdict && (
                   <p className="text-[11px] font-semibold text-accent-green">
                     判定: {VERDICT_LABELS[d.verdict]}
                   </p>
                 )}
                 {d.reasoning && (
-                  <p className="text-[10px] text-[#9890A8] mt-1">{d.reasoning}</p>
+                  <p className="text-[10px] text-slate-400 mt-1">{d.reasoning}</p>
                 )}
                 {d.status === "open" && (
                   <button

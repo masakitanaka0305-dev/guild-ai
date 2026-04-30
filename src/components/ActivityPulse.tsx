@@ -84,7 +84,7 @@ export function ActivityPulse({ assetId, className = "" }: ActivityPulseProps) {
       </span>
 
       {/* Visual display — updates every 3s but not announced */}
-      <span className="text-xs font-semibold tabular-nums text-[#4A4464]" aria-hidden>
+      <span className="text-xs font-semibold tabular-nums text-[#E2E8F0]" aria-hidden>
         今この瞬間{" "}
         <span className="text-kaki font-bold">{rps}</span>
         {" "}回 / 分

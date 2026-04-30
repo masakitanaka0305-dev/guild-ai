@@ -22,12 +22,12 @@ export function StepIndicator({ current }: { current: StepId }) {
               className={`rounded-md px-2.5 py-1 font-medium transition-colors ${
                 active
                   ? "bg-kaki text-white"
-                  : "text-[#9890A8] hover:text-kaki"
+                  : "text-slate-400 hover:text-kaki"
               }`}
             >
               {step.num} {step.label}
             </Link>
-            {i < STEPS.length - 1 && <span className="text-[#9890A8]">→</span>}
+            {i < STEPS.length - 1 && <span className="text-slate-400">→</span>}
           </span>
         );
       })}

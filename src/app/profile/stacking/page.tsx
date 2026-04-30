@@ -133,13 +133,13 @@ export default function StackingPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-3xl mx-auto">
-      <Link href="/profile" className="text-xs text-[#9890A8] hover:text-kaki transition-colors">
+      <Link href="/profile" className="text-xs text-slate-400 hover:text-kaki transition-colors">
         ← プロフィールに戻る
       </Link>
 
       <div className="mt-4 mb-6">
-        <h1 className="text-2xl font-bold text-kuroko">積み重なる知恵</h1>
-        <p className="text-sm text-[#9890A8] mt-1">
+        <h1 className="text-2xl font-bold text-white">積み重なる知恵</h1>
+        <p className="text-sm text-slate-400 mt-1">
           あなたのどのノートが、誰の創造を支えているかを可視化します。
         </p>
       </div>
@@ -149,12 +149,12 @@ export default function StackingPage() {
         <p className="text-lg font-black text-[var(--primary,#06B6D4)] leading-snug">
           {totalDescendants} 件の知恵が、{uniquePeople} 人の創造を支えています
         </p>
-        <p className="text-xs text-[#9890A8] mt-1">直近30日のデータをもとに算出（モック）</p>
+        <p className="text-xs text-slate-400 mt-1">直近30日のデータをもとに算出（モック）</p>
       </div>
 
       {/* Network SVG */}
       <section className="section-card p-5 mb-4">
-        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-3">
+        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-3">
           知恵のネットワーク
         </h2>
         <div className="overflow-x-auto">
@@ -202,7 +202,7 @@ export default function StackingPage() {
             </text>
           </svg>
         </div>
-        <div className="mt-2 flex items-center gap-4 text-[10px] text-[#9890A8] justify-center">
+        <div className="mt-2 flex items-center gap-4 text-[10px] text-slate-400 justify-center">
           {Object.entries(RANK_COLORS).map(([rank, color]) => (
             <span key={rank} className="flex items-center gap-1">
               <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: color }} />
@@ -214,7 +214,7 @@ export default function StackingPage() {
 
       {/* Stacked Bar Chart */}
       <section className="section-card p-5">
-        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-[#9890A8] mb-3">
+        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-3">
           積み重なる資産（月次）
         </h2>
         <div className="overflow-x-auto">
@@ -270,13 +270,13 @@ export default function StackingPage() {
         </div>
         <div className="mt-2 flex items-center gap-3 justify-center flex-wrap">
           {SEGMENT_COLORS.slice(0, 3).map((color, i) => (
-            <span key={i} className="flex items-center gap-1 text-[10px] text-[#9890A8]">
+            <span key={i} className="flex items-center gap-1 text-[10px] text-slate-400">
               <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: color }} />
               {i === 0 ? "直系子孫" : i === 1 ? "孫世代" : "曾孫以降"}
             </span>
           ))}
         </div>
-        <p className="mt-2 text-[10px] text-[#9890A8] text-center">
+        <p className="mt-2 text-[10px] text-slate-400 text-center">
           各色 = 子孫ノードの貢献の大きさ（モックデータ）
         </p>
       </section>

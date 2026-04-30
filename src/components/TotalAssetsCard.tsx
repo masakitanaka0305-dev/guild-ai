@@ -112,7 +112,7 @@ export function TotalAssetsCard() {
             aria-describedby={tipId}
             onClick={() => setTipVisible((v) => !v)}
             onBlur={() => setTipVisible(false)}
-            className="w-4 h-4 rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-[#9890A8] text-[10px] font-bold flex items-center justify-center hover:bg-[var(--n-divider,rgba(0,0,0,0.08))] transition-colors"
+            className="w-4 h-4 rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-slate-400 text-[10px] font-bold flex items-center justify-center hover:bg-[var(--n-divider,rgba(0,0,0,0.08))] transition-colors"
           >
             ？
           </button>

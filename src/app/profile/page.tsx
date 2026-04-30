@@ -120,7 +120,7 @@ export default function ProfilePage() {
             <p className="text-2xl font-extrabold tabular-nums text-[var(--n-gold,#D4AF37)] leading-none">
               ¥{lockReward.jpy.toLocaleString("ja-JP")}
             </p>
-            <p className="text-[10px] text-[#9890A8] mt-1">Genesis 遡及解禁</p>
+            <p className="text-[10px] text-slate-400 mt-1">Genesis 遡及解禁</p>
           </div>
         </div>
 

@@ -22,7 +22,7 @@ export function StarRating({ rank, size = "md" }: StarRatingProps) {
         <span
           key={i}
           aria-hidden="true"
-          className={i < filled ? "text-kaki" : "text-kuroko/20"}
+          className={i < filled ? "text-kaki" : "text-slate-400"}
         >
           ★
         </span>

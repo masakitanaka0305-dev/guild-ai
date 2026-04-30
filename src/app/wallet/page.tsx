@@ -26,7 +26,7 @@ import { useUserId } from "@/components/AuthProvider";
 // ─── Rank styling ─────────────────────────────────────────────────────────────
 
 const RANK_STYLE: Record<ContributionRank, { bg: string; text: string }> = {
-  Newcomer:      { bg: "bg-[#9890A8]/20", text: "text-[#9890A8]" },
+  Newcomer:      { bg: "bg-[#9890A8]/20", text: "text-slate-400" },
   Riser:         { bg: "bg-kaki/20",      text: "text-kaki" },
   Creator:       { bg: "bg-kaki/40",      text: "text-kaki" },
   "Pro Creator": { bg: "bg-kaki",         text: "text-white" },
@@ -81,27 +81,27 @@ function SkillGrowthCard({ currentRank }: { currentRank: Rank }) {
 
   return (
     <div className="mt-5 section-card p-5">
-      <h2 className="text-sm font-bold text-[#9890A8] uppercase tracking-widest mb-4">スキル成長</h2>
+      <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">スキル成長</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <p className="text-xs text-[#9890A8] font-semibold">GitHubの草</p>
-          <p className="mt-1 text-2xl font-bold text-kuroko tabular-nums">{greenScore}<span className="text-sm text-[#9890A8]"> / 100</span></p>
+          <p className="text-xs text-slate-400 font-semibold">GitHubの草</p>
+          <p className="mt-1 text-2xl font-bold text-white tabular-nums">{greenScore}<span className="text-sm text-slate-400"> / 100</span></p>
           <SkillProgressBar value={greenScore} color="bg-accent-green" />
         </div>
         <div>
-          <p className="text-xs text-[#9890A8] font-semibold">学習の進み</p>
-          <p className="mt-1 text-2xl font-bold text-kuroko tabular-nums">{learningProgress}<span className="text-sm text-[#9890A8]"> / 20</span></p>
+          <p className="text-xs text-slate-400 font-semibold">学習の進み</p>
+          <p className="mt-1 text-2xl font-bold text-white tabular-nums">{learningProgress}<span className="text-sm text-slate-400"> / 20</span></p>
           <SkillProgressBar value={learnPct} color="bg-[#9B6BB5]" />
         </div>
         <div>
-          <p className="text-xs text-[#9890A8] font-semibold">予測ランク</p>
-          <p className={`mt-1 text-2xl font-bold tabular-nums ${rankChanged ? "text-kaki" : "text-kuroko"}`}>
+          <p className="text-xs text-slate-400 font-semibold">予測ランク</p>
+          <p className={`mt-1 text-2xl font-bold tabular-nums ${rankChanged ? "text-kaki" : "text-white"}`}>
             {boostedRank} {rankChanged && <span className="text-sm text-kaki">↑</span>}
           </p>
           <SkillProgressBar value={overallPct} color={rankChanged ? "bg-kaki" : "bg-kuroko/30"} />
         </div>
       </div>
-      <p className="mt-3 text-xs text-[#4A4464] leading-relaxed">{hint}</p>
+      <p className="mt-3 text-xs text-[#E2E8F0] leading-relaxed">{hint}</p>
     </div>
   );
 }
@@ -133,7 +133,7 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
 
   return (
     <div className="mt-5 section-card p-5">
-      <h2 className="text-sm font-bold text-[#9890A8] uppercase tracking-widest mb-4 flex items-center gap-1.5"><BanknoteIcon size={14} />今月の収益明細</h2>
+      <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-1.5"><BanknoteIcon size={14} />今月の収益明細</h2>
 
       {/* Monthly earnings hero */}
       <div className="rounded-2xl bg-kuroko px-5 py-4 mb-4">
@@ -178,23 +178,23 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
 
         {/* Left: デジタル円 balance */}
         <div className="flex-1 rounded-xl bg-kaki/5 border border-kaki/20 px-4 py-4">
-          <p className="text-xs text-[#9890A8]">デジタル円残高</p>
+          <p className="text-xs text-slate-400">デジタル円残高</p>
           <div className="flex items-baseline gap-1.5 mt-1">
-            <span className="text-3xl font-bold text-kuroko tabular-nums">
+            <span className="text-3xl font-bold text-white tabular-nums">
               {snap.jpycBalance.toLocaleString("ja-JP")}
             </span>
-            <span className="text-base text-[#9890A8]">円</span>
+            <span className="text-base text-slate-400">円</span>
             <span className="ml-auto text-sm text-accent-green font-semibold">↑ +120</span>
           </div>
-          <p className="text-sm text-[#9890A8] mt-0.5">≒ ¥{snap.jpycBalance.toLocaleString("ja-JP")}</p>
+          <p className="text-sm text-slate-400 mt-0.5">≒ ¥{snap.jpycBalance.toLocaleString("ja-JP")}</p>
         </div>
 
         {/* Center: Trust Score + 7-day mini chart */}
-        <div className="flex-1 rounded-xl bg-surface-inset border border-kuroko/10 px-4 py-4">
-          <p className="text-xs text-[#9890A8]">信用スコア</p>
+        <div className="flex-1 rounded-xl bg-[#162035] border border-white/10 px-4 py-4">
+          <p className="text-xs text-slate-400">信用スコア</p>
           <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-bold text-kuroko tabular-nums">{snap.trustScore}</span>
-            <span className="text-base text-[#9890A8]">/ 1000</span>
+            <span className="text-3xl font-bold text-white tabular-nums">{snap.trustScore}</span>
+            <span className="text-base text-slate-400">/ 1000</span>
           </div>
           <div className="flex items-end gap-0.5 mt-3 h-8" aria-label="過去7日間の信用スコア推移">
             {snap.trustHistory.map((val, i) => (
@@ -206,15 +206,15 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
               />
             ))}
           </div>
-          <p className="text-xs text-[#9890A8] mt-1">過去7日間の推移</p>
+          <p className="text-xs text-slate-400 mt-1">過去7日間の推移</p>
         </div>
 
         {/* Right: Asset count + rank breakdown */}
-        <div className="flex-1 rounded-xl bg-surface-inset border border-kuroko/10 px-4 py-4">
-          <p className="text-xs text-[#9890A8]">登録済み資産</p>
+        <div className="flex-1 rounded-xl bg-[#162035] border border-white/10 px-4 py-4">
+          <p className="text-xs text-slate-400">登録済み資産</p>
           <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-bold text-kuroko tabular-nums">{assetCount}</span>
-            <span className="text-base text-[#9890A8]">件</span>
+            <span className="text-3xl font-bold text-white tabular-nums">{assetCount}</span>
+            <span className="text-base text-slate-400">件</span>
           </div>
           <div className="flex items-center gap-2 mt-3">
             {([
@@ -224,8 +224,8 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
             ] as const).map(({ label, color, count }) => (
               <div key={label} className="flex items-center gap-1" title={`ランク${label}: ${count}件`}>
                 <span className={`w-2 h-2 rounded-full ${color}`} aria-hidden />
-                <span className="text-xs text-[#9890A8] font-semibold">{label}</span>
-                <span className="text-xs text-kuroko tabular-nums">{count}</span>
+                <span className="text-xs text-slate-400 font-semibold">{label}</span>
+                <span className="text-xs text-white tabular-nums">{count}</span>
               </div>
             ))}
           </div>
@@ -233,21 +233,21 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
       </div>
 
       {/* Activity Pulse — 保有資産の鼓動 */}
-      <div className="mt-4 pt-4 border-t border-kuroko/10">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#9890A8] mb-2">保有資産の鼓動</p>
+      <div className="mt-4 pt-4 border-t border-white/10">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">保有資産の鼓動</p>
         <ActivityPulse assetId="demo-user-wallet" />
       </div>
 
       {/* Share passbook milestone */}
-      <div className="mt-4 pt-4 border-t border-kuroko/10">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#9890A8] mb-2">今月の成果をシェア</p>
+      <div className="mt-4 pt-4 border-t border-white/10">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">今月の成果をシェア</p>
         <ShareButton context={{ type: "passbook_milestone" }} seed={0} compact />
       </div>
 
       {/* Recent transactions — passbook style */}
-      <div className="mt-4 pt-4 border-t border-kuroko/10">
+      <div className="mt-4 pt-4 border-t border-white/10">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-semibold text-[#9890A8]">おさいふ通帳</p>
+          <p className="text-xs font-semibold text-slate-400">おさいふ通帳</p>
         </div>
         <PassbookTable transactions={snap.recentTransactions} />
       </div>
@@ -273,18 +273,18 @@ function SesLeverageChart() {
   return (
     <div className="mt-4 section-card p-5">
       <div className="flex items-center gap-2 mb-1">
-        <h2 className="text-base font-bold text-kuroko">SES レバレッジ</h2>
+        <h2 className="text-base font-bold text-white">SES レバレッジ</h2>
         <div className="group relative">
-          <span className="w-4 h-4 rounded-full border border-kuroko/30 flex items-center justify-center text-[10px] text-[#9890A8] cursor-help" aria-label="SESレバレッジとは">?</span>
-          <div className="hidden group-hover:block absolute left-6 top-0 z-10 w-64 rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-xs text-[#4A4464] shadow-card leading-relaxed">
+          <span className="w-4 h-4 rounded-full border border-white/10 flex items-center justify-center text-[10px] text-slate-400 cursor-help" aria-label="SESレバレッジとは">?</span>
+          <div className="hidden group-hover:block absolute left-6 top-0 z-10 w-64 rounded-xl border border-white/10 bg-white px-3 py-2 text-xs text-[#E2E8F0] shadow-card leading-relaxed">
             SESレバレッジとは：あなたが登録した資産が会社の収益にかける乗数効果。還元（リワード）が積み上がるほど倍率が上がります。
           </div>
         </div>
       </div>
-      <p className="text-sm text-[#9890A8] mb-4">登録済み資産が収益に与える乗数効果（法人向け）</p>
+      <p className="text-sm text-slate-400 mb-4">登録済み資産が収益に与える乗数効果（法人向け）</p>
 
       <div className="flex items-baseline gap-2 mb-4">
-        <span className="text-4xl font-bold text-kuroko tabular-nums">{result.multiplier}×</span>
+        <span className="text-4xl font-bold text-white tabular-nums">{result.multiplier}×</span>
         <span className="text-base text-accent-green font-semibold">レバレッジ</span>
       </div>
 
@@ -294,11 +294,11 @@ function SesLeverageChart() {
           return (
             <div key={label}>
               <div className="flex justify-between items-center text-sm mb-1">
-                <span className="text-[#3A3664] flex items-center gap-1.5">
+                <span className="text-[#E2E8F0] flex items-center gap-1.5">
                   <span className={`inline-block w-2 h-2 rounded-sm ${color}`} aria-hidden />
                   {label}
                 </span>
-                <span className="font-semibold text-kuroko tabular-nums">¥{value.toLocaleString("ja-JP")}</span>
+                <span className="font-semibold text-white tabular-nums">¥{value.toLocaleString("ja-JP")}</span>
               </div>
               <div className="h-2 rounded-full bg-kuroko/10">
                 <div className={`h-2 rounded-full ${color} transition-all`} style={{ width: `${pct}%` }} />
@@ -308,9 +308,9 @@ function SesLeverageChart() {
         })}
       </div>
 
-      <div className="mt-4 pt-3 border-t border-kuroko/10 flex justify-between text-sm">
-        <span className="text-[#9890A8]">合計収入（予測含む）</span>
-        <span className="font-bold text-kuroko tabular-nums">¥{result.totalIncome.toLocaleString("ja-JP")}</span>
+      <div className="mt-4 pt-3 border-t border-white/10 flex justify-between text-sm">
+        <span className="text-slate-400">合計収入（予測含む）</span>
+        <span className="font-bold text-white tabular-nums">¥{result.totalIncome.toLocaleString("ja-JP")}</span>
       </div>
     </div>
   );
@@ -337,17 +337,17 @@ function GamificationHeader({ owned }: { owned: OwnershipRecord[] }) {
             <span className={`rounded-full px-3 py-0.5 text-xs font-bold ${style.bg} ${style.text}`}>
               {rankResult.rank}
             </span>
-            <p className="text-xs uppercase tracking-widest text-[#9890A8]">貢献ランク</p>
+            <p className="text-xs uppercase tracking-widest text-slate-400">貢献ランク</p>
           </div>
           {rankResult.nextRank ? (
             <>
-              <p className={`mt-2 text-base font-medium ${isClose ? "text-kaki" : "text-[#3A3664]"}`}>
+              <p className={`mt-2 text-base font-medium ${isClose ? "text-kaki" : "text-[#E2E8F0]"}`}>
                 {isClose ? "あと一歩！ " : ""}{rankResult.nextRank} まで {100 - rankResult.progress}%
               </p>
               <div className="mt-1.5 h-2 w-full rounded-full bg-kuroko/10">
                 <div className="h-2 rounded-full bg-kaki transition-all duration-500" style={{ width: `${rankResult.progress}%` }} />
               </div>
-              <p className="mt-1 text-sm text-[#9890A8]">累計スコア {rankResult.score} pt</p>
+              <p className="mt-1 text-sm text-slate-400">累計スコア {rankResult.score} pt</p>
             </>
           ) : (
             <p className="mt-2 text-base font-medium text-kaki">最高ランク達成！スキルエコノミーのパイオニア</p>
@@ -355,7 +355,7 @@ function GamificationHeader({ owned }: { owned: OwnershipRecord[] }) {
         </div>
         <div className="sm:max-w-[220px] rounded-xl border border-kaki/20 bg-white px-4 py-3 shadow-sm">
           <p className="text-xs uppercase tracking-widest text-kaki font-semibold">AI レコメンド</p>
-          <p className="mt-1.5 text-sm text-[#3A3664] leading-relaxed">{rankResult.nextAction}</p>
+          <p className="mt-1.5 text-sm text-[#E2E8F0] leading-relaxed">{rankResult.nextAction}</p>
         </div>
       </div>
     </div>
@@ -375,7 +375,7 @@ function PublishChecklist() {
     }
   }, [step]);
   return (
-    <div className="absolute inset-0 z-10 rounded-2xl bg-white/95 flex flex-col items-center justify-center gap-1 text-sm text-[#3A3664]">
+    <div className="absolute inset-0 z-10 rounded-2xl bg-white/95 flex flex-col items-center justify-center gap-1 text-sm text-[#E2E8F0]">
       {PUBLISH_CHECKS.slice(0, step + 1).map((msg) => (
         <p key={msg} className="flex items-center gap-1.5">
           <span className="text-accent-green">✓</span> {msg}
@@ -411,14 +411,14 @@ function AssetCard({ record }: { record: OwnershipRecord }) {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-green" />
         </span>
-        <span className="text-xs text-[#9890A8]">稼働中</span>
+        <span className="text-xs text-slate-400">稼働中</span>
       </div>
 
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="font-semibold text-kuroko text-base truncate">{record.assetTitle}</h2>
-          <p className="mt-0.5 text-sm text-[#9890A8]">取得日: {new Date(record.acquiredAt).toLocaleDateString("ja-JP")}</p>
-          <p className="mt-0.5 text-xs text-[#9890A8] font-mono truncate">{record.assetId}</p>
+          <h2 className="font-semibold text-white text-base truncate">{record.assetTitle}</h2>
+          <p className="mt-0.5 text-sm text-slate-400">取得日: {new Date(record.acquiredAt).toLocaleDateString("ja-JP")}</p>
+          <p className="mt-0.5 text-xs text-slate-400 font-mono truncate">{record.assetId}</p>
         </div>
         <button
           type="button"
@@ -432,14 +432,14 @@ function AssetCard({ record }: { record: OwnershipRecord }) {
 
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
         <div>
-          <div className="flex justify-between text-sm text-[#3A3664]">
+          <div className="flex justify-between text-sm text-[#E2E8F0]">
             <span>稼働率</span>
             <span className="tabular-nums font-medium">{health.uptimePercent}%</span>
           </div>
           <StatBar value={health.uptimePercent} color="bg-kaki" />
         </div>
         <div>
-          <div className="flex justify-between text-sm text-[#3A3664]">
+          <div className="flex justify-between text-sm text-[#E2E8F0]">
             <span>成功率</span>
             <span className="tabular-nums font-medium">{health.successRate}%</span>
           </div>
@@ -447,13 +447,13 @@ function AssetCard({ record }: { record: OwnershipRecord }) {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-kuroko/10 flex flex-wrap items-center gap-3">
-        <Link href={`/asset/${record.assetId}`} className="text-sm text-[#9890A8] hover:text-kaki transition-colors">
+      <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+        <Link href={`/asset/${record.assetId}`} className="text-sm text-slate-400 hover:text-kaki transition-colors">
           資産詳細を見る →
         </Link>
         <Link
           href={`/sell?remix=${record.assetId}&from=${encodeURIComponent(record.assetTitle)}`}
-          className="ml-auto text-sm border border-kuroko/20 text-[#3A3664] rounded-lg px-3 py-1.5 hover:bg-kuroko/5 active:scale-[0.97] transition-all"
+          className="ml-auto text-sm border border-white/10 text-[#E2E8F0] rounded-lg px-3 py-1.5 hover:bg-kuroko/5 active:scale-[0.97] transition-all"
           aria-label="この資産を組み合わせて登録"
         >
           組み合わせて登録
@@ -476,15 +476,15 @@ function PayoutPreferencePanel() {
 
   return (
     <div className="mt-5 section-card p-5">
-      <h2 className="text-base font-semibold text-kuroko">売上の受け取り方</h2>
-      <p className="mt-0.5 text-sm text-[#9890A8]">資産が売れたときの収益受け取り方法</p>
+      <h2 className="text-base font-semibold text-white">売上の受け取り方</h2>
+      <p className="mt-0.5 text-sm text-slate-400">資産が売れたときの収益受け取り方法</p>
       <div className="mt-3 flex gap-4">
         {(["JPY", "JPYC"] as Currency[]).map((c) => (
           <label key={c} className="flex items-center gap-2 cursor-pointer">
             <input type="radio" name="payoutCurrency" value={c} checked={currency === c}
               onChange={() => { setCurrency(c); setSaved(false); }} className="accent-kaki"
               aria-label={`${CURRENCY_LABELS[c]}で受け取る`} />
-            <span className="text-base font-medium text-kuroko">{CURRENCY_LABELS[c]}</span>
+            <span className="text-base font-medium text-white">{CURRENCY_LABELS[c]}</span>
             {c === "JPYC" && (
               <span className="text-xs text-accent-green bg-accent-green/10 rounded-full px-2 py-0.5">安心の電子マネー</span>
             )}
@@ -509,15 +509,15 @@ function PaymentStats() {
   const max = Math.max(...data.map((d) => d.count));
   return (
     <div className="section-card p-4">
-      <p className="text-xs uppercase tracking-widest text-[#9890A8]">支払い内訳</p>
+      <p className="text-xs uppercase tracking-widest text-slate-400">支払い内訳</p>
       <div className="mt-3 space-y-2">
         {data.map(({ label, count, color }) => (
           <div key={label} className="flex items-center gap-3">
-            <span className="shrink-0 text-sm text-[#3A3664] w-24 truncate">{label}</span>
+            <span className="shrink-0 text-sm text-[#E2E8F0] w-24 truncate">{label}</span>
             <div className="flex-1 h-1.5 rounded-full bg-kuroko/10">
               <div className={`h-1.5 rounded-full ${color} transition-all`} style={{ width: `${(count / max) * 100}%` }} />
             </div>
-            <span className="w-4 text-sm tabular-nums text-kuroko font-semibold shrink-0">{count}</span>
+            <span className="w-4 text-sm tabular-nums text-white font-semibold shrink-0">{count}</span>
           </div>
         ))}
       </div>
@@ -566,8 +566,8 @@ export default function WalletPage() {
 
       <div className="mt-4 flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-kuroko leading-snug flex items-center gap-2"><UserIcon size={22} className="text-kaki" />💰 わたしの お財布</h1>
-          <p className="mt-1 text-base text-[#9890A8] leading-relaxed">
+          <h1 className="text-2xl font-bold tracking-tight text-white leading-snug flex items-center gap-2"><UserIcon size={22} className="text-kaki" />💰 わたしの お財布</h1>
+          <p className="mt-1 text-base text-slate-400 leading-relaxed">
             たからものの収益と信用スコアを一覧できます。
           </p>
         </div>
@@ -589,7 +589,7 @@ export default function WalletPage() {
 
       {!mounted ? (
         <div className="mt-12 section-card p-8 text-center">
-          <p className="text-base text-[#9890A8]">読み込み中…</p>
+          <p className="text-base text-slate-400">読み込み中…</p>
         </div>
       ) : (
         <>
@@ -605,11 +605,11 @@ export default function WalletPage() {
           {/* Summary stats */}
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="section-card p-4">
-              <p className="text-xs uppercase tracking-widest text-[#9890A8]">登録済み資産</p>
-              <p className="mt-1 text-2xl font-bold text-kuroko tabular-nums">{owned.length}</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400">登録済み資産</p>
+              <p className="mt-1 text-2xl font-bold text-white tabular-nums">{owned.length}</p>
             </div>
             <div className="section-card p-4">
-              <p className="text-xs uppercase tracking-widest text-[#9890A8]">AI評価済み</p>
+              <p className="text-xs uppercase tracking-widest text-slate-400">AI評価済み</p>
               <p className="mt-1 text-2xl font-bold text-kaki tabular-nums">{owned.length}</p>
             </div>
             <PaymentStats />
@@ -617,7 +617,7 @@ export default function WalletPage() {
 
           {/* SES Leverage — corporate mode toggle */}
           <div className="mt-5 flex items-center gap-3">
-            <span className="text-sm font-medium text-[#3A3664]">法人モード</span>
+            <span className="text-sm font-medium text-[#E2E8F0]">法人モード</span>
             <button
               type="button"
               role="switch"
@@ -628,7 +628,7 @@ export default function WalletPage() {
             >
               <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${corporateMode ? "translate-x-6" : "translate-x-1"}`} />
             </button>
-            <span className="text-sm text-[#9890A8]">SES レバレッジを表示</span>
+            <span className="text-sm text-slate-400">SES レバレッジを表示</span>
           </div>
 
           {corporateMode && <SesLeverageChart />}
@@ -639,8 +639,8 @@ export default function WalletPage() {
           {/* Asset list */}
           {owned.length === 0 ? (
             <div className="mt-8 section-card p-8 text-center">
-              <p className="text-base text-[#9890A8]">まだ保有資産がありません。</p>
-              <p className="mt-1 text-sm text-[#9890A8]">マーケットでスキル資産を購入すると、ここに表示されます。</p>
+              <p className="text-base text-slate-400">まだ保有資産がありません。</p>
+              <p className="mt-1 text-sm text-slate-400">マーケットでスキル資産を購入すると、ここに表示されます。</p>
               <Link href="/marketplace" className="btn-primary mt-5" aria-label="マーケットで資産を探す">
                 マーケットを見る →
               </Link>

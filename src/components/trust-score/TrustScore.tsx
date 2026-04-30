@@ -16,7 +16,7 @@ export interface TrustScoreProps {
 
 const rankColor: Record<string, string> = {
   S: "bg-kaki text-white",
-  A: "bg-zinc-300 text-kuroko",
+  A: "bg-zinc-300 text-white",
   B: "bg-amber-700 text-white"
 };
 
@@ -30,8 +30,8 @@ export function TrustScore({ input, ownerName = "Owner", className = "" }: Trust
     >
       <header className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-[11px] uppercase tracking-widest text-[#9890A8]">Trust Score</p>
-          <h3 className="text-sm font-semibold text-kuroko mt-0.5">{ownerName}</h3>
+          <p className="text-[11px] uppercase tracking-widest text-slate-400">Trust Score</p>
+          <h3 className="text-sm font-semibold text-white mt-0.5">{ownerName}</h3>
         </div>
         <span
           className={`rounded-full px-3 py-1 text-xs font-bold ${rankColor[result.rank]}`}
@@ -42,8 +42,8 @@ export function TrustScore({ input, ownerName = "Owner", className = "" }: Trust
       </header>
 
       <div className="mt-3 flex items-baseline gap-2">
-        <span className="text-4xl font-bold text-kuroko tabular-nums">{result.score}</span>
-        <span className="text-sm text-[#9890A8]">/ 1000</span>
+        <span className="text-4xl font-bold text-white tabular-nums">{result.score}</span>
+        <span className="text-sm text-slate-400">/ 1000</span>
       </div>
 
       <dl className="mt-4 space-y-2.5">
@@ -52,7 +52,7 @@ export function TrustScore({ input, ownerName = "Owner", className = "" }: Trust
         <Bar label="X 拡散" value={input.xAmplification} weight={0.2} />
       </dl>
 
-      <p className="mt-3 text-[11px] text-[#9890A8]">
+      <p className="mt-3 text-[11px] text-slate-400">
         最終更新: {new Date(result.updatedAt).toLocaleString("ja-JP")}
       </p>
     </section>
@@ -63,9 +63,9 @@ function Bar({ label, value, weight }: { label: string; value: number; weight: n
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div>
-      <div className="flex justify-between text-xs text-[#4A4464]">
+      <div className="flex justify-between text-xs text-[#E2E8F0]">
         <dt>
-          {label} <span className="text-[#9890A8]">×{weight}</span>
+          {label} <span className="text-slate-400">×{weight}</span>
         </dt>
         <dd className="tabular-nums font-medium">{Math.round(pct)}</dd>
       </div>

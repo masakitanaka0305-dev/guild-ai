@@ -39,7 +39,7 @@ function PaymentTile({
             : "border-kaki/30 bg-kaki/5 hover:border-kaki/60"
           : selected
           ? "border-kaki bg-kaki/5 ring-1 ring-kaki/30"
-          : "border-kuroko/15 bg-white hover:border-kaki/40"
+          : "border-white/10 bg-white hover:border-kaki/40"
       }`}
     >
       {badge && (
@@ -49,9 +49,9 @@ function PaymentTile({
       )}
       <div className="flex items-center gap-2">
         <span className="text-lg leading-none">{icon}</span>
-        <span className={`font-semibold text-kuroko ${prominent ? "text-base" : "text-sm"}`}>{label}</span>
+        <span className={`font-semibold text-white ${prominent ? "text-base" : "text-sm"}`}>{label}</span>
       </div>
-      <p className="mt-0.5 text-[11px] text-[#9890A8] leading-tight">{sublabel}</p>
+      <p className="mt-0.5 text-[11px] text-slate-400 leading-tight">{sublabel}</p>
     </button>
   );
 }
@@ -60,25 +60,25 @@ function OnrampModal({ amount, onClose }: { amount: number; onClose: () => void 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 px-4">
       <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-        <h3 className="text-base font-bold text-kuroko">クレカでデジタル円を購入して支払う</h3>
-        <p className="mt-1 text-sm text-[#9890A8]">クレジットカードでデジタル円を購入し、即時に決済します</p>
+        <h3 className="text-base font-bold text-white">クレカでデジタル円を購入して支払う</h3>
+        <p className="mt-1 text-sm text-slate-400">クレジットカードでデジタル円を購入し、即時に決済します</p>
 
         <div className="mt-4 space-y-3">
-          <div className="rounded-xl border border-kuroko/10 bg-surface-inset px-4 py-3">
-            <p className="text-xs text-[#9890A8]">購入金額</p>
-            <p className="mt-1 text-2xl font-bold text-kuroko tabular-nums">
+          <div className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
+            <p className="text-xs text-slate-400">購入金額</p>
+            <p className="mt-1 text-2xl font-bold text-white tabular-nums">
               ¥{amount.toLocaleString("ja-JP")}
             </p>
-            <p className="text-xs text-[#9890A8]">日本円と同じ価値のデジタル円で支払われます</p>
+            <p className="text-xs text-slate-400">日本円と同じ価値のデジタル円で支払われます</p>
           </div>
           <div className="rounded-xl border border-kaki/20 bg-kaki/5 px-4 py-3">
             <p className="text-xs text-kaki font-medium">
               デジタル円は日本円とほぼ同じ価値で、安全に保管できる安心の電子マネーです
             </p>
           </div>
-          <div className="rounded-xl border border-kuroko/10 bg-surface-inset px-4 py-3">
-            <p className="text-xs text-[#9890A8] mb-1">カード番号（モック）</p>
-            <p className="text-base font-mono text-kuroko">**** **** **** 4242</p>
+          <div className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
+            <p className="text-xs text-slate-400 mb-1">カード番号（モック）</p>
+            <p className="text-base font-mono text-white">**** **** **** 4242</p>
           </div>
         </div>
 
@@ -87,7 +87,7 @@ function OnrampModal({ amount, onClose }: { amount: number; onClose: () => void 
             type="button"
             onClick={onClose}
             aria-label="キャンセル"
-            className="flex-1 rounded-xl border border-kuroko/20 py-3 text-sm text-[#4A4464] hover:bg-kuroko/5 transition-colors"
+            className="flex-1 rounded-xl border border-white/10 py-3 text-sm text-[#E2E8F0] hover:bg-kuroko/5 transition-colors"
           >
             キャンセル
           </button>
@@ -126,7 +126,7 @@ function SetupChecklist({ onDone }: { onDone: () => void }) {
   return (
     <div className="mt-4 rounded-xl border border-kaki/20 bg-kaki/5 px-4 py-4 space-y-2">
       {SETUP_STEPS.slice(0, step + 1).map((msg, i) => (
-        <p key={msg} className="flex items-center gap-2 text-sm text-[#3A3664]">
+        <p key={msg} className="flex items-center gap-2 text-sm text-[#E2E8F0]">
           <span className={i < step ? "text-accent-green" : "text-kaki animate-pulse"}>
             {i < step ? "✓" : "⟳"}
           </span>
@@ -205,24 +205,24 @@ export function CheckoutSection({ assetId, assetTitle: _assetTitle, price, onSuc
       <section className="mt-4 section-card p-5">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-accent-green text-xl" aria-hidden>✓</span>
-          <h2 className="text-base font-bold text-kuroko">購入完了 — スキル資産を取得しました</h2>
+          <h2 className="text-base font-bold text-white">購入完了 — スキル資産を取得しました</h2>
         </div>
         <div className="rounded-xl border border-accent-green/20 bg-accent-green/5 px-4 py-3 space-y-1">
-          <p className="text-xs text-[#9890A8]">アクセスキー</p>
-          <p className="font-mono text-xs text-kuroko break-all">{flow.apiKey}</p>
+          <p className="text-xs text-slate-400">アクセスキー</p>
+          <p className="font-mono text-xs text-white break-all">{flow.apiKey}</p>
         </div>
         {flow.receiptUrl && (
-          <p className="mt-2 text-sm text-[#9890A8]">領収書: <span className="text-kaki underline">{flow.receiptUrl}</span></p>
+          <p className="mt-2 text-sm text-slate-400">領収書: <span className="text-kaki underline">{flow.receiptUrl}</span></p>
         )}
         {flow.txHash && (
-          <p className="mt-2 text-sm text-[#9890A8]">取引ID: <span className="font-mono text-xs">{flow.txHash}</span></p>
+          <p className="mt-2 text-sm text-slate-400">取引ID: <span className="font-mono text-xs">{flow.txHash}</span></p>
         )}
         {showSetupChecklist && (
           <SetupChecklist onDone={() => setShowSetupChecklist(false)} />
         )}
         {/* Share purchase */}
-        <div className="mt-4 pt-4 border-t border-kuroko/10">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#9890A8] mb-3">購入をシェアする</p>
+        <div className="mt-4 pt-4 border-t border-white/10">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">購入をシェアする</p>
           <ShareButton context={{ type: "purchase_done", assetId }} seed={0} compact />
         </div>
         <div className="mt-4">
@@ -239,8 +239,8 @@ export function CheckoutSection({ assetId, assetTitle: _assetTitle, price, onSuc
       <section className="mt-4 section-card p-5">
         <div className="flex items-center justify-between gap-4 mb-4">
           <div>
-            <p className="text-xs text-[#9890A8]">お値段</p>
-            <p className="text-3xl font-bold text-kuroko mt-0.5">
+            <p className="text-xs text-slate-400">お値段</p>
+            <p className="text-3xl font-bold text-white mt-0.5">
               ¥{price.toLocaleString("ja-JP")}
             </p>
           </div>
@@ -249,7 +249,7 @@ export function CheckoutSection({ assetId, assetTitle: _assetTitle, price, onSuc
           </span>
         </div>
 
-        <p className="text-sm font-semibold text-[#3A3664] mb-3">お支払い方法を選択</p>
+        <p className="text-sm font-semibold text-[#E2E8F0] mb-3">お支払い方法を選択</p>
 
         {/* Card — full-width prominent top tile */}
         <PaymentTile
@@ -293,7 +293,7 @@ export function CheckoutSection({ assetId, assetTitle: _assetTitle, price, onSuc
           {flow.kind === "processing" ? "決済処理中…" : flow.kind === "onramp-loading" ? "購入中…" : "購入してアクセスキーを取得する"}
         </button>
 
-        <p className="mt-2 text-xs text-center text-[#9890A8]">
+        <p className="mt-2 text-xs text-center text-slate-400">
           決済確認後にアクセスキーを発行します（安全な認証システムで保護）
         </p>
       </section>

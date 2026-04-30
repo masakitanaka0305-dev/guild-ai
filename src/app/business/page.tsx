@@ -25,7 +25,7 @@ export default function BusinessPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-3xl mx-auto">
-      <Link href="/" className="text-xs text-[#9890A8] hover:text-kaki transition-colors">
+      <Link href="/" className="text-xs text-slate-400 hover:text-kaki transition-colors">
         ← ホームに戻る
       </Link>
 
@@ -107,8 +107,8 @@ export default function BusinessPage() {
         ].map(({ icon, title, desc }) => (
           <div key={title} className="section-card p-4 text-center">
             <div className="text-2xl mb-2">{icon}</div>
-            <p className="text-sm font-bold text-kuroko mb-1">{title}</p>
-            <p className="text-xs text-[#9890A8] leading-relaxed">{desc}</p>
+            <p className="text-sm font-bold text-white mb-1">{title}</p>
+            <p className="text-xs text-slate-400 leading-relaxed">{desc}</p>
           </div>
         ))}
       </div>
@@ -116,7 +116,7 @@ export default function BusinessPage() {
       {/* Latest zero-day preview */}
       <div className="mt-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-bold text-kuroko">最新のゼロデイ情報</h2>
+          <h2 className="text-sm font-bold text-white">最新のゼロデイ情報</h2>
           <Link href="/feed/zero-day" className="text-xs text-[var(--primary,#06B6D4)] hover:underline font-semibold">
             すべて見る →
           </Link>
@@ -132,8 +132,8 @@ export default function BusinessPage() {
                 {event.priority === "critical" ? "緊急" : event.priority === "high" ? "重要" : "通常"}
               </span>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-kuroko truncate">{event.title}</p>
-                <p className="text-[10px] text-[#9890A8] mt-0.5 line-clamp-1">{event.description}</p>
+                <p className="text-xs font-semibold text-white truncate">{event.title}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-1">{event.description}</p>
               </div>
               <span className={`shrink-0 rounded-full text-[10px] px-2 py-0.5 ${
                 event.status === "covered"
@@ -149,8 +149,8 @@ export default function BusinessPage() {
 
       {/* Plan CTA */}
       <div className="mt-8 section-card p-6 text-center">
-        <h2 className="text-base font-bold text-kuroko mb-1">チームプランで始める</h2>
-        <p className="text-sm text-[#9890A8] mb-4 leading-relaxed">
+        <h2 className="text-base font-bold text-white mb-1">チームプランで始める</h2>
+        <p className="text-sm text-slate-400 mb-4 leading-relaxed">
           月額定額で全ゼロデイアラートを受信。
           Slack・Teams 連携、API 配信にも対応。
         </p>
@@ -163,12 +163,12 @@ export default function BusinessPage() {
           </Link>
           <Link
             href="/marketplace/pro"
-            className="inline-block rounded-xl border border-kuroko/20 px-8 py-3 text-sm font-bold text-kuroko hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors"
+            className="inline-block rounded-xl border border-white/10 px-8 py-3 text-sm font-bold text-white hover:bg-[var(--n-surface-2,#F5F3EE)] transition-colors"
           >
             法人検索・相談
           </Link>
         </div>
-        <p className="mt-3 text-[10px] text-[#9890A8]">初月無料 · クレジットカード不要（モック）</p>
+        <p className="mt-3 text-[10px] text-slate-400">初月無料 · クレジットカード不要（モック）</p>
       </div>
     </main>
   );

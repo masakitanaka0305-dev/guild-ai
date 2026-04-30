@@ -69,7 +69,7 @@ export function SupportChat() {
         <div
           role="dialog"
           aria-label="Shima サポートチャット"
-          className="fixed right-4 bottom-40 lg:bottom-20 z-50 w-80 max-h-[480px] flex flex-col rounded-2xl shadow-2xl border border-kuroko/10 bg-white overflow-hidden"
+          className="fixed right-4 bottom-40 lg:bottom-20 z-50 w-80 max-h-[480px] flex flex-col rounded-2xl shadow-2xl border border-white/10 bg-white overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center gap-2 px-4 py-3 bg-kuroko">
@@ -84,7 +84,7 @@ export function SupportChat() {
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 min-h-0">
             {messages.length === 0 && (
               <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-xl rounded-bl-sm px-3 py-2 bg-[var(--n-surface-2,#F5F3EE)] text-kuroko text-xs leading-relaxed">
+                <div className="max-w-[80%] rounded-xl rounded-bl-sm px-3 py-2 bg-[var(--n-surface-2,#F5F3EE)] text-white text-xs leading-relaxed">
                   {getGreeting()}
                 </div>
               </div>
@@ -95,7 +95,7 @@ export function SupportChat() {
                   className={`max-w-[80%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
                     m.role === "user"
                       ? "bg-[var(--primary,#06B6D4)] text-white rounded-br-sm"
-                      : "bg-[var(--n-surface-2,#F5F3EE)] text-kuroko rounded-bl-sm"
+                      : "bg-[var(--n-surface-2,#F5F3EE)] text-white rounded-bl-sm"
                   }`}
                 >
                   {m.content}
@@ -122,14 +122,14 @@ export function SupportChat() {
           )}
 
           {/* Input */}
-          <div className="flex gap-2 px-3 py-2 border-t border-kuroko/10">
+          <div className="flex gap-2 px-3 py-2 border-t border-white/10">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
               placeholder="メッセージを入力…"
-              className="flex-1 text-xs rounded-xl border border-kuroko/15 bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-kaki/30"
+              className="flex-1 text-xs rounded-xl border border-white/10 bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-kaki/30"
               aria-label="メッセージを入力"
             />
             <button

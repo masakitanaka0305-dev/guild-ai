@@ -45,7 +45,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Xでシェア"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-kuroko/20 px-3 py-1.5 text-xs font-semibold text-kuroko hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
         >
           <XLogo />
           シェア
@@ -64,7 +64,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
           type="button"
           onClick={handleCopy}
           aria-label="テキストをコピー"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-kuroko/20 px-3 py-1.5 text-xs font-semibold text-[#9890A8] hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-slate-400 hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
         >
           {copied ? "✓" : "コピー"}
         </button>
@@ -75,9 +75,9 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
   return (
     <div className={`space-y-3 ${className}`}>
       {/* Preview of share text */}
-      <div className="rounded-xl bg-kuroko/5 border border-kuroko/10 px-4 py-3">
-        <p className="text-xs text-[#9890A8] mb-1.5 font-semibold uppercase tracking-widest">シェア文</p>
-        <p className="text-sm text-[#4A4464] leading-relaxed whitespace-pre-wrap">{shareText}</p>
+      <div className="rounded-xl bg-kuroko/5 border border-white/10 px-4 py-3">
+        <p className="text-xs text-slate-400 mb-1.5 font-semibold uppercase tracking-widest">シェア文</p>
+        <p className="text-sm text-[#E2E8F0] leading-relaxed whitespace-pre-wrap">{shareText}</p>
       </div>
 
       {/* Share buttons row */}
@@ -87,7 +87,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Xでシェアする"
-          className="inline-flex items-center gap-2 rounded-xl border border-kuroko/20 px-4 py-2.5 text-sm font-semibold text-kuroko hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
+          className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-white hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
         >
           <XLogo />
           Xでシェア
@@ -109,7 +109,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
             type="button"
             onClick={handleNative}
             aria-label="共有する"
-            className="inline-flex items-center gap-2 rounded-xl border border-kuroko/20 px-4 py-2.5 text-sm font-semibold text-[#9890A8] hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
           >
             共有
           </button>
@@ -118,7 +118,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
             type="button"
             onClick={handleCopy}
             aria-label="テキストをコピーする"
-            className="inline-flex items-center gap-2 rounded-xl border border-kuroko/20 px-4 py-2.5 text-sm font-semibold text-[#9890A8] hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-kuroko/5 transition-colors active:scale-[0.97]"
           >
             {copied ? "✓ コピー済み" : "コピーする"}
           </button>
@@ -129,7 +129,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
             type="button"
             onClick={handleCopy}
             aria-label="テキストをコピーする"
-            className="inline-flex items-center gap-2 rounded-xl border border-kuroko/20 px-4 py-2.5 text-sm font-semibold text-[#9890A8] hover:bg-kuroko/5 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-400 hover:bg-kuroko/5 transition-colors"
           >
             {copied ? "✓ コピー済み" : "コピーする"}
           </button>

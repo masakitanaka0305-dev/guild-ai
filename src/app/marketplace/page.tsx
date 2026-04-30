@@ -56,7 +56,7 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
       </div>
 
       <div className="flex items-start justify-between gap-2">
-        <h2 className="text-base font-semibold leading-snug text-kuroko line-clamp-2 flex-1">
+        <h2 className="text-base font-semibold leading-snug text-white line-clamp-2 flex-1">
           {personaCard.headline}
         </h2>
         <div className="flex flex-col items-end gap-1 flex-shrink-0">
@@ -78,15 +78,15 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
 
       <ul className="mt-2 space-y-1">
         {personaCard.bullets.slice(0, 2).map((bullet) => (
-          <li key={bullet} className="flex gap-1.5 text-xs text-[#4A4464]">
+          <li key={bullet} className="flex gap-1.5 text-xs text-[#E2E8F0]">
             <span className="text-kaki mt-0.5">·</span>
             {bullet}
           </li>
         ))}
       </ul>
 
-      <div className="mt-3 flex items-baseline justify-between border-t border-kuroko/10 pt-2">
-        <span className="text-sm text-[#9890A8]">{personaCard.priceCallout}</span>
+      <div className="mt-3 flex items-baseline justify-between border-t border-white/10 pt-2">
+        <span className="text-sm text-slate-400">{personaCard.priceCallout}</span>
         <span className="text-xs font-semibold text-kaki">{personaCard.ctaLabel}</span>
       </div>
 
@@ -127,7 +127,7 @@ function UnclaimedCard({ draft }: { draft: ProvisionalListing }) {
 
       <div className="space-y-1 mb-2">
         {draft.useCases.slice(0, 2).map((uc) => (
-          <p key={uc} className="text-[10px] text-[#4A4464] flex gap-1">
+          <p key={uc} className="text-[10px] text-[#E2E8F0] flex gap-1">
             <span className="text-[#FFCC00] shrink-0">·</span>
             <span className="line-clamp-1">{uc}</span>
           </p>
@@ -212,8 +212,8 @@ function MarketplaceContent() {
 
       <div className="mt-4 flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-kuroko leading-snug flex items-center gap-2"><ShoppingBagIcon size={22} className="text-kaki" />保管庫（スキルの貯金箱）</h1>
-          <p className="mt-1 text-base text-[#9890A8] leading-relaxed">
+          <h1 className="text-2xl font-bold tracking-tight text-white leading-snug flex items-center gap-2"><ShoppingBagIcon size={22} className="text-kaki" />保管庫（スキルの貯金箱）</h1>
+          <p className="mt-1 text-base text-slate-400 leading-relaxed">
             AI評価済みスキル資産の保管庫。良質なたからものほど高評価・高価格で表示されます。
           </p>
         </div>
@@ -223,14 +223,14 @@ function MarketplaceContent() {
       </div>
 
       {/* View tabs: all / registered / unclaimed */}
-      <div role="tablist" className="flex gap-1 border-b border-kuroko/10 mt-4 mb-0">
+      <div role="tablist" className="flex gap-1 border-b border-white/10 mt-4 mb-0">
         {(["all", "registered", "unclaimed"] as ViewTab[]).map((tab) => (
           <button
             key={tab}
             role="tab"
             aria-selected={viewTab === tab}
             onClick={() => setViewTab(tab)}
-            className={`px-4 py-2 text-sm font-semibold transition-colors ${viewTab === tab ? "border-b-2 border-kaki text-kaki" : "text-[#9890A8] hover:text-kuroko"}`}
+            className={`px-4 py-2 text-sm font-semibold transition-colors ${viewTab === tab ? "border-b-2 border-kaki text-kaki" : "text-slate-400 hover:text-white"}`}
           >
             {tab === "all" ? "すべて" : tab === "registered" ? "登録済み" : "未請求"}
           </button>
@@ -254,7 +254,7 @@ function MarketplaceContent() {
           {/* Controls */}
           <div className="mt-4 section-card p-4 flex flex-wrap gap-5 items-end">
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#9890A8]">並び順</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">並び順</p>
               <div className="flex gap-1.5 flex-wrap">
                 {SORT_LABELS.map(({ key, label }) => (
                   <button
@@ -264,7 +264,7 @@ function MarketplaceContent() {
                     className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-all active:scale-[0.97] ${
                       sortKey === key
                         ? "border-kaki bg-kaki text-white"
-                        : "border-kuroko/20 text-[#3A3664] hover:border-kaki/40"
+                        : "border-white/10 text-[#E2E8F0] hover:border-kaki/40"
                     }`}
                   >
                     {label}
@@ -274,7 +274,7 @@ function MarketplaceContent() {
             </div>
 
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#9890A8]">ランク</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">ランク</p>
               <div className="flex gap-1.5">
                 {ALL_RANKS.map((rank) => (
                   <button
@@ -287,9 +287,9 @@ function MarketplaceContent() {
                         ? rank === "S"
                           ? "border-kaki bg-kaki text-white"
                           : rank === "A"
-                          ? "border-zinc-400 bg-zinc-300 text-kuroko"
+                          ? "border-zinc-400 bg-zinc-300 text-white"
                           : "border-amber-800 bg-amber-700 text-white"
-                        : "border-kuroko/20 text-[#9890A8]"
+                        : "border-white/10 text-slate-400"
                     }`}
                   >
                     {rank}
@@ -299,8 +299,8 @@ function MarketplaceContent() {
             </div>
 
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#9890A8]">
-                最低 信用スコア: <span className="text-kuroko font-bold">{minTrustScore}</span>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                最低 信用スコア: <span className="text-white font-bold">{minTrustScore}</span>
               </p>
               <input
                 type="range"
@@ -313,12 +313,12 @@ function MarketplaceContent() {
             </div>
 
             <fieldset>
-              <legend className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#9890A8]">表示スタイル</legend>
+              <legend className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">表示スタイル</legend>
               <div className="flex gap-1.5">
                 {(["general", "pm", "engineer"] as Persona[]).map((p) => (
                   <button key={p} onClick={() => setPersona(p)} aria-pressed={persona === p}
                     className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-all active:scale-[0.97] ${
-                      persona === p ? "border-kaki bg-kaki text-white" : "border-kuroko/20 text-[#3A3664] hover:border-kaki/40"
+                      persona === p ? "border-kaki bg-kaki text-white" : "border-white/10 text-[#E2E8F0] hover:border-kaki/40"
                     }`}>
                     {p === "general" ? "一般" : p === "pm" ? "PM" : "エンジニア"}
                   </button>
@@ -326,13 +326,13 @@ function MarketplaceContent() {
               </div>
             </fieldset>
 
-            <p className="ml-auto text-sm text-[#9890A8] self-end">{displayedItems?.length ?? draftListings.length} 件</p>
+            <p className="ml-auto text-sm text-slate-400 self-end">{displayedItems?.length ?? draftListings.length} 件</p>
           </div>
 
           {/* Asset grid */}
           {!displayedItems || displayedItems.length === 0 ? (
             <div className="mt-12 text-center">
-              <p className="text-base text-[#9890A8]">条件に一致する資産がありません。</p>
+              <p className="text-base text-slate-400">条件に一致する資産がありません。</p>
             </div>
           ) : (
             <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -359,7 +359,7 @@ export default function MarketplacePage() {
     <Suspense fallback={
       <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-4xl mx-auto">
         <div className="mt-12 section-card p-8 text-center">
-          <p className="text-base text-[#9890A8]">読み込み中…</p>
+          <p className="text-base text-slate-400">読み込み中…</p>
         </div>
       </main>
     }>

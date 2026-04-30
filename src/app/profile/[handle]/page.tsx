@@ -126,22 +126,22 @@ export default function HandleProfilePage({ params }: { params: { handle: string
         <div className="grid grid-cols-3 gap-3 mb-4">
           <div className="text-center">
             <p className="text-xl font-black tabular-nums text-white">{master.citationCount}</p>
-            <p className="text-[10px] text-[#9890A8]">被引用</p>
+            <p className="text-[10px] text-slate-400">被引用</p>
           </div>
           <div className="text-center">
             <p className="text-xl font-black tabular-nums text-white">{master.discipleCount}</p>
-            <p className="text-[10px] text-[#9890A8]">弟子</p>
+            <p className="text-[10px] text-slate-400">弟子</p>
           </div>
           <div className="text-center">
             <p className="text-xl font-black tabular-nums text-[var(--n-gold,#D4AF37)]">{master.collectiveScore}</p>
-            <p className="text-[10px] text-[#9890A8]">集合知スコア</p>
+            <p className="text-[10px] text-slate-400">集合知スコア</p>
           </div>
         </div>
 
         {/* Master score bar */}
         <div className="mb-4">
           <div className="flex justify-between text-[10px] mb-1">
-            <span className="text-[#9890A8]">マスタースコア</span>
+            <span className="text-slate-400">マスタースコア</span>
             <span className="tabular-nums font-bold text-[var(--n-gold,#D4AF37)]">{master.masterScore} / 1000</span>
           </div>
           <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">

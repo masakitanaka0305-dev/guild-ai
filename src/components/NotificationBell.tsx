@@ -43,7 +43,7 @@ export function NotificationBell({ notifications, unreadCount }: NotificationBel
       >
         <span className="text-xl">🔔</span>
         {effectiveUnread > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-kaki text-[10px] font-bold text-kuroko">
+          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-kaki text-[10px] font-bold text-white">
             {effectiveUnread}
           </span>
         )}
@@ -73,7 +73,7 @@ export function NotificationBell({ notifications, unreadCount }: NotificationBel
                     <span className="text-lg mt-0.5 shrink-0">{TYPE_ICON[n.type] ?? "📣"}</span>
                     <div className="min-w-0">
                       <p className="text-xs font-semibold text-kami truncate">{n.title}</p>
-                      <p className="mt-0.5 text-[11px] text-[#9890A8] leading-relaxed">{n.message}</p>
+                      <p className="mt-0.5 text-[11px] text-slate-400 leading-relaxed">{n.message}</p>
                       <p className="mt-1 text-[10px] text-[#6A607A]">{formatTime(n.createdAt)}</p>
                     </div>
                   </li>
@@ -83,7 +83,7 @@ export function NotificationBell({ notifications, unreadCount }: NotificationBel
             <div className="px-4 py-2 border-t border-white/10">
               <button
                 onClick={() => setOpen(false)}
-                className="text-[11px] text-[#9890A8] hover:text-kaki transition-colors"
+                className="text-[11px] text-slate-400 hover:text-kaki transition-colors"
               >
                 閉じる
               </button>

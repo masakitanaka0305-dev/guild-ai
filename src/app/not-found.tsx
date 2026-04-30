@@ -7,10 +7,10 @@ export default function NotFound() {
       <div className="mb-6 flex flex-col items-center gap-3">
         <div className="text-6xl" aria-hidden>🔍</div>
       </div>
-      <h1 className="text-2xl font-bold text-kuroko leading-snug max-w-sm">
+      <h1 className="text-2xl font-bold text-white leading-snug max-w-sm">
         {messages.notFound.heading}
       </h1>
-      <p className="mt-3 text-sm text-[#9890A8] leading-relaxed max-w-xs">
+      <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-xs">
         {messages.notFound.body}
       </p>
       <div className="mt-8 flex flex-col sm:flex-row gap-3">

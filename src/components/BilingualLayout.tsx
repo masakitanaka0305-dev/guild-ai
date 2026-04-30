@@ -17,14 +17,14 @@ export function BilingualLayout({ emotionalContent, specContent }: BilingualLayo
     <>
       {/* Mobile: 2 tabs */}
       <div className="md:hidden">
-        <div role="tablist" className="flex border-b border-kuroko/10 mt-4">
+        <div role="tablist" className="flex border-b border-white/10 mt-4">
           <button
             id={yasashiiId}
             role="tab"
             aria-selected={activeTab === "yasashii"}
             aria-controls={panelId}
             onClick={() => setActiveTab("yasashii")}
-            className={`flex-1 py-2 text-sm font-semibold transition-colors ${activeTab === "yasashii" ? "border-b-2 border-kaki text-kaki" : "text-[#9890A8]"}`}
+            className={`flex-1 py-2 text-sm font-semibold transition-colors ${activeTab === "yasashii" ? "border-b-2 border-kaki text-kaki" : "text-slate-400"}`}
           >
             やさしい説明
           </button>
@@ -34,7 +34,7 @@ export function BilingualLayout({ emotionalContent, specContent }: BilingualLayo
             aria-selected={activeTab === "kuwashii"}
             aria-controls={panelId}
             onClick={() => setActiveTab("kuwashii")}
-            className={`flex-1 py-2 text-sm font-semibold transition-colors ${activeTab === "kuwashii" ? "border-b-2 border-kaki text-kaki" : "text-[#9890A8]"}`}
+            className={`flex-1 py-2 text-sm font-semibold transition-colors ${activeTab === "kuwashii" ? "border-b-2 border-kaki text-kaki" : "text-slate-400"}`}
           >
             くわしい仕様
           </button>

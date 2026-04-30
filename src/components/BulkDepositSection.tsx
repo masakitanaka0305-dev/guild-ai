@@ -43,8 +43,8 @@ export function BulkDepositSection() {
 
   return (
     <div className="mt-6 rounded-2xl border border-kaki/20 bg-kaki/5 p-5">
-      <h3 className="text-sm font-bold text-kuroko mb-1">GitHub からまとめて預ける</h3>
-      <p className="text-xs text-[#9890A8] mb-4">
+      <h3 className="text-sm font-bold text-white mb-1">GitHub からまとめて預ける</h3>
+      <p className="text-xs text-slate-400 mb-4">
         リポジトリ URL を入力してスキャン → 資産を一括登録
       </p>
 
@@ -53,7 +53,7 @@ export function BulkDepositSection() {
           <p className="text-sm font-bold text-green-700">✅ {chosenCount} 件の資産を一括登録しました</p>
           <button
             onClick={() => { setDone(false); setAssets([]); setUrl(""); }}
-            className="mt-2 text-xs text-[#9890A8] underline"
+            className="mt-2 text-xs text-slate-400 underline"
           >
             もう一度
           </button>
@@ -66,7 +66,7 @@ export function BulkDepositSection() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://github.com/user/repo"
-              className="flex-1 rounded-xl border border-kuroko/15 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
+              className="flex-1 rounded-xl border border-white/10 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kaki/30"
               aria-label="GitHub リポジトリ URL"
             />
             <button
@@ -92,7 +92,7 @@ export function BulkDepositSection() {
 
           {assets.length > 0 && (
             <>
-              <p className="text-xs font-semibold text-kuroko mb-2">
+              <p className="text-xs font-semibold text-white mb-2">
                 抽出された資産：{assets.length} 件
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
@@ -102,7 +102,7 @@ export function BulkDepositSection() {
                     className={`flex items-start gap-2 rounded-xl border p-3 cursor-pointer transition-all ${
                       selected.has(a.pathHint)
                         ? "border-kaki bg-kaki/5"
-                        : "border-kuroko/10 bg-white"
+                        : "border-white/10 bg-white"
                     }`}
                   >
                     <input
@@ -113,8 +113,8 @@ export function BulkDepositSection() {
                       aria-label={a.title}
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-kuroko truncate">{a.title}</p>
-                      <p className="text-[10px] text-[#9890A8] truncate">{a.pathHint}</p>
+                      <p className="text-xs font-semibold text-white truncate">{a.title}</p>
+                      <p className="text-[10px] text-slate-400 truncate">{a.pathHint}</p>
                     </div>
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
                       a.rank === "S" ? "bg-yellow-100 text-yellow-700" :
