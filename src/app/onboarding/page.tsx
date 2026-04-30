@@ -174,7 +174,7 @@ function OnboardingContent() {
           Onboarding Express
         </h1>
         <p className="mt-0.5 text-sm text-[var(--n-muted,#6B6456)]">
-          GitHub リポジトリ → Asset Ledger 登記 → First Royalty まで 7 ステップ
+          GitHub コードベース → Asset Ledger 登記 → First Royalty まで 7 ステップ
         </p>
       </div>
 
@@ -274,7 +274,7 @@ function OnboardingContent() {
 
           <div>
             <label htmlFor="github-url" className="block text-[10px] font-bold uppercase tracking-wider text-[var(--water-muted,#94A3B8)] mb-1">
-              GitHub リポジトリ URL
+              GitHub コードベース URL
             </label>
             <input
               id="github-url"
@@ -387,7 +387,7 @@ function OnboardingContent() {
                 </dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-xs text-[var(--n-muted,#6B6456)]">エンドポイント</dt>
+                <dt className="text-xs text-[var(--n-muted,#6B6456)]">おしごと窓口</dt>
                 <dd className="text-[10px] font-mono font-bold text-[var(--n-text,#1A1714)] truncate max-w-[160px]">
                   guild-ai.vercel.app/{result.endpointSlug}
                 </dd>

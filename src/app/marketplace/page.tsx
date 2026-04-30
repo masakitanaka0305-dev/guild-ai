@@ -217,8 +217,8 @@ function MarketplaceContent() {
             AI評価済みスキル資産の保管庫。良質なたからものほど高評価・高価格で表示されます。
           </p>
         </div>
-        <Link href="/sell" className="btn-primary shrink-0" aria-label="スキルを資産として登録する">
-          登録する →
+        <Link href="/sell" className="btn-primary shrink-0" aria-label="スキルを資産として登記する">
+          登記（Sync） →
         </Link>
       </div>
 
