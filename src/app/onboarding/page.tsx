@@ -215,7 +215,7 @@ function OnboardingContent() {
             </span>
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#22D3EE)]">
-                SMART PRE-FILL — OAuth から取得した情報です
+                Smart Pre-fill — OAuth から取得した情報です
               </p>
               <h2 id="confirm-heading" className="text-base font-black text-[var(--water-text,#E2E8F0)]">
                 内容を確認してください

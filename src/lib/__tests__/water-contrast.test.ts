@@ -51,7 +51,9 @@ describe("Water Guild — contrast & button shape pass", () => {
     // Sub-line "マッチ N / M 件" uses the slate-400 hint style
     expect(src).toMatch(/text-slate-400 text-xs[^"]*">マッチ/);
     // Old amber/orange match-score branch is gone
-    expect(src).not.toContain("text-amber-300");
     expect(src).not.toMatch(/score >= 80 \? "text-cyan-400" : score >= 50 \? "text-amber-400"/);
+    // Score color is not orange-tinted
+    expect(src).not.toMatch(/<span[^>]*text-orange-\d+[^"]*">\{score\}%/);
+    expect(src).not.toMatch(/<span[^>]*text-amber-\d+[^"]*">\{score\}%/);
   });
 });

@@ -24,7 +24,8 @@ describe("Sticky Action — mobile-fixed Apply on /projects/[id]", () => {
   });
 
   it("/projects/[id] mounts the sticky variant on mobile and a card on md+", () => {
-    expect(projectPage).toMatch(/<PlugInApply\s+projectId=\{project\.id\}\s+sticky\s*\/>/);
+    // The mobile mount stays sticky; underwater is an optional disable flag.
+    expect(projectPage).toMatch(/<PlugInApply\s+projectId=\{project\.id\}\s+sticky\b/);
     expect(projectPage).toMatch(/hidden md:block/);
     // Mobile-only main padding leaves room for the sticky bar
     expect(projectPage).toMatch(/pb-44 md:pb-8/);

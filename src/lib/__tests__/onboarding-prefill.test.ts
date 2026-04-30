@@ -17,7 +17,9 @@ describe("Onboarding — Smart Pre-fill confirmation", () => {
 
   it("renders the confirmation heading (not 「入力」)", () => {
     expect(src).toContain("内容を確認してください");
-    expect(src).toContain("SMART PRE-FILL");
+    // Source uses Title-Case "Smart Pre-fill"; CSS uppercases it to SMART PRE-FILL.
+    expect(src).toContain("Smart Pre-fill");
+    expect(src).toMatch(/uppercase[^"]*">\s*Smart Pre-fill/);
   });
 
   it("CTA reads 「確認して進む」 with the rounded-xl shape", () => {

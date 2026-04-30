@@ -54,13 +54,13 @@ function Timeline({ status }: { status: Status }) {
           <li key={step} className="flex items-center gap-1.5">
             <span
               aria-current={active ? "step" : undefined}
-              className={`inline-flex items-center gap-1 ${done ? "text-white" : "text-slate-500"}`}
+              className={`inline-flex items-center gap-1 ${done ? "text-white" : "text-slate-400"}`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${done ? STATUS_DOT[step] : "bg-slate-700"}`} />
               <span className="font-medium">{step}</span>
             </span>
             {i < STATUS_STEPS.length - 1 && (
-              <ArrowRight className="w-3 h-3 text-slate-500" aria-hidden />
+              <ArrowRight className="w-3 h-3 text-slate-400" aria-hidden />
             )}
           </li>
         );
