@@ -168,7 +168,7 @@ export default function GuildPage() {
             <p
               aria-live="polite"
               aria-atomic="true"
-              className="text-3xl font-black tabular-nums text-[var(--n-positive,#0E9F4F)]"
+              className="text-5xl font-black tabular-nums text-[var(--n-positive,#0E9F4F)] leading-none"
             >
               ¥{hourlyRate.toLocaleString("ja-JP")}
               <span className="text-base font-bold text-[var(--n-muted,#6B6456)] ml-1">/ 時間</span>

@@ -77,6 +77,13 @@ export default function HomePage() {
           投稿する
         </Link>
         <p className="mt-3 text-sm text-gray-500">ノートを投稿するだけ</p>
+        {/* 稼げる目安バッジ */}
+        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--n-positive,#0E9F4F)]/10 border border-[var(--n-positive,#0E9F4F)]/25 px-4 py-1.5">
+          <span className="w-2 h-2 rounded-full bg-[var(--n-positive,#0E9F4F)] animate-pulse" />
+          <span className="text-xs font-bold text-[var(--n-positive,#0E9F4F)]">いま稼げる目安</span>
+          <span className="text-sm font-black text-[var(--n-positive,#0E9F4F)] tabular-nums">¥4,280,000</span>
+          <span className="text-[10px] text-[var(--n-muted,#6B6456)]">/ 直近24h</span>
+        </div>
       </section>
 
       {/* ── 初めてのギルドエーアイ講座 バナー ────────────────── */}

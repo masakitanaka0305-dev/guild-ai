@@ -134,10 +134,11 @@ export default function JobsPage() {
                 <button
                   type="button"
                   onClick={() => handleApply(job.id, job.reward)}
-                  className="w-full py-3 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm"
+                  className="w-full py-3 rounded-full bg-[var(--n-primary,#E64545)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm flex items-center justify-center gap-2"
                   aria-label={`${job.title}に応募する`}
                 >
-                  応募する
+                  <span className="font-black text-base">応募する</span>
+                  <span className="text-sm font-bold opacity-90">¥{job.reward.toLocaleString("ja-JP")}</span>
                 </button>
               ) : (
                 <div className="rounded-2xl bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-xs text-[var(--n-muted,#6B6456)] text-center">

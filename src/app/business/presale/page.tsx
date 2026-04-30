@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { proposeFromText, type PresaleProposal } from "@/lib/presale-agent";
@@ -20,6 +20,14 @@ const EXAMPLE_QUERIES = [
 ];
 
 export default function PresalePage() {
+  return (
+    <Suspense>
+      <PresaleContent />
+    </Suspense>
+  );
+}
+
+function PresaleContent() {
   const searchParams = useSearchParams();
   const pkgParam = searchParams.get("pkg");
 
