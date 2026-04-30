@@ -196,6 +196,37 @@
     transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
   }
+
+  /* ── Water Guild — prime numbers (sales / payout / match %) ──── */
+  /* Cyan-lit prime — for accent-worthy figures (default). */
+  .metric-prime {
+    @apply text-[#22D3EE] font-semibold tabular-nums tracking-tight;
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  @media (min-width: 640px) {
+    .metric-prime {
+      font-size: 1.875rem;
+    }
+  }
+
+  /* Pure-white prime — for figures that should anchor as truth, not accent. */
+  .metric-prime-white {
+    @apply text-white font-semibold tabular-nums tracking-tight;
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  @media (min-width: 640px) {
+    .metric-prime-white {
+      font-size: 1.875rem;
+    }
+  }
+
+  /* ── Water Guild — tech tag chip (#1E293B surface / #F1F5F9 ink) ── */
+  .chip-tech {
+    @apply inline-flex items-center bg-[#1E293B] text-[#F1F5F9] rounded-full px-3 py-1 text-xs font-medium;
+    border: 1px solid rgba(34,211,238,0.18);
+  }
 }
 
 /* Scan line for bank assessment */
