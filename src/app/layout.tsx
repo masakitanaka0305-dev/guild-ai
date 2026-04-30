@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { AppShell } from "@/components/AppShell";
 import { GuestInit } from "@/components/GuestInit";
+import { SwRegister } from "@/components/SwRegister";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -43,6 +44,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <AuthProvider>
           {/* Sets localStorage.guild_authed="1" for all visitors (auth postponed to v2) */}
           <GuestInit />
+          {/* Registers /sw.js in idle time for offline support */}
+          <SwRegister />
           <AppShell>{children}</AppShell>
         </AuthProvider>
       </body>
