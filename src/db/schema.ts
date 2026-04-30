@@ -586,3 +586,63 @@ export const royaltyDistributionsRelations = relations(royaltyDistributions, ({ 
   payout:  one(royaltyPayouts, { fields: [royaltyDistributions.payoutId], references: [royaltyPayouts.id] }),
   creator: one(users,          { fields: [royaltyDistributions.creatorId], references: [users.id] }),
 }));
+
+// ─── projects ─────────────────────────────────────────────────────────────────
+// Intelligence-driven project marketplace. required_md_interfaces: jsonb array
+// of { id, rankMin, weight, label } objects. See src/lib/projects/index.ts.
+export const projectStatusEnum = pgEnum("project_status", [
+  "open", "applied", "executing", "settling", "settled",
+]);
+
+export const projects = pgTable("projects", {
+  id:                    text("id").primaryKey(),
+  title:                 text("title").notNull(),
+  description:           text("description").notNull(),
+  industry:              text("industry").notNull(),
+  techStack:             jsonb("tech_stack").$type<string[]>().notNull().default([]),
+  requiredMdInterfaces:  jsonb("required_md_interfaces").$type<
+    { id: string; rankMin: string; weight: number; label: string }[]
+  >().notNull().default([]),
+  grossRewardJpy:        integer("gross_reward_jpy").notNull(),
+  platformFeePct:        integer("platform_fee_pct").notNull().default(5),
+  rentalFeeHourlyJpy:    integer("rental_fee_hourly_jpy").notNull().default(0),
+  deadline:              text("deadline").notNull(),    // YYYY-MM-DD
+  applicantCount:        integer("applicant_count").notNull().default(0),
+  clientHandle:          text("client_handle").notNull(),
+  sesChallenge:          text("ses_challenge"),
+  status:                projectStatusEnum("status").notNull().default("open"),
+  createdAt:             timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index("projects_status_idx").on(t.status),
+  index("projects_industry_idx").on(t.industry),
+]);
+
+// ─── escrow_reserves ──────────────────────────────────────────────────────────
+// Escrow for project application rental fees. Transitions:
+//   pending → executing → settling → settled
+export const escrowReserveStatusEnum = pgEnum("escrow_reserve_status", [
+  "pending", "executing", "settling", "settled",
+]);
+
+export const escrowReserves = pgTable("escrow_reserves", {
+  id:                    text("id").primaryKey(),
+  projectId:             text("project_id").notNull().references(() => projects.id),
+  applicantHandle:       text("applicant_handle").notNull(),
+  mdRentalIds:           jsonb("md_rental_ids").$type<string[]>().notNull().default([]),
+  totalReservedMilliJpy: integer("total_reserved_milli_jpy").notNull(),
+  status:                escrowReserveStatusEnum("status").notNull().default("pending"),
+  createdAt:             timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  settledAt:             timestamp("settled_at", { withTimezone: true }),
+}, (t) => [
+  index("escrow_res_project_idx").on(t.projectId),
+  index("escrow_res_applicant_idx").on(t.applicantHandle),
+  index("escrow_res_status_idx").on(t.status),
+]);
+
+export const projectsRelations = relations(projects, ({ many }) => ({
+  escrowReserves: many(escrowReserves),
+}));
+
+export const escrowReservesRelations = relations(escrowReserves, ({ one }) => ({
+  project: one(projects, { fields: [escrowReserves.projectId], references: [projects.id] }),
+}));
