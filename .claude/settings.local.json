@@ -31,7 +31,16 @@
       "Bash(curl -s -o /dev/null -w \"/wallet \\(no cookie\\) → %{http_code} %{redirect_url}\\\\n\" http://localhost:3000/wallet)",
       "Bash(curl -s -o /dev/null -w \"/login \\(no cookie\\) → %{http_code}\\\\n\" http://localhost:3000/login)",
       "Bash(curl -s -o /dev/null -w \"/ \\(no cookie\\) → %{http_code}\\\\n\" http://localhost:3000/)",
-      "Bash(npx tsx *)"
+      "Bash(npx tsx *)",
+      "Bash(npx vitest *)",
+      "Bash(git remote *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('deps:', list\\(d.get\\('dependencies',{}\\).keys\\(\\)\\)\\); print\\('devDeps:', list\\(d.get\\('devDependencies',{}\\).keys\\(\\)\\)\\)\")",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae add src/lib/next-auth.ts src/app/api/auth src/components/ConnectGithubButton.tsx src/components/SessionProviderWrapper.tsx src/app/layout.tsx)",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae add -f .env.local.example)",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae add /Users/tanakamasaki/Documents/GUILD_AI/package.json /Users/tanakamasaki/Documents/GUILD_AI/package-lock.json)",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae status --short)",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae log --oneline -6)",
+      "Bash(git -C /Users/tanakamasaki/Documents/GUILD_AI/.claude/worktrees/modest-newton-b327ae rev-parse HEAD)"
     ]
   }
 }
