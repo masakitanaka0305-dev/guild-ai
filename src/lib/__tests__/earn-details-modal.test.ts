@@ -18,7 +18,7 @@ describe("EarnDetailsModal — earn-explanation modal from 稼ぐ surface", () =
     expect(src).toContain("エージェントが派遣");
     expect(src).toContain("0.001 JPY 単位");
     // Card surface + cyan close button
-    expect(src).toContain("bg-[#162035]");
+    expect(src).toContain("bg-midnight-surface");
     expect(src).toContain("rounded-2xl shadow-xl p-6");
     expect(src).toContain("bg-cyan-400");
     // Secondary CTA links to /profile (Intelligence Balance lives there)

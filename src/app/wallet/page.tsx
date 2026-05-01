@@ -101,7 +101,7 @@ function SkillGrowthCard({ currentRank }: { currentRank: Rank }) {
           <SkillProgressBar value={overallPct} color={rankChanged ? "bg-kaki" : "bg-kuroko/30"} />
         </div>
       </div>
-      <p className="mt-3 text-xs text-[#E2E8F0] leading-relaxed">{hint}</p>
+      <p className="mt-3 text-xs text-text-primary leading-relaxed">{hint}</p>
     </div>
   );
 }
@@ -190,7 +190,7 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
         </div>
 
         {/* Center: Trust Score + 7-day mini chart */}
-        <div className="flex-1 rounded-xl bg-[#162035] border border-white/10 px-4 py-4">
+        <div className="flex-1 rounded-xl bg-midnight-surface border border-white/10 px-4 py-4">
           <p className="text-xs text-slate-400">信用スコア</p>
           <div className="flex items-baseline gap-1 mt-1">
             <span className="text-3xl font-bold text-white tabular-nums">{snap.trustScore}</span>
@@ -210,7 +210,7 @@ function PassbookCard({ owned }: { owned: OwnershipRecord[] }) {
         </div>
 
         {/* Right: Asset count + rank breakdown */}
-        <div className="flex-1 rounded-xl bg-[#162035] border border-white/10 px-4 py-4">
+        <div className="flex-1 rounded-xl bg-midnight-surface border border-white/10 px-4 py-4">
           <p className="text-xs text-slate-400">登録済み資産</p>
           <div className="flex items-baseline gap-1 mt-1">
             <span className="text-3xl font-bold text-white tabular-nums">{assetCount}</span>
@@ -276,7 +276,7 @@ function SesLeverageChart() {
         <h2 className="text-base font-bold text-white">SES レバレッジ</h2>
         <div className="group relative">
           <span className="w-4 h-4 rounded-full border border-white/10 flex items-center justify-center text-[10px] text-slate-400 cursor-help" aria-label="SESレバレッジとは">?</span>
-          <div className="hidden group-hover:block absolute left-6 top-0 z-10 w-64 rounded-xl border border-white/10 bg-white px-3 py-2 text-xs text-[#E2E8F0] shadow-card leading-relaxed">
+          <div className="hidden group-hover:block absolute left-6 top-0 z-10 w-64 rounded-xl border border-white/10 bg-white px-3 py-2 text-xs text-text-primary shadow-card leading-relaxed">
             SESレバレッジとは：あなたが登録した資産が会社の収益にかける乗数効果。還元（リワード）が積み上がるほど倍率が上がります。
           </div>
         </div>
@@ -294,7 +294,7 @@ function SesLeverageChart() {
           return (
             <div key={label}>
               <div className="flex justify-between items-center text-sm mb-1">
-                <span className="text-[#E2E8F0] flex items-center gap-1.5">
+                <span className="text-text-primary flex items-center gap-1.5">
                   <span className={`inline-block w-2 h-2 rounded-sm ${color}`} aria-hidden />
                   {label}
                 </span>
@@ -341,7 +341,7 @@ function GamificationHeader({ owned }: { owned: OwnershipRecord[] }) {
           </div>
           {rankResult.nextRank ? (
             <>
-              <p className={`mt-2 text-base font-medium ${isClose ? "text-kaki" : "text-[#E2E8F0]"}`}>
+              <p className={`mt-2 text-base font-medium ${isClose ? "text-kaki" : "text-text-primary"}`}>
                 {isClose ? "あと一歩！ " : ""}{rankResult.nextRank} まで {100 - rankResult.progress}%
               </p>
               <div className="mt-1.5 h-2 w-full rounded-full bg-kuroko/10">
@@ -355,7 +355,7 @@ function GamificationHeader({ owned }: { owned: OwnershipRecord[] }) {
         </div>
         <div className="sm:max-w-[220px] rounded-xl border border-kaki/20 bg-white px-4 py-3 shadow-sm">
           <p className="text-xs uppercase tracking-widest text-kaki font-semibold">AI レコメンド</p>
-          <p className="mt-1.5 text-sm text-[#E2E8F0] leading-relaxed">{rankResult.nextAction}</p>
+          <p className="mt-1.5 text-sm text-text-primary leading-relaxed">{rankResult.nextAction}</p>
         </div>
       </div>
     </div>
@@ -375,7 +375,7 @@ function PublishChecklist() {
     }
   }, [step]);
   return (
-    <div className="absolute inset-0 z-10 rounded-2xl bg-white/95 flex flex-col items-center justify-center gap-1 text-sm text-[#E2E8F0]">
+    <div className="absolute inset-0 z-10 rounded-2xl bg-white/95 flex flex-col items-center justify-center gap-1 text-sm text-text-primary">
       {PUBLISH_CHECKS.slice(0, step + 1).map((msg) => (
         <p key={msg} className="flex items-center gap-1.5">
           <span className="text-accent-green">✓</span> {msg}
@@ -432,14 +432,14 @@ function AssetCard({ record }: { record: OwnershipRecord }) {
 
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
         <div>
-          <div className="flex justify-between text-sm text-[#E2E8F0]">
+          <div className="flex justify-between text-sm text-text-primary">
             <span>稼働率</span>
             <span className="tabular-nums font-medium">{health.uptimePercent}%</span>
           </div>
           <StatBar value={health.uptimePercent} color="bg-kaki" />
         </div>
         <div>
-          <div className="flex justify-between text-sm text-[#E2E8F0]">
+          <div className="flex justify-between text-sm text-text-primary">
             <span>成功率</span>
             <span className="tabular-nums font-medium">{health.successRate}%</span>
           </div>
@@ -453,7 +453,7 @@ function AssetCard({ record }: { record: OwnershipRecord }) {
         </Link>
         <Link
           href={`/sell?remix=${record.assetId}&from=${encodeURIComponent(record.assetTitle)}`}
-          className="ml-auto text-sm border border-white/10 text-[#E2E8F0] rounded-lg px-3 py-1.5 hover:bg-kuroko/5 active:scale-[0.97] transition-all"
+          className="ml-auto text-sm border border-white/10 text-text-primary rounded-lg px-3 py-1.5 hover:bg-kuroko/5 active:scale-[0.97] transition-all"
           aria-label="この資産を組み合わせて登録"
         >
           組み合わせて登録
@@ -513,7 +513,7 @@ function PaymentStats() {
       <div className="mt-3 space-y-2">
         {data.map(({ label, count, color }) => (
           <div key={label} className="flex items-center gap-3">
-            <span className="shrink-0 text-sm text-[#E2E8F0] w-24 truncate">{label}</span>
+            <span className="shrink-0 text-sm text-text-primary w-24 truncate">{label}</span>
             <div className="flex-1 h-1.5 rounded-full bg-kuroko/10">
               <div className={`h-1.5 rounded-full ${color} transition-all`} style={{ width: `${(count / max) * 100}%` }} />
             </div>
@@ -617,7 +617,7 @@ export default function WalletPage() {
 
           {/* SES Leverage — corporate mode toggle */}
           <div className="mt-5 flex items-center gap-3">
-            <span className="text-sm font-medium text-[#E2E8F0]">法人モード</span>
+            <span className="text-sm font-medium text-text-primary">法人モード</span>
             <button
               type="button"
               role="switch"

@@ -186,7 +186,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 真正性証明 — Intelligence Signature */}
         <section
           data-testid="intelligence-signature-section"
-          className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-5 mt-6"
+          className="rounded-2xl border border-cyan-400/30 bg-midnight-surface p-5 mt-6"
         >
           <p className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">
             真正性証明

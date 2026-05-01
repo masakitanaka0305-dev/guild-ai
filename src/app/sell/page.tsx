@@ -197,7 +197,7 @@ function CompletionCard({ data }: { data: CompletionData }) {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-white">写真でも見せる（任意）</p>
           <p className="text-xs text-slate-400 mt-0.5">顔写真や作品画像を追加できます</p>
-          <label className="mt-2 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-[#E2E8F0] hover:border-kaki/40 transition-colors">
+          <label className="mt-2 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-text-primary hover:border-kaki/40 transition-colors">
             📷 画像を選ぶ
             <input type="file" accept="image/*" className="sr-only" onChange={handlePhotoChange} aria-label="写真をアップロード" />
           </label>
@@ -407,7 +407,7 @@ function AiPath({
             <span className="text-accent-green font-bold">✓</span>
             <span className="text-sm font-medium text-white">{username} — 連携完了</span>
           </div>
-          <p className="text-sm font-semibold text-[#E2E8F0]">あなたの作品を選ぶ</p>
+          <p className="text-sm font-semibold text-text-primary">あなたの作品を選ぶ</p>
 
           <ul className="grid gap-2 sm:grid-cols-2">
             {repos.map((repo, idx) => (
@@ -460,7 +460,7 @@ function AiPath({
                 <p className="text-xs font-semibold text-kaki mb-2">✨ AIが抽出した「売れる部品」</p>
                 <ul className="space-y-1">
                   {sp.sellingPoints.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs text-[#E2E8F0]">
+                    <li key={pt} className="flex gap-2 text-xs text-text-primary">
                       <span className="text-accent-green shrink-0">✓</span>{pt}
                     </li>
                   ))}
@@ -588,7 +588,7 @@ function VoicePath({ onComplete }: { onComplete: (data: CompletionData) => void 
           <p className="text-xs font-semibold text-accent-green mb-2">📋 マニュアル（自動作成）</p>
           <ul className="space-y-1">
             {pitch.manual.map((item, i) => (
-              <li key={i} className="flex gap-2 text-sm text-[#E2E8F0]">
+              <li key={i} className="flex gap-2 text-sm text-text-primary">
                 <span className="text-accent-green shrink-0">{i + 1}.</span>
                 {item}
               </li>
@@ -703,17 +703,17 @@ function TextPath({
       {/* Basic info */}
       <div className="section-card p-5 space-y-3">
         <h2 className="text-base font-bold text-white">基本情報</h2>
-        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
+        <label className="flex flex-col gap-1 text-sm text-text-primary">
           タイトル
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
             placeholder="あなたの作品のタイトル" aria-label="タイトル" className="input-base" />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
+        <label className="flex flex-col gap-1 text-sm text-text-primary">
           GitHub URL（任意）
           <input type="url" value={githubUrl} onChange={(e) => setGithubUrl(e.target.value)}
             placeholder="https://github.com/owner/repo" aria-label="GitHub URL" className="input-base" />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
+        <label className="flex flex-col gap-1 text-sm text-text-primary">
           説明文
           <textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)}
             placeholder="この作品が解決する課題と特徴" aria-label="説明文" className="input-base resize-none" />
@@ -724,19 +724,19 @@ function TextPath({
       <div className="section-card p-5 space-y-3">
         <h2 className="text-base font-bold text-white">こだわり（実績ログ）</h2>
         <div className="grid grid-cols-2 gap-3">
-          <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-sm text-text-primary">
             考えの深さ (0–100)
             <input type="number" value={ccaf.thoughtDensity} min={0} max={100}
               onChange={(e) => setCcaf({ ...ccaf, thoughtDensity: Number(e.target.value) })}
               aria-label="考えの深さ" className="input-base" />
           </label>
-          <label className="flex flex-col gap-1 text-sm text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-sm text-text-primary">
             試みた回数
             <input type="number" value={ccaf.iterations} min={0}
               onChange={(e) => setCcaf({ ...ccaf, iterations: Number(e.target.value) })}
               aria-label="試みた回数" className="input-base" />
           </label>
-          <label className="col-span-2 flex flex-col gap-1 text-sm text-[#E2E8F0]">
+          <label className="col-span-2 flex flex-col gap-1 text-sm text-text-primary">
             稼働日数
             <input type="number" value={vercelUptimeDays} min={0}
               onChange={(e) => setUptime(Number(e.target.value))}
@@ -758,11 +758,11 @@ function TextPath({
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
               <RankBadge rank={auditResult.rank} large />
-              <span className="text-base text-[#E2E8F0]">スコア {auditResult.score}</span>
+              <span className="text-base text-text-primary">スコア {auditResult.score}</span>
             </div>
             <ul className="space-y-1">
               {auditResult.reasons.map((r) => (
-                <li key={r} className="flex gap-2 text-sm text-[#E2E8F0]">
+                <li key={r} className="flex gap-2 text-sm text-text-primary">
                   <span className="text-kaki mt-0.5">·</span>{r}
                 </li>
               ))}
@@ -770,7 +770,7 @@ function TextPath({
             {auditResult.justification && (
               <div className="rounded-xl border border-kaki/20 bg-kaki/5 px-3 py-2.5">
                 <p className="text-xs font-semibold text-kaki mb-1">💬 AIの解説</p>
-                <p className="text-sm text-[#E2E8F0] leading-relaxed">{auditResult.justification}</p>
+                <p className="text-sm text-text-primary leading-relaxed">{auditResult.justification}</p>
               </div>
             )}
           </div>
@@ -810,22 +810,22 @@ function TextPath({
             <div className="rounded-xl bg-kaki/5 border border-kaki/10 p-3 space-y-1.5">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">自動計算される料金プラン</p>
               <div className="flex justify-between text-xs">
-                <span className="text-[#E2E8F0]">月額（目安）</span>
+                <span className="text-text-primary">月額（目安）</span>
                 <span className="font-semibold tabular-nums text-white">¥{pricing.monthlyJpy.toLocaleString("ja-JP")} / 月</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#E2E8F0]">買い切り（目安）</span>
+                <span className="text-text-primary">買い切り（目安）</span>
                 <span className="font-semibold tabular-nums text-white">¥{pricing.oneoffJpy.toLocaleString("ja-JP")}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-[#E2E8F0]">リクエスト単価</span>
+                <span className="text-text-primary">リクエスト単価</span>
                 <span className="font-semibold tabular-nums text-kaki">{pricing.perCallJpyc} デジタル円</span>
               </div>
             </div>
           );
         })()}
         <div>
-          <p className="text-sm font-semibold text-[#E2E8F0] mb-2">売上の受け取り方</p>
+          <p className="text-sm font-semibold text-text-primary mb-2">売上の受け取り方</p>
           <div className="flex gap-4">
             {(["JPY", "JPYC"] as Currency[]).map((c) => (
               <label key={c} className="flex items-center gap-2 cursor-pointer">

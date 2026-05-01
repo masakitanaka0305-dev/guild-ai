@@ -20,7 +20,7 @@ export function DeckHome() {
   const delta = getRecentAgentsDelta24h();
 
   return (
-    <main className="bg-[#0B1121] text-white min-h-screen min-h-dvh flex flex-col">
+    <main className="bg-midnight-base text-white min-h-screen min-h-dvh flex flex-col">
       <h1 className="sr-only">自分の知能を登記する</h1>
 
       {/* Top bar */}

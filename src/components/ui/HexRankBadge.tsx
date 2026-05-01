@@ -55,7 +55,7 @@ export function HexRankBadge({ rank, size = 48, showSubLabel = false }: HexRankB
           <p className={`text-xs font-bold tracking-widest uppercase ${tone.text}`}>
             {RANK_TIER[rank]}
           </p>
-          <p className="text-[#94A3B8] text-xs leading-snug max-w-[16ch] text-center">
+          <p className="text-text-muted text-xs leading-snug max-w-[16ch] text-center">
             {RANK_SUB_LABEL[rank]}
           </p>
         </>

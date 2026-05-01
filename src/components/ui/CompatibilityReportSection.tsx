@@ -19,7 +19,7 @@ export function CompatibilityReportSection({ report }: CompatibilityReportSectio
       aria-labelledby="compat-h"
       data-testid="intelligence-compatibility-report"
       data-component="intelligence-compatibility-report"
-      className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
+      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
     >
       <header className="flex items-start justify-between gap-3 mb-3">
         <h2

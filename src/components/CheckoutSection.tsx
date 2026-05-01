@@ -64,7 +64,7 @@ function OnrampModal({ amount, onClose }: { amount: number; onClose: () => void 
         <p className="mt-1 text-sm text-slate-400">クレジットカードでデジタル円を購入し、即時に決済します</p>
 
         <div className="mt-4 space-y-3">
-          <div className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
+          <div className="rounded-xl border border-white/10 bg-midnight-surface px-4 py-3">
             <p className="text-xs text-slate-400">購入金額</p>
             <p className="mt-1 text-2xl font-bold text-white tabular-nums">
               ¥{amount.toLocaleString("ja-JP")}
@@ -76,7 +76,7 @@ function OnrampModal({ amount, onClose }: { amount: number; onClose: () => void 
               デジタル円は日本円とほぼ同じ価値で、安全に保管できる安心の電子マネーです
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
+          <div className="rounded-xl border border-white/10 bg-midnight-surface px-4 py-3">
             <p className="text-xs text-slate-400 mb-1">カード番号（モック）</p>
             <p className="text-base font-mono text-white">**** **** **** 4242</p>
           </div>
@@ -87,7 +87,7 @@ function OnrampModal({ amount, onClose }: { amount: number; onClose: () => void 
             type="button"
             onClick={onClose}
             aria-label="キャンセル"
-            className="flex-1 rounded-xl border border-white/10 py-3 text-sm text-[#E2E8F0] hover:bg-kuroko/5 transition-colors"
+            className="flex-1 rounded-xl border border-white/10 py-3 text-sm text-text-primary hover:bg-kuroko/5 transition-colors"
           >
             キャンセル
           </button>
@@ -126,7 +126,7 @@ function SetupChecklist({ onDone }: { onDone: () => void }) {
   return (
     <div className="mt-4 rounded-xl border border-kaki/20 bg-kaki/5 px-4 py-4 space-y-2">
       {SETUP_STEPS.slice(0, step + 1).map((msg, i) => (
-        <p key={msg} className="flex items-center gap-2 text-sm text-[#E2E8F0]">
+        <p key={msg} className="flex items-center gap-2 text-sm text-text-primary">
           <span className={i < step ? "text-accent-green" : "text-kaki animate-pulse"}>
             {i < step ? "✓" : "⟳"}
           </span>
@@ -249,7 +249,7 @@ export function CheckoutSection({ assetId, assetTitle: _assetTitle, price, onSuc
           </span>
         </div>
 
-        <p className="text-sm font-semibold text-[#E2E8F0] mb-3">お支払い方法を選択</p>
+        <p className="text-sm font-semibold text-text-primary mb-3">お支払い方法を選択</p>
 
         {/* Card — full-width prominent top tile */}
         <PaymentTile

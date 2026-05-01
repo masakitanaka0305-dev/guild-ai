@@ -50,7 +50,7 @@ export function ComingSoonModal({
       onClick={onClose}
     >
       <div
-        className="bg-[#162035] rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/10"
+        className="bg-midnight-surface rounded-2xl shadow-xl p-6 w-full max-w-md border border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 id="coming-soon-heading" className="text-white font-bold text-lg">
@@ -64,7 +64,7 @@ export function ComingSoonModal({
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-[#0B1121] hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
           >
             閉じる
           </button>

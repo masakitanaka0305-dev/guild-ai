@@ -42,7 +42,7 @@ export default function MintPage() {
   }
 
   return (
-    <main className="bg-[#0B1121] text-white min-h-screen min-h-dvh px-5 sm:px-8 py-8 max-w-2xl mx-auto">
+    <main className="bg-midnight-base text-white min-h-screen min-h-dvh px-5 sm:px-8 py-8 max-w-2xl mx-auto">
       <header className="mb-6">
         <h1 className="text-white font-semibold text-2xl tracking-tight">
           取っておきのメモを教えてください
@@ -68,7 +68,7 @@ export default function MintPage() {
                   type="button"
                   data-testid={`mint-import-${imp.id}`}
                   onClick={chooseImport}
-                  className="w-full text-left rounded-2xl border border-white/10 bg-[#162035] hover:border-cyan-400/40 p-4 transition-colors"
+                  className="w-full text-left rounded-2xl border border-white/10 bg-midnight-surface hover:border-cyan-400/40 p-4 transition-colors"
                 >
                   <p className="text-white font-semibold">{imp.label}</p>
                   <p className="mt-1 text-xs text-slate-400">{imp.description}</p>
@@ -83,7 +83,7 @@ export default function MintPage() {
         <section
           data-testid="mint-pipeline"
           aria-labelledby="mint-pipeline-h"
-          className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-6"
+          className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-6"
         >
           <h2 id="mint-pipeline-h" className="text-white font-semibold text-base mb-3">
             知恵をかたちにします
@@ -143,7 +143,7 @@ export default function MintPage() {
               type="button"
               data-testid="mint-advance"
               onClick={advance}
-              className="rounded-full bg-cyan-400 text-[#0B1121] px-5 py-2 text-xs font-bold hover:bg-cyan-300"
+              className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300"
             >
               {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : "仕上げる"}
             </button>
@@ -155,7 +155,7 @@ export default function MintPage() {
         <section
           data-testid="mint-complete"
           aria-labelledby="mint-complete-h"
-          className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-6 text-center shadow-[0_0_0_1px_rgba(34,211,238,0.25),0_0_24px_rgba(34,211,238,0.18)]"
+          className="rounded-2xl border border-cyan-400/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(34,211,238,0.25),0_0_24px_rgba(34,211,238,0.18)]"
         >
           <CrystalSvg size={96} className="mx-auto mb-3" />
           <h2 id="mint-complete-h" className="text-white font-semibold text-xl">
@@ -183,7 +183,7 @@ export default function MintPage() {
             </button>
             <Link
               href="/guild"
-              className="rounded-full bg-cyan-400 text-[#0B1121] px-5 py-2 text-xs font-bold hover:bg-cyan-300 text-center"
+              className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300 text-center"
             >
               もちものを見る →
             </Link>

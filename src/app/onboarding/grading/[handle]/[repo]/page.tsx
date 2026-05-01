@@ -30,7 +30,7 @@ export default function GradingWaitPage({
   return (
     <main
       data-testid="grading-wait"
-      className="bg-[#0B1121] text-white min-h-screen min-h-dvh flex items-center justify-center px-6"
+      className="bg-midnight-base text-white min-h-screen min-h-dvh flex items-center justify-center px-6"
       role="status"
       aria-live="polite"
     >

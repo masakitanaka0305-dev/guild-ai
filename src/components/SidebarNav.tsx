@@ -130,7 +130,7 @@ export function BottomNav() {
         href={PRIMARY_ACTION.href}
         aria-label="出す"
         data-testid="bottom-nav-fab"
-        className="absolute left-1/2 -translate-x-1/2 -top-6 z-30 min-w-[44px] min-h-[44px] w-14 h-14 rounded-full bg-cyan-400 text-[#0B1121] flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-cyan-300 active:scale-[0.95] transition-all duration-220"
+        className="absolute left-1/2 -translate-x-1/2 -top-6 z-30 min-w-[44px] min-h-[44px] w-14 h-14 rounded-full bg-cyan-400 text-text-on-primary flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-cyan-300 active:scale-[0.95] transition-all duration-220"
       >
         ＋
       </Link>

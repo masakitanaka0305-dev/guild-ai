@@ -117,7 +117,7 @@ function ConfirmCancelModal({ row, onConfirm, onDismiss }: {
       aria-labelledby="cancel-modal-heading"
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 px-4 py-6"
     >
-      <div className="w-full max-w-md rounded-2xl bg-[#162035] border border-white/10 p-5 shadow-xl">
+      <div className="w-full max-w-md rounded-2xl bg-midnight-surface border border-white/10 p-5 shadow-xl">
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
             <h2 id="cancel-modal-heading" className="text-base font-bold text-white">
@@ -210,7 +210,7 @@ export default function ApplicationsPage() {
           </p>
           <Link
             href="/projects"
-            className="mt-2 inline-flex items-center gap-1 rounded-full bg-cyan-400 px-4 py-2 text-xs font-bold text-[#0B1121] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)]"
+            className="mt-2 inline-flex items-center gap-1 rounded-full bg-cyan-400 px-4 py-2 text-xs font-bold text-text-on-primary hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)]"
           >
             お困りごとを探す
             <ArrowRight className="w-3.5 h-3.5" aria-hidden />
@@ -245,7 +245,7 @@ export default function ApplicationsPage() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="bg-[#162035] border border-white/10 rounded-md px-2 py-1 text-xs text-white focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="bg-midnight-surface border border-white/10 rounded-md px-2 py-1 text-xs text-white focus:outline focus:outline-2 focus:outline-cyan-400"
           >
             <option value="latest">最新順</option>
             <option value="status">ステータス順</option>
@@ -258,7 +258,7 @@ export default function ApplicationsPage() {
         {rows.map((row) => (
           <li
             key={row.id}
-            className="rounded-2xl border border-white/10 bg-[#162035] p-4 space-y-3"
+            className="rounded-2xl border border-white/10 bg-midnight-surface p-4 space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <p className="text-sm font-semibold text-white leading-snug min-w-0 flex-1">

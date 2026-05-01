@@ -182,11 +182,11 @@ export function AssetPortfolio() {
 
   if (allAssets.length === 0) {
     return (
-      <div className="bg-[#162035] border border-white/10 rounded-2xl p-8 text-center">
+      <div className="bg-midnight-surface border border-white/10 rounded-2xl p-8 text-center">
         <p className="text-slate-400 mb-4">まだ投稿された資産はありません</p>
         <Link
           href="/sell"
-          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-[#22D3EE] text-[#0B1121] font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
         >
           投稿する
         </Link>
@@ -212,7 +212,7 @@ export function AssetPortfolio() {
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
             aria-label="並び替え"
-            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-[#162035] text-[#E2E8F0] border border-white/10 focus:outline-none focus:border-[#22D3EE] focus:ring-1 focus:ring-[#22D3EE]"
+            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-midnight-surface text-text-primary border border-white/10 focus:outline-none focus:border-ai-action focus:ring-1 focus:ring-[#22D3EE]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -221,7 +221,7 @@ export function AssetPortfolio() {
           <Link
             href="/sell"
             data-testid="new-listing-cta"
-            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-[#22D3EE] text-[#0B1121] text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 whitespace-nowrap"
+            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-ai-action text-text-on-primary text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 whitespace-nowrap"
           >
             ＋ 新しく投稿する
           </Link>
@@ -230,7 +230,7 @@ export function AssetPortfolio() {
 
       {/* PC table (md+) */}
       <div className="overflow-x-auto rounded-2xl border border-white/10 hidden md:block">
-        <table className="w-full text-sm bg-[#162035]">
+        <table className="w-full text-sm bg-midnight-surface">
           <caption className="sr-only">運用中の資産一覧</caption>
           <thead>
             <tr className="border-b border-white/10 bg-[#1E293B]">
@@ -267,14 +267,14 @@ export function AssetPortfolio() {
                     <code
                       aria-label="公開エンドポイント"
                       title={`/api/note/…${asset.endpointShort}`}
-                      className="font-mono text-xs text-slate-400 hover:text-[#22D3EE] truncate inline-block max-w-[200px]"
+                      className="font-mono text-xs text-slate-400 hover:text-ai-action truncate inline-block max-w-[200px]"
                     >
                       /api/note/…{asset.endpointShort}
                     </code>
                   </td>
                   <td className="px-4 py-3 text-right tabular-nums">
                     {asset.monthlyJpy > 0 ? (
-                      <span className="text-[#22D3EE] font-semibold text-base">
+                      <span className="text-ai-action font-semibold text-base">
                         ¥{asset.monthlyJpy.toLocaleString("ja-JP")}
                       </span>
                     ) : (
@@ -306,7 +306,7 @@ export function AssetPortfolio() {
                         href={`/lineage/${encodeURIComponent(asset.guildId)}`}
                         aria-label={`${asset.titleJa} の家系図を見る`}
                         title="家系図"
-                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full text-slate-300 hover:text-[#22D3EE]"
+                        className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full text-slate-300 hover:text-ai-action"
                       >
                         🌳
                       </Link>
@@ -326,7 +326,7 @@ export function AssetPortfolio() {
           return (
             <li
               key={asset.guildId}
-              className="bg-[#162035] border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-cyan-400/40"
+              className="bg-midnight-surface border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-cyan-400/40"
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <h3
@@ -345,19 +345,19 @@ export function AssetPortfolio() {
               <code
                 aria-label="公開エンドポイント"
                 title={`/api/note/…${asset.endpointShort}`}
-                className="block text-xs font-mono text-[#94A3B8] hover:text-[#22D3EE] truncate mb-4"
+                className="block text-xs font-mono text-text-muted hover:text-ai-action truncate mb-4"
               >
                 /api/note/…{asset.endpointShort}
               </code>
               <div className="grid grid-cols-3 gap-3 items-end">
                 <div>
-                  <p className="text-[10px] text-[#94A3B8] uppercase tracking-wide mb-1">今月の報酬</p>
+                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1">今月の報酬</p>
                   <p className="metric-prime tabular-nums" style={{ fontSize: "1.125rem" }}>
                     {asset.monthlyJpy > 0 ? `¥${asset.monthlyJpy.toLocaleString("ja-JP")}` : "—"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#94A3B8] uppercase tracking-wide mb-1">累計コール数</p>
+                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1">累計コール数</p>
                   <div className="flex items-center gap-1.5">
                     <span className="text-base tabular-nums text-white font-semibold">
                       {asset.callsLast30.toLocaleString("ja-JP")}
@@ -369,7 +369,7 @@ export function AssetPortfolio() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] text-[#94A3B8] uppercase tracking-wide mb-1">最終呼び出し</p>
+                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1">最終呼び出し</p>
                   <p className="text-xs text-slate-300 tabular-nums">{relativeTime(asset.lastCalledAt)}</p>
                 </div>
               </div>
@@ -378,7 +378,7 @@ export function AssetPortfolio() {
                   href={`/lineage/${encodeURIComponent(asset.guildId)}`}
                   aria-label={`${asset.titleJa} の家系図を見る`}
                   title="家系図"
-                  className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full text-slate-300 hover:text-[#22D3EE]"
+                  className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full text-slate-300 hover:text-ai-action"
                 >
                   🌳
                 </Link>

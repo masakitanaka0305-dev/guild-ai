@@ -396,7 +396,7 @@ describe("total-assets: hero card", () => {
   it("monthlyChangePct positive → cyan accent, negative → coral red (Water Guild v2)", () => {
     // Water Guild v2 swaps the legacy emerald + crimson pair for cyan + coral
     // to align with the deep-sea palette and stay AA-readable on #0B1121.
-    expect(cardSrc).toContain("text-[#22D3EE]");
+    expect(cardSrc).toContain("text-ai-action");
     expect(cardSrc).toContain("text-[#F87171]");
     expect(cardSrc).toContain("isPositive");
   });

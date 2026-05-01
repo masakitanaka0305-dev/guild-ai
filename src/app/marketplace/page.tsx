@@ -78,7 +78,7 @@ function LazyMarketplaceCard({ item, isNew, hasDetailPage, persona }: LazyMarket
 
       <ul className="mt-2 space-y-1">
         {personaCard.bullets.slice(0, 2).map((bullet) => (
-          <li key={bullet} className="flex gap-1.5 text-xs text-[#E2E8F0]">
+          <li key={bullet} className="flex gap-1.5 text-xs text-text-primary">
             <span className="text-kaki mt-0.5">·</span>
             {bullet}
           </li>
@@ -127,7 +127,7 @@ function UnclaimedCard({ draft }: { draft: ProvisionalListing }) {
 
       <div className="space-y-1 mb-2">
         {draft.useCases.slice(0, 2).map((uc) => (
-          <p key={uc} className="text-[10px] text-[#E2E8F0] flex gap-1">
+          <p key={uc} className="text-[10px] text-text-primary flex gap-1">
             <span className="text-[#FFCC00] shrink-0">·</span>
             <span className="line-clamp-1">{uc}</span>
           </p>
@@ -264,7 +264,7 @@ function MarketplaceContent() {
                     className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-all active:scale-[0.97] ${
                       sortKey === key
                         ? "border-kaki bg-kaki text-white"
-                        : "border-white/10 text-[#E2E8F0] hover:border-kaki/40"
+                        : "border-white/10 text-text-primary hover:border-kaki/40"
                     }`}
                   >
                     {label}
@@ -318,7 +318,7 @@ function MarketplaceContent() {
                 {(["general", "pm", "engineer"] as Persona[]).map((p) => (
                   <button key={p} onClick={() => setPersona(p)} aria-pressed={persona === p}
                     className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-all active:scale-[0.97] ${
-                      persona === p ? "border-kaki bg-kaki text-white" : "border-white/10 text-[#E2E8F0] hover:border-kaki/40"
+                      persona === p ? "border-kaki bg-kaki text-white" : "border-white/10 text-text-primary hover:border-kaki/40"
                     }`}>
                     {p === "general" ? "一般" : p === "pm" ? "PM" : "エンジニア"}
                   </button>

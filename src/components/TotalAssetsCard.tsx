@@ -160,7 +160,7 @@ export function TotalAssetsCard() {
           <p className="text-[10px] text-slate-400 mb-1">今月の伸び</p>
           <p
             className={`text-xl font-semibold tabular-nums tracking-tight ${
-              isPositive ? "text-[#22D3EE]" : "text-[#F87171]"
+              isPositive ? "text-ai-action" : "text-[#F87171]"
             }`}
           >
             {isPositive ? "+" : ""}¥{portfolio.monthlyChangeJpy.toLocaleString("ja-JP")}

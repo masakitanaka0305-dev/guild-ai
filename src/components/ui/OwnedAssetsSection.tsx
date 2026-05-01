@@ -132,7 +132,7 @@ export function OwnedAssetsSection() {
       role="region"
       aria-labelledby="owned-h"
       data-testid="owned-assets-section"
-      className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
+      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
     >
       <header className="flex items-baseline justify-between gap-3 mb-3">
         <h2 id="owned-h" className="text-white font-semibold text-base sm:text-lg leading-snug">

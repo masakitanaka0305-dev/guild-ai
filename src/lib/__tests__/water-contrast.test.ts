@@ -9,12 +9,12 @@ function read(rel: string) {
 }
 
 describe("Water Guild — contrast & button shape pass", () => {
-  it("inputs/textarea use bg-[#162035] + text-[#E2E8F0] (Edit & Mint draft)", () => {
+  it("inputs/textarea use bg-midnight-surface + text-text-primary (Edit & Mint draft)", () => {
     const src = read("src/app/onboarding/draft/[owner]/[repo]/page.tsx");
-    expect(src).toMatch(/bg-\[#162035\]/);
-    expect(src).toMatch(/text-\[#E2E8F0\]/);
-    expect(src).toMatch(/border-\[#22D3EE\]\/30/);
-    expect(src).toMatch(/focus:border-\[#22D3EE\]/);
+    expect(src).toMatch(/bg-midnight-surface/);
+    expect(src).toMatch(/text-text-primary/);
+    expect(src).toMatch(/border-ai-action\/30/);
+    expect(src).toMatch(/focus:border-ai-action/);
     expect(src).toMatch(/placeholder-slate-500/);
   });
 
@@ -29,22 +29,22 @@ describe("Water Guild — contrast & button shape pass", () => {
     }
   });
 
-  it("/projects MATCH percentage is rendered in text-[#22D3EE] (accent cyan)", () => {
+  it("/projects MATCH percentage is rendered in text-ai-action (accent cyan)", () => {
     const src = read("src/app/projects/page.tsx");
-    expect(src).toMatch(/text-\[#22D3EE\][^"]*[^A-Za-z0-9]+\{row\.matchScore\}%/s);
+    expect(src).toMatch(/text-ai-action[^"]*[^A-Za-z0-9]+\{row\.matchScore\}%/s);
     // Recommended row keeps the cyan left border
-    expect(src).toMatch(/border-l-\[#22D3EE\]/);
+    expect(src).toMatch(/border-l-ai-action/);
   });
 
-  it("/projects INDUSTRY and DEADLINE cells use text-[#E2E8F0] (≥ AA contrast on #0B1121)", () => {
+  it("/projects INDUSTRY and DEADLINE cells use text-text-primary (≥ AA contrast on #0B1121)", () => {
     const src = read("src/app/projects/page.tsx");
     // Friendly Tone (#123): industry tag is now wrapped through
     // friendlyIndustry(row.industry) — the cell still carries the
     // E2E8F0 utility, just on the wrapper.
     const industryCell = src.match(/<td[^>]*>\{friendlyIndustry\(row\.industry\)\}<\/td>/);
     const deadlineCell = src.match(/<td[^>]*>\{row\.deadline\}<\/td>/);
-    expect(industryCell?.[0] ?? "").toMatch(/text-\[#E2E8F0\]/);
-    expect(deadlineCell?.[0] ?? "").toMatch(/text-\[#E2E8F0\]/);
+    expect(industryCell?.[0] ?? "").toMatch(/text-text-primary/);
+    expect(deadlineCell?.[0] ?? "").toMatch(/text-text-primary/);
   });
 
   it("/projects/[id] Matching Score uses text-cyan-400 metric-prime (no amber/orange)", () => {

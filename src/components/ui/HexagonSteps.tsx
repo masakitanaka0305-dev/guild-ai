@@ -75,7 +75,7 @@ export function HexagonSteps({
               ariaLabel={ariaLabel}
             />
             {labels?.[idx] && (
-              <span className="mt-1 text-[10px] font-bold text-[#E2E8F0] text-center max-w-[68px] leading-tight">
+              <span className="mt-1 text-[10px] font-bold text-text-primary text-center max-w-[68px] leading-tight">
                 {labels[idx]}
               </span>
             )}

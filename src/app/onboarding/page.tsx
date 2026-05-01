@@ -84,7 +84,7 @@ function TimerBar({ elapsedMs, achieved }: { elapsedMs: number; achieved: boolea
         </span>
         <span className="text-[10px] text-slate-400">3 分以内</span>
       </div>
-      <div className="w-full h-2 bg-[#162035] rounded-full overflow-hidden relative">
+      <div className="w-full h-2 bg-midnight-surface rounded-full overflow-hidden relative">
         {/* 3-min red deadline marker */}
         <div className="absolute top-0 bottom-0 right-0 w-px bg-red-400 opacity-60" />
         <div
@@ -247,7 +247,7 @@ function OnboardingContent() {
           aria-labelledby="step-a-heading"
         >
           <div className="flex flex-col items-center gap-3">
-            <span aria-hidden className="w-16 h-16 rounded-full bg-[#162035] border border-cyan-400/30 flex items-center justify-center">
+            <span aria-hidden className="w-16 h-16 rounded-full bg-midnight-surface border border-cyan-400/30 flex items-center justify-center">
               <GitHubMark className="w-8 h-8 text-cyan-400" />
             </span>
             <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
@@ -269,9 +269,9 @@ function OnboardingContent() {
               setGithubConnected(true);
               setWizardStep(validQueryRole ? "confirm" : "role");
             }}
-            className="w-full inline-flex items-center justify-center gap-2 min-h-12 py-3 text-sm font-bold rounded-xl bg-cyan-400 text-[#0B1121] hover:bg-cyan-300 active:scale-[0.99] focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="w-full inline-flex items-center justify-center gap-2 min-h-12 py-3 text-sm font-bold rounded-xl bg-cyan-400 text-text-on-primary hover:bg-cyan-300 active:scale-[0.99] focus:outline focus:outline-2 focus:outline-cyan-400"
           >
-            <GitHubMark className="w-4 h-4 text-[#0B1121]" />
+            <GitHubMark className="w-4 h-4 text-text-on-primary" />
             GitHub と連携する
           </button>
           <p className="text-[10px] text-slate-400">
@@ -311,7 +311,7 @@ function OnboardingContent() {
                     setRole(t.id);
                     setWizardStep("confirm");
                   }}
-                  className={`group rounded-2xl border border-white/10 bg-[#162035] p-5 text-left ring-1 ${
+                  className={`group rounded-2xl border border-white/10 bg-midnight-surface p-5 text-left ring-1 ${
                     selected ? t.ring : "ring-transparent"
                   } hover:${t.ring} hover:ring-2 focus:outline focus:outline-2 focus:outline-cyan-400 transition-shadow`}
                 >
@@ -543,7 +543,7 @@ function OnboardingContent() {
                     placeholder="1990"
                     value={birthday}
                     onChange={(e) => setBirthday(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[#162035] border border-white/10 text-[#E2E8F0] focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-cyan-400"
                   />
                 </div>
                 <div>
@@ -556,7 +556,7 @@ function OnboardingContent() {
                     placeholder="東京都"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[#162035] border border-white/10 text-[#E2E8F0] focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-cyan-400"
                   />
                 </div>
                 <button
@@ -583,7 +583,7 @@ function OnboardingContent() {
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-[#162035] accent-cyan-400 focus:outline focus:outline-2 focus:outline-cyan-400"
+              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-midnight-surface accent-cyan-400 focus:outline focus:outline-2 focus:outline-cyan-400"
             />
             <span>
               利用規約と権利譲渡条件に同意します
@@ -622,23 +622,23 @@ function OnboardingContent() {
                   aria-current={isActive ? "step" : undefined}
                   className={
                     isDone
-                      ? "flex items-center gap-3 p-3 rounded-lg bg-emerald-600/10 border-l-4 border-[#22D3EE]"
+                      ? "flex items-center gap-3 p-3 rounded-lg bg-emerald-600/10 border-l-4 border-ai-action"
                       : isActive
-                      ? "flex items-center gap-3 p-3 rounded-lg bg-[#162035] border-l-4 border-[#22D3EE]"
-                      : "flex items-center gap-3 p-3 rounded-lg bg-[#0B1121] border-l-4 border-transparent opacity-60"
+                      ? "flex items-center gap-3 p-3 rounded-lg bg-midnight-surface border-l-4 border-ai-action"
+                      : "flex items-center gap-3 p-3 rounded-lg bg-midnight-base border-l-4 border-transparent opacity-60"
                   }
                 >
                   <span className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold">
                     {isDone ? (
-                      <span className="text-[#22D3EE]">✓</span>
+                      <span className="text-ai-action">✓</span>
                     ) : isActive ? (
-                      <span className="text-[#22D3EE]">●</span>
+                      <span className="text-ai-action">●</span>
                     ) : (
                       <span className="text-slate-400">{idx + 1}</span>
                     )}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-bold text-[#E2E8F0] leading-none">
+                    <p className="text-xs font-bold text-text-primary leading-none">
                       {step.label}
                     </p>
                     {isActive && (

@@ -26,8 +26,8 @@ export function RawDataPanel({ data }: RawDataPanelProps) {
         <CodeIcon size={12} />
         技術的な詳細を見る
       </summary>
-      <div className="mt-3 rounded-xl border border-white/10 bg-[#162035] p-4 text-xs font-mono">
-        <pre className="overflow-x-auto whitespace-pre-wrap leading-relaxed text-[#E2E8F0]">
+      <div className="mt-3 rounded-xl border border-white/10 bg-midnight-surface p-4 text-xs font-mono">
+        <pre className="overflow-x-auto whitespace-pre-wrap leading-relaxed text-text-primary">
           {json}
         </pre>
         <button

@@ -26,7 +26,7 @@ export function BackArrow({
       data-testid="back-arrow"
       className={
         "inline-flex items-center justify-center min-h-[44px] min-w-[44px] " +
-        "rounded-full text-[#22D3EE] hover:bg-white/5 active:bg-white/10 " +
+        "rounded-full text-ai-action hover:bg-white/5 active:bg-white/10 " +
         "outline-none focus:outline focus:outline-2 focus:outline-cyan-400 " +
         className
       }

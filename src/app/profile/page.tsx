@@ -133,7 +133,7 @@ export default function ProfilePage() {
       {/* ── Profile header — rank badge top with sub-label ──────────── */}
       <header
         data-testid="profile-header"
-        className="mb-5 rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400/30 p-5"
+        className="mb-5 rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400/30 p-5"
       >
         <div className="flex items-start gap-4">
           <HexRankBadge rank={topRank as "S" | "A" | "B"} size={80} showSubLabel />
@@ -224,7 +224,7 @@ export default function ProfilePage() {
         return (
           <section
             data-testid="intelligence-balance"
-            className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-5 mb-6 border-l-4 border-l-cyan-400/60"
+            className="rounded-2xl border border-cyan-400/30 bg-midnight-surface p-5 mb-6 border-l-4 border-l-cyan-400/60"
           >
             <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
               Intelligence Balance
@@ -385,7 +385,7 @@ export default function ProfilePage() {
             <li
               key={a.guildId}
               data-testid="knowledge-fragment-card"
-              className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400/30 p-4"
+              className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400/30 p-4"
             >
               <p className="text-white font-semibold text-sm leading-snug truncate">
                 {a.titleJa}

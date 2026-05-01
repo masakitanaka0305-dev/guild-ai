@@ -123,13 +123,13 @@ export function AssetReview({ assetId }: AssetReviewProps) {
       {/* Existing reviews */}
       <ul className="space-y-3 mb-5">
         {allReviews.map((r, i) => (
-          <li key={i} className="rounded-xl border border-white/10 bg-[#162035] px-4 py-3">
+          <li key={i} className="rounded-xl border border-white/10 bg-midnight-surface px-4 py-3">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-semibold text-white">{r.reviewer}</span>
               <span className="text-kaki text-xs">{"★".repeat(r.stars)}{"☆".repeat(5 - r.stars)}</span>
             </div>
             {r.comment && (
-              <p className="text-xs text-[#E2E8F0] leading-relaxed">{r.comment}</p>
+              <p className="text-xs text-text-primary leading-relaxed">{r.comment}</p>
             )}
             <p className="text-[10px] text-slate-400 mt-1">{r.date}</p>
           </li>
@@ -139,7 +139,7 @@ export function AssetReview({ assetId }: AssetReviewProps) {
       {/* Submit form */}
       {!submitted ? (
         <div className="border-t border-white/10 pt-4 space-y-3">
-          <p className="text-xs font-semibold text-[#E2E8F0]">★ を投じる</p>
+          <p className="text-xs font-semibold text-text-primary">★ を投じる</p>
           <StarPicker value={myStars} onChange={setMyStars} />
           <textarea
             rows={3}

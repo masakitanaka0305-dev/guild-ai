@@ -409,7 +409,7 @@ export default function GuildPage() {
 
       {/* ── 登記済みノート一覧 ────────────────────────────────────────── */}
       {!mounted ? (
-        <p className="text-sm text-[#22D3EE]">読み込み中...</p>
+        <p className="text-sm text-ai-action">読み込み中...</p>
       ) : weapons.length === 0 ? (
         <EmptyState
           title="まだ知能を登記していません"

@@ -88,7 +88,7 @@ export default function DisputesPage() {
         <h2 className="text-sm font-bold text-white mb-4">新規申請</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="text-xs font-semibold text-[#E2E8F0] block mb-1">クレームの種類</label>
+            <label className="text-xs font-semibold text-text-primary block mb-1">クレームの種類</label>
             <select
               value={claimType}
               onChange={(e) => setClaimType(e.target.value as ClaimType)}
@@ -101,7 +101,7 @@ export default function DisputesPage() {
             </select>
           </div>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
             対象 GUILD-ID
             <input
               type="text"
@@ -113,7 +113,7 @@ export default function DisputesPage() {
             />
           </label>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
             相手方のハンドル名
             <input
               type="text"
@@ -125,7 +125,7 @@ export default function DisputesPage() {
             />
           </label>
 
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
             詳細
             <textarea
               rows={3}
@@ -169,7 +169,7 @@ export default function DisputesPage() {
                      d.status === "escalated" ? "エスカレ" : "完了"}
                   </span>
                 </div>
-                <p className="text-xs text-[#E2E8F0] line-clamp-2 mb-2">{d.claim.description}</p>
+                <p className="text-xs text-text-primary line-clamp-2 mb-2">{d.claim.description}</p>
                 {d.verdict && (
                   <p className="text-[11px] font-semibold text-accent-green">
                     判定: {VERDICT_LABELS[d.verdict]}

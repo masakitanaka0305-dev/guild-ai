@@ -50,7 +50,7 @@ describe("Water Guild — body-contrast sweep", () => {
       join(ROOT, "src/app/projects/[id]/page.tsx"),
       "utf-8",
     );
-    expect(projects).toMatch(/text-\[#E2E8F0\]/);
+    expect(projects).toMatch(/text-text-primary/);
     // Detail page wraps the SES challenge body in ClampDescription, which
     // applies #E2E8F0 to its body paragraph
     expect(detail).toContain("<ClampDescription");
@@ -58,7 +58,7 @@ describe("Water Guild — body-contrast sweep", () => {
       join(ROOT, "src/components/ui/ClampDescription.tsx"),
       "utf-8",
     );
-    expect(clamp).toMatch(/text-\[#E2E8F0\]/);
+    expect(clamp).toMatch(/text-text-primary/);
   });
 
   it("low-contrast greys (text-slate-{500,600} / text-zinc-{400,500} / text-gray-{400,500,600}) are absent from src/", async () => {

@@ -32,8 +32,8 @@ function LogRow({ entry }: { entry: LogEntry }) {
           {OUTCOME_LABEL[entry.outcome] ?? entry.outcome}
         </span>
       </td>
-      <td className="py-2 px-3 text-xs text-[#E2E8F0]">{ENV_LABEL[entry.env] ?? entry.env}</td>
-      <td className="py-2 px-3 text-xs tabular-nums text-[#E2E8F0] text-right">{entry.durationMs}ms</td>
+      <td className="py-2 px-3 text-xs text-text-primary">{ENV_LABEL[entry.env] ?? entry.env}</td>
+      <td className="py-2 px-3 text-xs tabular-nums text-text-primary text-right">{entry.durationMs}ms</td>
       <td className="py-2 px-3 text-xs text-slate-400">{REGION_LABELS[entry.region] ?? entry.region}</td>
     </tr>
   );

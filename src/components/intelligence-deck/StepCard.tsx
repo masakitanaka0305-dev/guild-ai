@@ -16,7 +16,7 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
   return (
     <li
       data-testid={`deck-step-${step}`}
-      className="rounded-2xl border border-white/10 bg-[#162035] p-6 flex flex-col items-center text-center"
+      className="rounded-2xl border border-white/10 bg-midnight-surface p-6 flex flex-col items-center text-center"
     >
       <span className="self-start text-xs font-bold uppercase tracking-widest text-cyan-400">
         STEP {step}

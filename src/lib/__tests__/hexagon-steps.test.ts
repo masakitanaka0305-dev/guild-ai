@@ -50,6 +50,6 @@ describe("HexagonSteps — onboarding progress strip", () => {
       "utf-8",
     );
     expect(onboarding).toMatch(/bg-emerald-600\/10/);
-    expect(onboarding).toMatch(/border-\[#22D3EE\]/);
+    expect(onboarding).toMatch(/border-ai-action/);
   });
 });

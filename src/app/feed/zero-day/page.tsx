@@ -38,7 +38,7 @@ function EventCard({ event }: { event: ZeroDayEvent }) {
           </div>
 
           <h2 className="text-sm font-bold text-white leading-snug mb-1">{event.title}</h2>
-          <p className="text-xs text-[#E2E8F0] leading-relaxed mb-3">{event.description}</p>
+          <p className="text-xs text-text-primary leading-relaxed mb-3">{event.description}</p>
 
           {isCovered && event.coveredBy && (
             <div className="rounded-xl border border-green-100 bg-green-50/60 p-3 mb-3">

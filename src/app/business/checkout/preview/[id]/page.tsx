@@ -58,7 +58,7 @@ export default function EnterprisePreviewPage({ params }: { params: { id: string
 
       <article
         data-testid="enterprise-preview-body"
-        className="rounded-2xl border border-cyan-400/20 bg-[#162035] p-6 whitespace-pre-wrap font-mono text-sm text-slate-200 leading-relaxed"
+        className="rounded-2xl border border-cyan-400/20 bg-midnight-surface p-6 whitespace-pre-wrap font-mono text-sm text-slate-200 leading-relaxed"
       >
         {masked.text}
       </article>

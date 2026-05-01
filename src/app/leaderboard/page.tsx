@@ -12,7 +12,7 @@ export default function LeaderboardPage() {
   const entries = getSRankLeaderboard();
 
   return (
-    <main className="bg-[#0B1121] text-white min-h-screen min-h-dvh px-5 sm:px-8 py-8 max-w-3xl mx-auto">
+    <main className="bg-midnight-base text-white min-h-screen min-h-dvh px-5 sm:px-8 py-8 max-w-3xl mx-auto">
       <header className="mb-6">
         <h1 className="text-white font-semibold text-2xl tracking-tight">
           伝説の知能ギルド
@@ -32,7 +32,7 @@ export default function LeaderboardPage() {
             key={e.handle}
             data-testid="leaderboard-entry"
             data-rank={e.rank}
-            className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-[#FDE047]/70 p-4"
+            className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-[#FDE047]/70 p-4"
           >
             <Link
               href={`/profile/${e.handle}`}

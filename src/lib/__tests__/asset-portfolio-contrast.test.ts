@@ -33,7 +33,7 @@ describe("/guild — Asset Portfolio readability", () => {
 
   it("「+ 新しく投稿する」 button is the cyan primary, rounded-full, ≥44px", () => {
     expect(src).toMatch(/data-testid="new-listing-cta"[\s\S]{0,400}rounded-full/);
-    expect(src).toMatch(/data-testid="new-listing-cta"[\s\S]{0,400}bg-\[#22D3EE\]/);
+    expect(src).toMatch(/data-testid="new-listing-cta"[\s\S]{0,400}bg-ai-action/);
     expect(src).toMatch(/data-testid="new-listing-cta"[\s\S]{0,400}min-h-\[44px\]/);
     // Section uses the spec'd "新しく投稿する" label, not the legacy "投稿する" verb
     expect(src).toContain("＋ 新しく投稿する");

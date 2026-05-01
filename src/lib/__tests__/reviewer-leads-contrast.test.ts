@@ -20,8 +20,8 @@ describe("Reviewer / business-leads contrast", () => {
       join(ROOT, "src/app/business/checkout/page.tsx"),
       "utf-8",
     );
-    expect(src).toContain("bg-[#162035]");
-    expect(src).toContain("text-[#E2E8F0]");
+    expect(src).toContain("bg-midnight-surface");
+    expect(src).toContain("text-text-primary");
     // Selected plan tile keeps the deep-sea contrast (no nameraka red wash)
     expect(src).not.toContain("border-[var(--primary,#06B6D4)] bg-red-50");
   });

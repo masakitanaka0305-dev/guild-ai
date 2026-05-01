@@ -118,8 +118,8 @@ export default function BusinessCheckoutPage() {
             key={p.id}
             className={`flex flex-col rounded-xl border-2 p-3 cursor-pointer transition-all ${
               plan === p.id
-                ? "border-[#22D3EE] bg-[#1E293B]"
-                : "border-white/10 bg-[#162035] hover:border-[#22D3EE]/40"
+                ? "border-ai-action bg-[#1E293B]"
+                : "border-white/10 bg-midnight-surface hover:border-ai-action/40"
             }`}
           >
             <input
@@ -146,7 +146,7 @@ export default function BusinessCheckoutPage() {
         <p className="text-xs font-semibold text-white mb-2">{selected.name} の特典</p>
         <ul className="space-y-1">
           {selected.features.map((f) => (
-            <li key={f} className="flex gap-2 text-xs text-[#E2E8F0]">
+            <li key={f} className="flex gap-2 text-xs text-text-primary">
               <span className="text-accent-green">✓</span>{f}
             </li>
           ))}
@@ -157,7 +157,7 @@ export default function BusinessCheckoutPage() {
       <form onSubmit={handleSubmit} className="section-card p-5 space-y-4">
         <h2 className="text-sm font-bold text-white">お支払い情報（モック）</h2>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+        <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
           カード番号
           <input
             type="text"
@@ -166,13 +166,13 @@ export default function BusinessCheckoutPage() {
             placeholder="4242 4242 4242 4242"
             inputMode="numeric"
             maxLength={19}
-            className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono tracking-wider"
+            className="rounded-xl border border-white/10 bg-midnight-surface px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono tracking-wider"
             aria-label="カード番号"
           />
         </label>
 
         <div className="grid grid-cols-2 gap-3">
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
             有効期限
             <input
               type="text"
@@ -180,11 +180,11 @@ export default function BusinessCheckoutPage() {
               onChange={(e) => handleExpiryInput(e.target.value)}
               placeholder="MM/YY"
               maxLength={5}
-              className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
+              className="rounded-xl border border-white/10 bg-midnight-surface px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
               aria-label="有効期限"
             />
           </label>
-          <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+          <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
             CVC
             <input
               type="text"
@@ -192,20 +192,20 @@ export default function BusinessCheckoutPage() {
               onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 3))}
               placeholder="123"
               maxLength={3}
-              className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
+              className="rounded-xl border border-white/10 bg-midnight-surface px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-kaki/30 font-mono"
               aria-label="CVC"
             />
           </label>
         </div>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[#E2E8F0]">
+        <label className="flex flex-col gap-1 text-xs font-semibold text-text-primary">
           カード名義
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="TARO YAMADA"
-            className="rounded-xl border border-white/10 bg-[#162035] px-3 py-2 text-sm text-[#E2E8F0] focus:outline-none focus:ring-2 focus:ring-kaki/30 uppercase"
+            className="rounded-xl border border-white/10 bg-midnight-surface px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-kaki/30 uppercase"
             aria-label="カード名義"
           />
         </label>

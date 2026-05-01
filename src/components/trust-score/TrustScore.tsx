@@ -63,7 +63,7 @@ function Bar({ label, value, weight }: { label: string; value: number; weight: n
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div>
-      <div className="flex justify-between text-xs text-[#E2E8F0]">
+      <div className="flex justify-between text-xs text-text-primary">
         <dt>
           {label} <span className="text-slate-400">×{weight}</span>
         </dt>

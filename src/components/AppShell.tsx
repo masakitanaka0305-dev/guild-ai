@@ -14,7 +14,7 @@ function EnterpriseCTA() {
   return (
     <div
       data-testid="enterprise-cta-mobile"
-      className="lg:hidden flex-shrink-0 sticky bottom-16 z-20 bg-[#162035] border-t border-cyan-400/20"
+      className="lg:hidden flex-shrink-0 sticky bottom-16 z-20 bg-midnight-surface border-t border-cyan-400/20"
     >
       <Link
         href="/business/checkout"
@@ -30,7 +30,7 @@ function EnterpriseCTADesktop() {
   return (
     <div
       data-testid="enterprise-cta-desktop"
-      className="flex-shrink-0 border-t border-white/10 bg-[#162035] flex items-center justify-between"
+      className="flex-shrink-0 border-t border-white/10 bg-midnight-surface flex items-center justify-between"
     >
       <Link
         href="/business/checkout"

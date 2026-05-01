@@ -77,7 +77,7 @@ export function ShareButton({ context, url, seed, className = "", compact = fals
       {/* Preview of share text */}
       <div className="rounded-xl bg-kuroko/5 border border-white/10 px-4 py-3">
         <p className="text-xs text-slate-400 mb-1.5 font-semibold uppercase tracking-widest">シェア文</p>
-        <p className="text-sm text-[#E2E8F0] leading-relaxed whitespace-pre-wrap">{shareText}</p>
+        <p className="text-sm text-text-primary leading-relaxed whitespace-pre-wrap">{shareText}</p>
       </div>
 
       {/* Share buttons row */}

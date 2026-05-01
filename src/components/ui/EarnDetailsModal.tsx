@@ -40,7 +40,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-[#162035] rounded-2xl shadow-xl p-6 w-full max-w-md border border-cyan-400/20"
+        className="bg-midnight-surface rounded-2xl shadow-xl p-6 w-full max-w-md border border-cyan-400/20"
         onClick={(e) => e.stopPropagation()}
       >
         <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
@@ -55,7 +55,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
 
         <ol className="mt-4 space-y-3">
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-[#0B1121] text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
               1
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
@@ -63,7 +63,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
             </p>
           </li>
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-[#0B1121] text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
               2
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
@@ -72,7 +72,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
             </p>
           </li>
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-[#0B1121] text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
               3
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
@@ -94,7 +94,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-[#0B1121] hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
           >
             閉じる
           </button>

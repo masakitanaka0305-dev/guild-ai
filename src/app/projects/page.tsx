@@ -48,7 +48,7 @@ export default function ProjectsPage() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead>
-            <tr className="border-b border-slate-700 text-[#E2E8F0] text-xs uppercase">
+            <tr className="border-b border-slate-700 text-text-primary text-xs uppercase">
               <th className="pb-3 pr-4">困りごと</th>
               <th className="pb-3 pr-4">分野</th>
               <th className="pb-3 pr-4">マッチ度</th>
@@ -63,29 +63,29 @@ export default function ProjectsPage() {
               return (
                 <tr
                   key={row.id}
-                  className={`border-b border-slate-800 hover:bg-slate-900 ${isRecommended ? "border-l-4 border-l-[#22D3EE]" : "border-l-4 border-l-transparent"}`}
+                  className={`border-b border-slate-800 hover:bg-slate-900 ${isRecommended ? "border-l-4 border-l-ai-action" : "border-l-4 border-l-transparent"}`}
                 >
                   <td className="py-3 pr-4">
                     <p className="font-medium text-white">{row.title}</p>
                     {isRecommended && (
-                      <span className="text-[10px] text-[#22D3EE] font-bold uppercase">おすすめ</span>
+                      <span className="text-[10px] text-ai-action font-bold uppercase">おすすめ</span>
                     )}
                   </td>
-                  <td className="py-3 pr-4 text-[#E2E8F0] text-xs">{friendlyIndustry(row.industry)}</td>
+                  <td className="py-3 pr-4 text-text-primary text-xs">{friendlyIndustry(row.industry)}</td>
                   <td className="py-3 pr-4">
-                    <span className="font-semibold tabular-nums text-[#22D3EE]">
+                    <span className="font-semibold tabular-nums text-ai-action">
                       {row.matchScore}%
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-[#E2E8F0] tabular-nums">
+                  <td className="py-3 pr-4 text-text-primary tabular-nums">
                     ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
                   </td>
-                  <td className="py-3 pr-4 text-[#E2E8F0] text-xs">{row.deadline}</td>
+                  <td className="py-3 pr-4 text-text-primary text-xs">{row.deadline}</td>
                   <td className="py-3">
                     <Link
                       href={`/projects/${row.id}`}
                       aria-label="この困りごとの中身を見る"
-                      className="px-4 py-1.5 bg-[#22D3EE] text-[#0B1121] text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+                      className="px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
                     >
                       中身を見る
                     </Link>

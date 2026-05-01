@@ -35,7 +35,7 @@ export function ValuationSection({
         />
         <div className="flex-1 space-y-3">
           {justification && (
-            <p className="text-sm text-[#E2E8F0] leading-relaxed">{justification}</p>
+            <p className="text-sm text-text-primary leading-relaxed">{justification}</p>
           )}
           <div className="flex items-baseline gap-2">
             <span className="text-xs text-slate-400">お値段の目安</span>

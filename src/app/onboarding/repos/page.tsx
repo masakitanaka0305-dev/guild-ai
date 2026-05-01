@@ -142,7 +142,7 @@ export default function ReposPage() {
 
                 <Link
                   href={`/onboarding/draft/${owner}/${repo.name}`}
-                  className="block text-center py-2 px-4 rounded-full bg-[#22D3EE] text-[#0B1121] text-xs font-bold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+                  className="block text-center py-2 px-4 rounded-full bg-ai-action text-text-on-primary text-xs font-bold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
                 >
                   Analyze — このコードベースを解析
                 </Link>

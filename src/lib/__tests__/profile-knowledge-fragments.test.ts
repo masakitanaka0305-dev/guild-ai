@@ -16,8 +16,8 @@ describe("/profile — Phase H layout", () => {
     expect(src).toContain("知能の断片");
     expect(src).toContain('data-testid="knowledge-fragments"');
     expect(src).toContain('data-testid="knowledge-fragment-card"');
-    // Each card uses bg-[#162035] + border-l-cyan-400/30
-    expect(src).toMatch(/data-testid="knowledge-fragment-card"[\s\S]{0,400}bg-\[#162035\]/);
+    // Each card uses bg-midnight-surface + border-l-cyan-400/30
+    expect(src).toMatch(/data-testid="knowledge-fragment-card"[\s\S]{0,400}bg-midnight-surface/);
     expect(src).toMatch(/data-testid="knowledge-fragment-card"[\s\S]{0,400}border-l-cyan-400\/30/);
   });
 });

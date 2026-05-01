@@ -12,7 +12,7 @@ describe("Onboarding 鑑定中 wait page → reveal flow", () => {
     const src = read("src/app/onboarding/grading/[handle]/[repo]/page.tsx");
     expect(src).toContain("鑑定中...");
     expect(src).toContain("Analyzing your Intelligence");
-    expect(src).toContain("bg-[#0B1121]");
+    expect(src).toContain("bg-midnight-base");
     expect(src).toMatch(/role="status"/);
     expect(src).toMatch(/aria-live="polite"/);
     // 3-second timeout that replaces with ?reveal=1

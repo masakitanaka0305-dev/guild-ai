@@ -47,7 +47,7 @@ export function ClampDescription({
         data-testid="clamp-body"
         data-expanded={expanded || undefined}
         style={clampStyle}
-        className="text-sm text-[#E2E8F0] leading-relaxed"
+        className="text-sm text-text-primary leading-relaxed"
       >
         {text}
       </p>
@@ -55,7 +55,7 @@ export function ClampDescription({
         type="button"
         aria-expanded={expanded}
         onClick={() => setExpanded(v => !v)}
-        className="mt-1 text-xs font-bold text-[#22D3EE] hover:underline focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+        className="mt-1 text-xs font-bold text-ai-action hover:underline focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
       >
         {expanded ? "閉じる" : "もっと見る"}
       </button>

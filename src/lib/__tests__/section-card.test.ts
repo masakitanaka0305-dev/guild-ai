@@ -11,7 +11,7 @@ describe("SectionCard — unified card wrapper for /projects/[id]", () => {
   const card = read("src/components/ui/SectionCard.tsx");
 
   it("ships the unified visual contract (rounded-2xl, cyan rail, slate surface)", () => {
-    expect(card).toContain("rounded-2xl border border-white/10 bg-[#162035]");
+    expect(card).toContain("rounded-2xl border border-white/10 bg-midnight-surface");
     expect(card).toContain("p-5 sm:p-6");
     expect(card).toContain("mb-4");
     expect(card).toContain("border-l-4 border-cyan-400 pl-3");

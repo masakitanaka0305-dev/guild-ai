@@ -43,7 +43,7 @@ describe("Intelligence Deck — three-step onboarding home", () => {
     expect(src).toContain('aria-label="自分の知能を登記する"');
     // Cyan-400 fill + static glow shadow + rounded-full
     expect(src).toContain("bg-cyan-400");
-    expect(src).toContain("text-[#0B1121]");
+    expect(src).toContain("text-text-on-primary");
     expect(src).toContain("rounded-full");
     expect(src).toMatch(/shadow-\[0_0_0_2px_rgba\(34,211,238,0\.5\),0_0_28px_rgba\(34,211,238,0\.35\)\]/);
   });

@@ -86,7 +86,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
   // Bilingual layout: emotional (left/yasashii) content
   const emotionalContent = (
     <>
-      <p className="text-sm text-[#E2E8F0] leading-relaxed">{listing.description}</p>
+      <p className="text-sm text-text-primary leading-relaxed">{listing.description}</p>
 
       {listing.githubUrl && (
         <a
@@ -121,7 +121,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
           <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
             クリエイターのこだわり（実績ログ）
           </h2>
-          <p className="mt-3 text-sm text-[#E2E8F0] leading-relaxed whitespace-pre-wrap">
+          <p className="mt-3 text-sm text-text-primary leading-relaxed whitespace-pre-wrap">
             {listing.proofOfMakeNote}
           </p>
         </section>
@@ -143,15 +143,15 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         </h2>
         <dl className="mt-3 space-y-2.5 text-sm">
           <div className="flex justify-between">
-            <dt className="text-[#E2E8F0]">考えの深さ</dt>
+            <dt className="text-text-primary">考えの深さ</dt>
             <dd className="font-semibold tabular-nums text-white">{listing.ccaf.thoughtDensity} / 100</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-[#E2E8F0]">試みた回数</dt>
+            <dt className="text-text-primary">試みた回数</dt>
             <dd className="font-semibold tabular-nums text-white">{listing.ccaf.iterations}</dd>
           </div>
           <div>
-            <dt className="text-[#E2E8F0] mb-1.5">意思シグナル（お墨付き証明）</dt>
+            <dt className="text-text-primary mb-1.5">意思シグナル（お墨付き証明）</dt>
             {listing.ccaf.intentSignals.length > 0 ? (
               <ul className="flex flex-wrap gap-1.5">
                 {listing.ccaf.intentSignals.map((s) => (
@@ -175,7 +175,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
         <h2 className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           <SearchIcon size={13} className="mr-1 opacity-60 inline-block" />AI 評価レポート
         </h2>
-        <ul className="mt-3 space-y-1.5 text-sm text-[#E2E8F0]">
+        <ul className="mt-3 space-y-1.5 text-sm text-text-primary">
           {auditResult.reasons.map((r) => (
             <li key={r} className="flex gap-2">
               <span className="text-kaki mt-0.5">·</span>
@@ -406,7 +406,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
                 <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-2">汎用 AI の回答</p>
                 <ul className="space-y-1.5">
                   {delta.generic.points.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs text-[#E2E8F0]">
+                    <li key={pt} className="flex gap-2 text-xs text-text-primary">
                       <span className="text-slate-400 mt-0.5 shrink-0">·</span>
                       {pt}
                     </li>
@@ -419,7 +419,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
                 <p className="text-[10px] font-semibold uppercase tracking-widest text-kaki mb-2">このノートの回答</p>
                 <ul className="space-y-1.5 mb-3">
                   {delta.pro.points.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs text-[#E2E8F0]">
+                    <li key={pt} className="flex gap-2 text-xs text-text-primary">
                       <span className="text-kaki mt-0.5 shrink-0">✓</span>
                       {pt}
                     </li>
@@ -544,15 +544,15 @@ export default function AssetPage({ params }: { params: { id: string } }) {
             <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-3">料金プラン</p>
             <div className="space-y-1.5 text-sm">
               <div className="flex justify-between">
-                <span className="text-[#E2E8F0]">月額</span>
+                <span className="text-text-primary">月額</span>
                 <span className="font-semibold tabular-nums text-white">¥{pricing.monthlyJpy.toLocaleString("ja-JP")} / 月</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#E2E8F0]">買い切り</span>
+                <span className="text-text-primary">買い切り</span>
                 <span className="font-semibold tabular-nums text-white">¥{pricing.oneoffJpy.toLocaleString("ja-JP")}</span>
               </div>
               <div className="flex justify-between pt-1.5 border-t border-white/10">
-                <span className="text-[#E2E8F0]">1リクエスト</span>
+                <span className="text-text-primary">1リクエスト</span>
                 <span className="font-semibold tabular-nums text-kaki">{pricing.perCallJpyc} デジタル円</span>
               </div>
             </div>
@@ -584,7 +584,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
             "不正検知時は自動で返金",
             "鍵は AES-256 と Schnorr 署名（モック）",
           ].map((lockItem) => (
-            <li key={lockItem} className="flex items-start gap-2 text-sm text-[#E2E8F0]">
+            <li key={lockItem} className="flex items-start gap-2 text-sm text-text-primary">
               <span className="text-accent-green mt-0.5">✓</span>
               {lockItem}
             </li>
@@ -625,7 +625,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
             </span>
           ))}
         </div>
-        <p className="mt-2 text-sm text-[#E2E8F0]">
+        <p className="mt-2 text-sm text-text-primary">
           AIエージェントが直接このスキルを利用できます — 人間の介在なしに採用・実行が完結します。
         </p>
         <p className="mt-1 text-xs text-slate-400">
