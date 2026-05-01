@@ -17,7 +17,7 @@ const STATUS_TO_PCT: Record<JobStatus, 33 | 66 | 100> = {
 };
 
 export const STATUS_LABEL: Record<JobStatus, string> = {
-  applied:   "応募中",
+  applied:   "エージェント派遣中",
   engaged:   "参画中",
   completed: "完了",
 };

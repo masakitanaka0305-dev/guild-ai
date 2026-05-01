@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Send } from "lucide-react";
 import { getDemoOwnedMds } from "@/lib/matching";
 import { pickBestFitMd } from "@/lib/md-pickfit";
 import { getProject } from "@/lib/projects";
@@ -55,7 +56,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
     <div className={wrapperClass} role={wrapperRole} aria-label={wrapperLabel}>
       <div>
         <label htmlFor="md-select" className="text-xs text-[#E2E8F0] block mb-1">
-          この知能で応募 — 知能資産を選ぶ
+          知能をプラグイン — 知能資産を選ぶ
         </label>
         <select
           id="md-select"
@@ -81,13 +82,14 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
       <button
         onClick={handleApply}
         disabled={!selectedMd || applying || underwater}
-        aria-label="この案件に応募する"
-        className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+        aria-label="エージェントをデプロイ"
+        className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2"
       >
-        {applying ? "応募中..." : "この案件に応募する"}
+        <Send aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
+        {applying ? "派遣中..." : "エージェントをデプロイ"}
       </button>
-      <p className="mt-1 text-[11px] text-slate-400 text-center">
-        選んだ知能資産があなたのスキル証明になります
+      <p className="mt-1 text-xs text-cyan-400/70 text-center leading-snug">
+        あなたの思考をコピーした AI が、企業のプロジェクトに参加します
       </p>
     </div>
   );
