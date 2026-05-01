@@ -110,7 +110,12 @@ describe("mercari-ui: bottom tabs", () => {
 // ─── 5. FAB href=/onboarding aria-label="投稿" ─────────────────────────────
 
 describe("mercari-ui: FAB", () => {
-  const src = readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
+  // Floating-FAB removed in UX pass 2; the ＋ entry now lives in
+  // BottomNav (SidebarNav) + MainHeader. Concatenate them so the
+  // legacy assertion still expresses the same intent.
+  const src = readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8")
+            + readFileSync(resolve(root, "src/components/MainHeader.tsx"), "utf8")
+            + readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
   it("FAB links to /onboarding (Quick Listing)", () => {
     expect(src).toContain('href="/onboarding"');

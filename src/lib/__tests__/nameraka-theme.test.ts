@@ -34,9 +34,13 @@ describe("nameraka-theme.tokens", () => {
 // ─── 3. FAB (+のこす) ─────────────────────────────────────────────────────────
 
 describe("nameraka-theme.fab", () => {
-  // FAB lives in AppShell (extracted from layout for auth-path isolation)
+  // FAB now lives at BottomNav center (SidebarNav) + a small Plus in
+  // MainHeader. The legacy floating FAB on AppShell was removed in
+  // UX pass 2 to stop overlapping the partnership banner.
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
-               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
+               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/MainHeader.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
   it("layout has FAB (＋) linking to /onboarding", () => {
     expect(layout).toContain("href=\"/onboarding\"");
@@ -149,7 +153,9 @@ describe("nameraka-theme.light-repaint", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
   // FAB lives in AppShell (extracted from layout for auth-path isolation)
   const layout = readFileSync(resolve(root, "src/app/layout.tsx"), "utf8")
-               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8");
+               + readFileSync(resolve(root, "src/components/AppShell.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/MainHeader.tsx"), "utf8")
+               + readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
   it("water theme --bg is dark (#020617) replacing old nameraka light bg", () => {
@@ -164,6 +170,8 @@ describe("nameraka-theme.light-repaint", () => {
   });
 
   it("FAB links to /onboarding (Quick Listing) with aria-label", () => {
+    // Literal href lives in MainHeader; aria-label="出す" lives in
+    // both BottomNav (SidebarNav) and MainHeader.
     expect(layout).toContain('href="/onboarding"');
     expect(layout).toContain('aria-label="出す"');
   });

@@ -136,7 +136,14 @@ describe("nav: 2-tab + center FAB structure (探す/稼ぐ + 出す FAB)", () =>
   });
 
   it("center FAB links to /onboarding with aria-label='出す'", () => {
-    const combined = navSrc + appShellSrc;
+    const headerSrc = (() => {
+      try {
+        return readFileSync(join(root, "src/components/MainHeader.tsx"), "utf8");
+      } catch { return ""; }
+    })();
+    const combined = navSrc + appShellSrc + headerSrc;
+    // The mobile MainHeader Plus link uses the literal href, while the
+    // BottomNav center FAB resolves it via PRIMARY_ACTION.href.
     expect(combined).toContain('href="/onboarding"');
     expect(combined).toContain('aria-label="出す"');
   });
