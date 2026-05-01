@@ -190,7 +190,12 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                       <span className="ml-1 font-bold text-cyan-400">[{ownedRank}]</span>
                     )}
                     {!matched && (
-                      <span className="ml-1 text-slate-400">（持っていません — {req.rankMin} 以上）</span>
+                      <span
+                        data-testid="missing-positive-recommend"
+                        className="ml-1 text-[var(--color-text-muted)]"
+                      >
+                        — まだ持っていません。似た知恵を出品してみよう
+                      </span>
                     )}
                   </span>
                   {req.weight === 3 && (

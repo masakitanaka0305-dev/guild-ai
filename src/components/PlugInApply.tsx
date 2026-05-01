@@ -220,15 +220,17 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
       )}
 
       {!pluggedIn && (
-        <p className="text-center text-[11px] text-slate-300">
-          あなたの知恵が、企業のお困りごとを助けます
-        </p>
-      )}
-
-      {!pluggedIn && (
-        <p className="mt-1 text-xs text-cyan-400/70 text-center leading-snug">
-          あなたの思考をコピーした AI が、企業のプロジェクトに参加します
-        </p>
+        <>
+          <p
+            data-testid="apply-clone-caption"
+            className="mt-2 text-center text-base sm:text-lg font-semibold text-[var(--color-text-primary)] leading-snug px-2"
+          >
+            あなたの思考をコピーしたAIが、企業のプロジェクトに参加します
+          </p>
+          <p className="text-center text-[11px] text-[var(--color-text-muted)]">
+            あなたの知恵が、企業のお困りごとを助けます
+          </p>
+        </>
       )}
 
       <PluggedInConfirmModal open={modalOpen} onClose={() => setModalOpen(false)} />
