@@ -7,6 +7,7 @@ import { ZeroDayToast } from "@/components/ZeroDayToast";
 import { MainHeader } from "@/components/MainHeader";
 import { ZeroDayBanner } from "@/components/ZeroDayBanner";
 import { EarningTicker } from "@/components/ui/EarningTicker";
+import { LiveModeSwitch } from "@/components/ui/LiveModeSwitch";
 
 // ─── Enterprise CTA banner — shared footer band, sticks above bottom nav ─────
 
@@ -61,6 +62,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <span className="text-sm font-bold text-[var(--n-text,#1A1714)]">GUILD AI</span>
           <EarningTicker className="ml-auto" />
+          <LiveModeSwitch />
         </div>
         <SidebarNav />
         <EnterpriseCTADesktop />
