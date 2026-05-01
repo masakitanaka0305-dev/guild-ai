@@ -193,3 +193,20 @@
 | jargon-lint Rezon NG ＋ <h1> sweep | +6 | `src/lib/__tests__/jargon-lint.test.ts` |
 
 合計 **40 件以上**（既存ファイル更新も含む）。
+
+---
+
+## 7. 配色は Midnight Logic に一本化、コピーは友好的のまま
+
+Midnight Logic Update (#124) 以降、**配色は `docs/Midnight-Logic設計.md` の
+セマンティック・トークンに一本化**。本ドキュメント (Friendly Tone) は
+**コピー（用語マッピング・トーン）に責任を持ち、色はもう持たない**。
+
+実務上の境界：
+- カラー（hex／Tailwind ユーティリティ） → `docs/Midnight-Logic設計.md`
+- 文言・トーン・命名（用語マッピング） → 本ドキュメント
+- 太鼓判（金 #FDE047 ／銀 #CBD5E1 ／銅 #D2A06B） → 別系統として維持
+
+UI コピーは引き続き友好的（マイページ ― もちもの／お困りごと／知恵を
+貸す／お礼）、色は Midnight Logic（bg-midnight-base ／ bg-ai-action ／
+text-text-primary）。両者は独立に進化する。
