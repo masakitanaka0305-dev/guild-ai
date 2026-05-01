@@ -16,6 +16,23 @@ FOMO（Fear Of Missing Out）演出を構造的に排除するための設計仕
 | `royalty_settled` | 「新しい印税が **¥84 入金されました**」 | royalty stream の confirmed event |
 | `enterprise_interest` | 「**○○社**があなたの『観測性設計メモ』に注目しています」 | mock AtoA inquiry — 必ず counterparty を名指す |
 
+### 1b. Streak / milestone 事実 spike（#129 拡張）
+
+`@/lib/streak-events` が以下 4 タイプを生成。すべて **過去の実績**にしか言及しない：
+
+| type | UI 文例 | しきい値 |
+|---|---|---|
+| `consecutive_royalty_days`     | 「**3 日連続**で印税が届いています」 | 3 / 7 / 14 / 30 day streak |
+| `peak_weekly_adoption`         | 「今週、あなたの知恵が **連続 5 件採用**されました（過去最多）」 | `thisWeek > previousMax` のときのみ発火 |
+| `consecutive_calls_milestone`  | 「**直近 24 時間で 100 回呼び出されました**」 | 10 / 50 / 100 / 500 / 1,000 calls |
+| `royalty_total_milestone`      | 「**累計 ¥10,000 を超えました**」 | ¥1,000 / ¥10,000 / ¥100,000 / ¥1,000,000 |
+
+判定ルール（`computeStreaks(history)`）：
+1. しきい値テーブルから「value 以上の最大しきい値」を選ぶ。中間値（4 日連続）では発火しない。
+2. peak は **strictly greater** のみ（同点・以下では発火しない）。
+3. **dedupe**: `recentEventIds` セットに同 id があれば skip（実装は同種を 24 時間内 1 回まで）。
+4. 数値以外の文言は固定。架空の % / 急騰 / 暴落 などは引き続き jargon-lint で禁止。
+
 `@/lib/notifications/honest-events` に上記 3 タイプを生成するヘルパーが揃って
 おり、`buildHonestNotificationStack(userId)` が deterministic な 3 件
 スタックを返す（SSR / テストのため）。
