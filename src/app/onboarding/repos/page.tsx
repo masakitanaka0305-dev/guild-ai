@@ -53,13 +53,24 @@ export default function ReposPage() {
       <div className="mb-8">
         <div className="-ml-2 mb-2 flex items-center gap-1">
           <BackArrow href="/onboarding" label="オンボーディングに戻る" />
-          <span className="text-xs text-slate-400">オンボーディング ›</span>
-          <span aria-current="step" className="text-xs text-white font-medium">コードベース選択</span>
+          <span className="text-sm text-[var(--color-text-muted)]">オンボーディング ›</span>
+          <span
+            aria-current="step"
+            className="text-sm text-[var(--color-text-primary)] font-semibold"
+          >
+            コードベース選択
+          </span>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight text-white mb-2">
+        <h1
+          data-testid="repos-h1"
+          className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text-primary)] mb-2"
+        >
           コードベースを選択
         </h1>
-        <p className="text-slate-400 text-sm">
+        <p
+          data-testid="repos-subtitle"
+          className="text-base font-medium text-[var(--color-text-muted)]"
+        >
           GUILD AI に登記するコードベースを選んでください。AI が内容を解析して知能資産の草稿を生成します。
         </p>
       </div>
