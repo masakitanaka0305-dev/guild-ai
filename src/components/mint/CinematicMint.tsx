@@ -8,19 +8,25 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import type { Rank } from "@/types";
 
 /**
- * Cinematic Mint (#128) — four-phase reveal for the
- * /onboarding/grading/[handle]/[repo] surface.
+ * Cinematic Mint (#128 / #129 dramatic Phase 3) — four-phase reveal for
+ * the /onboarding/grading/[handle]/[repo] surface.
  *
  *   Phase 1 — 加速 (1400ms): matrix-style 知恵キーワード drift
  *   Phase 2 — 飽和 (1400ms): crystal at center, purple particles orbit
- *   Phase 3 — 静謐の間 (800ms): screen settles to abyss, single gold line
+ *   Phase 3 — 静謐の間 (1400ms, #129):
+ *      0.0–0.4s  curtain fade to abyss
+ *      0.4–1.0s  three purple ellipsis dots breathe in + gold hairlines
+ *                grow vertically from the centerline (the "tame")
+ *      1.0–1.4s  hairlines converge back to a single point, handing off
+ *                to Phase 4's radial gold glow
  *   Phase 4 — 啓示 (1000ms): radial gold glow, rank card + 資産価値 rises
  *
- * Total ≈ 4.6s (or 0.5s with prefers-reduced-motion: reduce — Phase 4 only).
+ * Total ≈ 5.2s (or 0.5s with prefers-reduced-motion: reduce — Phase 4 only).
  *
  * The "curtain" Phase 3 is intentionally calm. There is no error icon,
- * no red flash, no "crash" cosplay — only a quiet abyss + a single
- * thin gold line, and `aria-live="polite"` announcing 「準備中…」 once.
+ * no red flash, no "crash" cosplay, no loader spinner — just abyss +
+ * three breathing dots + a tightening hairline, and `aria-live="polite"`
+ * announcing 「準備中…」 once.
  */
 export interface CinematicMintProps {
   rank: Rank;
@@ -33,8 +39,15 @@ export interface CinematicMintProps {
 const PHASE_TIMINGS = {
   phase1: 1400,
   phase2: 1400,
-  phase3: 800,
+  phase3: 1400,
   phase4: 1000,
+} as const;
+
+// Phase 3 sub-beats (#129). Sum equals PHASE_TIMINGS.phase3.
+const PHASE3_BEATS = {
+  fadeMs: 400,    // curtain settles to abyss
+  tameMs: 600,    // dots + hairlines breathe in
+  convergeMs: 400, // hairlines collapse back to a point
 } as const;
 
 const REDUCED_TIMING = 500;
@@ -49,9 +62,12 @@ const MATRIX_TOKENS = [
   "review", "trace",    "意図",    "意思",
 ];
 
+type Phase3Beat = "fade" | "tame" | "converge";
+
 export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintProps) {
   const reduced = usePrefersReducedMotion();
   const [phase, setPhase] = useState<1 | 2 | 3 | 4>(reduced ? 4 : 1);
+  const [phase3Beat, setPhase3Beat] = useState<Phase3Beat>("fade");
 
   useEffect(() => {
     if (reduced) {
@@ -63,15 +79,25 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
       }, REDUCED_TIMING);
       return () => window.clearTimeout(t);
     }
+    const phase3StartMs = PHASE_TIMINGS.phase1 + PHASE_TIMINGS.phase2;
+    const tameStartMs = phase3StartMs + PHASE3_BEATS.fadeMs;
+    const convergeStartMs = tameStartMs + PHASE3_BEATS.tameMs;
     const t1 = window.setTimeout(() => setPhase(2), PHASE_TIMINGS.phase1);
-    const t2 = window.setTimeout(() => setPhase(3), PHASE_TIMINGS.phase1 + PHASE_TIMINGS.phase2);
+    const t2 = window.setTimeout(() => {
+      setPhase(3);
+      setPhase3Beat("fade");
+    }, phase3StartMs);
+    const t2b = window.setTimeout(() => setPhase3Beat("tame"), tameStartMs);
+    const t2c = window.setTimeout(() => setPhase3Beat("converge"), convergeStartMs);
     const t3 = window.setTimeout(() => {
       onReveal?.();
       setPhase(4);
-    }, PHASE_TIMINGS.phase1 + PHASE_TIMINGS.phase2 + PHASE_TIMINGS.phase3);
+    }, phase3StartMs + PHASE_TIMINGS.phase3);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
+      window.clearTimeout(t2b);
+      window.clearTimeout(t2c);
       window.clearTimeout(t3);
     };
   }, [reduced, onReveal]);
@@ -166,21 +192,64 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
         </div>
       )}
 
-      {/* ── Phase 3 — 静謐の間 (calm curtain) ─────────────────────── */}
+      {/* ── Phase 3 — 静謐の間 (#129 dramatic ellipsis + hairlines) ── */}
       {phase === 3 && (
         <div
           data-testid="cinematic-phase-3"
+          data-beat={phase3Beat}
           aria-hidden="false"
-          className="absolute inset-0 bg-[var(--color-bg-base)] motion-safe:animate-curtain-fade flex items-center justify-center"
+          className="absolute inset-0 bg-[var(--color-bg-base)] motion-safe:animate-curtain-fade flex flex-col items-center justify-center gap-6"
         >
-          {/* A single, calm gold line — the "curtain" metaphor.
-              Reduced-motion path skips this element so screen-readers
-              don't get a phantom delay. */}
-          <span
-            data-testid="cinematic-curtain-line"
+          {/* Three purple ellipsis dots — the "tame". Each dot breathes
+              with a 200ms phase offset so the trio reads as a single
+              held breath. Hidden during the fade beat so it lands gently. */}
+          <div
+            data-testid="cinematic-phase-3-dots"
             aria-hidden
-            className="block w-32 h-px bg-[var(--color-action-secondary)]/70 motion-reduce:hidden"
-          />
+            className={`flex items-center gap-3 motion-reduce:hidden transition-opacity duration-300 ${
+              phase3Beat === "fade" ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {[0, 200, 400].map((delay, i) => (
+              <span
+                key={i}
+                data-testid={`cinematic-phase-3-dot-${i}`}
+                className="block w-2 h-2 rounded-full bg-[var(--color-action-primary)] motion-safe:animate-ellipsis-pulse"
+                style={{ animationDelay: `${delay}ms` }}
+              />
+            ))}
+          </div>
+
+          {/* Two thin gold hairlines — one above the dots, one below —
+              grow from the centerline during "tame", then collapse back
+              to a single point during "converge", handing off to Phase 4. */}
+          <div
+            aria-hidden
+            data-testid="cinematic-phase-3-hairline-wrap"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-12 motion-reduce:hidden"
+          >
+            {(["top", "bottom"] as const).map((position) => {
+              const beatClass =
+                phase3Beat === "fade"
+                  ? "opacity-0"
+                  : phase3Beat === "tame"
+                  ? "motion-safe:animate-hairline-grow"
+                  : "motion-safe:animate-hairline-converge";
+              return (
+                <span
+                  key={position}
+                  data-testid={`cinematic-phase-3-hairline-${position}`}
+                  data-position={position}
+                  className={`block w-px h-16 origin-center bg-[var(--color-action-secondary)]/70 ${beatClass}`}
+                  style={{
+                    transformOrigin: position === "top" ? "bottom" : "top",
+                    [position === "top" ? "marginBottom" : "marginTop"]: "1.25rem",
+                  } as React.CSSProperties}
+                />
+              );
+            })}
+          </div>
+
           <span className="sr-only">準備中…</span>
         </div>
       )}

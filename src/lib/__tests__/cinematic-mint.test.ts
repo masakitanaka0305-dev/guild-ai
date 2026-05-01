@@ -18,7 +18,7 @@ describe("Cinematic Mint (#128) — 4-phase reveal", () => {
     expect(cmSrc).toContain('data-testid="cinematic-phase-4"');
   });
 
-  it("phase total is ≤ 5s (1.4s + 1.4s + 0.8s + 1.0s = 4.6s)", () => {
+  it("phase total is ≤ 5.4s (1.4s + 1.4s + 1.4s + 1.0s = 5.2s after #129)", () => {
     const m = cmSrc.match(/const PHASE_TIMINGS\s*=\s*\{([\s\S]*?)\}\s*as const;/);
     expect(m).not.toBeNull();
     const block = m![1];
@@ -29,10 +29,10 @@ describe("Cinematic Mint (#128) — 4-phase reveal", () => {
     }
     expect(phaseMs.phase1).toBe(1400);
     expect(phaseMs.phase2).toBe(1400);
-    expect(phaseMs.phase3).toBe(800);
+    expect(phaseMs.phase3).toBe(1400);
     expect(phaseMs.phase4).toBe(1000);
     const total = phaseMs.phase1 + phaseMs.phase2 + phaseMs.phase3 + phaseMs.phase4;
-    expect(total).toBeLessThanOrEqual(5000);
+    expect(total).toBeLessThanOrEqual(5400);
   });
 
   it("reduced-motion path collapses to a single ≤ 0.5s settle (Phase 4 only)", () => {

@@ -156,6 +156,23 @@ const config: Config = {
           "0%":   { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        // Phase 3 drama (#129) — three ellipsis dots breathe in sequence.
+        "ellipsis-pulse": {
+          "0%, 100%": { opacity: "0.25", transform: "scale(0.85)" },
+          "50%":      { opacity: "1",    transform: "scale(1)" },
+        },
+        // Gold hairline grows vertically from the centerline.
+        "hairline-grow": {
+          "0%":   { transform: "scaleY(0)", opacity: "0" },
+          "20%":  { opacity: "0.7" },
+          "100%": { transform: "scaleY(1)", opacity: "0.85" },
+        },
+        // The hairline collapses back to a single point right before
+        // Phase 4 mounts (drives the visual hand-off into the gold-glow).
+        "hairline-converge": {
+          "0%":   { transform: "scaleY(1)", opacity: "0.85" },
+          "100%": { transform: "scaleY(0.05)", opacity: "0" },
+        },
         "gold-glow": {
           "0%":   { opacity: "0",   transform: "scale(0.6)" },
           "60%":  { opacity: "0.7" },
@@ -174,7 +191,11 @@ const config: Config = {
         "matrix-drift": "matrix-drift 900ms ease-in-out forwards",
         "crystal-spin": "crystal-spin 8s linear infinite",
         "particle-orbit": "particle-orbit 1400ms ease-in-out forwards",
-        "curtain-fade": "curtain-fade 800ms ease-in-out forwards",
+        "curtain-fade": "curtain-fade 400ms ease-in-out forwards",
+        // Phase 3 drama (#129) — dots breathe (looping inside Phase 3).
+        "ellipsis-pulse": "ellipsis-pulse 900ms ease-in-out infinite",
+        "hairline-grow": "hairline-grow 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "hairline-converge": "hairline-converge 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "gold-glow": "gold-glow 1000ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "hero-rise": "hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
