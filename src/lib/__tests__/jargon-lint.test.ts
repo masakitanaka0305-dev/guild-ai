@@ -58,6 +58,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Intelligence Deck #119): 自分の知能を登記する / 知能の資産化を開始する / 登記済みエージェント数 / 登記 (Sync) / 鑑定 (Grade) / 派遣 (Deploy) / STEP 1 / STEP 2 / STEP 3
 // Explicitly PERMITTED (Intelligence Proof #120): 鑑定中 / Analyzing your Intelligence / Intelligence Balance / 予測印税 / 伝説の知能ギルド / Hall of Fame / 知能の断片 / 真正性証明 / Legend / Expert / Core / Seed / Confidentiality Filter
 // Explicitly PERMITTED (Hybrid Plug-in System #121): 知能をプラグイン / 案件に参画 / 接続完了 / Plugged-in / デプロイ済み / エンジニア・エージェント / Connected Intelligence Assets / Agent Active
+// Explicitly PERMITTED (Compatibility Report #122): 案件に参画する / 参画済み / この知能で参画します / Intelligence Compatibility Report / Compatibility / 適合率 / 充足要件 / 未充足 / 事前診断 / Pre-Check
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -150,6 +151,28 @@ describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button",
     expect(
       violations,
       `Primary CTA aria-label still uses エージェントをデプロイ in: ${violations.join(", ")}`,
+    ).toHaveLength(0);
+  });
+
+  // Compatibility Report #122 — primary CTA simplifies further. Body /
+  // docs / explanations may still mention "知能をプラグイン", but the
+  // aria-label of the primary button must read "案件に参画する" instead.
+  it('"知能をプラグイン" must not surface as an aria-label CTA', () => {
+    const violations: string[] = [];
+    for (const file of PRIMARY_FILES) {
+      const content = readFileSync(file, "utf-8");
+      // Match the exact aria-label assignment, with or without the
+      // "（案件に参画）" suffix that the prior iteration carried.
+      if (
+        content.includes('aria-label="知能をプラグイン"') ||
+        content.includes('aria-label="知能をプラグイン（案件に参画）"')
+      ) {
+        violations.push(file.split("src/")[1] ?? file);
+      }
+    }
+    expect(
+      violations,
+      `Primary CTA aria-label still uses 知能をプラグイン in: ${violations.join(", ")}`,
     ).toHaveLength(0);
   });
 });
