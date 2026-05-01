@@ -5,6 +5,7 @@ import { buildReport } from "@/lib/compliance-report";
 import { PrintButton } from "@/components/PrintButton";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { mintGuildIdForAsset } from "@/lib/guild-id";
+import { signMd } from "@/lib/intelligence-signature";
 
 export function generateStaticParams() {
   return MOCK_MARKETPLACE.map((item) => ({ id: item.listing.id }));
@@ -17,6 +18,11 @@ export default function ReportPage({ params }: { params: { id: string } }) {
   const { listing } = item;
   const guildId = mintGuildIdForAsset(listing.id);
   const report = buildReport(guildId, { title: listing.title, rank: listing.rank });
+  // Deterministic Intelligence Signature for this listing — used to surface
+  // 真正性証明 (hash + ISO timestamp) on the report card.
+  const signed = signMd(`${listing.title}\n${guildId}`, listing.ownerId, {
+    now: () => new Date("2026-05-01T00:00:00.000Z"),
+  });
 
   const verdictColor =
     report.overallVerdict === "合格"
@@ -175,6 +181,26 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               ))}
             </tbody>
           </table>
+        </section>
+
+        {/* 真正性証明 — Intelligence Signature */}
+        <section
+          data-testid="intelligence-signature-section"
+          className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-5 mt-6"
+        >
+          <p className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">
+            真正性証明
+          </p>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div>
+              <dt className="text-slate-400">Intelligence Signature (hash)</dt>
+              <dd className="mt-0.5 font-mono text-white">{signed.hash}</dd>
+            </div>
+            <div>
+              <dt className="text-slate-400">Timestamp (ISO 8601 UTC)</dt>
+              <dd className="mt-0.5 font-mono text-white">{signed.timestamp}</dd>
+            </div>
+          </dl>
         </section>
 
         {/* Footer */}
