@@ -8,9 +8,9 @@ function read(rel: string) {
 }
 
 describe("Applications redesign + entry from /projects", () => {
-  it('/projects renders an "応募状況を見る →" link to /applications', () => {
+  it('/projects renders a 「参加状況を見る →」 link to /applications (Friendly Tone)', () => {
     const src = read("src/app/projects/page.tsx");
-    expect(src).toContain("応募状況を見る");
+    expect(src).toContain("参加状況を見る");
     expect(src).toMatch(/href="\/applications"/);
     expect(src).toContain("text-cyan-400");
     expect(src).toContain("ListChecks");

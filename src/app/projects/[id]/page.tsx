@@ -160,9 +160,16 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
             </div>
           </SectionCard>
 
-          {/* Why you match */}
-          <SectionCard id="why-match" title="なぜマッチしているか">
-            <ul className="space-y-2">
+          {/* ほしい知恵（必要なカード） */}
+          <SectionCard id="why-match" title="ほしい知恵（必要なカード）">
+            <p className="text-xs text-slate-400 mb-3">
+              この困りごとは、いろんな分野の知恵を組み合わせて解いていきます。
+              あなたの持っているカードとの相性を見てみましょう。
+            </p>
+            <ul
+              data-testid="required-intelligence-list"
+              className="space-y-2"
+            >
               {matching.matchDetails.map(({ req, matched, ownedRank }) => (
                 <li key={req.id} className="flex items-center gap-2 text-xs">
                   {matched ? (
@@ -182,7 +189,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                       <span className="ml-1 font-bold text-cyan-400">[{ownedRank}]</span>
                     )}
                     {!matched && (
-                      <span className="ml-1 text-slate-400">（未所持 — 要 {req.rankMin}+）</span>
+                      <span className="ml-1 text-slate-400">（持っていません — {req.rankMin} 以上）</span>
                     )}
                   </span>
                   {req.weight === 3 && (
