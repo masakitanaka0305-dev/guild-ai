@@ -18,10 +18,13 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
       data-testid={`deck-step-${step}`}
       className="rounded-2xl border border-white/10 bg-midnight-surface p-6 flex flex-col items-center text-center"
     >
-      <span className="self-start text-xs font-bold uppercase tracking-widest text-cyan-400">
+      <span
+        data-testid="deck-step-label"
+        className="self-start text-xs font-bold uppercase tracking-widest text-brand-primary"
+      >
         STEP {step}
       </span>
-      <Hexagon size={56} stroke="#22D3EE" fill="#0B1121" strokeWidth={2}>
+      <Hexagon size={56} stroke="#4F46E5" fill="#6366F1" strokeWidth={2}>
         <text
           x="50"
           y="60"
@@ -29,7 +32,7 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
           fontFamily="inherit"
           fontWeight={900}
           fontSize="36"
-          fill="#22D3EE"
+          fill="#FFFFFF"
         >
           {step}
         </text>
@@ -37,7 +40,10 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
       <h2 className="mt-3 text-white font-semibold text-base sm:text-lg">
         {title}
       </h2>
-      <p className="mt-1 text-slate-300 text-sm leading-relaxed">
+      <p
+        data-testid="deck-step-subtitle"
+        className="mt-1 font-medium text-[#F1F5F9] text-sm leading-relaxed"
+      >
         {subtitle}
       </p>
     </li>
