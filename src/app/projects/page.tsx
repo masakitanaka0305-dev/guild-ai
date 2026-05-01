@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ListChecks } from "lucide-react";
 import { MOCK_PROJECTS } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
+import { TAP_CLASS } from "@/lib/motion";
 
 export const metadata = { title: "みんなの お困りごと | ギルドAI" };
 
@@ -101,7 +102,7 @@ export default function ProjectsPage() {
               <Link
                 href={`/projects/${row.id}`}
                 aria-label="この困りごとを助ける"
-                className="mt-1 inline-flex items-center justify-center min-h-[40px] rounded-full bg-[var(--color-ai-action)] text-[var(--color-text-on-primary)] text-xs font-bold active:scale-[0.98] motion-reduce:active:scale-100 transition-transform duration-100 focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)]"
+                className={`mt-1 inline-flex items-center justify-center min-h-[40px] rounded-full bg-[var(--color-ai-action)] text-[var(--color-text-on-primary)] text-xs font-bold focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)] ${TAP_CLASS}`}
               >
                 {isRecommended ? "🌟 この困りごとを助ける" : "この困りごとを助ける"}
               </Link>
@@ -153,7 +154,7 @@ export default function ProjectsPage() {
                     <Link
                       href={`/projects/${row.id}`}
                       aria-label="この困りごとを助ける"
-                      className="px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:scale-[0.98] motion-reduce:active:scale-100 transition-transform duration-100 outline-none focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)]"
+                      className={`px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)] ${TAP_CLASS}`}
                     >
                       この困りごとを助ける
                     </Link>

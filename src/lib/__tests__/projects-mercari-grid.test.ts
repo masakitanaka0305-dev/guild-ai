@@ -26,9 +26,10 @@ describe("/projects — Mercari mobile grid (#126)", () => {
   it("primary card CTA reads 「この困りごとを助ける」", () => {
     expect(src).toContain("この困りごとを助ける");
     expect(src).toMatch(/aria-label="この困りごとを助ける"/);
-    // Tap reaction
-    expect(src).toMatch(/active:scale-\[0\.98\]/);
-    expect(src).toMatch(/motion-reduce:active:scale-100/);
+    // Tap reaction is inherited from the canonical TAP_CLASS helper
+    // (active:scale-[0.98] + motion-reduce:active:scale-100).
+    expect(src).toContain('from "@/lib/motion"');
+    expect(src).toContain("TAP_CLASS");
   });
 
   it("relativeDeadline replaces YYYY-MM-DD with あと N 日 / 今日まで copy", () => {

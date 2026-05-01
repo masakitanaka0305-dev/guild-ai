@@ -6,6 +6,8 @@ import { Plug, CheckCircle2 } from "lucide-react";
 import { getDemoOwnedMds } from "@/lib/matching";
 import { pickBestFitMd } from "@/lib/md-pickfit";
 import { getProject } from "@/lib/projects";
+import { TAP_CLASS } from "@/lib/motion";
+import { useTactile } from "@/hooks/useTactile";
 
 interface Props {
   projectId: string;
@@ -126,6 +128,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
   const [applying, setApplying] = useState(false);
   const [pluggedIn, setPluggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const tap = useTactile("quest");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -138,6 +141,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
 
   async function handleApply() {
     if (!selectedMdId || pluggedIn) return;
+    tap();
     setApplying(true);
     try {
       await fetch("/api/applications/apply", {
@@ -212,7 +216,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
           disabled={!selectedMdId || applying || underwater}
           aria-label="この知恵を貸す"
           data-testid="apply-cta-engage"
-          className="w-full px-4 py-3 bg-ai-action text-text-on-primary font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2"
+          className={`w-full px-4 py-3 bg-ai-action text-text-on-primary font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2 ${TAP_CLASS}`}
         >
           <Plug aria-hidden className="w-4 h-4 stroke-midnight-base" />
           {applying ? "参加中..." : "この知恵を貸す（参加する）"}

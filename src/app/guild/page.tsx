@@ -22,6 +22,7 @@ import { useUserId } from "@/components/AuthProvider";
 import { WaveLine } from "@/components/ui/WaveLine";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CoinCounter } from "@/components/ui/CoinCounter";
+import { TAP_CLASS } from "@/lib/motion";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -211,7 +212,7 @@ export default function GuildPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/projects"
-            className="flex-1 py-2.5 rounded-xl bg-[var(--primary,#06B6D4)] text-white text-sm font-bold text-center hover:bg-[#0891B2] transition-colors"
+            className={`flex-1 py-2.5 rounded-xl bg-[var(--primary,#06B6D4)] text-white text-sm font-bold text-center hover:bg-[#0891B2] transition-colors ${TAP_CLASS}`}
           >
             さらに稼ぐ →
           </Link>

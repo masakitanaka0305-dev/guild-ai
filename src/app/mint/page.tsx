@@ -9,6 +9,8 @@ import { CrystalSvg } from "@/components/ui/CrystalSvg";
 import { ShieldedBadge } from "@/components/ui/ShieldedBadge";
 import { MINT_STEPS, MINT_IMPORTS } from "@/lib/mint-pipeline";
 import { rankCardCta } from "@/lib/proof-of-make";
+import { TAP_CLASS } from "@/lib/motion";
+import { useTactile } from "@/hooks/useTactile";
 import type { Rank } from "@/types";
 
 const ICON_MAP = {
@@ -27,8 +29,10 @@ export default function MintPage() {
   const [imported, setImported] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   const [done, setDone] = useState(false);
+  const tap = useTactile("coin");
 
   function advance() {
+    tap();
     if (stepIdx < MINT_STEPS.length - 1) {
       setStepIdx((i) => i + 1);
     } else {
@@ -149,7 +153,7 @@ export default function MintPage() {
               type="button"
               data-testid="mint-advance"
               onClick={advance}
-              className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300"
+              className={`rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300 ${TAP_CLASS}`}
             >
               {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : rankCardCta(DEMO_RANK)}
             </button>
