@@ -1,13 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { BackArrow } from "@/components/ui/BackArrow";
+import { HexRankBadge } from "@/components/ui/HexRankBadge";
+import { gradeIntelligence } from "@/lib/grading";
 
 export default function DraftPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const owner = params.owner as string;
   const repo = params.repo as string;
+  const showReveal = searchParams?.get("reveal") === "1";
 
   const [draft, setDraft] = useState<any>(null);
   const [context, setContext] = useState<any>(null);
@@ -72,6 +76,23 @@ export default function DraftPage() {
           {context.language} / {context.runtime} · {context.deps?.length ?? 0} deps
         </p>
       )}
+
+      {/* Rank Reveal — first visit after the 鑑定中 wait. Static, no animation. */}
+      {showReveal && draft && (() => {
+        const md = `${title}\n\n${SECTIONS.map(k => `## ${k}\n${(fields as any)[k] || ""}`).join("\n\n")}`;
+        const grade = gradeIntelligence({ mdText: md, hasRunningCode: true });
+        return (
+          <section
+            data-testid="rank-reveal"
+            className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-6 mb-6 flex flex-col items-center text-center shadow-[0_0_0_1px_rgba(34,211,238,0.25),0_0_24px_rgba(34,211,238,0.18)]"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-2">
+              鑑定結果
+            </p>
+            <HexRankBadge rank={grade.rank} size={80} showSubLabel />
+          </section>
+        );
+      })()}
 
       <div className="mb-4">
         <label className="text-xs text-[#E2E8F0] block mb-1" htmlFor="title">Title</label>
