@@ -23,11 +23,13 @@ export const ROLE_COLOR: Record<AssetRoleType, string> = {
   "Cross-functional": "#22D3EE",
 };
 
+/** Friendly-tone display labels (Friendly Tone #123) — replaces the
+ *  English Dev / Design / PM tags wherever the UI surfaces a Type pill. */
 export const ROLE_LABEL: Record<AssetRoleType, string> = {
-  Dev:               "Dev",
-  Design:            "Design",
-  PM:                "PM",
-  "Cross-functional": "Cross-functional",
+  Dev:               "作り方のコツ",
+  Design:            "見た目の工夫",
+  PM:                "進め方の相談",
+  "Cross-functional": "色んな分野",
 };
 
 /** Tailwind text-color utilities matching ROLE_COLOR. */

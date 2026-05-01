@@ -26,6 +26,13 @@ const STATUS_DOT: Record<string, string> = {
   "Deployed":        "bg-cyan-400",
 };
 
+// Friendly-tone display for the internal status enum.
+const STATUS_FRIENDLY: Record<string, string> = {
+  "Private (Vault)": "自分だけ",
+  "Encrypted":       "鍵つき",
+  "Deployed":        "お貸出し中",
+};
+
 function formatJpy(n: number): string {
   return `¥${n.toLocaleString("ja-JP")}`;
 }
@@ -53,7 +60,7 @@ function ValueTimelineChart({ data }: { data: number[] }) {
     <svg
       viewBox={`0 0 ${W} ${H}`}
       role="img"
-      aria-label="知能の時価推移（直近 30 日）"
+      aria-label="もちもの時価のうごき（過去 30 日）"
       data-testid="value-timeline-chart"
       className="w-full h-20"
       preserveAspectRatio="none"
@@ -76,7 +83,7 @@ function TypePill({ type }: { type: AssetRoleType }) {
     <span
       data-testid="owned-asset-type-pill"
       data-type={type}
-      aria-label={`Type ${ROLE_LABEL[type]}`}
+      aria-label={`カードのジャンル ${ROLE_LABEL[type]}`}
       className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs uppercase tracking-wide ring-1 ${ROLE_BG_CLASS[type]} ${ROLE_TEXT_CLASS[type]} ${ROLE_RING_CLASS[type]}`}
     >
       {isCross ? (
@@ -97,15 +104,16 @@ function TypePill({ type }: { type: AssetRoleType }) {
 }
 
 function StatusPill({ status }: { status: string }) {
+  const friendly = STATUS_FRIENDLY[status] ?? status;
   return (
     <span
       data-testid="owned-asset-status-pill"
       data-status={status}
-      aria-label={`Status ${status}`}
+      aria-label={`カードの状態 ${friendly}`}
       className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 ${STATUS_PILL[status] ?? "bg-slate-500/15 text-slate-200 ring-slate-400/30"}`}
     >
       <span aria-hidden className={`w-1.5 h-1.5 rounded-full ${STATUS_DOT[status] ?? "bg-slate-400"}`} />
-      {status}
+      {friendly}
     </span>
   );
 }
@@ -128,24 +136,24 @@ export function OwnedAssetsSection() {
     >
       <header className="flex items-baseline justify-between gap-3 mb-3">
         <h2 id="owned-h" className="text-white font-semibold text-base sm:text-lg leading-snug">
-          Owned Assets — 保有知能資産
+          知恵のカード一覧
         </h2>
-        <p className="text-[11px] text-slate-400">{assets.length} 件稼働</p>
+        <p className="text-[11px] text-slate-400">{assets.length} 枚</p>
       </header>
 
-      {/* 知能の時価推移 */}
+      {/* もちもの時価のうごき */}
       <div className="rounded-xl border border-white/5 bg-[#0F1827] p-4 mb-4">
         <div className="flex items-baseline justify-between gap-3">
           <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
-            知能の時価
+            もちもの時価のうごき
           </p>
-          <p className="text-[10px] text-slate-400">直近 30 日</p>
+          <p className="text-[10px] text-slate-400">過去 30 日</p>
         </div>
         <p
           data-testid="owned-total-valuation"
           className="text-cyan-400 metric-prime tabular-nums mt-1"
         >
-          総時価 {formatJpy(total)}
+          今のあなたの価値：{formatJpy(total)}
         </p>
         <p
           data-testid="owned-delta"
@@ -161,7 +169,7 @@ export function OwnedAssetsSection() {
       {/* Asset cards */}
       <ul
         data-testid="owned-assets-list"
-        aria-label="保有知能資産リスト"
+        aria-label="知恵のカード一覧"
         className="space-y-3"
       >
         {assets.map((a) => (
