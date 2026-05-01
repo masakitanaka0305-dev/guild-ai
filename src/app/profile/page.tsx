@@ -154,7 +154,7 @@ export default function ProfilePage() {
         </div>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div>
-            <p className="text-[#CBD5E1] text-xs uppercase tracking-wide">累計報酬 ¥</p>
+            <p className="text-[#CBD5E1] text-xs uppercase tracking-wide">これまでのお礼 ¥</p>
             <p data-testid="profile-cumulative-jpy" className="text-cyan-400 metric-prime">
               ¥{cumulativeJpy.toLocaleString("ja-JP")}
             </p>
@@ -230,7 +230,7 @@ export default function ProfilePage() {
               Intelligence Balance
             </p>
             <p className="mt-1 text-white text-sm font-semibold">
-              予測印税（月額シミュレーション）
+              予測のお礼（月のめやす）
             </p>
             <p
               data-testid="intelligence-balance-central"

@@ -68,8 +68,8 @@ describe("Intelligence Compatibility Report on /projects/[id]", () => {
     const apply = read("src/components/PlugInApply.tsx");
     // No raw <select> tag in the apply surface
     expect(apply).not.toMatch(/<select\b/);
-    // Read-only MD card present instead
+    // Read-only MD card present instead — Friendly Tone (#123) copy.
     expect(apply).toContain('data-testid="apply-readonly-md"');
-    expect(apply).toContain("この知能で参画します");
+    expect(apply).toContain("この知恵で参加します");
   });
 });

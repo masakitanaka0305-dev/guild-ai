@@ -21,7 +21,8 @@ describe("SectionCard — unified card wrapper for /projects/[id]", () => {
   it("/projects/[id] wraps all 5 sections with SectionCard", () => {
     const src = read("src/app/projects/[id]/page.tsx");
     expect(src).toContain('import { SectionCard } from "@/components/ui/SectionCard"');
-    const sections = ["技術スタック", "なぜマッチしているか", "現場課題", "Net Payout", "Competition"];
+    // Friendly Tone (#123): なぜマッチしているか → ほしい知恵（必要なカード）
+    const sections = ["技術スタック", "ほしい知恵（必要なカード）", "現場課題", "Net Payout", "Competition"];
     for (const heading of sections) {
       const re = new RegExp(`<SectionCard[^>]*title="${heading}"`);
       expect(src, `SectionCard for "${heading}"`).toMatch(re);

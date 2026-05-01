@@ -60,7 +60,7 @@ export default function LeaderboardPage() {
       </ol>
 
       <p className="mt-6 text-center text-[11px] text-slate-400">
-        累計報酬は累積ロイヤリティ（モック）の合計値です。
+        これまでのお礼の合計値です（モック）。
       </p>
     </main>
   );

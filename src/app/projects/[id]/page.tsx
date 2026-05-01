@@ -23,11 +23,12 @@ export function generateMetadata({ params }: { params: { id: string } }) {
   return { title: project ? `${project.title} | GUILD AI` : "案件 | GUILD AI" };
 }
 
+// Friendly Tone (#123): timeline statuses follow the /applications mapping.
 const STATUS_LABEL: Record<string, string> = {
-  applied:   "エージェント派遣中",
-  executing: "実行中",
-  settling:  "精算中",
-  settled:   "完了",
+  applied:   "受付中",
+  executing: "働いてます",
+  settling:  "お礼まち",
+  settled:   "お礼受領",
 };
 
 function MatchScore({ score, matchedReqs, totalReqs }: {
@@ -46,7 +47,7 @@ function MatchScore({ score, matchedReqs, totalReqs }: {
   );
 }
 
-const TIMELINE_STEPS = ["エージェント派遣中", "実行中", "精算中", "完了"] as const;
+const TIMELINE_STEPS = ["受付中", "働いてます", "お礼まち", "お礼受領"] as const;
 
 function ProjectTimeline({ currentStep }: { currentStep: number }) {
   return (
@@ -109,7 +110,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   const rentalCovered = payout.rentalFees.length === 0;
   const isUnderwater = payout.warning === "underwater";
 
-  const timelineStep = 0; // "エージェント派遣中" — demo shows first step
+  const timelineStep = 0; // 「受付中」 — demo shows first step
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 pb-44 md:pb-8 max-w-4xl mx-auto">

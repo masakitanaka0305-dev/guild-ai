@@ -21,7 +21,7 @@ let _toastId = 0;
  * stays 1.5s, then fades out.
  * aria-live="polite" so screen readers announce the payout.
  */
-export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "報酬入金" }: Props) {
+export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "お礼が届きました" }: Props) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {
@@ -48,10 +48,11 @@ export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "報酬入金
           key={t.id}
           className="flex items-center gap-2 bg-[var(--n-surface,#0E2240)] border border-[var(--n-gold,#D4AF37)]/40 rounded-2xl px-4 py-2.5 shadow-2xl animate-[slideInToast_220ms_ease-out_forwards]"
         >
-          <span className="text-[var(--n-gold,#D4AF37)] font-bold text-lg leading-none">＋</span>
+          <span className="text-[var(--n-gold,#D4AF37)] font-bold text-lg leading-none">🎉</span>
           <div>
-            <p className="text-[var(--n-text,#F1F4F9)] font-bold text-sm tabular-nums">
-              ¥{t.amountJpy.toLocaleString("ja-JP")}
+            <p className="text-[10px] text-cyan-300 font-bold leading-none">おめでとうございます！</p>
+            <p className="text-emerald-300 font-bold text-sm tabular-nums mt-0.5">
+              +¥{t.amountJpy.toLocaleString("ja-JP")}
             </p>
             <p className="text-[var(--n-muted,#9FB1C8)] text-[10px]">{t.label}</p>
           </div>

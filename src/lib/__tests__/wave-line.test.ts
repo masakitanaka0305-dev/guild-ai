@@ -24,13 +24,14 @@ describe("WaveLine — dashboard line-art", () => {
     expect(src).not.toMatch(/animate|@keyframes|transition\s*:/i);
   });
 
-  it("guild dashboard mounts the WaveLine under the Asset Ledger heading", () => {
+  it("guild dashboard mounts the WaveLine under the もちもの heading", () => {
     const guild = readFileSync(
       join(ROOT, "src/app/guild/page.tsx"),
       "utf-8",
     );
     expect(guild).toContain('from "@/components/ui/WaveLine"');
-    expect(guild).toContain("資産台帳");
+    // Friendly Tone (#123): h1 swapped from 資産台帳 → マイページ — もちもの
+    expect(guild).toContain("マイページ — もちもの");
     expect(guild).toContain("<WaveLine");
   });
 });

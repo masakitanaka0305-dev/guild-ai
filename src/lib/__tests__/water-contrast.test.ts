@@ -38,7 +38,10 @@ describe("Water Guild — contrast & button shape pass", () => {
 
   it("/projects INDUSTRY and DEADLINE cells use text-[#E2E8F0] (≥ AA contrast on #0B1121)", () => {
     const src = read("src/app/projects/page.tsx");
-    const industryCell = src.match(/<td[^>]*>\{row\.industry\}<\/td>/);
+    // Friendly Tone (#123): industry tag is now wrapped through
+    // friendlyIndustry(row.industry) — the cell still carries the
+    // E2E8F0 utility, just on the wrapper.
+    const industryCell = src.match(/<td[^>]*>\{friendlyIndustry\(row\.industry\)\}<\/td>/);
     const deadlineCell = src.match(/<td[^>]*>\{row\.deadline\}<\/td>/);
     expect(industryCell?.[0] ?? "").toMatch(/text-\[#E2E8F0\]/);
     expect(deadlineCell?.[0] ?? "").toMatch(/text-\[#E2E8F0\]/);

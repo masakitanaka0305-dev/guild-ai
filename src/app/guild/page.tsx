@@ -142,12 +142,12 @@ export default function GuildPage() {
       <FloatingPayoutToast
         deltaJpy={earnings.lastDelta}
         bumpCount={earnings.bumpCount}
-        label="報酬入金"
+        label="お礼が届きました"
       />
       <FloatingPayoutToast
         deltaJpy={royaltyDelta}
         bumpCount={royaltyBump}
-        label="API印税"
+        label="お礼が届きました"
       />
       <ChainNotifyToast />
 
@@ -265,7 +265,7 @@ export default function GuildPage() {
       {royalties.length > 0 && (
         <div className="bg-[var(--n-surface-2,#F5F3EE)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl px-4 py-2 mb-4 flex items-center justify-between">
           <span className="text-[10px] text-[var(--n-muted,#6B6456)]">
-            API印税（累計 {royalties.length} 件）
+            お礼の履歴（合計 {royalties.length} 件）
           </span>
           <span className="text-xs font-bold text-[var(--n-gold,#D4AF37)] tabular-nums">
             +¥{royaltyTotal.toFixed(1)}
@@ -315,7 +315,7 @@ export default function GuildPage() {
                     ...royalties.slice(0, 3).map((r) => ({
                       id: r.id,
                       at: r.at,
-                      label: `API印税 #${r.apiCallId}`,
+                      label: `お礼 #${r.apiCallId}`,
                       amount: r.amountJpy,
                       type: "印税",
                       currency: undefined as string | undefined,

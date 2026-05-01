@@ -26,13 +26,13 @@ describe("/profile — tab UI + visible numbers", () => {
     expect(src).toMatch(/h-0\.5 bg-cyan-400/);
   });
 
-  it("header surfaces 累計報酬 ¥ and 稼働中 MD as cyan metric-prime numbers", () => {
+  it("header surfaces 「これまでのお礼 ¥」 and 「稼働中 MD」 as cyan metric-prime numbers", () => {
     expect(src).toContain('data-testid="profile-header"');
-    expect(src).toMatch(/累計報酬 ¥/);
+    // Friendly Tone (#123): 累計報酬 → これまでのお礼
+    expect(src).toMatch(/これまでのお礼 ¥/);
     expect(src).toMatch(/稼働中 MD/);
     expect(src).toMatch(/data-testid="profile-cumulative-jpy"[\s\S]{0,200}className="text-cyan-400 metric-prime"/);
     expect(src).toMatch(/data-testid="profile-active-md"[\s\S]{0,200}className="text-cyan-400 metric-prime"/);
-    // Labels use the slate-200 spec
     expect(src).toContain("text-[#CBD5E1] text-xs uppercase tracking-wide");
   });
 
