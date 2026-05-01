@@ -157,11 +157,14 @@ describe("Final Polish (#127) — UI surfaces", () => {
     expect(owned).not.toContain("もちもの時価のうごき");
   });
 
-  it("Onboarding StepCard uses purple Hexagon fill (#4C1D95) with white inner number", () => {
+  it("Onboarding StepCard uses purple Hexagon + theme-aware subtitle (#135)", () => {
     const card = read("src/components/intelligence-deck/StepCard.tsx");
     expect(card).toMatch(/fill="#4C1D95"/);
     expect(card).toMatch(/fill="#FFFFFF"/);
-    expect(card).toMatch(/font-medium text-\[#F1F5F9\]/);
+    // #135 — subtitle now reads through `var(--color-text-muted)` so it
+    // stays legible on both Logic White and the abyss palette.
+    expect(card).toMatch(/text-\[var\(--color-text-muted\)\]/);
+    expect(card).toMatch(/font-medium text-base/);
   });
 });
 

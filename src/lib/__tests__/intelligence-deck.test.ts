@@ -47,11 +47,14 @@ describe("Intelligence Deck — three-step onboarding home", () => {
     expect(src).toContain("rounded-full");
   });
 
-  it("DeckHome surfaces 「登記済みエージェント数：1,284 体」 in the top-right", () => {
+  it("DeckHome surfaces 「登記済みエージェント数：1,284 体」 with high-contrast brand-primary copy (#135)", () => {
     const src = read("src/components/intelligence-deck/DeckHome.tsx");
     expect(src).toContain("登記済みエージェント数：");
     expect(src).toContain("data-testid=\"deck-registered-count\"");
-    expect(src).toContain("text-brand-primary/80");
+    // #135 lifted the registered count from `text-brand-primary/80` to
+    // a full-strength `text-brand-primary font-semibold` so it reads
+    // properly on both light + abyss bases.
+    expect(src).toMatch(/text-brand-primary[^"]*font-semibold/);
     expect(src).toContain("font-mono");
   });
 

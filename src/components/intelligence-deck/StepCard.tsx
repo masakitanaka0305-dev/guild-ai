@@ -16,7 +16,7 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
   return (
     <li
       data-testid={`deck-step-${step}`}
-      className="rounded-2xl border border-white/10 bg-midnight-surface p-6 flex flex-col items-center text-center"
+      className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-6 flex flex-col items-center text-center"
     >
       <span
         data-testid="deck-step-label"
@@ -24,7 +24,7 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
       >
         STEP {step}
       </span>
-      <Hexagon size={56} stroke="#4F46E5" fill="#4C1D95" strokeWidth={2}>
+      <Hexagon size={56} stroke="#6D28D9" fill="#4C1D95" strokeWidth={2}>
         <text
           x="50"
           y="60"
@@ -37,12 +37,12 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
           {step}
         </text>
       </Hexagon>
-      <h2 className="mt-3 text-white font-semibold text-base sm:text-lg">
+      <h2 className="mt-3 font-semibold text-base sm:text-lg text-[var(--color-text-primary)]">
         {title}
       </h2>
       <p
         data-testid="deck-step-subtitle"
-        className="mt-1 font-medium text-[#F1F5F9] text-sm leading-relaxed"
+        className="mt-1 font-medium text-base leading-relaxed text-[var(--color-text-muted)]"
       >
         {subtitle}
       </p>

@@ -20,20 +20,22 @@ export function DeckHome() {
   const delta = getRecentAgentsDelta24h();
 
   return (
-    <main className="bg-midnight-base text-white min-h-screen min-h-dvh flex flex-col">
+    <main className="bg-[var(--color-bg-base)] text-[var(--color-text-primary)] min-h-screen min-h-dvh flex flex-col">
       <h1 className="sr-only">自分の知能を登記する</h1>
 
       {/* Top bar */}
       <header className="flex items-start justify-between px-5 pt-6 sm:px-8 sm:pt-8">
-        <span className="text-white font-semibold text-sm tracking-wide">GUILD AI</span>
+        <span className="font-semibold text-sm tracking-wide text-[var(--color-text-primary)]">
+          GUILD AI
+        </span>
         <div className="text-right">
           <p
             data-testid="deck-registered-count"
-            className="text-brand-primary/80 text-xs tabular-nums font-mono"
+            className="text-brand-primary text-xs tabular-nums font-mono font-semibold"
           >
             登記済みエージェント数：{formatAgentCount(registered)} 体
           </p>
-          <p className="mt-0.5 text-slate-400 text-[10px] tabular-nums">
+          <p className="mt-0.5 text-[10px] tabular-nums text-[var(--color-text-muted)]">
             直近 24h で +{delta} 体
           </p>
         </div>
@@ -58,7 +60,7 @@ export function DeckHome() {
         {/* Hero CTA */}
         <div className="w-full max-w-md mx-auto">
           <HeroButton />
-          <p className="mt-3 text-center text-slate-400 text-xs">
+          <p className="mt-3 text-center text-xs text-[var(--color-text-muted)]">
             = 知能の資産化を開始する
           </p>
         </div>
