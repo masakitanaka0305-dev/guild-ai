@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { HexRankBadge } from "@/components/ui/HexRankBadge";
 import { TAP_CLASS } from "@/lib/motion";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import type { Rank } from "@/types";
 
 /**
@@ -47,19 +48,6 @@ const MATRIX_TOKENS = [
   "型推論", "OpenAPI",  "RAG",     "命題",
   "review", "trace",    "意図",    "意思",
 ];
-
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(m.matches);
-    const fn = () => setReduced(m.matches);
-    m.addEventListener("change", fn);
-    return () => m.removeEventListener("change", fn);
-  }, []);
-  return reduced;
-}
 
 export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintProps) {
   const reduced = usePrefersReducedMotion();
