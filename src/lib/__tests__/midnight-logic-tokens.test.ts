@@ -16,7 +16,7 @@ describe("Midnight Logic — pro toggle palette (#124, dark)", () => {
     // dark surface.
     expect(block).toMatch(/--color-bg-base:\s*#020617/i);
     expect(block).toMatch(/--color-bg-surface:\s*#0E1422/i);
-    expect(block).toMatch(/--color-bg-elevated:\s*#1A2236/i);
+    expect(block).toMatch(/--color-bg-elevated:\s*#1A2238/i);
     expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
     expect(block).toMatch(/--color-text-soft:\s*#E0E0E0/i);
     expect(block).toMatch(/--color-text-muted:\s*#94A3B8/i);

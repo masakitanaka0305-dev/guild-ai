@@ -49,14 +49,19 @@
     --color-action-secondary-soft: #FEF3C7;
     --color-cyan-helper:           #0EA5E9;
 
-    --color-bg-base:        #F8FAFC;
-    --color-bg-surface:     #FFFFFF;
-    --color-bg-elevated:    #F1F5F9;
-    --color-text-primary:   #212121;   /* softened from pure #0F172A (#126) */
-    --color-text-soft:      #424242;   /* secondary headings */
+    /* ── Visual Hierarchy (#133) — light surfaces L0 → L2 + borders ── */
+    --color-bg-base:        #F8FAFC;   /* L0  off-white page floor */
+    --color-bg-surface:     #FFFFFF;   /* L1  cards / panels */
+    --color-bg-elevated:    #F1F5F9;   /* L2  modals / hover */
+    --color-border-subtle:  rgba(15,23,42,0.06);   /* L3-subtle */
+    --color-border-strong:  rgba(15,23,42,0.12);   /* L3-strong */
+    /* ── Text (4 tokens) ──────────────────────────────────────────── */
+    --color-text-primary:   #212121;
+    --color-text-soft:      #424242;
     --color-text-muted:     #475569;
     --color-text-on-primary:#FFFFFF;
     --color-link:           #6D28D9;
+    /* ── Status / role tokens ─────────────────────────────────────── */
     --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #7C3AED;
     --color-ai-success:     #059669;
@@ -64,8 +69,7 @@
     --color-ai-negative:    #DC2626;
     --color-status-success: var(--color-ai-success);
     --color-status-warn:    var(--color-ai-warn);
-    --color-border-subtle:  #E2E8F0;
-    --color-border-strong:  #CBD5E1;
+    --color-status-negative:var(--color-ai-negative);
 
     /* Rank colors — Cinematic Mint (#128) ties the S medal to the
        Electric Gold brand secondary so the reveal radiates the same
@@ -118,14 +122,19 @@
     --color-action-secondary-soft: rgba(245,158,11,0.18);
     --color-cyan-helper:           #38BDF8;   /* sky-400 — warn/helper only */
 
-    --color-bg-base:        #020617;   /* abyss black */
-    --color-bg-surface:     #0E1422;
-    --color-bg-elevated:    #1A2236;
+    /* ── Visual Hierarchy (#133) — surfaces L0 → L2 + 2-tier borders ─ */
+    --color-bg-base:        #020617;   /* L0  abyss base (page floor) */
+    --color-bg-surface:     #0E1422;   /* L1  cards / panels */
+    --color-bg-elevated:    #1A2238;   /* L2  modals / hover */
+    --color-border-subtle:  rgba(255,255,255,0.06);  /* L3-subtle */
+    --color-border-strong:  rgba(255,255,255,0.12);  /* L3-strong */
+    /* ── Text (4 tokens) ──────────────────────────────────────────── */
     --color-text-primary:   #F8FAFC;
     --color-text-soft:      #E0E0E0;
     --color-text-muted:     #94A3B8;
     --color-text-on-primary:#FFFFFF;
-    --color-link:           #C4B5FD;   /* violet-300 reads on abyss, no cyan */
+    --color-link:           #C4B5FD;   /* violet-300 reads on abyss */
+    /* ── Status / role tokens ─────────────────────────────────────── */
     --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #8B5CF6;
     --color-ai-success:     #10B981;
@@ -133,8 +142,7 @@
     --color-ai-negative:    #E64545;
     --color-status-success: var(--color-ai-success);
     --color-status-warn:    var(--color-ai-warn);
-    --color-border-subtle:  rgba(248,250,252,0.08);
-    --color-border-strong:  rgba(248,250,252,0.18);
+    --color-status-negative:var(--color-ai-negative);
 
     --rank-gold:   #F59E0B;   /* electric gold — S medal */
     --rank-silver: #CBD5E1;

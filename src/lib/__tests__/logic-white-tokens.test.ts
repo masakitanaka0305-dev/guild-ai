@@ -28,9 +28,10 @@ describe("Logic White (#125) — default light tokens", () => {
     expect(css).toMatch(/--color-ai-success:\s*#059669/i);
     expect(css).toMatch(/--color-ai-warn:\s*#D97706/i);
     expect(css).toMatch(/--color-ai-negative:\s*#DC2626/i);
-    // Borders
-    expect(css).toMatch(/--color-border-subtle:\s*#E2E8F0/i);
-    expect(css).toMatch(/--color-border-strong:\s*#CBD5E1/i);
+    // Borders — #133 Visual Hierarchy moved to ink-on-white rgba so
+    // light borders sit at L3-subtle (6% slate) / L3-strong (12% slate).
+    expect(css).toMatch(/--color-border-subtle:\s*rgba\(15,\s*23,\s*42,\s*0\.06\)/);
+    expect(css).toMatch(/--color-border-strong:\s*rgba\(15,\s*23,\s*42,\s*0\.12\)/);
   });
 
   it("Midnight Logic values dive to abyss-black under [data-theme=\"midnight\"] (#128)", () => {

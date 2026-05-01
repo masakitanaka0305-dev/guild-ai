@@ -8,10 +8,10 @@ const block =
   css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
 
 describe("Cinematic Mint (#128) — Midnight tuning (abyss palette)", () => {
-  it("backgrounds dive to abyss black + lifted surfaces", () => {
-    expect(block).toContain("#020617"); // bg-base — abyss black
-    expect(block).toContain("#0E1422"); // bg-surface
-    expect(block).toContain("#1A2236"); // bg-elevated
+  it("backgrounds dive to abyss black + lifted surfaces (#133 hierarchy)", () => {
+    expect(block).toContain("#020617"); // L0 abyss base
+    expect(block).toContain("#0E1422"); // L1 surface
+    expect(block).toContain("#1A2238"); // L2 elevated (#133 retuned by 2)
   });
 
   it("action / warn colors are Deep Purple brand + lemon warn", () => {
@@ -24,7 +24,8 @@ describe("Cinematic Mint (#128) — Midnight tuning (abyss palette)", () => {
     expect(block).toMatch(/--color-text-soft:\s*#E0E0E0/i);
   });
 
-  it("border-subtle becomes a thinner 8% white", () => {
-    expect(block).toMatch(/--color-border-subtle:\s*rgba\(248,\s*250,\s*252,\s*0\.08\)/);
+  it("border-subtle is a 6% white hairline at L3-subtle (#133)", () => {
+    expect(block).toMatch(/--color-border-subtle:\s*rgba\(255,\s*255,\s*255,\s*0\.06\)/);
+    expect(block).toMatch(/--color-border-strong:\s*rgba\(255,\s*255,\s*255,\s*0\.12\)/);
   });
 });
