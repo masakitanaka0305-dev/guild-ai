@@ -122,3 +122,30 @@ export const TAP_CLASS =
 - `RankBadge` が D の `D` を `—` で表示しているのは Friendly Tone 由来。`みならい` のミニアバターが必要なら `/guild` 内で別途検討。
 - `CoinCounter` の初期値は `useLiveEarnings(userId).jpy`（その時点の合計）。完全リセット表示にしたい場合は `initialJpy={0}` で渡せる。
 - `EarningTicker` は `lastDelta === 0` のとき何も描画しない仕様。初回バンプまでは header に空きが出る。
+
+---
+
+## 8. Final Polish（#127）— brand palette / 知恵の価値 / お仕事中
+
+Mercari Lightness の上に **`#127 Final Polish`** を被せ、ブランド色・コピー・
+モーションを最終形に締めた。差分のみここに記す（一次資料は `docs/Brand-Palette設計.md`）。
+
+| 項目 | 旧 (#126) | 新 (#127) |
+|---|---|---|
+| Primary CTA | Royal Blue `#4F46E5` ／ Cyan `#06B6D4`/`#4DD0E1` | **Mercari Purple `#6366F1`** に統一 |
+| お礼 / S 太鼓判 | `#FDE047` / `#D4A437` の混在 | **お礼 Gold `#FBBF24`** に統一（S = 金 = お礼） |
+| ダークリンク | Cyan 系 | Indigo-300 `#A5B4FC` |
+| 「もちもの時価のうごき」見出し | そのまま | **「あなたの知恵の価値」** |
+| 「お貸出し中」ステータス | そのまま | **「お仕事中」** |
+| /guild 合計売上 | `metric-prime-white`（24px） | **`metric-hero` 36px / 72px**（1.5×）＋ ¥ は 1.4× |
+| /projects 想定お礼 | `text-[#B45309]` 単体 | brand-gold（dark: `#FBBF24` / light: `#A16207`）＋ ¥ 1.4× |
+| 主要 CTA タップ | `TAP_CLASS` のみ | `TAP_CLASS` ＋ **`useRipple()`**（purple ripple）|
+| Onboarding 6 角形 | `fill="#0B1121"` ＋ `fill="#6366F1"` 数字 | `fill="#6366F1"` 塗りに **白抜き数字** |
+| ダーク本文 | `text-slate-300` 系 | `font-medium text-[#F1F5F9]` で AA を確保 |
+
+### Cyan 残存ゼロ運用
+
+`brand-palette.test.ts` の `cyan-restricted` テストが `src/app` ＋ `src/components`
+を走査し、`bg-cyan-*` `text-cyan-*` `border-cyan-*` ＋ ハード hex（`#22D3EE`
+`#06B6D4` `#4DD0E1`）の出現を **0 件**にロック。警告／helper 文脈で意図的に
+シアンを使う場合は `var(--color-cyan-helper)` を経由する。

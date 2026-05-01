@@ -32,9 +32,9 @@ describe("Midnight Logic — unified card surfaces (#124)", () => {
   it("primary action surfaces (CTA / pill / FAB) reach for the ai-action token", () => {
     const apply = read("src/components/PlugInApply.tsx");
     const nav   = read("src/components/SidebarNav.tsx");
-    // Apply CTA carries the cyan glow + bg-cyan-400 (which is the same hex
-    // as ai-action #06B6D4 in the canonical Midnight palette).
-    expect(apply).toMatch(/bg-cyan-400|bg-ai-action/);
-    expect(nav).toMatch(/bg-cyan-400|bg-ai-action/);
+    // Apply CTA carries the cyan glow + bg-brand-primary (which is the same hex
+    // as ai-action #6366F1 in the canonical Midnight palette).
+    expect(apply).toMatch(/bg-brand-primary|bg-ai-action/);
+    expect(nav).toMatch(/bg-brand-primary|bg-ai-action/);
   });
 });

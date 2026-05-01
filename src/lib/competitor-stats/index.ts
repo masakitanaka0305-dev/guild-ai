@@ -41,7 +41,7 @@ export function getCompetition(projectId: string, totalApplicants: number): Comp
 }
 
 export const RANK_COLOR: Record<"S" | "A" | "B", string> = {
-  S: "#06B6D4",
+  S: "#6366F1",
   A: "#F59E0B",
   B: "#3B82F6",
 };

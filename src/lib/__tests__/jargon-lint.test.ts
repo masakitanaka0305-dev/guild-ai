@@ -61,6 +61,8 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Compatibility Report #122): 案件に参画する / 参画済み / この知能で参画します / Intelligence Compatibility Report / Compatibility / 適合率 / 充足要件 / 未充足 / 事前診断 / Pre-Check
 // Explicitly PERMITTED (Friendly Tone #123): 知恵を貸す / 知恵のカード / もちもの / お困りごと / ほしい知恵 / カードのジャンル / 作り方のコツ / 見た目の工夫 / 進め方の相談 / 色んな分野 / 自分だけ / 鍵つき / お貸出し中 / 取っておきのメモ / 読みとる / 意味を見つける / 値段をつける / 大切に保管 / お礼 / 参加する / 参加中 / 受付中 / 働いてます / お礼まち / お礼受領 / マッチ度 / AIの参考書 / 時価のうごき / 太鼓判 / 金の太鼓判 / 銀の太鼓判 / 銅の太鼓判 / みならい / 知恵を出品する / Hashed on Chain / Scan / Identify Context / Appraise Value
 // Explicitly PERMITTED (Mercari Lightness #126): 知恵袋銀行 / 知恵袋の中身 / 今、働いています / 困りごとを助ける / この困りごとを助ける / 似た知恵を出品してみよう / 金の太鼓判カードにする / 銀の太鼓判カードにする / 銅の太鼓判カードにする / みならいカードにする / あなたのコツ（メモ）を見つける / そのコツの価値を鑑定する / 分身AIが企業で働き始める / あなたの分身（AI） / プロの技術が詰まっています / 安定して動き続けています / 実装の意図が明確です / 実際に動くコードが入っています / テストや検証の跡が残っています
+// Explicitly PERMITTED (Final Polish #127): あなたの知恵の価値 / お仕事中 / 想定お礼
+// FORBIDDEN as UI tokens (Final Polish #127): "Mercari Purple" / "メルカリ・パープル" / "お礼のゴールド" / "Cyan Helper" / "Brand Palette" — these are internal names only.
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -106,6 +108,15 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // ─── Brand (#123) — Rezon は不採用、ギルドAI を維持 ─────────────
   { term: "Rezon",                   reason: "→ ギルドAI に統一（仮称 Rezon は不採用）" },
   { term: "レゾン",                  reason: "→ ギルドAI に統一（仮称 Rezon は不採用）" },
+  // ─── Final Polish (#127) — internal palette names must not surface in UI
+  { term: "Mercari Purple",          reason: "→ 内部呼称のみ。UI には Mercari Purple と書かない（Brand Palette #127）" },
+  { term: "メルカリ・パープル",       reason: "→ 内部呼称のみ。UI 非表示（Brand Palette #127）" },
+  { term: "お礼のゴールド",            reason: "→ 内部呼称のみ。UI 非表示（Brand Palette #127）" },
+  { term: "Cyan Helper",             reason: "→ 内部呼称のみ。UI 非表示（Brand Palette #127）" },
+  { term: "メルカリStyle",            reason: "→ 内部呼称のみ。UI 非表示（Brand Palette #127）" },
+  // Final Polish (#127): 旧表記の撤廃
+  { term: "お貸出し中",               reason: "→ 「お仕事中」 に置換（Final Polish #127）" },
+  { term: "もちもの時価のうごき",      reason: "→ 「あなたの知恵の価値」 に置換（Final Polish #127）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

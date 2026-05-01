@@ -33,7 +33,7 @@ export const HEXAGON_POLYGON_POINTS = HEX_POINTS.map(([x, y]) => `${x},${y}`).jo
 export function Hexagon({
   size = 64,
   fill = "transparent",
-  stroke = "#22D3EE",
+  stroke = "#6366F1",
   strokeWidth = 2,
   label,
   labelColor = "#E2E8F0",

@@ -1,7 +1,7 @@
 // GUILD AI — Static hex-shaped rank badge.
 //
 // Tier colors (Intelligence Proof spec):
-//   S #FDE047 (Legend) / A #22D3EE (Expert) / B #34D399 (Core) / D #94A3B8 (Seed)
+//   S #FBBF24 (Legend) / A #6366F1 (Expert) / B #34D399 (Core) / D #94A3B8 (Seed)
 //
 // Render is intentionally static: no animation, no glow loops. The shell
 // is the single source of truth for the hex contour.

@@ -1,5 +1,9 @@
 # Midnight Logic — Pro-tier Design Tokens
 
+> **#127 Final Polish 以降、主色は Mercari Purple `#6366F1` に統一。**
+> 旧 Cyan `#4DD0E1` は撤去し、ダークテーマでもアクションはパープル。
+> ダーク時のリンクは Indigo-300 `#A5B4FC`。詳細は `docs/Brand-Palette設計.md`。
+>
 > 「深い知性とプロ仕様のコックピット」。
 > 静寂と鋭さを両立、WCAG AA 準拠の意味論的トークン体系。
 

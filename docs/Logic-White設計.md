@@ -1,6 +1,10 @@
 # Logic White × Intelligent Simplicity
 
-> 「白い静けさの中で、最重要なアクションだけが Royal Blue で立ち上がる」。
+> **#127 Final Polish 以降、主色は Mercari Purple `#6366F1` に統一。**
+> 旧 Royal Blue `#4F46E5` はホバー色に降格、シアン由来は警告／helper 限定。
+> 詳しくは `docs/Brand-Palette設計.md` を参照。
+>
+> 「白い静けさの中で、最重要なアクションだけが Mercari Purple で立ち上がる」。
 > プロフェッショナル層（AIデザイナー／AI Ops Manager／AIPM）のために、
 > 直感的な階層構造と WCAG AA 準拠のコントラストを両立する。
 
