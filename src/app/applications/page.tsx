@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, ListChecks, X } from "lucide-react";
+import { ArrowRight, ListChecks, X, HelpCircle } from "lucide-react";
 
 const STATUS_STEPS = ["受付", "AI鑑定中", "クライアント確認中"] as const;
 type Status = typeof STATUS_STEPS[number];
@@ -39,6 +39,30 @@ function StatusChip({ status }: { status: Status }) {
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 ${STATUS_CHIP[status] ?? "bg-slate-700/60 text-slate-200 ring-slate-500/30"}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${STATUS_DOT[status] ?? "bg-slate-400"}`} />
       {status}
+    </span>
+  );
+}
+
+/**
+ * Agent Active pill — shown alongside the application's status to
+ * communicate that the AI layer is already plugged in even before
+ * a human reviewer sees the entry.
+ */
+function AgentActivePill() {
+  return (
+    <span
+      data-testid="agent-active-pill"
+      aria-label="AI エージェントが接続中"
+      className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 bg-emerald-500/15 text-emerald-300 ring-emerald-400/30"
+    >
+      <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+      Agent Active
+      <span
+        title="人間の参画前から、AI レイヤでデプロイ済みです"
+        className="ml-0.5 inline-flex items-center text-emerald-200/80"
+      >
+        <HelpCircle aria-hidden className="w-3 h-3 stroke-emerald-200/80" />
+      </span>
     </span>
   );
 }
@@ -198,6 +222,13 @@ export default function ApplicationsPage() {
         <h1 className="text-xl font-semibold tracking-tight text-white">応募状況</h1>
       </div>
 
+      <p
+        data-testid="agent-active-banner"
+        className="text-slate-300 text-sm mb-3 leading-relaxed"
+      >
+        Agent Active：あなたの知能はすでに動いています。
+      </p>
+
       <div className="flex items-center justify-between mb-3">
         <p className="text-xs text-slate-400">{rows.length} 件の応募</p>
         <label className="text-xs text-slate-400 inline-flex items-center gap-2">
@@ -224,7 +255,10 @@ export default function ApplicationsPage() {
               <p className="text-sm font-semibold text-white leading-snug min-w-0 flex-1">
                 {row.projectTitle}
               </p>
-              <StatusChip status={row.status} />
+              <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
+                <StatusChip status={row.status} />
+                <AgentActivePill />
+              </div>
             </div>
             <div className="flex items-center justify-between text-[11px]">
               <span className="font-mono text-slate-400">{row.mdGuildId}</span>
@@ -256,7 +290,12 @@ export default function ApplicationsPage() {
             {rows.map((row) => (
               <tr key={row.id} className="border-b border-slate-800 hover:bg-slate-900/50">
                 <td className="py-3 pr-4 text-white font-semibold">{row.projectTitle}</td>
-                <td className="py-3 pr-4"><StatusChip status={row.status} /></td>
+                <td className="py-3 pr-4">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <StatusChip status={row.status} />
+                    <AgentActivePill />
+                  </div>
+                </td>
                 <td className="py-3 pr-4 text-slate-400 text-xs font-mono">{row.mdGuildId}</td>
                 <td className="py-3 pr-4 text-slate-400 text-xs">
                   {new Date(row.appliedAt).toLocaleDateString("ja-JP")}
