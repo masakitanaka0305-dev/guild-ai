@@ -142,7 +142,7 @@ function ConfirmCancelModal({ row, onConfirm, onDismiss }: {
             onClick={onDismiss}
             className="rounded-full px-4 py-2 text-xs font-bold text-slate-200 hover:bg-white/5"
           >
-            やめる
+            いいえ、戻ります
           </button>
           <button
             type="button"
