@@ -5,6 +5,20 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Check } from "lucide-react";
+
+// Inline GitHub mark — lucide-react v1 does not export Github.
+function GitHubMark({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.24 3.34.95.1-.74.4-1.24.73-1.52-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.08 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
+    </svg>
+  );
+}
 import {
   EXPRESS_STEPS,
   BUDGET_MS,
@@ -17,6 +31,25 @@ import { recordExpressRun } from "@/lib/metrics/express";
 import { splitJapaneseName } from "@/lib/name-split";
 import { HexagonSteps } from "@/components/ui/HexagonSteps";
 import type { Rank } from "@/types";
+
+// ─── Role tile selector (Step B) ─────────────────────────────────────────────
+
+type RoleId = "engineer" | "designer" | "pdm";
+
+interface RoleTile {
+  id: RoleId;
+  emoji: string;
+  label: string;
+  caption: string;
+  accent: string;   // text-* class
+  ring: string;     // ring-* class
+}
+
+const ROLE_TILES: RoleTile[] = [
+  { id: "engineer", emoji: "💻", label: "エンジニア",  caption: "コードベースを資産化する", accent: "text-cyan-400",    ring: "ring-cyan-400/40"    },
+  { id: "designer", emoji: "🎨", label: "デザイナー",  caption: "発想と表現を資産化する",   accent: "text-rose-400",    ring: "ring-rose-400/40"    },
+  { id: "pdm",      emoji: "📋", label: "PdM",         caption: "意思決定と戦略を資産化する", accent: "text-emerald-400", ring: "ring-emerald-400/40" },
+];
 
 // ─── OAuth pre-fill (mock) ────────────────────────────────────────
 // Auth is stubbed in v1, but the confirmation UI is wired to the
@@ -99,10 +132,24 @@ function Confetti() {
 function OnboardingContent() {
   const searchParams = useSearchParams();
   const fastMode = searchParams.get("fast") === "1";
+  const queryRole = searchParams.get("role") as RoleId | null;
+  const validQueryRole: RoleId | null =
+    queryRole === "engineer" || queryRole === "designer" || queryRole === "pdm"
+      ? queryRole
+      : null;
 
   const [phase, setPhase] = useState<"form" | "running" | "done">("form");
+  // Wizard step inside the form phase: github → role → confirm.
+  const initialWizard: "github" | "role" | "confirm" =
+    fastMode ? "confirm" : validQueryRole ? "confirm" : "github";
+  const [wizardStep, setWizardStep] = useState<"github" | "role" | "confirm">(initialWizard);
+  const [role, setRole] = useState<RoleId | null>(validQueryRole);
+  const [githubConnected, setGithubConnected] = useState<boolean>(fastMode);
   const [editMode, setEditMode] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [showOptional, setShowOptional] = useState(false);
+  const [birthday, setBirthday] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const prefillName = splitJapaneseName(MOCK_OAUTH_PROFILE.fullName);
   const [familyName, setFamilyName] = useState<string>(prefillName.familyName);
   const [givenName, setGivenName] = useState<string>(prefillName.givenName);
@@ -185,7 +232,99 @@ function OnboardingContent() {
         </p>
       </div>
 
-      {phase === "form" && (
+      {phase === "form" && wizardStep === "github" && (
+        <section
+          data-testid="onboarding-step-a"
+          className="section-card p-8 space-y-6 text-center"
+          aria-labelledby="step-a-heading"
+        >
+          <div className="flex flex-col items-center gap-3">
+            <span aria-hidden className="w-16 h-16 rounded-full bg-[#162035] border border-cyan-400/30 flex items-center justify-center">
+              <GitHubMark className="w-8 h-8 text-cyan-400" />
+            </span>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+              Step A — GitHub 連携
+            </p>
+            <h2 id="step-a-heading" className="text-2xl font-black text-white leading-tight">
+              GitHub から始める
+            </h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              あなたのコードベースを Asset Ledger に登記します。
+              読み取り専用で安全に解析されます。
+            </p>
+          </div>
+          <button
+            type="button"
+            data-testid="onboarding-github-connect"
+            aria-label="GitHub と連携する"
+            onClick={() => {
+              setGithubConnected(true);
+              setWizardStep(validQueryRole ? "confirm" : "role");
+            }}
+            className="w-full inline-flex items-center justify-center gap-2 min-h-12 py-3 text-sm font-bold rounded-xl bg-cyan-400 text-[#0B1121] hover:bg-cyan-300 active:scale-[0.99] focus:outline focus:outline-2 focus:outline-cyan-400"
+          >
+            <GitHubMark className="w-4 h-4 text-[#0B1121]" />
+            GitHub と連携する
+          </button>
+          <p className="text-[10px] text-slate-400">
+            連携後、職種を選んで確認画面に進みます。
+          </p>
+        </section>
+      )}
+
+      {phase === "form" && wizardStep === "role" && (
+        <section
+          data-testid="onboarding-step-b"
+          className="section-card p-6 space-y-5"
+          aria-labelledby="step-b-heading"
+        >
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+              Step B — 職種選択
+            </p>
+            <h2 id="step-b-heading" className="text-xl font-black text-white leading-tight">
+              あなたの職種を教えてください
+            </h2>
+            <p className="mt-1 text-xs text-slate-400">
+              タップで次の画面へ進みます。
+            </p>
+          </div>
+          <div role="radiogroup" aria-label="職種選択" className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {ROLE_TILES.map((t) => {
+              const selected = role === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  data-testid={`role-tile-${t.id}`}
+                  onClick={() => {
+                    setRole(t.id);
+                    setWizardStep("confirm");
+                  }}
+                  className={`group rounded-2xl border border-white/10 bg-[#162035] p-5 text-left ring-1 ${
+                    selected ? t.ring : "ring-transparent"
+                  } hover:${t.ring} hover:ring-2 focus:outline focus:outline-2 focus:outline-cyan-400 transition-shadow`}
+                >
+                  <span aria-hidden className="text-3xl block">{t.emoji}</span>
+                  <span className={`mt-2 block text-base font-bold ${t.accent}`}>{t.label}</span>
+                  <span className="mt-1 block text-xs text-slate-400">{t.caption}</span>
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setWizardStep("github")}
+            className="text-xs text-slate-400 underline-offset-4 hover:underline"
+          >
+            ← 戻る
+          </button>
+        </section>
+      )}
+
+      {phase === "form" && wizardStep === "confirm" && (
         <section
           className="section-card p-6 space-y-5"
           aria-labelledby="confirm-heading"
@@ -350,12 +489,85 @@ function OnboardingContent() {
             </div>
           )}
 
+          {/* Optional profile fields — birthday + address. Default skipped. */}
+          <div
+            data-testid="onboarding-optional-fields"
+            className="rounded-xl border border-white/5 bg-[#0F1827] p-4 space-y-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  任意項目（生年・住所）
+                </p>
+                <p className="mt-1 text-[11px] text-slate-400 leading-relaxed">
+                  登記には不要です。<span className="text-cyan-400">後で /profile でも編集できます</span>。
+                </p>
+              </div>
+              {!showOptional && (
+                <button
+                  type="button"
+                  data-testid="onboarding-later-skip"
+                  onClick={() => setShowOptional(false)}
+                  className="shrink-0 inline-flex items-center justify-center min-h-11 px-4 rounded-full text-cyan-400 ring-1 ring-cyan-400/30 hover:bg-cyan-400/10 text-xs font-bold"
+                >
+                  後で設定する →
+                </button>
+              )}
+            </div>
+            {!showOptional ? (
+              <button
+                type="button"
+                onClick={() => setShowOptional(true)}
+                className="text-[11px] text-slate-400 underline-offset-4 hover:underline hover:text-white"
+              >
+                + いま入力する
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label htmlFor="birthday" className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    生年
+                  </label>
+                  <input
+                    id="birthday"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="1990"
+                    value={birthday}
+                    onChange={(e) => setBirthday(e.target.value)}
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[#162035] border border-white/10 text-[#E2E8F0] focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="address" className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    住所（任意）
+                  </label>
+                  <input
+                    id="address"
+                    type="text"
+                    placeholder="東京都"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[#162035] border border-white/10 text-[#E2E8F0] focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowOptional(false)}
+                  className="text-[11px] text-slate-400 underline-offset-4 hover:underline hover:text-white"
+                >
+                  閉じる
+                </button>
+              </div>
+            )}
+          </div>
+
           <p className="text-[10px] text-[var(--water-muted,#94A3B8)] leading-relaxed">
             修正があれば「編集する」を押してください。登記の前に
             <Link href="/legal/terms" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">利用規約</Link>
             と
             <Link href="/legal/transfer" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">権利譲渡条件</Link>
-            に同意してください。
+            に同意してください。あとで /profile でも編集できます。
           </p>
 
           <label className="flex items-start gap-2 text-[11px] text-[var(--water-text,#E2E8F0)] cursor-pointer select-none">
