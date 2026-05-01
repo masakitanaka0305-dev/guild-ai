@@ -30,13 +30,20 @@ function EnterpriseCTADesktop() {
   return (
     <div
       data-testid="enterprise-cta-desktop"
-      className="flex-shrink-0 border-t border-white/10 bg-[#162035]"
+      className="flex-shrink-0 border-t border-white/10 bg-[#162035] flex items-center justify-between"
     >
       <Link
         href="/business/checkout"
         className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-semibold text-cyan-400 underline-offset-4 hover:underline hover:bg-cyan-400/5 transition-colors"
       >
         <span>🏢 提携・案件提供をご検討の企業様へ →</span>
+      </Link>
+      <Link
+        href="/leaderboard"
+        data-testid="legend-link"
+        className="px-3 py-2 text-[11px] font-semibold text-[#FDE047]/90 underline-offset-4 hover:underline hover:bg-[#FDE047]/5 transition-colors"
+      >
+        伝説 →
       </Link>
     </div>
   );
