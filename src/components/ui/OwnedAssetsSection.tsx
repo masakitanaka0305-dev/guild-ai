@@ -154,7 +154,7 @@ export function OwnedAssetsSection() {
         </div>
         <p
           data-testid="owned-total-valuation"
-          className="text-brand-primary metric-prime tabular-nums mt-1"
+          className="metric-prime-gold tabular-nums mt-1"
         >
           今のあなたの価値：{formatJpy(total)}
         </p>
@@ -179,21 +179,27 @@ export function OwnedAssetsSection() {
           <li
             key={a.guildId}
             data-testid="owned-asset-card"
-            className="rounded-2xl border border-white/10 bg-midnight-base p-4"
+            className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-4"
           >
-            <div className="flex items-start justify-between gap-3 mb-2">
+            <div className="flex items-start justify-between gap-3 mb-3">
               <TypePill type={a.type} />
               <StatusPill status={a.status} />
             </div>
-            <p className="text-white font-semibold text-sm leading-snug">
+            <p
+              data-testid="owned-asset-title"
+              className="font-semibold text-sm leading-snug text-[var(--color-text-primary)]"
+            >
               {a.titleJa}
             </p>
-            <p className="mt-1 text-[11px] font-mono text-slate-400 truncate">
+            <p
+              data-testid="owned-asset-guildid"
+              className="mt-1 text-[11px] font-mono truncate text-[var(--color-text-muted)]"
+            >
               {a.guildId}
             </p>
             <div className="mt-3 flex items-center justify-between gap-3">
               <HexRankBadge rank={a.rank} size={32} />
-              <p className="text-brand-primary metric-prime tabular-nums">
+              <p className="metric-prime-gold tabular-nums">
                 {formatJpy(a.valuationJpy)}
               </p>
             </div>

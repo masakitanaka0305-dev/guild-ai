@@ -135,7 +135,7 @@ export default function GuildPage() {
         >
           あなたの知恵袋銀行
         </h1>
-        <p className="mt-1 text-xs text-slate-400">
+        <p className="mt-1 text-sm font-medium text-[var(--color-text-muted)]">
           あなたの知恵カードと、これまでのお礼を一覧にしています。
         </p>
         <WaveLine ariaLabel="水の意匠 — 静的波線" />
@@ -199,12 +199,12 @@ export default function GuildPage() {
               key={stat.label}
               className="bg-[#1A2238] rounded-xl px-3 py-2 text-center"
             >
-              <p className="text-[9px] text-slate-400 mb-0.5 leading-tight">{stat.label}</p>
+              <p className="text-[10px] font-medium leading-tight mb-0.5 text-[var(--color-text-muted)]">{stat.label}</p>
               <p
                 className={
                   stat.prime
-                    ? "metric-prime"
-                    : "text-base font-bold tabular-nums text-white"
+                    ? "metric-prime-gold"
+                    : "text-base font-bold tabular-nums text-[var(--color-text-primary)]"
                 }
                 style={stat.prime ? { fontSize: "1.05rem" } : undefined}
               >
