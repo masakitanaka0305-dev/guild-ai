@@ -59,7 +59,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Intelligence Proof #120): 鑑定中 / Analyzing your Intelligence / Intelligence Balance / 予測印税 / 伝説の知能ギルド / Hall of Fame / 知能の断片 / 真正性証明 / Legend / Expert / Core / Seed / Confidentiality Filter
 // Explicitly PERMITTED (Hybrid Plug-in System #121): 知能をプラグイン / 案件に参画 / 接続完了 / Plugged-in / デプロイ済み / エンジニア・エージェント / Connected Intelligence Assets / Agent Active
 // Explicitly PERMITTED (Compatibility Report #122): 案件に参画する / 参画済み / この知能で参画します / Intelligence Compatibility Report / Compatibility / 適合率 / 充足要件 / 未充足 / 事前診断 / Pre-Check
-// Explicitly PERMITTED (Rezon Protocol #123): 知能をプラグインする / 知能をプラグイン / Plugin My Intelligence / プラグイン済み / Plugged-in / Owned Assets / 保有知能資産 / Type / Rank / Status / Private (Vault) / Encrypted / Deployed / 知能の時価 / 時価 / 時価推移 / Project Goals / Required Intelligence / Intelligence Minting / 資産化 / Mint / Scan / Identify Context / Appraise Value / Hashed on Chain / AI 学習クローラから保護 / Slack インポート / Project Crystal / 約定 / 契約 / 取引
+// Explicitly PERMITTED (Friendly Tone #123): 知恵を貸す / 知恵のカード / もちもの / お困りごと / ほしい知恵 / カードのジャンル / 作り方のコツ / 見た目の工夫 / 進め方の相談 / 色んな分野 / 自分だけ / 鍵つき / お貸出し中 / 取っておきのメモ / 読みとる / 意味を見つける / 値段をつける / 大切に保管 / お礼 / 参加する / 参加中 / 受付中 / 働いてます / お礼まち / お礼受領 / マッチ度 / AIの参考書 / 時価のうごき / 太鼓判 / 金の太鼓判 / 銀の太鼓判 / 銅の太鼓判 / みならい / 知恵を出品する / Hashed on Chain / Scan / Identify Context / Appraise Value
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -155,11 +155,10 @@ describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button",
     ).toHaveLength(0);
   });
 
-  // Rezon Protocol (#123) — "応募する" / "この案件に応募する" stay banned
-  // as primary CTAs, but "知能をプラグインする" is welcomed back. The
-  // previous-iteration ban on `aria-label="知能をプラグイン"` is lifted
-  // here on purpose; the canonical CTA text is now the long form
-  // "知能をプラグインする（Plugin My Intelligence）".
+  // Friendly Tone (#123) — primary CTA settles on the friendly Japanese
+  // form 「知恵を貸す（参加する）」. "応募する" / "この案件に応募する"
+  // remain banned as CTAs, and prior English/protocol labels also can't
+  // surface as the primary aria-label.
   it('"応募する" / "この案件に応募する" must not surface as an aria-label CTA', () => {
     const violations: string[] = [];
     for (const file of PRIMARY_FILES) {

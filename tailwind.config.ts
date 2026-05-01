@@ -47,6 +47,12 @@ const config: Config = {
           muted:          "#94A3B8",
           divider:        "rgba(226,232,240,0.10)",
         },
+        // ─── ギルドAI — role color tokens (#123) ────────────────────
+        // The dashboard mixes these three so the surface communicates
+        // "intelligence is cross-functional, not siloed".
+        roleDev:    "#22D3EE", // cyan-400
+        roleDesign: "#A78BFA", // violet-400
+        rolePM:     "#FDE047", // amber/yellow-300
       },
       boxShadow: {
         card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",

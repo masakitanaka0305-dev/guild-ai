@@ -12,7 +12,7 @@ function fab(text: string, count: number): string {
 }
 
 describe("grading: structure / density / consistency formula", () => {
-  it("S-tier example crosses the 85 threshold and carries the 伝説級 sub-label", () => {
+  it("S-tier example crosses the 85 threshold and carries the 金の太鼓判 sub-label", () => {
     const md =
       // 2,000+ chars and a full ATX hierarchy
       "# 大見出し\n" +
@@ -34,7 +34,7 @@ describe("grading: structure / density / consistency formula", () => {
     expect(r.rank).toBe("S");
     expect(r.total).toBeGreaterThanOrEqual(85);
     expect(r.subLabel).toBe(RANK_SUB_LABEL.S);
-    expect(r.subLabel).toBe("伝説級。市場価値トップ1%");
+    expect(r.subLabel).toBe("金の太鼓判。市場価値トップ1%");
   });
 
   it("A-tier example sits in [70, 85)", () => {
@@ -55,7 +55,7 @@ describe("grading: structure / density / consistency formula", () => {
     expect(r.rank).toBe("A");
     expect(r.total).toBeGreaterThanOrEqual(70);
     expect(r.total).toBeLessThan(85);
-    expect(r.subLabel).toBe("即戦力。エージェント派遣の主力");
+    expect(r.subLabel).toBe("銀の太鼓判。すぐ役立つ即戦力の知恵");
   });
 
   it("B-tier example sits in [50, 70)", () => {
@@ -71,14 +71,14 @@ describe("grading: structure / density / consistency formula", () => {
     expect(r.rank).toBe("B");
     expect(r.total).toBeGreaterThanOrEqual(50);
     expect(r.total).toBeLessThan(70);
-    expect(r.subLabel).toBe("堅実な基盤。信頼性の高い知能");
+    expect(r.subLabel).toBe("銅の太鼓判。これからもっと光る知恵");
   });
 
   it("D-tier — recipe-gate (hasRunningCode=false) forces D regardless of score", () => {
     const md = "# Title\n本文だけ。技術用語: API REST.";
     const r = gradeIntelligence({ mdText: md, hasRunningCode: false });
     expect(r.rank).toBe("D");
-    expect(r.subLabel).toBe("育成枠。ポテンシャルを秘めた種");
+    expect(r.subLabel).toBe("みならい。育成枠の知恵");
   });
 
   it("breakdown values are bounded to [0, 100] and pillars vary independently", () => {
@@ -99,11 +99,12 @@ describe("grading: structure / density / consistency formula", () => {
   });
 
   it("color tokens, tier labels, and sub-labels are wired for all four ranks", () => {
-    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FDE047");
-    expect(RANK_COLOR_TOKEN.A.fill).toBe("#22D3EE");
-    expect(RANK_COLOR_TOKEN.B.fill).toBe("#34D399");
-    expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8");
-    expect(RANK_TIER).toEqual({ S: "Legend", A: "Expert", B: "Core", D: "Seed" });
+    // Friendly Tone (#123): 金/銀/銅/みならい with silver + bronze fills.
+    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FDE047"); // 金
+    expect(RANK_COLOR_TOKEN.A.fill).toBe("#CBD5E1"); // 銀 (silver)
+    expect(RANK_COLOR_TOKEN.B.fill).toBe("#D2A06B"); // 銅 (bronze)
+    expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8"); // みならい
+    expect(RANK_TIER).toEqual({ S: "金", A: "銀", B: "銅", D: "みならい" });
   });
 
   it("extractHeadings counts ATX h1/h2/h3 only", () => {

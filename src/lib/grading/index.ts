@@ -49,31 +49,31 @@ export interface GradingResult {
   breakdown: GradingBreakdown;
 }
 
-// ─── Sub-label table (spec) ──────────────────────────────────────────────────
+// ─── Sub-label table (Friendly Tone — 金/銀/銅/みならい) ─────────────────────
 
 export const RANK_SUB_LABEL: Record<Rank, string> = {
-  S: "伝説級。市場価値トップ1%",
-  A: "即戦力。エージェント派遣の主力",
-  B: "堅実な基盤。信頼性の高い知能",
-  D: "育成枠。ポテンシャルを秘めた種",
+  S: "金の太鼓判。市場価値トップ1%",
+  A: "銀の太鼓判。すぐ役立つ即戦力の知恵",
+  B: "銅の太鼓判。これからもっと光る知恵",
+  D: "みならい。育成枠の知恵",
 };
 
-// ─── Rank tier label (English short tag for badges) ──────────────────────────
+// ─── Rank tier label (friendly Japanese tag) ─────────────────────────────────
 
-export const RANK_TIER: Record<Rank, "Legend" | "Expert" | "Core" | "Seed"> = {
-  S: "Legend",
-  A: "Expert",
-  B: "Core",
-  D: "Seed",
+export const RANK_TIER: Record<Rank, "金" | "銀" | "銅" | "みならい"> = {
+  S: "金",
+  A: "銀",
+  B: "銅",
+  D: "みならい",
 };
 
 // ─── Color tokens shared with HexRankBadge ───────────────────────────────────
 
 export const RANK_COLOR_TOKEN: Record<Rank, { fill: string; ink: string; text: string }> = {
-  S: { fill: "#FDE047", ink: "#0B1121", text: "text-[#FDE047]" }, // legend yellow
-  A: { fill: "#22D3EE", ink: "#0B1121", text: "text-cyan-400"   }, // expert cyan
-  B: { fill: "#34D399", ink: "#0B1121", text: "text-emerald-400" }, // core emerald
-  D: { fill: "#94A3B8", ink: "#0B1121", text: "text-slate-400"   }, // seed slate
+  S: { fill: "#FDE047", ink: "#0B1121", text: "text-[#FDE047]" }, // 金
+  A: { fill: "#CBD5E1", ink: "#0B1121", text: "text-[#CBD5E1]" }, // 銀 (silver)
+  B: { fill: "#D2A06B", ink: "#0B1121", text: "text-[#D2A06B]" }, // 銅 (bronze)
+  D: { fill: "#94A3B8", ink: "#0B1121", text: "text-slate-400"   }, // みならい
 };
 
 // ─── Term dictionaries (Density scoring) ─────────────────────────────────────
