@@ -97,17 +97,36 @@ export const LOGIC_WHITE_PAIRS = [
   { name: "rank-gold × text-primary",   fg: "#0F172A", bg: "#F59E0B" },
 ] as const;
 
-// ─── Brand Palette pairs (#128, Cinematic Mint) ──────────────────────────────
+// ─── Brand Palette pairs (#128 → #133 Visual Hierarchy) ───────────────────────
 //
-// The brand-locked combinations the user-facing UI must clear at AA.
-// Independent of theme: verify the brand colors themselves work on the
-// surfaces they actually pair with.
+// 18 brand-locked combinations the user-facing UI must clear at AA.
+// We sweep L0 / L1 / L2 surfaces against text-primary, text-muted, link,
+// on-primary, secondary, success, and negative — once for the abyss
+// (dark) palette and once for Logic White (light) so the two themes
+// stay in parity.
 
 export const BRAND_PALETTE_PAIRS = [
-  { name: "brand-primary × on-primary",         fg: "#FFFFFF", bg: "#4C1D95" },
-  { name: "brand-secondary × bg-abyss",         fg: "#F59E0B", bg: "#020617" },
-  { name: "bg-base × text-primary (light)",     fg: "#212121", bg: "#F8FAFC" },
-  { name: "bg-abyss × text-primary (dark)",     fg: "#F8FAFC", bg: "#020617" },
-  { name: "bg-abyss × text-muted (dark)",       fg: "#94A3B8", bg: "#020617" },
-  { name: "bg-abyss × text-link (dark)",        fg: "#C4B5FD", bg: "#020617" },
+  // ── Dark / Abyss (#020617 / #0E1422 / #1A2238) ─────────────────────────────
+  { name: "L0 abyss × text-primary",       fg: "#F8FAFC", bg: "#020617" },
+  { name: "L0 abyss × text-muted",         fg: "#94A3B8", bg: "#020617" },
+  { name: "L0 abyss × text-link",          fg: "#C4B5FD", bg: "#020617" },
+  { name: "L1 surface (dark) × text-primary",   fg: "#F8FAFC", bg: "#0E1422" },
+  { name: "L2 elevated (dark) × text-primary",  fg: "#F8FAFC", bg: "#1A2238" },
+  { name: "brand-primary × on-primary (dark)",  fg: "#FFFFFF", bg: "#4C1D95" },
+  { name: "brand-secondary × L0 abyss",         fg: "#F59E0B", bg: "#020617" },
+  { name: "ai-success × L1 (dark) text",        fg: "#10B981", bg: "#0E1422" },
+  { name: "ai-negative × L1 (dark) text",       fg: "#E64545", bg: "#0E1422" },
+
+  // ── Light / Logic White (#F8FAFC / #FFFFFF / #F1F5F9) ──────────────────────
+  { name: "L0 white × text-primary",       fg: "#212121", bg: "#F8FAFC" },
+  { name: "L0 white × text-muted",         fg: "#475569", bg: "#F8FAFC" },
+  { name: "L0 white × text-link",          fg: "#6D28D9", bg: "#F8FAFC" },
+  { name: "L1 surface (light) × text-primary",  fg: "#212121", bg: "#FFFFFF" },
+  { name: "L2 elevated (light) × text-primary", fg: "#212121", bg: "#F1F5F9" },
+  { name: "brand-primary × on-primary (light)", fg: "#FFFFFF", bg: "#4C1D95" },
+  { name: "brand-secondary × L0 ink",           fg: "#0F172A", bg: "#F59E0B" },
+  // Emerald-600 is a status pill background; chip text reads as the
+  // dark slate ink (white on emerald-600 only clears AA-large).
+  { name: "ai-success × dark ink (light)",      fg: "#0F172A", bg: "#059669" },
+  { name: "ai-negative × on-primary (light)",   fg: "#FFFFFF", bg: "#DC2626" },
 ] as const;

@@ -93,9 +93,18 @@ describe("Final Polish (#127) — Cyan restricted to warn/helper only", () => {
   });
 });
 
-describe("Final Polish (#127) — Brand Palette WCAG AA pairs", () => {
-  it("BRAND_PALETTE_PAIRS lists the 6 spec combinations", () => {
-    expect(BRAND_PALETTE_PAIRS).toHaveLength(6);
+describe("Visual Hierarchy (#133) — Brand Palette WCAG AA pairs", () => {
+  it("BRAND_PALETTE_PAIRS lists the 18 surface × role combinations", () => {
+    expect(BRAND_PALETTE_PAIRS).toHaveLength(18);
+    // Sweeps every L0/L1/L2 surface against the primary text role on
+    // both themes, plus brand-primary/secondary/success/negative.
+    const names = BRAND_PALETTE_PAIRS.map((p) => p.name).join(",");
+    expect(names).toContain("L0 abyss × text-primary");
+    expect(names).toContain("L1 surface (dark) × text-primary");
+    expect(names).toContain("L2 elevated (dark) × text-primary");
+    expect(names).toContain("L0 white × text-primary");
+    expect(names).toContain("brand-primary × on-primary (dark)");
+    expect(names).toContain("brand-primary × on-primary (light)");
   });
 
   it("Every brand palette pair clears AA (≥ 4.5) for body text", () => {
