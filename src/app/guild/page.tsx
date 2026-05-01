@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { RankBadge } from "@/components/RankBadge";
+import { EarnDetailsModal } from "@/components/ui/EarnDetailsModal";
 import { Tip } from "@/components/Tip";
 import { AssetPortfolio } from "@/components/AssetPortfolio";
 import { TotalAssetsCard } from "@/components/TotalAssetsCard";
@@ -100,6 +101,7 @@ export default function GuildPage() {
   // ── 頻度制限付きロイヤリティトースト（最大1分に1回）─────────────────────
   const [royaltyBump, setRoyaltyBump] = useState(0);
   const [royaltyDelta, setRoyaltyDelta] = useState(0);
+  const [earnOpen, setEarnOpen] = useState(false);
   const lastToastAt = useRef(0);
   useEffect(() => {
     if (royalties.length === 0) return;
@@ -145,6 +147,17 @@ export default function GuildPage() {
         label="API印税"
       />
       <ChainNotifyToast />
+
+      {/* Earn details — opens a modal explaining how royalties accrue */}
+      <button
+        type="button"
+        data-testid="earn-details-trigger"
+        onClick={() => setEarnOpen(true)}
+        className="text-xs text-cyan-400 underline-offset-4 hover:underline mb-2 inline-flex items-center gap-1"
+      >
+        収益の仕組みを見る →
+      </button>
+      <EarnDetailsModal open={earnOpen} onClose={() => setEarnOpen(false)} />
 
       {/* ── Mercari-style 売上金ヒーロー ───────────────────────────────── */}
       <section className="mb-5 sm:mb-6 bg-[var(--n-surface,#FFFFFF)] border-2 border-[var(--n-gold,#D4AF37)]/40 rounded-2xl px-5 py-5 shadow-sm">
