@@ -55,6 +55,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Water Guild v2 — UX/UI refinements #116): 資産運用者 / 自動でおすすめを選択 / もっと見る / AI Pre-select / 1-Tap Mint / Sticky Action / ClampDescription
 // Explicitly PERMITTED (Water Guild v3 — direct CTA copy #117): この知能で応募 / 知能資産 / あなたのスキル証明 / GitHub から始める / まだ知能を登記していません / あなたの知能を資産化する場所
 // Explicitly PERMITTED (UX pass 2 — agent-deploy CTA #118): エージェントをデプロイ / 知能をプラグイン / エージェント派遣中 / 思考をコピー / 後で設定 / Coming Soon / タブ切替 / 応募状況を見る / 取り消す / 別の知能を選びましょう / 編集する
+// Explicitly PERMITTED (Intelligence Deck #119): 自分の知能を登記する / 知能の資産化を開始する / 登記済みエージェント数 / 登記 (Sync) / 鑑定 (Grade) / 派遣 (Deploy) / STEP 1 / STEP 2 / STEP 3
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -91,6 +92,12 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "プラグイン応募",          reason: "→ 「知能をプラグイン」 に置換（Water Guild v3）" },
   // ─── UX pass 2 — agent-deploy CTA (#118) ─────────────────────────
   { term: "この案件に応募する",      reason: "→ 「エージェントをデプロイ」 に置換（UX pass 2 — \"応募\" は人間トーン、エージェント派遣に統一）" },
+  // ─── Intelligence Deck (#119) — signup-style language is banned ──
+  { term: "Signup",                  reason: "→ 「自分の知能を登記する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
+  { term: "Sign up",                 reason: "→ 「自分の知能を登記する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
+  { term: "サインアップ",            reason: "→ 「自分の知能を登記する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
+  { term: "会員登録",                reason: "→ 「知能の資産化を開始する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
+  { term: "無料登録",                reason: "→ 「知能の資産化を開始する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {
