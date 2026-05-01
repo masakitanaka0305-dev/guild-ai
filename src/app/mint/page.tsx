@@ -8,6 +8,8 @@ import { HexRankBadge } from "@/components/ui/HexRankBadge";
 import { CrystalSvg } from "@/components/ui/CrystalSvg";
 import { ShieldedBadge } from "@/components/ui/ShieldedBadge";
 import { MINT_STEPS, MINT_IMPORTS } from "@/lib/mint-pipeline";
+import { rankCardCta } from "@/lib/proof-of-make";
+import type { Rank } from "@/types";
 
 const ICON_MAP = {
   ScanSearch,
@@ -15,6 +17,10 @@ const ICON_MAP = {
   Gem,
   Lock,
 } as const;
+
+// Demo: completion screen always shows S rank in this surface. In
+// production the rank would come from grading.
+const DEMO_RANK: Rank = "S";
 
 export default function MintPage() {
   // 3 importers select → step 0..3 → completion (4)
@@ -145,7 +151,7 @@ export default function MintPage() {
               onClick={advance}
               className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300"
             >
-              {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : "仕上げる"}
+              {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : rankCardCta(DEMO_RANK)}
             </button>
           </div>
         </section>

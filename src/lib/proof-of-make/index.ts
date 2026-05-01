@@ -82,3 +82,62 @@ export function generateProductPitch(transcript: string): ProductPitch {
 
   return { description, manual };
 }
+
+// ─── Mercari Lightness (#126) helpers ────────────────────────────────────────
+
+import type { Rank } from "@/types";
+
+/**
+ * Returns the rank-aware Mint CTA for /mint and the draft surface.
+ * Each rank gets a friendly 「金/銀/銅/みならい カードにする」 phrasing
+ * so the user sees their tier reflected in the action they're about
+ * to take.
+ */
+export function rankCardCta(rank: Rank): string {
+  switch (rank) {
+    case "S": return "金の太鼓判カードにする";
+    case "A": return "銀の太鼓判カードにする";
+    case "B": return "銅の太鼓判カードにする";
+    case "D": return "みならいカードにする";
+  }
+}
+
+/**
+ * Trims a long body to the first ~ratio of its length on a sentence
+ * boundary so the Edit & Mint screen feels lighter without losing the
+ * gist. Returns the original if it's already short enough.
+ */
+export function condense(text: string, ratio = 0.5): string {
+  if (!text) return text;
+  const limit = Math.max(16, Math.round(text.length * ratio));
+  if (text.length <= limit) return text;
+  // Prefer a sentence boundary (。 or 〜 ! ? newline) within the cap.
+  const window = text.slice(0, limit);
+  const cut = Math.max(
+    window.lastIndexOf("。"),
+    window.lastIndexOf("！"),
+    window.lastIndexOf("？"),
+    window.lastIndexOf("\n"),
+  );
+  if (cut > limit * 0.6) return window.slice(0, cut + 1).trim();
+  return window.trim() + "…";
+}
+
+const REASON_FRIENDLY_TABLE: Array<{ pattern: RegExp; friendly: string }> = [
+  { pattern: /思考密度/,         friendly: "プロの技術が詰まっています" },
+  { pattern: /稼働実績|uptime/i, friendly: "安定して動き続けています" },
+  { pattern: /意思シグナル|intent/i, friendly: "実装の意図が明確です" },
+  { pattern: /running.code|hasRunningCode|実稼働コード/i, friendly: "実際に動くコードが入っています" },
+  { pattern: /test|テスト/i,     friendly: "テストや検証の跡が残っています" },
+];
+
+/**
+ * Translates ai-auditor reason strings into friendly Japanese for the
+ * Edit & Mint surface. Unrecognised strings pass through unchanged.
+ */
+export function prettifyAuditReason(reason: string): string {
+  for (const row of REASON_FRIENDLY_TABLE) {
+    if (row.pattern.test(reason)) return row.friendly;
+  }
+  return reason;
+}
