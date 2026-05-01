@@ -1,5 +1,15 @@
+import { MOCK_MARKETPLACE } from "@/lib/marketplace";
+
 export type AssetStatus = "active" | "reviewing" | "paused";
 export type SortKey = "monthly" | "calls" | "lastCalled" | "postedAt" | "status";
+
+/**
+ * Returns true when an asset has a real /asset/[id] detail page (i.e. the
+ * id matches a marketplace listing). Type-strict to avoid silent breakage.
+ */
+export function isAssetImplemented(guildId: string): boolean {
+  return MOCK_MARKETPLACE.some((m) => m.listing.id === guildId);
+}
 
 export interface PortfolioAsset {
   guildId: string;

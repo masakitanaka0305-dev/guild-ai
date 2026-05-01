@@ -2,11 +2,46 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { getMyAssets, summarize, sortAssets, relativeTime } from "@/lib/portfolio";
+import { getMyAssets, summarize, sortAssets, relativeTime, isAssetImplemented } from "@/lib/portfolio";
 import type { AssetStatus, SortKey, PortfolioAsset } from "@/lib/portfolio";
 import { computeStatus, statusSortOrder, STATUS_META } from "@/lib/asset-status";
 import type { AssetStatusCode } from "@/lib/asset-status";
 import { incomeStream } from "@/lib/income-stream";
+import { ComingSoonModal } from "@/components/ui/ComingSoonModal";
+
+/**
+ * Asset detail trigger — Link when /asset/[id] exists, else a button that
+ * opens the Coming Soon modal so the click is never a dead end.
+ */
+function DetailTrigger({
+  guildId,
+  className,
+  onComingSoon,
+  children = "詳細",
+}: {
+  guildId: string;
+  className: string;
+  onComingSoon: () => void;
+  children?: React.ReactNode;
+}) {
+  if (isAssetImplemented(guildId)) {
+    return (
+      <Link href={`/asset/${guildId}`} className={className}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button
+      type="button"
+      data-testid="asset-detail-coming-soon"
+      onClick={onComingSoon}
+      className={className}
+    >
+      {children}
+    </button>
+  );
+}
 
 // ─── Status badge — Water Guild v3 contrast ──────────────────────────────────
 
@@ -99,7 +134,10 @@ export function AssetPortfolio() {
   const [sortKey, setSortKey] = useState<SortKey>("monthly");
   const [reducedMotion, setReducedMotion] = useState(false);
   const [executingId, setExecutingId] = useState<string | null>(null);
+  const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const execTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showComingSoon = () => setComingSoonOpen(true);
 
   useEffect(() => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -259,12 +297,11 @@ export function AssetPortfolio() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1.5">
-                      <Link
-                        href={`/asset/${asset.guildId}`}
+                      <DetailTrigger
+                        guildId={asset.guildId}
+                        onComingSoon={showComingSoon}
                         className="inline-flex items-center justify-center min-h-[44px] px-3 text-cyan-400 underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
-                      >
-                        詳細
-                      </Link>
+                      />
                       <Link
                         href={`/lineage/${encodeURIComponent(asset.guildId)}`}
                         aria-label={`${asset.titleJa} の家系図を見る`}
@@ -345,17 +382,17 @@ export function AssetPortfolio() {
                 >
                   🌳
                 </Link>
-                <Link
-                  href={`/asset/${asset.guildId}`}
+                <DetailTrigger
+                  guildId={asset.guildId}
+                  onComingSoon={showComingSoon}
                   className="inline-flex items-center justify-center min-h-[44px] px-3 text-sm text-cyan-400 underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
-                >
-                  詳細
-                </Link>
+                />
               </div>
             </li>
           );
         })}
       </ul>
+      <ComingSoonModal open={comingSoonOpen} onClose={() => setComingSoonOpen(false)} />
     </section>
   );
 }
