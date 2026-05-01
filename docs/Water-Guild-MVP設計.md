@@ -425,3 +425,97 @@ phase = "running" → TimerBar + 既存 7 ステップ
 
 合計 **23 件** の UX pass 2 新規テスト。
 
+---
+
+## 19. Intelligence Deck — Onboarding Home
+
+### 19.1 目的とトーン
+
+「登録」「Signup」と一切言わない、**「知能の資産化を開始する」**を中心軸に据えた没入型ランディング画面。背景は **#0B1121**（深海ネイビー）、フルスクリーン、ナビ・フッタなし。
+
+### 19.2 ルーティング
+
+| URL | 表示 |
+|-----|------|
+| `/intelligence-deck` | 公開ランディング（誰でも） |
+| `/onboarding`（未認証時） | `<DeckHome>` を返す（ゲート） |
+| `/onboarding`（認証済 or `?fast=1`） | 既存ウィザード（Step A → B → 0） |
+
+未認証時の判定は `useAuthState()` の `status === "anonymous"`。`?fast=1` はデモ用バイパス。
+
+### 19.3 画面構成
+
+```
+┌──────────────────────────────────────────────────────────┐
+│ GUILD AI                       登記済みエージェント数：  │
+│                                  1,284 体                 │
+│                                  直近 24h で +18 体        │
+│                                                            │
+│   ┌─────────────┐ ┌─────────────┐ ┌─────────────┐        │
+│   │ STEP 1      │ │ STEP 2      │ │ STEP 3      │        │
+│   │   ⬢          │ │   ⬢          │ │   ⬢          │        │
+│   │ 登記 (Sync) │ │鑑定 (Grade) │ │派遣 (Deploy)│        │
+│   │  GitHub …   │ │  AI が …    │ │  企業へ …   │        │
+│   └─────────────┘ └─────────────┘ └─────────────┘        │
+│                                                            │
+│        ┌────────────────────────────────────┐             │
+│        │       自分の知能を登記する         │             │
+│        └────────────────────────────────────┘             │
+│              = 知能の資産化を開始する                      │
+└──────────────────────────────────────────────────────────┘
+```
+
+3 カード：
+
+| Step | タイトル | サブタイトル |
+|------|----------|--------------|
+| 1 | 登記 (Sync) | GitHub 連携であなたの思考を抽出 |
+| 2 | 鑑定 (Grade) | AI があなたの専門知能を資産として評価 |
+| 3 | 派遣 (Deploy) | あなたの代わりに働く AI エージェントを企業へ |
+
+カードは `<ol aria-label="知能を資産化する 3 ステップ">` ＋ `<li data-testid="deck-step-N">`。`<Hexagon>` を中央に静的に配置、step 番号を中に黒抜きで描画。モバイル `grid-cols-1`、PC `md:grid-cols-3`。
+
+### 19.4 Hero Button
+
+- テキスト：「自分の知能を登記する」
+- href：`/onboarding/repos`（GitHub 連携面）
+- スタイル：`bg-cyan-400 text-[#0B1121] font-semibold rounded-full h-14 w-full md:h-16 md:max-w-md`
+- 静的 glow：`shadow-[0_0_0_2px_rgba(34,211,238,0.5),0_0_28px_rgba(34,211,238,0.35)]` ＝ アニメ無し
+- aria-label：`自分の知能を登記する`
+- 直下の補助テキスト：`= 知能の資産化を開始する`（slate-400, text-xs）
+
+### 19.5 ギルド感の演出
+
+- `登記済みエージェント数：1,284 体` を `text-cyan-400/80 text-xs tabular-nums font-mono` で右上に
+- `直近 24h で +18 体` を slate-400 small で添える
+- 数値は `src/lib/intelligence-deck/index.ts` の `getRegisteredAgents()` ＋ `getRecentAgentsDelta24h()` で固定（テストで pin）
+
+### 19.6 コピーガイド（jargon-lint）
+
+許可語：
+- 自分の知能を登記する
+- 知能の資産化を開始する
+- 登記済みエージェント数
+- 登記 (Sync) / 鑑定 (Grade) / 派遣 (Deploy)
+- STEP 1 / STEP 2 / STEP 3
+
+NG（jargon-lint で検出）：
+- Signup / Sign up / サインアップ / 会員登録 / 無料登録（**全 UI で禁止**）
+- Intelligence Deck 配下のファイルでは **登録** も禁止（必ず **登記**）
+
+### 19.7 アクセシビリティ
+
+- `<main>` は 1 つ、`<h1 class="sr-only">自分の知能を登記する</h1>`
+- 3 カードは `<ol>` で順序を保ち、各 `<li>`
+- Hero Button は `<Link>`（Enter／Space で発火）
+- フォーカスリング `outline-cyan-400`
+
+### 19.8 テスト一覧
+
+| テスト | 件数 | 場所 |
+|--------|------|------|
+| intelligence-deck | 14 | `src/lib/__tests__/intelligence-deck.test.ts` |
+
+`getRegisteredAgents() === 1284`、3 ステップ文言、Hero Button の文言・href・aria・glow、`/onboarding` 未認証時のゲート、Signup/Sign up/サインアップ/会員登録/無料登録 が src/app・src/components 配下に **存在しない**こと、Intelligence Deck 配下に「登録」が出てこないこと、を全部 source-string レベルで検証。
+
+
