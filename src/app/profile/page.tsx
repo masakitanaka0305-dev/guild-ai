@@ -130,13 +130,13 @@ export default function ProfilePage() {
         ← 運用に戻る
       </Link>
 
-      {/* ── Profile header ─────────────────────────────────────────── */}
+      {/* ── Profile header — rank badge top with sub-label ──────────── */}
       <header
         data-testid="profile-header"
-        className="mb-5 rounded-2xl border border-white/10 bg-[#162035] p-5"
+        className="mb-5 rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400/30 p-5"
       >
         <div className="flex items-start gap-4">
-          <HexRankBadge rank={topRank as "S" | "A" | "B"} size={48} />
+          <HexRankBadge rank={topRank as "S" | "A" | "B"} size={80} showSubLabel />
           <div className="min-w-0 flex-1">
             <h2 className="text-white font-semibold text-2xl leading-tight truncate">
               @{handle}
@@ -373,13 +373,36 @@ export default function ProfilePage() {
         aria-labelledby="tab-md"
         hidden={activeTab !== "md"}
       >
-        <section className="rounded-2xl border border-white/10 bg-[#162035] p-5 mb-4">
-          <p className="text-white font-semibold mb-1">登記済み MD（{activeCount} 件）</p>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            登記済みの知能資産は <Link href="/guild" className="text-cyan-400 underline-offset-4 hover:underline">マイ銀行</Link> に一覧表示されます。
-            鑑定状況・呼び出し数・収益はマイ銀行の Asset Portfolio から確認できます。
-          </p>
-        </section>
+        <p className="text-white font-semibold mb-3">
+          知能の断片（{activeCount} 件稼働中）
+        </p>
+        <ul
+          data-testid="knowledge-fragments"
+          aria-label="知能の断片リスト"
+          className="space-y-3 mb-4"
+        >
+          {assets.map((a) => (
+            <li
+              key={a.guildId}
+              data-testid="knowledge-fragment-card"
+              className="rounded-2xl border border-white/10 bg-[#162035] border-l-4 border-l-cyan-400/30 p-4"
+            >
+              <p className="text-white font-semibold text-sm leading-snug truncate">
+                {a.titleJa}
+              </p>
+              <p className="mt-1 text-[11px] font-mono text-slate-400 truncate">
+                {a.guildId}
+              </p>
+              <p className="mt-2 text-xs text-slate-300 leading-relaxed line-clamp-3">
+                エージェント時代の知識を MD ファイルに蒸留し、AI が自律的に活用できる形で公開されています。
+                直近 30 日のコール数：{a.callsLast30.toLocaleString("ja-JP")} 回。
+              </p>
+            </li>
+          ))}
+        </ul>
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          完全な一覧と鑑定状況は <Link href="/guild" className="text-cyan-400 underline-offset-4 hover:underline">マイ銀行</Link> から確認できます。
+        </p>
       </div>
 
       {/* ── 活動履歴 tab ─────────────────────────────────────────── */}

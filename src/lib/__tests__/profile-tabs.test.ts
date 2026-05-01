@@ -38,7 +38,8 @@ describe("/profile — tab UI + visible numbers", () => {
 
   it("hexagonal rank badge replaces the legacy RankShield in the header", () => {
     expect(src).toContain("HexRankBadge");
-    expect(src).toMatch(/<HexRankBadge[^>]*size=\{48\}/);
+    // Phase H: badge size moved from 48 → 80 with showSubLabel.
+    expect(src).toMatch(/<HexRankBadge[^>]*size=\{80\}/);
   });
 
   it("each tabpanel uses role=tabpanel + hidden gate based on activeTab", () => {
