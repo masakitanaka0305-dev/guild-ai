@@ -1,0 +1,80 @@
+// GUILD AI — WCAG 2.1 contrast ratio utility (#124)
+//
+// Implements the standard relative luminance formula and the
+// (L1 + 0.05) / (L2 + 0.05) ratio. Returns a ratio in [1, 21].
+//
+//   AA normal text          ≥ 4.5
+//   AA large text / UI      ≥ 3.0
+//   AAA normal text         ≥ 7.0
+//
+// Used to gate the Midnight Logic palette during CI:
+//   - bg-base × text-primary    must be ≥ 4.5
+//   - bg-base × text-muted      must be ≥ 4.5
+//   - ai-action × on-primary    must be ≥ 4.5
+//   - ai-success × on-primary   must be ≥ 4.5
+//
+// Pure function — safe to call in tests and at module-load time.
+
+export interface RGB {
+  r: number;
+  g: number;
+  b: number;
+}
+
+/** Parses #RRGGBB / #RGB into 0..255 channels. Throws on invalid input. */
+export function parseHex(hex: string): RGB {
+  const s = hex.trim().replace(/^#/, "");
+  if (s.length === 3) {
+    const [r, g, b] = s.split("").map((c) => parseInt(c + c, 16));
+    return { r, g, b };
+  }
+  if (s.length === 6) {
+    return {
+      r: parseInt(s.slice(0, 2), 16),
+      g: parseInt(s.slice(2, 4), 16),
+      b: parseInt(s.slice(4, 6), 16),
+    };
+  }
+  throw new Error(`Invalid hex color: ${hex}`);
+}
+
+/** sRGB → linear-light component (used by relative luminance). */
+function channelLuminance(c8: number): number {
+  const c = c8 / 255;
+  return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+}
+
+/** WCAG relative luminance L = 0.2126 R + 0.7152 G + 0.0722 B (linear). */
+export function relativeLuminance(hex: string): number {
+  const { r, g, b } = parseHex(hex);
+  return (
+    0.2126 * channelLuminance(r) +
+    0.7152 * channelLuminance(g) +
+    0.0722 * channelLuminance(b)
+  );
+}
+
+/** Contrast ratio between two hex colors (1..21). */
+export function contrastRatio(fg: string, bg: string): number {
+  const l1 = relativeLuminance(fg);
+  const l2 = relativeLuminance(bg);
+  const lighter = Math.max(l1, l2);
+  const darker  = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/** Convenience: rounds to 1 decimal — matches what most a11y reports show. */
+export function contrastRatioRounded(fg: string, bg: string): number {
+  return Math.round(contrastRatio(fg, bg) * 10) / 10;
+}
+
+// ─── Canonical Midnight Logic combinations (used by tests + docs) ────────────
+
+export const MIDNIGHT_PAIRS = [
+  { name: "bg-base × text-primary",  fg: "#F8FAFC", bg: "#0F172A" },
+  { name: "bg-base × text-muted",    fg: "#94A3B8", bg: "#0F172A" },
+  { name: "ai-action × on-primary",  fg: "#0F172A", bg: "#06B6D4" },
+  { name: "ai-flow × on-primary",    fg: "#0F172A", bg: "#8B5CF6" },
+  { name: "ai-success × on-primary", fg: "#0F172A", bg: "#10B981" },
+  { name: "bg-surface × text-primary", fg: "#F8FAFC", bg: "#1E293B" },
+] as const;
