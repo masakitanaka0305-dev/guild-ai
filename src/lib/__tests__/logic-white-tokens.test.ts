@@ -15,7 +15,10 @@ describe("Logic White (#125) — default light tokens", () => {
     expect(css).toMatch(/--color-bg-surface:\s*#FFFFFF/i);
     expect(css).toMatch(/--color-bg-elevated:\s*#F1F5F9/i);
     // Text
-    expect(css).toMatch(/--color-text-primary:\s*#0F172A/i);
+    // Mercari Lightness (#126): body text softens to #212121, plus a
+    // secondary text-soft token at #424242.
+    expect(css).toMatch(/--color-text-primary:\s*#212121/i);
+    expect(css).toMatch(/--color-text-soft:\s*#424242/i);
     expect(css).toMatch(/--color-text-muted:\s*#475569/i);
     expect(css).toMatch(/--color-text-on-primary:\s*#FFFFFF/i);
     // Action / status
@@ -29,13 +32,13 @@ describe("Logic White (#125) — default light tokens", () => {
     expect(css).toMatch(/--color-border-strong:\s*#CBD5E1/i);
   });
 
-  it("Midnight Logic values stay verbatim under [data-theme=\"midnight\"]", () => {
+  it("Midnight Logic values stay tuned under [data-theme=\"midnight\"] (#126)", () => {
     const css = read("src/app/globals.css");
-    // Extract the actual selector block (skip the prose comment that
-    // mentions the same string).
     const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
-    expect(block).toMatch(/--color-bg-base:\s*#0F172A/i);
-    expect(block).toMatch(/--color-ai-action:\s*#06B6D4/i);
+    // Mercari Lightness (#126): the dark surface lifts off pure-black
+    // and the action color shifts to a lighter cyan.
+    expect(block).toMatch(/--color-bg-base:\s*#101418/i);
+    expect(block).toMatch(/--color-ai-action:\s*#4DD0E1/i);
     expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
   });
 

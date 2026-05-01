@@ -34,7 +34,8 @@
     --color-bg-base:        #F8FAFC;
     --color-bg-surface:     #FFFFFF;
     --color-bg-elevated:    #F1F5F9;
-    --color-text-primary:   #0F172A;
+    --color-text-primary:   #212121;   /* softened from pure #0F172A (#126) */
+    --color-text-soft:      #424242;   /* secondary headings */
     --color-text-muted:     #475569;
     --color-text-on-primary:#FFFFFF;
     --color-ai-action:      #4F46E5;
@@ -77,23 +78,26 @@
   }
 
   /*  Midnight Logic — hidden pro toggle (`<html data-theme="midnight">`)
-   *  Same variable names, dark values. Mirrors the previous canonical
-   *  palette so power users on the night surface get the same vocabulary. */
+   *  Tuned (#126) to lift off pure black: bg-base sits a hair above pure
+   *  midnight, surfaces gain altitude, action color shifts to a lighter
+   *  cyan that reads on the new bg, and the warn token swaps amber for
+   *  lemon yellow so it stays visible. */
   [data-theme="midnight"] {
     color-scheme: dark;
 
-    --color-bg-base:        #0F172A;
-    --color-bg-surface:     #1E293B;
-    --color-bg-elevated:    #293548;
+    --color-bg-base:        #101418;   /* ← #0F172A */
+    --color-bg-surface:     #1C2126;   /* ← #1E293B (lift over base) */
+    --color-bg-elevated:    #252A30;   /* ← #293548 */
     --color-text-primary:   #F8FAFC;
+    --color-text-soft:      #E0E0E0;   /* secondary headings / subdued body */
     --color-text-muted:     #94A3B8;
-    --color-text-on-primary:#0F172A;
-    --color-ai-action:      #06B6D4;
+    --color-text-on-primary:#101418;
+    --color-ai-action:      #4DD0E1;   /* lighter cyan reads on dark */
     --color-ai-flow:        #8B5CF6;
     --color-ai-success:     #10B981;
-    --color-ai-warn:        #F59E0B;
+    --color-ai-warn:        #FFF176;   /* lemon yellow on dark */
     --color-ai-negative:    #E64545;
-    --color-border-subtle:  rgba(248,250,252,0.10);
+    --color-border-subtle:  rgba(248,250,252,0.08);
     --color-border-strong:  rgba(248,250,252,0.18);
 
     --rank-gold:   #FDE047;

@@ -8,17 +8,21 @@ function read(rel: string) {
 }
 
 describe("Midnight Logic — pro toggle palette (#124, dark)", () => {
-  it("globals.css keeps the Midnight Logic values under data-theme=midnight", () => {
+  it("globals.css keeps the Midnight Logic values under data-theme=midnight (#126 tuned)", () => {
     const css = read("src/app/globals.css");
     const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
-    expect(block).toMatch(/--color-bg-base:\s*#0F172A/i);
-    expect(block).toMatch(/--color-bg-surface:\s*#1E293B/i);
-    expect(block).toMatch(/--color-bg-elevated:\s*#293548/i);
+    // Mercari Lightness (#126) tuning: bg lifts off pure-black, action
+    // shifts to lighter cyan, warn flips to lemon yellow.
+    expect(block).toMatch(/--color-bg-base:\s*#101418/i);
+    expect(block).toMatch(/--color-bg-surface:\s*#1C2126/i);
+    expect(block).toMatch(/--color-bg-elevated:\s*#252A30/i);
     expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
+    expect(block).toMatch(/--color-text-soft:\s*#E0E0E0/i);
     expect(block).toMatch(/--color-text-muted:\s*#94A3B8/i);
-    expect(block).toMatch(/--color-ai-action:\s*#06B6D4/i);
+    expect(block).toMatch(/--color-ai-action:\s*#4DD0E1/i);
     expect(block).toMatch(/--color-ai-flow:\s*#8B5CF6/i);
     expect(block).toMatch(/--color-ai-success:\s*#10B981/i);
+    expect(block).toMatch(/--color-ai-warn:\s*#FFF176/i);
   });
 
   it("legacy --water-* / --n-* tokens stay aliased through the same CSS variables", () => {
