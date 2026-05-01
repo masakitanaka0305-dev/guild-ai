@@ -122,12 +122,15 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <div className="lg:hidden flex-shrink-0 relative pb-[env(safe-area-inset-bottom)]">
-      {/* Center FAB — absolutely positioned, protruding above the bar */}
+    <div className="lg:hidden flex-shrink-0 relative z-40 pb-[env(safe-area-inset-bottom)]">
+      {/* Center FAB — absolutely positioned, protruding above the bar.
+          z-30 keeps it above the cyan footer band (z-20) but below the
+          bottom-nav stacking context (z-40). */}
       <Link
         href={PRIMARY_ACTION.href}
         aria-label="出す"
-        className="absolute left-1/2 -translate-x-1/2 -top-6 z-10 min-w-[44px] min-h-[44px] w-14 h-14 rounded-full bg-[var(--primary,#06B6D4)] text-white flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-[#0891B2] active:scale-[0.95] transition-all duration-220"
+        data-testid="bottom-nav-fab"
+        className="absolute left-1/2 -translate-x-1/2 -top-6 z-30 min-w-[44px] min-h-[44px] w-14 h-14 rounded-full bg-cyan-400 text-[#0B1121] flex items-center justify-center shadow-xl text-2xl font-bold hover:bg-cyan-300 active:scale-[0.95] transition-all duration-220"
       >
         ＋
       </Link>

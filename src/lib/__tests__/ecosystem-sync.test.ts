@@ -11,8 +11,8 @@ describe("Ecosystem sync — shared footer banner + nav active state", () => {
   it("AppShell renders the shared 提携・案件提供 footer band on both surfaces", () => {
     const src = read("src/components/AppShell.tsx");
     expect(src).toContain("提携・案件提供をご検討の企業様へ");
-    // Mobile sticky band sits above the bottom nav
-    expect(src).toMatch(/sticky bottom-16[^"]*z-30[^"]*bg-\[#162035\]/);
+    // Mobile sticky band sits above the bottom nav (z-20: below the FAB and nav)
+    expect(src).toMatch(/sticky bottom-16[^"]*z-20[^"]*bg-\[#162035\]/);
     // Cyan accent + underline on hover
     expect(src).toContain("text-cyan-400");
     expect(src).toContain("underline-offset-4");

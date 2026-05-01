@@ -9,11 +9,12 @@ import { ZeroDayBanner } from "@/components/ZeroDayBanner";
 
 // ─── Enterprise CTA banner — shared footer band, sticks above bottom nav ─────
 
+// z-index ladder: footer band z-20 → FAB z-30 → bottom nav z-40
 function EnterpriseCTA() {
   return (
     <div
       data-testid="enterprise-cta-mobile"
-      className="lg:hidden flex-shrink-0 sticky bottom-16 z-30 bg-[#162035] border-t border-cyan-400/20"
+      className="lg:hidden flex-shrink-0 sticky bottom-16 z-20 bg-[#162035] border-t border-cyan-400/20"
     >
       <Link
         href="/business/checkout"
@@ -72,14 +73,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <BottomNav />
         <IncomeStreamBar />
         <ZeroDayToast />
-        {/* FAB — 出す (Quick Listing) — desktop only; mobile FAB lives in BottomNav */}
-        <Link
-          href="/onboarding"
-          aria-label="出す"
-          className="hidden lg:flex fixed right-8 bottom-8 z-50 w-14 h-14 items-center justify-center rounded-full shadow-xl text-2xl font-bold bg-[var(--primary,#06B6D4)] text-white hover:bg-[#0891B2] active:scale-[0.98] transition-all duration-220"
-        >
-          ＋
-        </Link>
+        {/* No floating FAB — mobile entry lives at BottomNav center,
+            desktop entry lives in the SidebarNav primary action card. */}
       </div>
     </>
   );
