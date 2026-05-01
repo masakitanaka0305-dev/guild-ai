@@ -68,12 +68,17 @@ export const RANK_TIER: Record<Rank, "金" | "銀" | "銅" | "みならい"> = {
 };
 
 // ─── Color tokens shared with HexRankBadge ───────────────────────────────────
+// Logic White (#125) tunes the rank fills for a white background:
+//   金 (S) #D4A437 — deep gold (旧 #FDE047 だと白上で薄すぎる)
+//   銀 (A) #94A3B8 — slate-400, neutral on white
+//   銅 (B) #B45309 — amber-700, distinct from gold
+//   みならい (D) #94A3B8 — same slate as silver, but used as the seed tier
 
 export const RANK_COLOR_TOKEN: Record<Rank, { fill: string; ink: string; text: string }> = {
-  S: { fill: "#FDE047", ink: "#0B1121", text: "text-[#FDE047]" }, // 金
-  A: { fill: "#CBD5E1", ink: "#0B1121", text: "text-[#CBD5E1]" }, // 銀 (silver)
-  B: { fill: "#D2A06B", ink: "#0B1121", text: "text-[#D2A06B]" }, // 銅 (bronze)
-  D: { fill: "#94A3B8", ink: "#0B1121", text: "text-slate-400"   }, // みならい
+  S: { fill: "#D4A437", ink: "#FFFFFF", text: "text-[#D4A437]" }, // 金 (Logic White)
+  A: { fill: "#94A3B8", ink: "#0F172A", text: "text-[#94A3B8]" }, // 銀
+  B: { fill: "#B45309", ink: "#FFFFFF", text: "text-[#B45309]" }, // 銅
+  D: { fill: "#94A3B8", ink: "#0F172A", text: "text-slate-400"   }, // みならい
 };
 
 // ─── Term dictionaries (Density scoring) ─────────────────────────────────────

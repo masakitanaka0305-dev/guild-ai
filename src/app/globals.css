@@ -3,30 +3,85 @@
 @tailwind utilities;
 
 @layer base {
-  /* Water Guild — Hexagonal Robustness (デフォルト) */
+  /*  Logic White (#125) — DEFAULT
+   *
+   *  The page now opens on a white-base, professional-light surface.
+   *  All semantic CSS variables on `:root` carry the Logic White values;
+   *  the Midnight Logic palette is preserved verbatim under the
+   *  `[data-theme="midnight"]` selector for the hidden pro toggle.
+   *
+   *  Variable names are unchanged so consuming components keep working
+   *  through `var(--color-*)`; only the *values* differ between themes.
+   *
+   *    Color             Hex       Role
+   *    ────────────────  ────────  ─────────────────────────────────
+   *    Off-white         #F8FAFC   bg-base — page floor
+   *    Pure white        #FFFFFF   bg-surface — cards
+   *    Slate-100         #F1F5F9   bg-elevated — popovers
+   *    Slate-900         #0F172A   text-primary
+   *    Slate-600         #475569   text-muted
+   *    White             #FFFFFF   text-on-primary (button ink)
+   *    Royal Blue        #4F46E5   ai-action (primary CTA)
+   *    Violet-600        #7C3AED   ai-flow
+   *    Emerald-600       #059669   ai-success
+   *    Amber-600         #D97706   ai-warn
+   *    Red-600           #DC2626   ai-negative
+   *    Slate-200         #E2E8F0   border-subtle
+   *    Slate-300         #CBD5E1   border-strong                   */
   :root {
+    color-scheme: light;
+
+    --color-bg-base:        #F8FAFC;
+    --color-bg-surface:     #FFFFFF;
+    --color-bg-elevated:    #F1F5F9;
+    --color-text-primary:   #0F172A;
+    --color-text-muted:     #475569;
+    --color-text-on-primary:#FFFFFF;
+    --color-ai-action:      #4F46E5;
+    --color-ai-flow:        #7C3AED;
+    --color-ai-success:     #059669;
+    --color-ai-warn:        #D97706;
+    --color-ai-negative:    #DC2626;
+    --color-border-subtle:  #E2E8F0;
+    --color-border-strong:  #CBD5E1;
+
+    /* Rank colors tuned for the white background. The dark themes
+       still see the cooler Midnight palette via the override below. */
+    --rank-gold:   #D4A437;
+    --rank-silver: #94A3B8;
+    --rank-bronze: #B45309;
+    --rank-seed:   #94A3B8;
+
+    /* Legacy aliases — resolve through Logic White (the active theme).
+       Components that still reference --water-* / --n-* / --primary
+       inherit the new white palette automatically. */
+    --water-bg:           var(--color-bg-base);
+    --water-surface:      var(--color-bg-surface);
+    --water-surface-2:    var(--color-bg-elevated);
+    --water-accent:       var(--color-ai-action);
+    --water-accent-hover: #4338CA;
+    --water-text:         var(--color-text-primary);
+    --water-muted:        var(--color-text-muted);
+    --water-divider:      var(--color-border-subtle);
+
+    --primary: var(--color-ai-action);
+    --primary-hover: #4338CA;
+    --primary-soft: #E0E7FF;
+    --negative: var(--color-ai-negative);
+    --bg: var(--color-bg-base);
+    --surface: var(--water-surface);
+    --surface-2: var(--water-surface-2);
+    --divider: var(--water-divider);
+    --text: var(--water-text);
+    --muted: var(--water-muted);
+  }
+
+  /*  Midnight Logic — hidden pro toggle (`<html data-theme="midnight">`)
+   *  Same variable names, dark values. Mirrors the previous canonical
+   *  palette so power users on the night surface get the same vocabulary. */
+  [data-theme="midnight"] {
     color-scheme: dark;
 
-    /* ── Midnight Logic — semantic tokens (正本 / canonical) ──────
-       The "Midnight Logic" palette is the single source of truth for
-       background, text, action and status colors. All older tokens
-       (water-* / n-* / surface / primary) become aliases that resolve
-       through these. Pro-tier surfaces target WCAG AA on every pair.
-
-       Color           Hex       Role
-       ──────────────  ────────  ─────────────────────────────────
-       Deep Space Blue  #0F172A  bg-base — the cockpit floor
-       Cockpit Surface  #1E293B  bg-surface — panels and cards
-       Elevated Panel   #293548  bg-elevated — modals, popovers
-       Off-white        #F8FAFC  text-primary
-       Slate-400        #94A3B8  text-muted
-       Electric Cyan    #06B6D4  ai-action (primary CTA)
-       Electric Violet  #8B5CF6  ai-flow (generation / multi-dim)
-       Neon Mint        #10B981  ai-success (live / OK)
-       Amber 500        #F59E0B  ai-warn
-       Red 500          #E64545  ai-negative
-       Border subtle    rgba(248,250,252,0.10)
-       Border strong    rgba(248,250,252,0.18)                  */
     --color-bg-base:        #0F172A;
     --color-bg-surface:     #1E293B;
     --color-bg-elevated:    #293548;
@@ -41,41 +96,23 @@
     --color-border-subtle:  rgba(248,250,252,0.10);
     --color-border-strong:  rgba(248,250,252,0.18);
 
-    /* ── Water Guild tokens (legacy aliases — resolve through Midnight) */
-    --water-bg:           var(--color-bg-base);
-    --water-surface:      var(--color-bg-surface);
-    --water-surface-2:    var(--color-bg-elevated);
-    --water-accent:       var(--color-ai-action);
-    --water-accent-hover: #0891B2;
-    --water-text:         var(--color-text-primary);
-    --water-muted:        var(--color-text-muted);
-    --water-divider:      var(--color-border-subtle);
-
-    /* Legacy aliases retained for components that still reference them.
-       --primary keeps its cyan-500 tone to avoid disturbing pre-Water-Guild
-       components (FAB, sidebar). New Water Guild surfaces use
-       --water-accent (#22D3EE) directly. */
-    --primary: #06B6D4;
-    --primary-hover: #0891B2;
-    --primary-soft: #164E63;
-    --negative: #F87171;
-    --bg: #020617;
-    --surface: var(--water-surface);
-    --surface-2: var(--water-surface-2);
-    --divider: var(--water-divider);
-    --text: var(--water-text);
-    --muted: var(--water-muted);
+    --rank-gold:   #FDE047;
+    --rank-silver: #CBD5E1;
+    --rank-bronze: #D2A06B;
+    --rank-seed:   #94A3B8;
   }
 
-  [data-theme="water"] {
-    color-scheme: dark;
-    /* Mirror Midnight Logic tokens at the theme root so that any
-       descendant only needs to read `var(--color-bg-base)` etc. */
+  /* Legacy `data-theme="water"` is kept as an alias for Logic White
+     so any saved profile / SSR snapshot that still emits this attribute
+     resolves to the active palette. */
+  [data-theme="water"],
+  [data-theme="logic-white"] {
+    color-scheme: light;
     --water-bg:           var(--color-bg-base);
     --water-surface:      var(--color-bg-surface);
     --water-surface-2:    var(--color-bg-elevated);
     --water-accent:       var(--color-ai-action);
-    --water-accent-hover: #0891B2;
+    --water-accent-hover: #4338CA;
     --water-text:         var(--color-text-primary);
     --water-muted:        var(--color-text-muted);
     --water-divider:      var(--color-border-subtle);

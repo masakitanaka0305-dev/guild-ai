@@ -36,45 +36,47 @@ const config: Config = {
         "n-gold-soft": "#F2DFA0",
         "n-positive": "#0E9F4F",
         "n-negative": "#E64545",
-        // ─── Midnight Logic — Pro tier palette (#124, canonical) ────
-        // bg-base #0F172A / bg-surface #1E293B / bg-elevated #293548
-        // ai-action #06B6D4 / ai-flow #8B5CF6 / ai-success #10B981
+        // ─── Logic White (#125) is the default; Midnight Logic stays
+        //     as the dark pro toggle. Both palettes flow through the
+        //     same semantic CSS variables, so `bg-midnight-base` /
+        //     `text-text-primary` / `bg-ai-action` automatically swap
+        //     with the html `data-theme` attribute.
         midnight: {
-          base:    "#0F172A",
-          surface: "#1E293B",
-          panel:   "#1E293B",   // alias for "card panel"
-          elevated:"#293548",
+          base:    "var(--color-bg-base)",
+          surface: "var(--color-bg-surface)",
+          panel:   "var(--color-bg-surface)",
+          elevated:"var(--color-bg-elevated)",
         },
         ai: {
-          action:  "#06B6D4",   // Electric Cyan — primary CTA
-          flow:    "#8B5CF6",   // Electric Violet — generation / multi-dim
-          success: "#10B981",   // Neon Mint — live / OK
-          warn:    "#F59E0B",
-          negative:"#E64545",
+          action:  "var(--color-ai-action)",   // Royal Blue (white) / Cyan (midnight)
+          flow:    "var(--color-ai-flow)",
+          success: "var(--color-ai-success)",
+          warn:    "var(--color-ai-warn)",
+          negative:"var(--color-ai-negative)",
         },
         text: {
-          primary: "#F8FAFC",
-          muted:   "#94A3B8",
+          primary:      "var(--color-text-primary)",
+          muted:        "var(--color-text-muted)",
+          "on-primary": "var(--color-text-on-primary)",
         },
-        // ─── Water Guild legacy alias (now resolves to Midnight) ─────
-        // Existing components keep referencing `bg-water-bg` etc. — the
-        // hex below mirrors the canonical Midnight tokens above.
+        // Water Guild legacy alias — also routes through CSS variables
+        // so `bg-water-bg` etc. tracks the active theme.
         water: {
-          bg:             "#0F172A",
-          surface:        "#1E293B",
-          "surface-2":    "#293548",
-          accent:         "#06B6D4",
-          "accent-hover": "#0891B2",
-          text:           "#F8FAFC",
-          muted:          "#94A3B8",
-          divider:        "rgba(248,250,252,0.10)",
+          bg:             "var(--color-bg-base)",
+          surface:        "var(--color-bg-surface)",
+          "surface-2":    "var(--color-bg-elevated)",
+          accent:         "var(--color-ai-action)",
+          "accent-hover": "#4338CA",
+          text:           "var(--color-text-primary)",
+          muted:          "var(--color-text-muted)",
+          divider:        "var(--color-border-subtle)",
         },
         // ─── ギルドAI — role color tokens (#123) ────────────────────
         // The dashboard mixes these three so the surface communicates
         // "intelligence is cross-functional, not siloed".
-        roleDev:    "#06B6D4", // ai-action — was cyan-400 #22D3EE
-        roleDesign: "#8B5CF6", // ai-flow   — was violet-400 #A78BFA
-        rolePM:     "#FDE047", // amber/yellow-300 (太鼓判 gold tone)
+        roleDev:    "#4F46E5", // ai-action — Royal Blue
+        roleDesign: "#7C3AED", // ai-flow   — Violet
+        rolePM:     "#D4A437", // 金 (太鼓判 gold tone, Logic White-tuned)
       },
       boxShadow: {
         card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",

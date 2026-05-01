@@ -99,10 +99,10 @@ describe("grading: structure / density / consistency formula", () => {
   });
 
   it("color tokens, tier labels, and sub-labels are wired for all four ranks", () => {
-    // Friendly Tone (#123): 金/銀/銅/みならい with silver + bronze fills.
-    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FDE047"); // 金
-    expect(RANK_COLOR_TOKEN.A.fill).toBe("#CBD5E1"); // 銀 (silver)
-    expect(RANK_COLOR_TOKEN.B.fill).toBe("#D2A06B"); // 銅 (bronze)
+    // Logic White (#125): rank fills are tuned for a white background.
+    expect(RANK_COLOR_TOKEN.S.fill).toBe("#D4A437"); // 金 (Logic White)
+    expect(RANK_COLOR_TOKEN.A.fill).toBe("#94A3B8"); // 銀
+    expect(RANK_COLOR_TOKEN.B.fill).toBe("#B45309"); // 銅
     expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8"); // みならい
     expect(RANK_TIER).toEqual({ S: "金", A: "銀", B: "銅", D: "みならい" });
   });

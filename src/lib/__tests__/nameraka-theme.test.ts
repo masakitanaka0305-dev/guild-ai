@@ -9,12 +9,14 @@ const root = process.cwd();
 describe("nameraka-theme.tokens", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("globals.css defines Water theme --primary token (#06B6D4)", () => {
-    expect(css).toContain("--primary: #06B6D4");
+  it("globals.css aliases Water theme --primary through ai-action (Logic White)", () => {
+    // Logic White (#125): --primary redirects to semantic ai-action.
+    expect(css).toMatch(/--primary:\s*var\(--color-ai-action\)/);
   });
 
-  it("globals.css defines Water theme --bg token (#020617)", () => {
-    expect(css).toContain("--bg: #020617");
+  it("globals.css aliases --bg through bg-base (Logic White default)", () => {
+    // Logic White (#125): --bg now resolves to the semantic bg-base.
+    expect(css).toMatch(/--bg:\s*var\(--color-bg-base\)/);
   });
 
   it("globals.css does NOT define pro or kawaii themes (deleted)", () => {
@@ -158,8 +160,9 @@ describe("nameraka-theme.light-repaint", () => {
                + readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
   const nav = readFileSync(resolve(root, "src/components/SidebarNav.tsx"), "utf8");
 
-  it("water theme --bg is dark (#020617) replacing old nameraka light bg", () => {
-    expect(css).toContain("--bg: #020617");
+  it("Logic White theme aliases --bg through bg-base (Logic White default)", () => {
+    // Logic White (#125): --bg redirects to the semantic bg-base token.
+    expect(css).toMatch(/--bg:\s*var\(--color-bg-base\)/);
   });
 
   it("bottom nav has 2 core tabs (探す/稼ぐ) + center FAB (出す) with role=tablist", () => {

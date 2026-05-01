@@ -5,22 +5,22 @@ import { resolve } from "path";
 const root = process.cwd();
 
 describe("water-theme: color tokens", () => {
-  it("tailwind.config.ts defines the Midnight Logic action hue (#06B6D4)", () => {
+  it("tailwind.config.ts retains the primary namespace (legacy compat)", () => {
     const src = readFileSync(resolve(root, "tailwind.config.ts"), "utf8");
-    // Midnight Logic (#124) supersedes #22D3EE — Electric Cyan #06B6D4
-    // is now the canonical ai-action hue.
-    expect(src).toContain("#06B6D4");
     expect(src).toContain("primary");
+    // Logic White (#125): midnight / ai / text utilities resolve through
+    // CSS variables now so they swap with the html data-theme attribute.
+    expect(src).toMatch(/midnight:\s*\{[^}]*base:\s*"var\(--color-bg-base\)"/);
   });
 
-  it("globals.css resolves --water-* through Midnight Logic tokens", () => {
-    // Midnight Logic (#124): legacy --water-* tokens are aliases that
-    // resolve through --color-bg-base / --color-ai-action.
+  it("globals.css resolves --water-* through Logic White semantic tokens (default)", () => {
+    // Logic White (#125): :root carries the white palette; Midnight Logic
+    // hex literals only appear inside `[data-theme="midnight"]`.
     const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
     expect(src).toMatch(/--water-bg:\s*var\(--color-bg-base\)/);
     expect(src).toMatch(/--water-accent:\s*var\(--color-ai-action\)/);
-    expect(src).toMatch(/--color-bg-base:\s*#0F172A/i);
-    expect(src).toMatch(/--color-ai-action:\s*#06B6D4/i);
+    expect(src).toMatch(/--color-bg-base:\s*#F8FAFC/i);
+    expect(src).toMatch(/--color-ai-action:\s*#4F46E5/i);
   });
 });
 

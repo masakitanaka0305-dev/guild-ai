@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { getPageTitle, showBackButton } from "@/lib/nav-config";
+import { ThemeSwitch } from "@/components/ui/ThemeSwitch";
 
 export function MainHeader() {
   const pathname = usePathname();
@@ -39,8 +40,9 @@ export function MainHeader() {
         {title}
       </h1>
 
-      {/* Right: small + entry to /onboarding + notification bell */}
+      {/* Right: theme toggle + small + entry + notification bell */}
       <div className="flex items-center justify-end gap-1">
+        <ThemeSwitch />
         <Link
           href="/onboarding"
           aria-label="出す"

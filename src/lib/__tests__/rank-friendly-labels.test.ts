@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { RANK_COLOR_TOKEN, RANK_TIER, RANK_SUB_LABEL } from "@/lib/grading";
 
-describe("rank — friendly tone (#123): 金/銀/銅/みならい", () => {
-  it("S/A/B/D fills are gold #FDE047 / silver #CBD5E1 / bronze #D2A06B / slate #94A3B8", () => {
-    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FDE047");
-    expect(RANK_COLOR_TOKEN.A.fill).toBe("#CBD5E1");
-    expect(RANK_COLOR_TOKEN.B.fill).toBe("#D2A06B");
+describe("rank — friendly tone × Logic White (#125)", () => {
+  it("S/A/B/D fills are gold #D4A437 / silver #94A3B8 / bronze #B45309 / slate #94A3B8", () => {
+    expect(RANK_COLOR_TOKEN.S.fill).toBe("#D4A437");
+    expect(RANK_COLOR_TOKEN.A.fill).toBe("#94A3B8");
+    expect(RANK_COLOR_TOKEN.B.fill).toBe("#B45309");
     expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8");
   });
 
@@ -23,10 +23,10 @@ describe("rank — friendly tone (#123): 金/銀/銅/みならい", () => {
     expect(RANK_SUB_LABEL.D).toBe("みならい。育成枠の知恵");
   });
 
-  it("text utility classes match each rank's fill", () => {
-    expect(RANK_COLOR_TOKEN.S.text).toBe("text-[#FDE047]");
-    expect(RANK_COLOR_TOKEN.A.text).toBe("text-[#CBD5E1]");
-    expect(RANK_COLOR_TOKEN.B.text).toBe("text-[#D2A06B]");
+  it("text utility classes match each rank's Logic White fill", () => {
+    expect(RANK_COLOR_TOKEN.S.text).toBe("text-[#D4A437]");
+    expect(RANK_COLOR_TOKEN.A.text).toBe("text-[#94A3B8]");
+    expect(RANK_COLOR_TOKEN.B.text).toBe("text-[#B45309]");
     expect(RANK_COLOR_TOKEN.D.text).toBe("text-slate-400");
   });
 });

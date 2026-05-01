@@ -7,27 +7,21 @@ function read(rel: string) {
   return readFileSync(join(ROOT, rel), "utf-8");
 }
 
-describe("Midnight Logic — palette + semantic tokens (#124)", () => {
-  it("globals.css declares the canonical semantic variables", () => {
+describe("Midnight Logic — pro toggle palette (#124, dark)", () => {
+  it("globals.css keeps the Midnight Logic values under data-theme=midnight", () => {
     const css = read("src/app/globals.css");
-    // Backgrounds
-    expect(css).toMatch(/--color-bg-base:\s*#0F172A/i);
-    expect(css).toMatch(/--color-bg-surface:\s*#1E293B/i);
-    expect(css).toMatch(/--color-bg-elevated:\s*#293548/i);
-    // Text
-    expect(css).toMatch(/--color-text-primary:\s*#F8FAFC/i);
-    expect(css).toMatch(/--color-text-muted:\s*#94A3B8/i);
-    expect(css).toMatch(/--color-text-on-primary:\s*#0F172A/i);
-    // AI / Action / Status
-    expect(css).toMatch(/--color-ai-action:\s*#06B6D4/i);
-    expect(css).toMatch(/--color-ai-flow:\s*#8B5CF6/i);
-    expect(css).toMatch(/--color-ai-success:\s*#10B981/i);
-    // Borders
-    expect(css).toMatch(/--color-border-subtle:\s*rgba\(248,\s*250,\s*252,\s*0\.10\)/);
-    expect(css).toMatch(/--color-border-strong:\s*rgba\(248,\s*250,\s*252,\s*0\.18\)/);
+    const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
+    expect(block).toMatch(/--color-bg-base:\s*#0F172A/i);
+    expect(block).toMatch(/--color-bg-surface:\s*#1E293B/i);
+    expect(block).toMatch(/--color-bg-elevated:\s*#293548/i);
+    expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
+    expect(block).toMatch(/--color-text-muted:\s*#94A3B8/i);
+    expect(block).toMatch(/--color-ai-action:\s*#06B6D4/i);
+    expect(block).toMatch(/--color-ai-flow:\s*#8B5CF6/i);
+    expect(block).toMatch(/--color-ai-success:\s*#10B981/i);
   });
 
-  it("legacy --water-* / --n-* tokens are aliased through Midnight tokens", () => {
+  it("legacy --water-* / --n-* tokens stay aliased through the same CSS variables", () => {
     const css = read("src/app/globals.css");
     expect(css).toMatch(/--water-bg:\s*var\(--color-bg-base\)/);
     expect(css).toMatch(/--water-surface:\s*var\(--color-bg-surface\)/);
@@ -36,13 +30,13 @@ describe("Midnight Logic — palette + semantic tokens (#124)", () => {
     expect(css).toMatch(/--water-muted:\s*var\(--color-text-muted\)/);
   });
 
-  it("tailwind.config.ts exposes the midnight + ai + text namespaces", () => {
+  it("tailwind.config.ts midnight/ai/text namespaces resolve through CSS variables", () => {
     const tw = read("tailwind.config.ts");
-    expect(tw).toMatch(/midnight:\s*\{[^}]*base:\s*"#0F172A"/);
-    expect(tw).toMatch(/midnight:\s*\{[^}]*surface:\s*"#1E293B"/);
-    expect(tw).toMatch(/ai:\s*\{[^}]*action:\s*"#06B6D4"/);
-    expect(tw).toMatch(/ai:\s*\{[^}]*flow:\s*"#8B5CF6"/);
-    expect(tw).toMatch(/ai:\s*\{[^}]*success:\s*"#10B981"/);
-    expect(tw).toMatch(/text:\s*\{[^}]*primary:\s*"#F8FAFC"/);
+    // Logic White (#125): values flipped to var(--color-*) so the
+    // Tailwind utilities track the html data-theme attribute.
+    expect(tw).toMatch(/midnight:\s*\{[^}]*base:\s*"var\(--color-bg-base\)"/);
+    expect(tw).toMatch(/midnight:\s*\{[^}]*surface:\s*"var\(--color-bg-surface\)"/);
+    expect(tw).toMatch(/ai:\s*\{[^}]*action:\s*"var\(--color-ai-action\)"/);
+    expect(tw).toMatch(/text:\s*\{[^}]*primary:\s*"var\(--color-text-primary\)"/);
   });
 });

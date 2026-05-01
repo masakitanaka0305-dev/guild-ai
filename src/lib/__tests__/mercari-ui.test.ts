@@ -81,12 +81,14 @@ describe("catchphrase: metadata", () => {
 describe("mercari-ui: primary color token", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("--primary is #06B6D4", () => {
-    expect(src).toContain("--primary: #06B6D4");
+  it("--primary aliases through the semantic ai-action token (Logic White)", () => {
+    // Logic White (#125): legacy --primary now redirects to the
+    // semantic --color-ai-action variable so it tracks the theme.
+    expect(src).toMatch(/--primary:\s*var\(--color-ai-action\)/);
   });
 
-  it("--primary-hover is #0891B2", () => {
-    expect(src).toContain("--primary-hover: #0891B2");
+  it("--primary-hover stays as a literal Royal Blue darker tone", () => {
+    expect(src).toMatch(/--primary-hover:\s*#4338CA/);
   });
 });
 

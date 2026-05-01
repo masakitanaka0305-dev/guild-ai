@@ -225,19 +225,23 @@ describe("footer: enterprise CTA pinned in AppShell", () => {
 
 // ─── Theme: Deep Blue Primary ──────────────────────────────────────────────────
 
-describe("theme: primary color is deep blue #06B6D4", () => {
+describe("theme: primary token is wired through CSS variables (Logic White)", () => {
   const root = process.cwd();
 
-  it("tailwind.config.ts defines primary DEFAULT as #06B6D4", () => {
+  it("tailwind.config.ts retains the primary namespace + cyan hex (legacy compat)", () => {
     const src = readFileSync(join(root, "tailwind.config.ts"), "utf8");
+    // Legacy `primary` namespace keeps its cyan-500 hex for components
+    // that still reference `bg-primary`. Logic White routes the active
+    // CTA hue through `var(--color-ai-action)` separately.
     expect(src).toContain("#06B6D4");
     expect(src).toContain("primary");
   });
 
-  it("globals.css defines --primary: #06B6D4", () => {
+  it("globals.css aliases --primary through var(--color-ai-action)", () => {
     const src = readFileSync(join(root, "src/app/globals.css"), "utf8");
-    expect(src).toContain("--primary: #06B6D4");
-    expect(src).toContain("--primary: #06B6D4");
+    // Logic White (#125): --primary now redirects to the semantic
+    // ai-action token instead of carrying its own hex.
+    expect(src).toMatch(/--primary:\s*var\(--color-ai-action\)/);
   });
 
   it("main CTAs use primary blue — FAB and sidebar action have #06B6D4 or var(--primary", () => {
