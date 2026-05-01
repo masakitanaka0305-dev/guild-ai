@@ -173,7 +173,7 @@ export default function GuildPage() {
       <EarnDetailsModal open={earnOpen} onClose={() => setEarnOpen(false)} />
 
       {/* ── Mercari-style 売上金ヒーロー (#127 frosted glass + 1.5x) ──── */}
-      <section className="mb-5 sm:mb-6 bg-white/95 dark:bg-[#1E293B]/95 backdrop-blur-sm border-2 border-[#F59E0B]/40 rounded-2xl px-5 py-5 shadow-sm">
+      <section className="mb-5 sm:mb-6 bg-white/95 dark:bg-[#1A2238]/95 backdrop-blur-sm border-2 border-[#F59E0B]/40 rounded-2xl px-5 py-5 shadow-sm">
         <p className="text-[11px] font-bold text-[var(--color-text-muted)] mb-1 tracking-wider uppercase">
           稼ぐ — Asset Ledger
         </p>
@@ -197,7 +197,7 @@ export default function GuildPage() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="bg-[#1E293B] rounded-xl px-3 py-2 text-center"
+              className="bg-[#1A2238] rounded-xl px-3 py-2 text-center"
             >
               <p className="text-[9px] text-slate-400 mb-0.5 leading-tight">{stat.label}</p>
               <p

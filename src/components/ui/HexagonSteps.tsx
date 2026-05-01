@@ -7,7 +7,7 @@ import { Hexagon } from "@/components/ui/Hexagon";
  * Three states encoded as fill / stroke / center label:
  *
  *   complete: fill #4C1D95, stroke #4C1D95, center "✓" on #0B1121 ink
- *   active:   fill #1E293B, stroke #4C1D95, center step number in #4C1D95
+ *   active:   fill #1A2238, stroke #4C1D95, center step number in #4C1D95
  *   pending:  fill #162035, stroke #94A3B8, center number in #94A3B8
  */
 export interface HexagonStepsProps {
@@ -39,7 +39,7 @@ export function HexagonSteps({
 
         const fill =
           state === "complete" ? "#4C1D95"
-          : state === "active"   ? "#1E293B"
+          : state === "active"   ? "#1A2238"
           : "#162035";
         const stroke =
           state === "complete" ? "#4C1D95"

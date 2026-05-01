@@ -118,7 +118,7 @@ export default function BusinessCheckoutPage() {
             key={p.id}
             className={`flex flex-col rounded-xl border-2 p-3 cursor-pointer transition-all ${
               plan === p.id
-                ? "border-ai-action bg-[#1E293B]"
+                ? "border-ai-action bg-[#1A2238]"
                 : "border-white/10 bg-midnight-surface hover:border-ai-action/40"
             }`}
           >

@@ -74,7 +74,7 @@ export default function ProjectsPage() {
             <li
               key={row.id}
               data-testid="project-card-mobile"
-              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1E293B] p-3 flex flex-col gap-2 min-w-[160px] shadow-sm"
+              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1A2238] p-3 flex flex-col gap-2 min-w-[160px] shadow-sm"
             >
               <p className="font-semibold text-[var(--color-text-primary)] text-sm leading-snug line-clamp-2 min-h-[2.6em]">
                 {row.title}

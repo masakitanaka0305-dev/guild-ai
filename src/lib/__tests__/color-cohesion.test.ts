@@ -87,6 +87,21 @@ describe("Visual Hierarchy (#133) — color cohesion across UI", () => {
     const css = read("src/app/globals.css");
     expect(css.match(/--color-status-negative:\s*var\(--color-ai-negative\)/g)?.length).toBeGreaterThanOrEqual(2);
   });
+
+  it("legacy --n-gold / --n-positive aliases route to brand secondary + status-success (#134)", () => {
+    // Pre-#134 these aliased through `--water-accent` (= brand purple),
+    // which made every "gold border" / "positive pulse" render purple.
+    // The bug was invisible to the audit because `--water-accent` is a
+    // valid token — only the runtime resolution was wrong.
+    const css = read("src/app/globals.css");
+    expect(css).toMatch(/--n-gold:\s*var\(--color-action-secondary\)/);
+    expect(css).toMatch(/--n-gold-soft:\s*var\(--color-action-secondary-soft\)/);
+    expect(css).toMatch(/--n-positive:\s*var\(--color-status-success\)/);
+    expect(css).toMatch(/--n-negative:\s*var\(--color-status-negative\)/);
+    // Make sure they're explicitly NOT routed through --water-accent any more.
+    expect(css).not.toMatch(/--n-gold:\s*var\(--water-accent\)/);
+    expect(css).not.toMatch(/--n-positive:\s*var\(--water-accent\)/);
+  });
 });
 
 describe("Visual Hierarchy (#133) — surface chain tests", () => {

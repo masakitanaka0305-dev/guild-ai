@@ -16,8 +16,8 @@ describe("HexagonSteps — onboarding progress strip", () => {
     expect(src).toMatch(/state\s*===\s*"complete"\s*\?\s*"#0B1121"/);
     expect(src).toMatch(/"complete"\s*\?\s*"✓"/);
 
-    // active → surface-2 fill + cyan stroke + cyan number
-    expect(src).toMatch(/"active"\s+\?\s*"#1E293B"/);
+    // active → L2 elevated fill (#134) + brand stroke + brand number
+    expect(src).toMatch(/"active"\s+\?\s*"#1A2238"/);
     // pending fall-through fill is the deep surface, stroke is muted
     expect(src).toContain('"#162035"');
     expect(src).toContain("#94A3B8");

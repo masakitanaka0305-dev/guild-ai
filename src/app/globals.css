@@ -174,12 +174,16 @@
     --n-divider:          var(--water-divider);
     --n-text:             var(--water-text);
     --n-muted:            var(--water-muted);
-    --n-primary:          var(--water-accent);
-    --n-primary-hover:    var(--water-accent-hover);
-    --n-gold:             var(--water-accent);
-    --n-gold-soft:        rgba(34,211,238,0.18);
-    --n-positive:         var(--water-accent);
-    --n-negative:         #F87171;
+    --n-primary:          var(--color-action-primary);
+    --n-primary-hover:    var(--color-action-primary-hover);
+    /* #134 — n-gold / n-positive used to alias through `--water-accent`,
+       which resolves to the brand purple. That made every legacy
+       "gold border" / "positive pulse" render in purple. Re-route them
+       to the actual brand secondary + status-success tokens. */
+    --n-gold:             var(--color-action-secondary);
+    --n-gold-soft:        var(--color-action-secondary-soft);
+    --n-positive:         var(--color-status-success);
+    --n-negative:         var(--color-status-negative);
     --radius-md: 14px;
     --radius-sm: 8px;
     --radius-lg: 22px;
@@ -389,7 +393,7 @@
 
   /* ── Water Guild — tech tag chip (#1E293B surface / #F1F5F9 ink) ── */
   .chip-tech {
-    @apply inline-flex items-center bg-[#1E293B] text-[#F1F5F9] rounded-full px-3 py-1 text-xs font-medium;
+    @apply inline-flex items-center bg-[#1A2238] text-[#F1F5F9] rounded-full px-3 py-1 text-xs font-medium;
     border: 1px solid rgba(34,211,238,0.18);
   }
 }

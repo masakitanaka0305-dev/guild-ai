@@ -233,7 +233,7 @@ export function AssetPortfolio() {
         <table className="w-full text-sm bg-midnight-surface">
           <caption className="sr-only">運用中の資産一覧</caption>
           <thead>
-            <tr className="border-b border-white/10 bg-[#1E293B]">
+            <tr className="border-b border-white/10 bg-[#1A2238]">
               {["タイトル", "ステータス", "実行状態", "公開エンドポイント", "今月の報酬", "累計コール数", "最終呼び出し", ""].map((h) => (
                 <th
                   key={h}

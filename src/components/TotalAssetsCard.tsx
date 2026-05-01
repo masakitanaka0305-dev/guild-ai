@@ -144,19 +144,19 @@ export function TotalAssetsCard() {
 
       {/* Sub metrics — responsive: stacked on mobile, 3-col on sm+ */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+        <div className="bg-[#1A2238] rounded-2xl px-4 py-3">
           <p className="text-[10px] text-slate-400 mb-1">累計報酬</p>
           <p className="metric-prime" style={{ fontSize: "1.25rem" }}>
             ¥{portfolio.lifetimeEarningsJpy.toLocaleString("ja-JP")}
           </p>
         </div>
-        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+        <div className="bg-[#1A2238] rounded-2xl px-4 py-3">
           <p className="text-[10px] text-slate-400 mb-1">運用資産の評価額</p>
           <p className="metric-prime" style={{ fontSize: "1.25rem" }}>
             ¥{portfolio.runningAssetValueJpy.toLocaleString("ja-JP")}
           </p>
         </div>
-        <div className="bg-[#1E293B] rounded-2xl px-4 py-3">
+        <div className="bg-[#1A2238] rounded-2xl px-4 py-3">
           <p className="text-[10px] text-slate-400 mb-1">今月の伸び</p>
           <p
             className={`text-xl font-semibold tabular-nums tracking-tight ${

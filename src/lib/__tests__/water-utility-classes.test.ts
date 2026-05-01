@@ -17,8 +17,8 @@ describe("Brand Palette — utility classes (#127)", () => {
     expect(css).toMatch(/\.metric-hero-yen\s*\{[\s\S]*?font-size:\s*1\.4em/);
   });
 
-  it("chip-tech uses bg #1E293B and text #F1F5F9 with rounded-full pill geometry", () => {
-    expect(css).toMatch(/\.chip-tech\s*\{[\s\S]*?#1E293B[\s\S]*?\}/);
+  it("chip-tech uses bg L2 elevated #1A2238 (#134) + text #F1F5F9 with rounded-full pill", () => {
+    expect(css).toMatch(/\.chip-tech\s*\{[\s\S]*?#1A2238[\s\S]*?\}/);
     expect(css).toMatch(/\.chip-tech\s*\{[\s\S]*?#F1F5F9[\s\S]*?\}/);
     expect(css).toMatch(/\.chip-tech\s*\{[\s\S]*?rounded-full[\s\S]*?\}/);
   });
