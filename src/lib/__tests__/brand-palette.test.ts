@@ -8,22 +8,23 @@ function read(rel: string) {
   return readFileSync(join(ROOT, rel), "utf-8");
 }
 
-describe("Final Polish (#127) — Brand Palette tokens", () => {
-  it("globals.css :root carries Mercari Purple #6366F1 + お礼 Gold #FBBF24", () => {
+describe("Cinematic Mint (#128) — Brand Palette tokens", () => {
+  it("globals.css :root carries Deep Purple #4C1D95 + Electric Gold #F59E0B", () => {
     const css = read("src/app/globals.css");
-    expect(css).toMatch(/--color-action-primary:\s*#6366F1/i);
-    expect(css).toMatch(/--color-action-secondary:\s*#FBBF24/i);
-    expect(css).toMatch(/--color-action-primary-hover:\s*#4F46E5/i);
-    expect(css).toMatch(/--color-action-primary-soft:\s*#E0E7FF/i);
+    expect(css).toMatch(/--color-action-primary:\s*#4C1D95/i);
+    expect(css).toMatch(/--color-action-secondary:\s*#F59E0B/i);
+    expect(css).toMatch(/--color-action-primary-hover:\s*#6D28D9/i);
+    expect(css).toMatch(/--color-action-primary-soft:\s*#1E0F47/i);
     expect(css).toMatch(/--color-action-secondary-soft:\s*#FEF3C7/i);
   });
 
-  it("Midnight theme keeps the same purple/gold and links via #A5B4FC (no cyan)", () => {
+  it("Midnight theme dives to abyss-black (#020617) with violet-300 link", () => {
     const css = read("src/app/globals.css");
     const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
-    expect(block).toMatch(/--color-action-primary:\s*#6366F1/i);
-    expect(block).toMatch(/--color-action-secondary:\s*#FBBF24/i);
-    expect(block).toMatch(/--color-link:\s*#A5B4FC/i);
+    expect(block).toMatch(/--color-bg-base:\s*#020617/i);
+    expect(block).toMatch(/--color-action-primary:\s*#4C1D95/i);
+    expect(block).toMatch(/--color-action-secondary:\s*#F59E0B/i);
+    expect(block).toMatch(/--color-link:\s*#C4B5FD/i);
   });
 
   it("tailwind.config.ts exposes brand.primary / brand.secondary / brand.cyan-helper", () => {

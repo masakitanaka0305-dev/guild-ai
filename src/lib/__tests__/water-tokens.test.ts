@@ -17,7 +17,7 @@ describe("Water Guild — design tokens", () => {
     // Final Polish (#127): ai-action resolves through the brand token
     // so it's locked to Mercari Purple regardless of theme.
     expect(css).toMatch(/--color-ai-action\s*:\s*var\(--color-action-primary\)/i);
-    expect(css).toMatch(/--color-action-primary\s*:\s*#6366F1/i);
+    expect(css).toMatch(/--color-action-primary\s*:\s*#4C1D95/i);
     expect(css).toMatch(/--color-bg-surface\s*:\s*#FFFFFF/i);
   });
 

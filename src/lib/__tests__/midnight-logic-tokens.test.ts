@@ -8,20 +8,20 @@ function read(rel: string) {
 }
 
 describe("Midnight Logic — pro toggle palette (#124, dark)", () => {
-  it("globals.css keeps the Midnight Logic values under data-theme=midnight (#127 tuned)", () => {
+  it("globals.css keeps the Midnight Logic values under data-theme=midnight (#128 cinematic)", () => {
     const css = read("src/app/globals.css");
     const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
-    // Final Polish (#127): bg returns to slate-900, action becomes Mercari
-    // Purple via the brand token alias, link adopts indigo-300 so cyan
-    // is dropped from the dark surface.
-    expect(block).toMatch(/--color-bg-base:\s*#0F172A/i);
-    expect(block).toMatch(/--color-bg-surface:\s*#1C2126/i);
-    expect(block).toMatch(/--color-bg-elevated:\s*#252A30/i);
-    expect(block).toMatch(/--color-text-primary:\s*#F1F5F9/i);
+    // Cinematic Mint (#128): bg dives to abyss-black, action becomes
+    // Deep Purple, link adopts violet-300 so cyan stays out of the
+    // dark surface.
+    expect(block).toMatch(/--color-bg-base:\s*#020617/i);
+    expect(block).toMatch(/--color-bg-surface:\s*#0E1422/i);
+    expect(block).toMatch(/--color-bg-elevated:\s*#1A2236/i);
+    expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
     expect(block).toMatch(/--color-text-soft:\s*#E0E0E0/i);
     expect(block).toMatch(/--color-text-muted:\s*#94A3B8/i);
-    expect(block).toMatch(/--color-link:\s*#A5B4FC/i);
-    expect(block).toMatch(/--color-action-primary:\s*#6366F1/i);
+    expect(block).toMatch(/--color-link:\s*#C4B5FD/i);
+    expect(block).toMatch(/--color-action-primary:\s*#4C1D95/i);
     expect(block).toMatch(/--color-ai-action:\s*var\(--color-action-primary\)/i);
     expect(block).toMatch(/--color-ai-flow:\s*#8B5CF6/i);
     expect(block).toMatch(/--color-ai-success:\s*#10B981/i);

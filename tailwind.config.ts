@@ -93,6 +93,10 @@ const config: Config = {
         card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",
         "card-hover": "0px 4px 12px rgba(0,0,0,0.10)",
         "water-glow": "0 0 0 1px rgba(34,211,238,0.35), 0 8px 24px -12px rgba(34,211,238,0.45)",
+        // Cinematic Mint (#128) — deep purple halo for the reveal card
+        // and any emphasis surface that floats over the abyss base.
+        "brand-glow": "0 0 24px rgba(76,29,149,0.45)",
+        "brand-glow-gold": "0 0 32px rgba(245,158,11,0.45)",
       },
       fontFamily: {
         sans: ["var(--font-noto-jp)", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],
@@ -125,10 +129,54 @@ const config: Config = {
           "60%":  { opacity: "0.35", transform: "scale(1.04)" },
           "100%": { opacity: "0",   transform: "scale(1.05)" },
         },
+        // ─── Cinematic Mint (#128) — 4-phase reveal keyframes ─────────
+        // matrix-drift  → Phase 1 each token fades in/out as it falls
+        // crystal-spin  → Phase 2 the central crystal slowly rotates
+        // particle-orbit → Phase 2 small purple stars orbit the crystal
+        // curtain-fade  → Phase 3 the entire screen settles to abyss
+        // gold-glow     → Phase 4 the reveal radial-glows from black
+        // hero-rise     → Phase 4 the rank card lifts into view
+        "matrix-drift": {
+          "0%":   { opacity: "0", transform: "translateY(-12px)" },
+          "30%":  { opacity: "0.55" },
+          "70%":  { opacity: "0.55" },
+          "100%": { opacity: "0", transform: "translateY(12px)" },
+        },
+        "crystal-spin": {
+          "0%":   { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "particle-orbit": {
+          "0%":   { opacity: "0",  transform: "rotate(0deg) translateX(64px) rotate(0deg)" },
+          "20%":  { opacity: "0.7" },
+          "80%":  { opacity: "0.7" },
+          "100%": { opacity: "0",  transform: "rotate(360deg) translateX(64px) rotate(-360deg)" },
+        },
+        "curtain-fade": {
+          "0%":   { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "gold-glow": {
+          "0%":   { opacity: "0",   transform: "scale(0.6)" },
+          "60%":  { opacity: "0.7" },
+          "100%": { opacity: "0.45",transform: "scale(1.2)" },
+        },
+        "hero-rise": {
+          "0%":   { opacity: "0", transform: "translateY(24px) scale(0.9)" },
+          "60%":  { opacity: "1", transform: "translateY(-2px) scale(1.02)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 320ms ease-out both",
         "purple-ripple": "purple-ripple 220ms ease-out forwards",
+        // Cinematic Mint — phase animations
+        "matrix-drift": "matrix-drift 900ms ease-in-out forwards",
+        "crystal-spin": "crystal-spin 8s linear infinite",
+        "particle-orbit": "particle-orbit 1400ms ease-in-out forwards",
+        "curtain-fade": "curtain-fade 800ms ease-in-out forwards",
+        "gold-glow": "gold-glow 1000ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "hero-rise": "hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
     }
   },

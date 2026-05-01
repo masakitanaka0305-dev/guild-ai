@@ -31,20 +31,21 @@
   :root {
     color-scheme: light;
 
-    /* ── Brand Palette (#127 — Mercari Purple final polish) ──────────
-       Single source of truth for primary action colors across both
-       Logic White (light) and Midnight Logic (dark). UI is locked to
-       three colors:
-         Primary  — Mercari Purple  #6366F1   (action / progress / icons)
-         Secondary— お礼 Gold        #FBBF24   (お礼 amount, S rank, alerts)
-         Helper   — Cyan             #0EA5E9   (warn/helper ONLY, never CTA)
-       Older tokens (--color-ai-action / --primary / --water-accent) are
-       kept as aliases so unmodified components inherit the new purple
-       automatically. */
-    --color-action-primary:        #6366F1;
-    --color-action-primary-hover:  #4F46E5;
-    --color-action-primary-soft:   #E0E7FF;
-    --color-action-secondary:      #FBBF24;
+    /* ── Brand Palette (#128 — Cinematic Mint, abyss palette) ────────
+       Mercari Purple (#127) elides into a deeper, more cinematic
+       palette for the Cinematic Mint reveal. The 3-color UI lock now
+       reads:
+         Primary   — Deep Purple        #4C1D95   (action / progress / icons)
+         Secondary — Electric Gold      #F59E0B   (お礼 amount, S rank, reveal)
+         Helper    — Cyan (warn only)   #0EA5E9
+       The Logic White light surface keeps `#F8FAFC` / `#FFFFFF` as the
+       page floor; only the Midnight (cinematic) data-theme dives all
+       the way to abyss-black `#020617`. The old #127 hexes survive as
+       hover / soft tones so existing components aren't disturbed. */
+    --color-action-primary:        #4C1D95;
+    --color-action-primary-hover:  #6D28D9;
+    --color-action-primary-soft:   #1E0F47;
+    --color-action-secondary:      #F59E0B;
     --color-action-secondary-soft: #FEF3C7;
     --color-cyan-helper:           #0EA5E9;
 
@@ -55,7 +56,7 @@
     --color-text-soft:      #424242;   /* secondary headings */
     --color-text-muted:     #475569;
     --color-text-on-primary:#FFFFFF;
-    --color-link:           #4F46E5;
+    --color-link:           #6D28D9;
     --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #7C3AED;
     --color-ai-success:     #059669;
@@ -66,9 +67,10 @@
     --color-border-subtle:  #E2E8F0;
     --color-border-strong:  #CBD5E1;
 
-    /* Rank colors — final palette aligned to the brand gold so the
-       S medal and "お礼" amount share one yellow hue. */
-    --rank-gold:   #FBBF24;
+    /* Rank colors — Cinematic Mint (#128) ties the S medal to the
+       Electric Gold brand secondary so the reveal radiates the same
+       hue as お礼 amounts. */
+    --rank-gold:   #F59E0B;
     --rank-silver: #94A3B8;
     --rank-bronze: #B45309;
     --rank-seed:   #94A3B8;
@@ -105,23 +107,25 @@
   [data-theme="midnight"] {
     color-scheme: dark;
 
-    /* Brand Palette — same purple/gold primaries, with link/text-on
-       tones tuned for the dark surface. */
-    --color-action-primary:        #6366F1;
-    --color-action-primary-hover:  #818CF8;   /* lift on dark */
-    --color-action-primary-soft:   rgba(99,102,241,0.18);
-    --color-action-secondary:      #FBBF24;
-    --color-action-secondary-soft: rgba(251,191,36,0.18);
+    /* Brand Palette — Cinematic Mint (#128). Abyss base lifts the
+       gold and purple off pure-black for max cinematic contrast.
+       Link color shifts to violet-300 (#C4B5FD) so it reads as part
+       of the same purple family. */
+    --color-action-primary:        #4C1D95;
+    --color-action-primary-hover:  #6D28D9;
+    --color-action-primary-soft:   #1E0F47;
+    --color-action-secondary:      #F59E0B;
+    --color-action-secondary-soft: rgba(245,158,11,0.18);
     --color-cyan-helper:           #38BDF8;   /* sky-400 — warn/helper only */
 
-    --color-bg-base:        #0F172A;   /* deep slate-900 base */
-    --color-bg-surface:     #1C2126;
-    --color-bg-elevated:    #252A30;
-    --color-text-primary:   #F1F5F9;   /* slate-100 */
+    --color-bg-base:        #020617;   /* abyss black */
+    --color-bg-surface:     #0E1422;
+    --color-bg-elevated:    #1A2236;
+    --color-text-primary:   #F8FAFC;
     --color-text-soft:      #E0E0E0;
     --color-text-muted:     #94A3B8;
     --color-text-on-primary:#FFFFFF;
-    --color-link:           #A5B4FC;   /* indigo-300 reads on dark, no cyan */
+    --color-link:           #C4B5FD;   /* violet-300 reads on abyss, no cyan */
     --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #8B5CF6;
     --color-ai-success:     #10B981;
@@ -132,7 +136,7 @@
     --color-border-subtle:  rgba(248,250,252,0.08);
     --color-border-strong:  rgba(248,250,252,0.18);
 
-    --rank-gold:   #FBBF24;   /* unified with brand gold */
+    --rank-gold:   #F59E0B;   /* electric gold — S medal */
     --rank-silver: #CBD5E1;
     --rank-bronze: #D2A06B;
     --rank-seed:   #94A3B8;

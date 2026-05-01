@@ -7,18 +7,17 @@ const css = readFileSync(join(ROOT, "src/app/globals.css"), "utf-8");
 const block =
   css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
 
-describe("Final Polish (#127) — Midnight tuning (post Mercari Lightness)", () => {
-  it("backgrounds settle back to slate-900 base + lifted surfaces", () => {
-    // #127 returns to the canonical slate-900 base; surfaces stay lifted.
-    expect(block).toContain("#0F172A"); // bg-base
-    expect(block).toContain("#1C2126"); // bg-surface
-    expect(block).toContain("#252A30"); // bg-elevated
+describe("Cinematic Mint (#128) — Midnight tuning (abyss palette)", () => {
+  it("backgrounds dive to abyss black + lifted surfaces", () => {
+    expect(block).toContain("#020617"); // bg-base — abyss black
+    expect(block).toContain("#0E1422"); // bg-surface
+    expect(block).toContain("#1A2236"); // bg-elevated
   });
 
-  it("action / warn colors are the Mercari Purple brand + lemon warn", () => {
-    expect(block).toContain("#6366F1"); // brand-primary (action)
+  it("action / warn colors are Deep Purple brand + lemon warn", () => {
+    expect(block).toContain("#4C1D95"); // brand-primary (action)
     expect(block).toContain("#FFF176"); // ai-warn: lemon yellow
-    expect(block).toContain("#A5B4FC"); // dark link (replaces cyan)
+    expect(block).toContain("#C4B5FD"); // dark link (violet-300)
   });
 
   it("text-soft secondary token is added (#E0E0E0)", () => {
