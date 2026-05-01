@@ -12,10 +12,16 @@ describe("/projects — Mercari mobile grid (#126)", () => {
     expect(src).toContain('data-testid="project-card-mobile"');
   });
 
-  it("each card surfaces 想定お礼 in deep gold tabular-nums", () => {
+  it("each card surfaces 想定お礼 in brand gold (#FBBF24 dark / #A16207 light) tabular-nums with 1.4× ¥", () => {
     expect(src).toContain('data-testid="project-card-reward"');
-    expect(src).toMatch(/text-\[#B45309\]/);
+    // Final Polish (#127): light-on-white falls back to amber-700
+    // (#A16207) and dark uses the brand gold (#FBBF24).
+    expect(src).toMatch(/text-\[#A16207\]/);
+    expect(src).toMatch(/text-\[#FBBF24\]/);
     expect(src).toContain("想定お礼");
+    // ¥ is rendered 1.4em larger than the digits.
+    expect(src).toMatch(/text-\[1\.4em\]/);
+    expect(src).toContain('data-testid="project-card-yen-mark"');
   });
 
   it("desktop table view persists behind md:block", () => {

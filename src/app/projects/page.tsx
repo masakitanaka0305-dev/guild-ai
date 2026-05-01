@@ -74,7 +74,7 @@ export default function ProjectsPage() {
             <li
               key={row.id}
               data-testid="project-card-mobile"
-              className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-3 flex flex-col gap-2 min-w-[160px]"
+              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1E293B] p-3 flex flex-col gap-2 min-w-[160px] shadow-sm"
             >
               <p className="font-semibold text-[var(--color-text-primary)] text-sm leading-snug line-clamp-2 min-h-[2.6em]">
                 {row.title}
@@ -84,25 +84,29 @@ export default function ProjectsPage() {
               </p>
               <p
                 data-testid="project-card-reward"
-                className="text-base font-bold tabular-nums text-[#B45309]"
+                className="font-bold tracking-tight tabular-nums text-[#A16207] dark:text-[#FBBF24] flex items-baseline gap-1 leading-none"
               >
-                想定お礼 ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
+                <span className="text-[10px] font-bold text-[var(--color-text-muted)] mr-0.5 self-center">
+                  想定お礼
+                </span>
+                <span data-testid="project-card-yen-mark" className="text-[1.4em] font-extrabold leading-none">¥</span>
+                <span className="text-base">{row.grossRewardJpy.toLocaleString("ja-JP")}</span>
               </p>
-              <div className="flex items-center justify-between text-[10px] tabular-nums">
+              <div className="flex items-center justify-between text-[11px] tabular-nums">
                 <span
                   data-testid="project-card-deadline"
-                  className="text-[var(--color-text-muted)]"
+                  className="font-medium text-[var(--color-text-primary)] dark:text-[#F1F5F9]"
                 >
                   {relativeDeadline(row.deadline)}
                 </span>
-                <span className="font-semibold text-[var(--color-ai-action)]">
+                <span className="font-semibold text-brand-primary">
                   マッチ {row.matchScore}%
                 </span>
               </div>
               <Link
                 href={`/projects/${row.id}`}
                 aria-label="この困りごとを助ける"
-                className={`mt-1 inline-flex items-center justify-center min-h-[40px] rounded-full bg-[var(--color-ai-action)] text-[var(--color-text-on-primary)] text-xs font-bold focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)] ${TAP_CLASS}`}
+                className={`mt-1 inline-flex items-center justify-center min-h-[40px] rounded-full bg-brand-primary text-white text-xs font-semibold hover:bg-brand-primary-hover focus:outline focus:outline-2 focus:outline-brand-primary ${TAP_CLASS}`}
               >
                 {isRecommended ? "🌟 この困りごとを助ける" : "この困りごとを助ける"}
               </Link>
@@ -130,31 +134,34 @@ export default function ProjectsPage() {
               return (
                 <tr
                   key={row.id}
-                  className={`border-b border-[var(--color-border-subtle)] hover:bg-[var(--color-bg-elevated)] ${isRecommended ? "border-l-4 border-l-ai-action" : "border-l-4 border-l-transparent"}`}
+                  className={`border-b border-[var(--color-border-subtle)] hover:bg-[var(--color-bg-elevated)] ${isRecommended ? "border-l-4 border-l-brand-primary" : "border-l-4 border-l-transparent"}`}
                 >
                   <td className="py-3 pr-4">
                     <p className="font-medium text-[var(--color-text-primary)]">{row.title}</p>
                     {isRecommended && (
-                      <span className="text-[10px] text-ai-action font-bold uppercase">おすすめ</span>
+                      <span className="text-[10px] text-brand-primary font-bold uppercase">おすすめ</span>
                     )}
                   </td>
                   <td className="py-3 pr-4 text-[var(--color-text-muted)] text-xs">{friendlyIndustry(row.industry)}</td>
                   <td className="py-3 pr-4">
-                    <span className="font-semibold tabular-nums text-ai-action">
+                    <span className="font-semibold tabular-nums text-brand-primary">
                       {row.matchScore}%
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-[var(--color-text-primary)] tabular-nums">
-                    ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
+                  <td className="py-3 pr-4 tabular-nums">
+                    <span className="font-bold text-[#A16207] dark:text-[#FBBF24] inline-flex items-baseline gap-0.5">
+                      <span className="text-[1.4em] font-extrabold">¥</span>
+                      <span>{row.grossRewardJpy.toLocaleString("ja-JP")}</span>
+                    </span>
                   </td>
-                  <td className="py-3 pr-4 text-[var(--color-text-muted)] text-xs tabular-nums">
+                  <td className="py-3 pr-4 text-[var(--color-text-primary)] text-xs tabular-nums font-medium">
                     {relativeDeadline(row.deadline)}
                   </td>
                   <td className="py-3">
                     <Link
                       href={`/projects/${row.id}`}
                       aria-label="この困りごとを助ける"
-                      className={`px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)] ${TAP_CLASS}`}
+                      className={`px-4 py-1.5 bg-brand-primary text-white text-xs font-semibold rounded-full min-h-[44px] inline-flex items-center hover:bg-brand-primary-hover outline-none focus:outline focus:outline-2 focus:outline-brand-primary ${TAP_CLASS}`}
                     >
                       この困りごとを助ける
                     </Link>

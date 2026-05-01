@@ -41,7 +41,7 @@ function MatchScore({ score, matchedReqs, totalReqs }: {
       data-testid="matching-score"
       className="flex flex-col items-center gap-1"
     >
-      <span className="text-cyan-400 metric-prime">{score}%</span>
+      <span className="text-brand-primary metric-prime">{score}%</span>
       <p className="text-slate-400 text-xs">マッチ {matchedReqs} / {totalReqs} 件</p>
     </div>
   );
@@ -59,23 +59,23 @@ function ProjectTimeline({ currentStep }: { currentStep: number }) {
           <li key={label} className="flex-1 flex flex-col items-center gap-1">
             <div className="flex items-center w-full">
               {i > 0 && (
-                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--primary,#06B6D4)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done || active ? "bg-[var(--primary,#6366F1)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
               <div
                 aria-current={active ? "step" : undefined}
                 className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[9px] font-black transition-colors ${
-                  done ? "bg-[var(--primary,#06B6D4)] text-white"
-                  : active ? "bg-[var(--primary,#06B6D4)] text-white ring-2 ring-[var(--primary,#06B6D4)] ring-offset-1"
+                  done ? "bg-[var(--primary,#6366F1)] text-white"
+                  : active ? "bg-[var(--primary,#6366F1)] text-white ring-2 ring-[var(--primary,#6366F1)] ring-offset-1"
                   : "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]"
                 }`}
               >
                 {done ? "✓" : i + 1}
               </div>
               {i < TIMELINE_STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--primary,#06B6D4)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
+                <div className={`flex-1 h-0.5 ${done ? "bg-[var(--primary,#6366F1)]" : "bg-[var(--n-divider,rgba(0,0,0,0.12))]"}`} />
               )}
             </div>
-            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-muted,#6B6456)]"}`}>
+            <span className={`text-[9px] font-bold text-center leading-tight mt-0.5 ${active ? "text-[var(--primary,#6366F1)]" : "text-[var(--n-muted,#6B6456)]"}`}>
               {label}
             </span>
           </li>
@@ -176,7 +176,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   {matched ? (
                     <Check
                       aria-hidden
-                      className="flex-shrink-0 w-4 h-4 stroke-cyan-400"
+                      className="flex-shrink-0 w-4 h-4 stroke-brand-primary"
                     />
                   ) : (
                     <AlertCircle
@@ -187,7 +187,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                   <span className={matched ? "text-white" : "text-slate-400"}>
                     {req.label}
                     {matched && ownedRank && (
-                      <span className="ml-1 font-bold text-cyan-400">[{ownedRank}]</span>
+                      <span className="ml-1 font-bold text-brand-primary">[{ownedRank}]</span>
                     )}
                     {!matched && (
                       <span
