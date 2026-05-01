@@ -21,6 +21,7 @@ import { getRecentSettlements, seedDemoSettlements } from "@/lib/global-settleme
 import { useUserId } from "@/components/AuthProvider";
 import { WaveLine } from "@/components/ui/WaveLine";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { CoinCounter } from "@/components/ui/CoinCounter";
 import type { Weapon, PassbookTransaction } from "@/types";
 
 // ─── Pulse indicator ──────────────────────────────────────────────────────────
@@ -122,20 +123,23 @@ export default function GuildPage() {
 
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12 relative">
-      {/* ── マイページ — もちもの の見出し ─────────────────────────── */}
+      {/* ── あなたの知恵袋銀行 の見出し ─────────────────────────── */}
       <header className="mb-4" aria-labelledby="ledger-title">
         <h1
           id="ledger-title"
           data-testid="guild-h1"
           className="text-white font-semibold text-2xl tracking-tight"
         >
-          マイページ — もちもの
+          あなたの知恵袋銀行
         </h1>
         <p className="mt-1 text-xs text-slate-400">
-          あなたの知恵のカードと、これまでのお礼を一覧にしています。
+          あなたの知恵カードと、これまでのお礼を一覧にしています。
         </p>
         <WaveLine ariaLabel="水の意匠 — 静的波線" />
       </header>
+
+      {/* ── 知恵袋の中身（CoinCounter）─────────────────────────────── */}
+      <CoinCounter initialJpy={earnings.jpy} label="知恵袋の中身（今月のお礼）" />
 
       {/* 知恵のカード一覧（Owned Assets） */}
       <OwnedAssetsSection />
@@ -429,6 +433,13 @@ export default function GuildPage() {
                 <p className="font-bold text-[var(--n-text,#1A1714)] text-sm truncate">{w.title}</p>
                 <p className="text-xs text-[var(--n-muted,#6B6456)] mt-0.5">
                   スコア {w.score.toFixed(1)} · クエスト {w.jobsCompleted.length} 件
+                </p>
+                <p
+                  data-testid="weapon-working-now"
+                  className="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--n-positive,#0E9F4F)]"
+                >
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--n-positive,#0E9F4F)] animate-pulse motion-reduce:animate-none" aria-hidden />
+                  今、働いています
                 </p>
               </div>
               <p className="text-xs text-[var(--n-muted,#6B6456)] shrink-0">

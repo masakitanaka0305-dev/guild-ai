@@ -43,8 +43,8 @@ describe("/guild — friendly tone", () => {
   const page = read("src/app/guild/page.tsx");
   const owned = read("src/components/ui/OwnedAssetsSection.tsx");
 
-  it("/guild h1 reads 「マイページ — もちもの」", () => {
-    expect(page).toContain("マイページ — もちもの");
+  it("/guild h1 reads 「あなたの知恵袋銀行」 (Mercari Lightness #126)", () => {
+    expect(page).toContain("あなたの知恵袋銀行");
     expect(page).toContain('data-testid="guild-h1"');
   });
 

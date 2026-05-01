@@ -12,13 +12,13 @@ describe("Hexagonal RankBadge", () => {
     expect(src).toContain("<Hexagon");
   });
 
-  it("S/A/B each have a distinct hex style triple (fill, stroke, label)", () => {
-    expect(src).toContain('S: {');
-    expect(src).toContain('A: {');
-    expect(src).toContain('B: {');
-    expect(src).toContain("#22D3EE"); // accent — used by S fill / A stroke
-    expect(src).toContain("#0B1121"); // ink letter on S
-    expect(src).toContain("#162035"); // surface — used by A & B fill
+  it("Mercari Lightness #126 — sources medal colors from RANK_COLOR_TOKEN (金/銀/銅/みならい)", () => {
+    expect(src).toContain("RANK_COLOR_TOKEN");
+    expect(src).toContain("RANK_TIER");
+    // Stroke palette mirrors the medal edges (gold / silver / bronze).
+    expect(src).toContain("#CA8A04"); // 金 edge
+    expect(src).toContain("#94A3B8"); // 銀 edge
+    expect(src).toContain("#92400E"); // 銅 edge
   });
 
   it("removes the legacy icon-based meta map (no Crown/Star/Leaf badges)", () => {
@@ -26,6 +26,6 @@ describe("Hexagonal RankBadge", () => {
   });
 
   it("preserves the rank/sublabel a11y contract", () => {
-    expect(src).toMatch(/aria-label=\{`ランク \$\{rank\} — \$\{style\.sublabel\}`\}/);
+    expect(src).toMatch(/aria-label=\{`ランク \$\{rank\} — \$\{tier\}の太鼓判`\}/);
   });
 });

@@ -37,7 +37,7 @@ describe("/projects — お困りごと一覧 (Friendly Tone)", () => {
     );
   });
 
-  it("missing-requirement copy reads 「持っていません — X 以上」", () => {
-    expect(detail).toContain("（持っていません —");
+  it("missing-requirement copy reads as a positive nudge (Mercari Lightness #126)", () => {
+    expect(detail).toContain("まだ持っていません。似た知恵を出品してみよう");
   });
 });

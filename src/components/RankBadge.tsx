@@ -1,43 +1,17 @@
 import type { Rank } from "@/types";
 import { Hexagon } from "@/components/ui/Hexagon";
+import { RANK_COLOR_TOKEN, RANK_TIER } from "@/lib/grading";
 
-// ─── Water Guild — Hexagonal Rank Badge ─────────────────────────────
-// Geometry as authority: the rank is encoded in fill / stroke / text
-// inside a static regular hexagon. No icons, no character art.
-//
-// S — solid cyan fill, deep-sea ink letter      (お墨付き)
-// A — surface fill,   cyan stroke, cyan letter  (高評価)
-// B — surface fill,   muted stroke, muted letter (標準)
-// D — divider stroke, muted letter              (非公開)
+// ─── Mercari Lightness (#126) — Hexagonal Rank Medal ───────────────
+// 金 / 銀 / 銅 / みならい. The medal colors are sourced from the
+// canonical RANK_COLOR_TOKEN dictionary so they stay in lockstep with
+// HexRankBadge / grading / rankCardCta.
 
-const RANK_STYLE: Record<
-  Rank,
-  { fill: string; stroke: string; labelColor: string; sublabel: string }
-> = {
-  S: {
-    fill: "#22D3EE",
-    stroke: "#22D3EE",
-    labelColor: "#0B1121",
-    sublabel: "お墨付き",
-  },
-  A: {
-    fill: "#162035",
-    stroke: "#22D3EE",
-    labelColor: "#22D3EE",
-    sublabel: "高評価",
-  },
-  B: {
-    fill: "#162035",
-    stroke: "#475569",
-    labelColor: "#94A3B8",
-    sublabel: "標準",
-  },
-  D: {
-    fill: "transparent",
-    stroke: "rgba(148,163,184,0.45)",
-    labelColor: "#94A3B8",
-    sublabel: "非公開",
-  },
+const STROKE: Record<Rank, string> = {
+  S: "#CA8A04", // gold edge
+  A: "#94A3B8", // silver edge
+  B: "#92400E", // bronze edge
+  D: "rgba(148,163,184,0.45)",
 };
 
 interface RankBadgeProps {
@@ -49,29 +23,28 @@ interface RankBadgeProps {
 }
 
 export function RankBadge({ rank, large, showLabel = false }: RankBadgeProps) {
-  const style = RANK_STYLE[rank];
+  const tone = RANK_COLOR_TOKEN[rank];
   const size = large ? 56 : 36;
   const letter = rank === "D" ? "—" : rank;
+  const tier = RANK_TIER[rank];
+  const fill = rank === "D" ? "transparent" : tone.fill;
   return (
     <span
       className="inline-flex items-center gap-2 align-middle"
-      aria-label={`ランク ${rank} — ${style.sublabel}`}
+      aria-label={`ランク ${rank} — ${tier}の太鼓判`}
     >
       <Hexagon
         size={size}
-        fill={style.fill}
-        stroke={style.stroke}
+        fill={fill}
+        stroke={STROKE[rank]}
         strokeWidth={2}
         label={letter}
-        labelColor={style.labelColor}
+        labelColor={tone.ink}
         ariaLabel={`ランク ${rank}`}
       />
       {showLabel && (
-        <span
-          className="text-xs font-bold"
-          style={{ color: style.labelColor }}
-        >
-          {style.sublabel}
+        <span className={`text-xs font-bold ${tone.text}`}>
+          {tier}の太鼓判
         </span>
       )}
     </span>

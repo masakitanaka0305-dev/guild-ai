@@ -60,6 +60,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Hybrid Plug-in System #121): 知能をプラグイン / 案件に参画 / 接続完了 / Plugged-in / デプロイ済み / エンジニア・エージェント / Connected Intelligence Assets / Agent Active
 // Explicitly PERMITTED (Compatibility Report #122): 案件に参画する / 参画済み / この知能で参画します / Intelligence Compatibility Report / Compatibility / 適合率 / 充足要件 / 未充足 / 事前診断 / Pre-Check
 // Explicitly PERMITTED (Friendly Tone #123): 知恵を貸す / 知恵のカード / もちもの / お困りごと / ほしい知恵 / カードのジャンル / 作り方のコツ / 見た目の工夫 / 進め方の相談 / 色んな分野 / 自分だけ / 鍵つき / お貸出し中 / 取っておきのメモ / 読みとる / 意味を見つける / 値段をつける / 大切に保管 / お礼 / 参加する / 参加中 / 受付中 / 働いてます / お礼まち / お礼受領 / マッチ度 / AIの参考書 / 時価のうごき / 太鼓判 / 金の太鼓判 / 銀の太鼓判 / 銅の太鼓判 / みならい / 知恵を出品する / Hashed on Chain / Scan / Identify Context / Appraise Value
+// Explicitly PERMITTED (Mercari Lightness #126): 知恵袋銀行 / 知恵袋の中身 / 今、働いています / 困りごとを助ける / この困りごとを助ける / 似た知恵を出品してみよう / 金の太鼓判カードにする / 銀の太鼓判カードにする / 銅の太鼓判カードにする / みならいカードにする / あなたのコツ（メモ）を見つける / そのコツの価値を鑑定する / 分身AIが企業で働き始める / あなたの分身（AI） / プロの技術が詰まっています / 安定して動き続けています / 実装の意図が明確です / 実際に動くコードが入っています / テストや検証の跡が残っています
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome

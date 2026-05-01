@@ -24,14 +24,14 @@ describe("WaveLine — dashboard line-art", () => {
     expect(src).not.toMatch(/animate|@keyframes|transition\s*:/i);
   });
 
-  it("guild dashboard mounts the WaveLine under the もちもの heading", () => {
+  it("guild dashboard mounts the WaveLine under the 知恵袋銀行 heading", () => {
     const guild = readFileSync(
       join(ROOT, "src/app/guild/page.tsx"),
       "utf-8",
     );
     expect(guild).toContain('from "@/components/ui/WaveLine"');
-    // Friendly Tone (#123): h1 swapped from 資産台帳 → マイページ — もちもの
-    expect(guild).toContain("マイページ — もちもの");
+    // Mercari Lightness (#126): h1 swapped from もちもの → 知恵袋銀行
+    expect(guild).toContain("あなたの知恵袋銀行");
     expect(guild).toContain("<WaveLine");
   });
 });
