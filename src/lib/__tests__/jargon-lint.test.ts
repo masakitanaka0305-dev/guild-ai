@@ -59,6 +59,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Intelligence Proof #120): 鑑定中 / Analyzing your Intelligence / Intelligence Balance / 予測印税 / 伝説の知能ギルド / Hall of Fame / 知能の断片 / 真正性証明 / Legend / Expert / Core / Seed / Confidentiality Filter
 // Explicitly PERMITTED (Hybrid Plug-in System #121): 知能をプラグイン / 案件に参画 / 接続完了 / Plugged-in / デプロイ済み / エンジニア・エージェント / Connected Intelligence Assets / Agent Active
 // Explicitly PERMITTED (Compatibility Report #122): 案件に参画する / 参画済み / この知能で参画します / Intelligence Compatibility Report / Compatibility / 適合率 / 充足要件 / 未充足 / 事前診断 / Pre-Check
+// Explicitly PERMITTED (Rezon Protocol #123): 知能をプラグインする / 知能をプラグイン / Plugin My Intelligence / プラグイン済み / Plugged-in / Owned Assets / 保有知能資産 / Type / Rank / Status / Private (Vault) / Encrypted / Deployed / 知能の時価 / 時価 / 時価推移 / Project Goals / Required Intelligence / Intelligence Minting / 資産化 / Mint / Scan / Identify Context / Appraise Value / Hashed on Chain / AI 学習クローラから保護 / Slack インポート / Project Crystal / 約定 / 契約 / 取引
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -154,25 +155,25 @@ describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button",
     ).toHaveLength(0);
   });
 
-  // Compatibility Report #122 — primary CTA simplifies further. Body /
-  // docs / explanations may still mention "知能をプラグイン", but the
-  // aria-label of the primary button must read "案件に参画する" instead.
-  it('"知能をプラグイン" must not surface as an aria-label CTA', () => {
+  // Rezon Protocol (#123) — "応募する" / "この案件に応募する" stay banned
+  // as primary CTAs, but "知能をプラグインする" is welcomed back. The
+  // previous-iteration ban on `aria-label="知能をプラグイン"` is lifted
+  // here on purpose; the canonical CTA text is now the long form
+  // "知能をプラグインする（Plugin My Intelligence）".
+  it('"応募する" / "この案件に応募する" must not surface as an aria-label CTA', () => {
     const violations: string[] = [];
     for (const file of PRIMARY_FILES) {
       const content = readFileSync(file, "utf-8");
-      // Match the exact aria-label assignment, with or without the
-      // "（案件に参画）" suffix that the prior iteration carried.
       if (
-        content.includes('aria-label="知能をプラグイン"') ||
-        content.includes('aria-label="知能をプラグイン（案件に参画）"')
+        content.includes('aria-label="応募する"') ||
+        content.includes('aria-label="この案件に応募する"')
       ) {
         violations.push(file.split("src/")[1] ?? file);
       }
     }
     expect(
       violations,
-      `Primary CTA aria-label still uses 知能をプラグイン in: ${violations.join(", ")}`,
+      `Primary CTA aria-label still uses 応募する in: ${violations.join(", ")}`,
     ).toHaveLength(0);
   });
 });

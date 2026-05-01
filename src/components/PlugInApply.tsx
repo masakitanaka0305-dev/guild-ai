@@ -199,24 +199,30 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
           type="button"
           disabled
           aria-disabled="true"
-          aria-label="参画済み"
+          aria-label="プラグイン済み"
           data-testid="apply-cta-plugged-in"
           className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 bg-emerald-500/10 ring-1 ring-emerald-400/40 text-emerald-300 rounded-full text-sm font-semibold"
         >
           <CheckCircle2 aria-hidden className="w-4 h-4 stroke-emerald-300" />
-          参画済み
+          プラグイン済み（Plugged-in）
         </button>
       ) : (
         <button
           onClick={handleApply}
           disabled={!selectedMdId || applying || underwater}
-          aria-label="案件に参画する"
+          aria-label="知能をプラグインする"
           data-testid="apply-cta-engage"
           className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2"
         >
           <LogIn aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
-          {applying ? "参画中..." : "案件に参画する"}
+          {applying ? "プラグイン中..." : "知能をプラグインする（Plugin My Intelligence）"}
         </button>
+      )}
+
+      {!pluggedIn && (
+        <p className="text-center text-[11px] text-slate-300">
+          = 案件に参画する
+        </p>
       )}
 
       {!pluggedIn && (

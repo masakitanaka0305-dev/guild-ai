@@ -4,27 +4,27 @@ import { join } from "node:path";
 
 const ROOT = process.cwd();
 
-describe("Apply CTA — 案件に参画する (Compatibility Report Update)", () => {
+describe("Apply CTA — 知能をプラグインする (Rezon Protocol)", () => {
   const src = readFileSync(
     join(ROOT, "src/components/PlugInApply.tsx"),
     "utf-8",
   );
 
-  it("primary CTA reads 「案件に参画する」 with the matching aria-label", () => {
-    expect(src).toContain('aria-label="案件に参画する"');
-    expect(src).toContain("案件に参画する");
-    // Loading state copy
-    expect(src).toContain('"参画中..."');
+  it("primary CTA reads 「知能をプラグインする（Plugin My Intelligence）」 with the matching aria-label", () => {
+    expect(src).toContain('aria-label="知能をプラグインする"');
+    expect(src).toContain("知能をプラグインする（Plugin My Intelligence）");
+    expect(src).toContain('"プラグイン中..."');
   });
 
-  it("retires the previous-iteration copy from the primary button", () => {
+  it("retires the previous-iteration aria-label CTAs", () => {
+    expect(src).not.toMatch(/aria-label="案件に参画する"/);
     expect(src).not.toMatch(/aria-label="知能をプラグイン（案件に参画）"/);
     expect(src).not.toMatch(/aria-label="エージェントをデプロイ"/);
   });
 
-  it("Plugged-in state surfaces 「参画済み」 with CheckCircle2", () => {
-    expect(src).toContain("参画済み");
-    expect(src).toContain('aria-label="参画済み"');
+  it("Plugged-in state reads 「プラグイン済み（Plugged-in）」 with CheckCircle2", () => {
+    expect(src).toContain("プラグイン済み（Plugged-in）");
+    expect(src).toContain('aria-label="プラグイン済み"');
     expect(src).toMatch(/<CheckCircle2\b/);
   });
 
@@ -33,11 +33,13 @@ describe("Apply CTA — 案件に参画する (Compatibility Report Update)", ()
     expect(src).toMatch(/<LogIn\b/);
   });
 
-  it("MD pre-select label uses 「この知能で参画します」 and the picker is read-only", () => {
+  it("MD pre-select label uses 「この知能で参画します」 and the picker stays read-only", () => {
     expect(src).toContain("この知能で参画します");
     expect(src).toContain('data-testid="apply-readonly-md"');
-    // Legacy <select> picker is gone
     expect(src).not.toMatch(/<select\b/);
-    expect(src).not.toContain('htmlFor="md-select"');
+  });
+
+  it("subcaption beneath the CTA reads 「= 案件に参画する」", () => {
+    expect(src).toContain("= 案件に参画する");
   });
 });

@@ -23,9 +23,9 @@ describe("Plug-in flow — confirm modal + plugged-in state + localStorage", () 
     expect(src).toContain("max-w-[calc(100vw-32px)]");
   });
 
-  it("on success the CTA flips to a disabled emerald 参画済み pill", () => {
+  it("on success the CTA flips to a disabled emerald プラグイン済み pill", () => {
     expect(src).toMatch(/data-testid="apply-cta-plugged-in"/);
-    expect(src).toContain('aria-label="参画済み"');
+    expect(src).toContain('aria-label="プラグイン済み"');
     expect(src).toContain('aria-disabled="true"');
     // Spec colors
     expect(src).toContain("bg-emerald-500/10");
