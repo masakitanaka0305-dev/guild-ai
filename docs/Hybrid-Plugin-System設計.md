@@ -153,3 +153,16 @@ Active ピル** を並列表示。`gap-2` で隣接。
 | jargon-lint deploy-cta scope | +1 | 既存 `src/lib/__tests__/jargon-lint.test.ts` |
 
 合計 **15 件**（うち新規ファイル 4 個 = 14 件、既存 1 件追記）。
+
+---
+
+## 6. アップデート（#122 — Compatibility Report）
+
+UX 反復で以下が変更された：
+
+- **CTA**：「知能をプラグイン（案件に参画）」 → **「案件に参画する」**（lucide `LogIn`）。完了状態は **「参画済み」**（`CheckCircle2`）。
+- **MD `<select>` ピッカーの撤去**：`pickBestFitMd` の選択結果を読み取り専用カード（`data-testid="apply-readonly-md"`、ラベル「この知能で参画します」）として表示する。MD 自由選択はオーナーシップ管理画面（v1.5+）へ移譲。
+- **位置付け**：プラグインは「AI に任せる」ためでなく、**人間が参画する際のミスマッチを減らし、オンボーディングを加速させるための事前診断**として機能する。Compatibility Report が前段に立ち、Connected Intelligence Assets ＋ Apply CTA の流れを視覚的に保証する。
+- **jargon-lint**：`aria-label="知能をプラグイン"` ／ `aria-label="知能をプラグイン（案件に参画）"` を CTA で禁止。本文・docs での出現は許容。
+
+詳細は [`Intelligence-Compatibility設計.md`](./Intelligence-Compatibility設計.md) を参照。
