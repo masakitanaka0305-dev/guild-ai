@@ -102,6 +102,9 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "サインアップ",            reason: "→ 「自分の知能を登記する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
   { term: "会員登録",                reason: "→ 「知能の資産化を開始する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
   { term: "無料登録",                reason: "→ 「知能の資産化を開始する」 に置換（Intelligence Deck — \"登録\"系は不使用）" },
+  // ─── Brand (#123) — Rezon は不採用、ギルドAI を維持 ─────────────
+  { term: "Rezon",                   reason: "→ ギルドAI に統一（仮称 Rezon は不採用）" },
+  { term: "レゾン",                  reason: "→ ギルドAI に統一（仮称 Rezon は不採用）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {
@@ -155,10 +158,9 @@ describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button",
     ).toHaveLength(0);
   });
 
-  // Friendly Tone (#123) — primary CTA settles on the friendly Japanese
-  // form 「知恵を貸す（参加する）」. "応募する" / "この案件に応募する"
-  // remain banned as CTAs, and prior English/protocol labels also can't
-  // surface as the primary aria-label.
+  // Friendly Tone (#123) — primary CTA settles on 「この知恵を貸す（参加する）」.
+  // "応募する" / "この案件に応募する" remain banned as CTAs, and prior
+  // English/protocol labels also can't surface as the primary aria-label.
   it('"応募する" / "この案件に応募する" must not surface as an aria-label CTA', () => {
     const violations: string[] = [];
     for (const file of PRIMARY_FILES) {
@@ -175,4 +177,36 @@ describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button",
       `Primary CTA aria-label still uses 応募する in: ${violations.join(", ")}`,
     ).toHaveLength(0);
   });
+
+  // Friendly Tone (#123) — English protocol labels banned in primary UI
+  // chrome (page <h1>). They may still appear in code comments, internal
+  // identifiers, and documentation. We detect by scanning the literal
+  // <h1> contents for the banned tokens.
+  const ENGLISH_UI_BANS = [
+    "Owned Assets",
+    "Plugin My Intelligence",
+    "Intelligence Minting",
+    "Project Goals",
+    "Required Intelligence",
+  ];
+  for (const term of ENGLISH_UI_BANS) {
+    it(`"${term}" must not surface inside an <h1>...</h1>`, () => {
+      const violations: string[] = [];
+      for (const file of PRIMARY_FILES) {
+        const content = readFileSync(file, "utf-8");
+        // crude: collect every <h1>...</h1> body and check for the term
+        const matches = content.match(/<h1[^>]*>([\s\S]*?)<\/h1>/g) ?? [];
+        for (const m of matches) {
+          if (m.includes(term)) {
+            violations.push(file.split("src/")[1] ?? file);
+            break;
+          }
+        }
+      }
+      expect(
+        violations,
+        `<h1> still contains "${term}" in: ${violations.join(", ")}`,
+      ).toHaveLength(0);
+    });
+  }
 });
