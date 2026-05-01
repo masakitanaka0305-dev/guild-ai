@@ -58,10 +58,11 @@ describe("/guild — friendly tone", () => {
     expect(owned).toContain("今のあなたの価値：");
   });
 
-  it("Status pills display friendly Japanese (自分だけ / 鍵つき / お貸出し中)", () => {
+  it("Status pills display friendly Japanese (自分だけ / 鍵つき / お仕事中)", () => {
+    // Final Polish (#127): Deployed → 「お仕事中」 (more active than 「お貸出し中」).
     expect(owned).toContain('"Private (Vault)": "自分だけ"');
     expect(owned).toContain('"Encrypted":       "鍵つき"');
-    expect(owned).toContain('"Deployed":        "お貸出し中"');
+    expect(owned).toContain('"Deployed":        "お仕事中"');
   });
 
   it("Type pill labels in role-colors map to the friendly Japanese tags", () => {
