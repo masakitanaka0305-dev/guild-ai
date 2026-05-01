@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Plug, CheckCircle2 } from "lucide-react";
+import { LogIn, CheckCircle2 } from "lucide-react";
 import { getDemoOwnedMds } from "@/lib/matching";
 import { pickBestFitMd } from "@/lib/md-pickfit";
 import { getProject } from "@/lib/projects";
@@ -21,7 +21,7 @@ function pluggedInKey(projectId: string, guildId: string): string {
   return `${STORAGE_PREFIX}${projectId}:${guildId}`;
 }
 
-// ─── Confirmation modal — fired right after a successful plug-in ─────────────
+// ─── Confirmation modal — fired right after a successful entry ───────────────
 
 interface ConfirmModalProps {
   open: boolean;
@@ -38,7 +38,6 @@ function PluggedInConfirmModal({ open, onClose }: ConfirmModalProps) {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
       if (e.key === "Tab") {
-        // Trivial focus trap: keep focus inside the dialog.
         const root = overlayRef.current;
         if (!root) return;
         const focusable = root.querySelectorAll<HTMLElement>(
@@ -107,7 +106,7 @@ function PluggedInConfirmModal({ open, onClose }: ConfirmModalProps) {
   );
 }
 
-// ─── Plug-in CTA ─────────────────────────────────────────────────────────────
+// ─── Apply CTA ───────────────────────────────────────────────────────────────
 
 export function PlugInApply({ projectId, sticky = false, underwater = false }: Props) {
   const ownedMds = useMemo(() => getDemoOwnedMds("demo-user"), []);
@@ -119,35 +118,36 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
         : { mdId: ownedMds[0]?.id ?? null, coveredReqs: 0, rankScore: 0, reason: "" },
     [ownedMds, project],
   );
-  const [selectedMd, setSelectedMd] = useState<string>(
-    preselect.mdId ?? ownedMds[0]?.id ?? "",
-  );
+
+  // The MD that we'll plug in is fixed by AI Pre-select — no user picker.
+  const selectedMdId = preselect.mdId ?? ownedMds[0]?.id ?? "";
+  const selectedMd = ownedMds.find((m) => m.id === selectedMdId) ?? null;
+
   const [applying, setApplying] = useState(false);
   const [pluggedIn, setPluggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Re-hydrate from localStorage so the Plugged-in state persists across visits.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!selectedMd) return;
+    if (!selectedMdId) return;
     try {
-      const raw = window.localStorage.getItem(pluggedInKey(projectId, selectedMd));
+      const raw = window.localStorage.getItem(pluggedInKey(projectId, selectedMdId));
       if (raw) setPluggedIn(true);
     } catch { /* SSR / blocked storage — silently ignore */ }
-  }, [projectId, selectedMd]);
+  }, [projectId, selectedMdId]);
 
   async function handleApply() {
-    if (!selectedMd || pluggedIn) return;
+    if (!selectedMdId || pluggedIn) return;
     setApplying(true);
     try {
       await fetch("/api/applications/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectId, mdGuildId: selectedMd }),
+        body: JSON.stringify({ projectId, mdGuildId: selectedMdId }),
       });
       try {
         window.localStorage.setItem(
-          pluggedInKey(projectId, selectedMd),
+          pluggedInKey(projectId, selectedMdId),
           new Date().toISOString(),
         );
       } catch { /* ignore */ }
@@ -166,24 +166,25 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
 
   return (
     <div className={wrapperClass} role={wrapperRole} aria-label={wrapperLabel}>
-      <div>
-        <label htmlFor="md-select" className="text-xs text-[#E2E8F0] block mb-1">
-          知能をプラグイン — 知能資産を選ぶ
-        </label>
-        <select
-          id="md-select"
-          value={selectedMd}
-          onChange={e => setSelectedMd(e.target.value)}
-          disabled={pluggedIn}
-          className="w-full bg-[#162035] border border-[#22D3EE]/30 focus:border-[#22D3EE] text-[#E2E8F0] rounded-md px-3 py-2 text-sm outline-cyan-400 disabled:opacity-60"
-        >
-          {ownedMds.map(md => (
-            <option key={md.id} value={md.id}>
-              {md.id} [{md.rank}]
-            </option>
-          ))}
-        </select>
-        {preselect.mdId && preselect.reason && !pluggedIn && (
+      {/* Read-only AI pre-select MD — replaces the legacy SELECT picker */}
+      <div
+        data-testid="apply-readonly-md"
+        className="rounded-lg bg-[#162035] border border-cyan-400/20 px-3 py-2 text-xs"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+          この知能で参画します
+        </p>
+        <p className="mt-0.5 font-mono text-[#E2E8F0]">
+          {selectedMd ? (
+            <>
+              {selectedMd.id}{" "}
+              <span className="text-cyan-300">[{selectedMd.rank}]</span>
+            </>
+          ) : (
+            <span className="text-slate-400">保有 MD がありません</span>
+          )}
+        </p>
+        {preselect.reason && (
           <p
             data-testid="ai-preselect-note"
             className="mt-1 text-[11px] text-slate-400"
@@ -198,23 +199,23 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
           type="button"
           disabled
           aria-disabled="true"
-          aria-label="接続済み"
+          aria-label="参画済み"
           data-testid="apply-cta-plugged-in"
           className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 bg-emerald-500/10 ring-1 ring-emerald-400/40 text-emerald-300 rounded-full text-sm font-semibold"
         >
           <CheckCircle2 aria-hidden className="w-4 h-4 stroke-emerald-300" />
-          Plugged-in / デプロイ済み
+          参画済み
         </button>
       ) : (
         <button
           onClick={handleApply}
-          disabled={!selectedMd || applying || underwater}
-          aria-label="知能をプラグイン（案件に参画）"
-          data-testid="apply-cta-plug-in"
+          disabled={!selectedMdId || applying || underwater}
+          aria-label="案件に参画する"
+          data-testid="apply-cta-engage"
           className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2"
         >
-          <Plug aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
-          {applying ? "プラグイン中..." : "知能をプラグイン（案件に参画）"}
+          <LogIn aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
+          {applying ? "参画中..." : "案件に参画する"}
         </button>
       )}
 
