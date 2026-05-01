@@ -22,7 +22,7 @@ describe("/guild — Asset Portfolio readability", () => {
     expect(src).toContain("bg-amber-500/20 text-amber-300 ring-1 ring-amber-400/40");
     expect(src).toContain("bg-slate-500/20 text-slate-300 ring-1 ring-slate-400/40");
     // LIVE_STATUS_STYLE 待機中 (cyan)
-    expect(src).toContain("bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-400/40");
+    expect(src).toContain("bg-brand-primary/20 text-brand-primary ring-1 ring-brand-primary/40");
   });
 
   it("public endpoint is rendered as font-mono with the public-endpoint a11y label", () => {

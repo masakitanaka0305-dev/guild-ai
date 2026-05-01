@@ -34,7 +34,7 @@ describe("Intelligence Compatibility Report on /projects/[id]", () => {
 
   it("Compatibility 81% style is metric-prime + tabular-nums + cyan", () => {
     expect(cmp).toMatch(/data-testid="compat-percent"/);
-    expect(cmp).toContain("text-cyan-400 metric-prime tabular-nums");
+    expect(cmp).toContain("text-brand-primary metric-prime tabular-nums");
     expect(cmp).toContain("Compatibility");
     expect(cmp).toContain("マッチ");
     expect(cmp).toContain("件");
@@ -61,7 +61,7 @@ describe("Intelligence Compatibility Report on /projects/[id]", () => {
     // Spec colors per pill
     expect(cmp).toContain("bg-emerald-500/15");
     expect(cmp).toContain("bg-rose-500/10");
-    expect(cmp).toContain("bg-cyan-500/15");
+    expect(cmp).toContain("bg-brand-primary/15");
   });
 
   it("page no longer renders the legacy MD <select> picker", () => {

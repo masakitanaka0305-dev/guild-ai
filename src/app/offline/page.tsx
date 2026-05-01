@@ -12,7 +12,7 @@ export default function OfflinePage() {
       </p>
       <a
         href="/projects"
-        className="inline-block px-6 py-3 rounded-xl bg-[var(--primary,#06B6D4)] text-white font-bold text-sm hover:bg-[#0891B2] transition-colors"
+        className="inline-block px-6 py-3 rounded-xl bg-[var(--primary,#6366F1)] text-white font-bold text-sm hover:bg-[#4F46E5] transition-colors"
       >
         案件を探す
       </a>

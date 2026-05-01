@@ -29,7 +29,7 @@ export function DeckHome() {
         <div className="text-right">
           <p
             data-testid="deck-registered-count"
-            className="text-cyan-400/80 text-xs tabular-nums font-mono"
+            className="text-brand-primary/80 text-xs tabular-nums font-mono"
           >
             登記済みエージェント数：{formatAgentCount(registered)} 体
           </p>

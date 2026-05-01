@@ -48,7 +48,7 @@ interface RoleTile {
 }
 
 const ROLE_TILES: RoleTile[] = [
-  { id: "engineer", emoji: "💻", label: "エンジニア",  caption: "コードベースを資産化する", accent: "text-cyan-400",    ring: "ring-cyan-400/40"    },
+  { id: "engineer", emoji: "💻", label: "エンジニア",  caption: "コードベースを資産化する", accent: "text-brand-primary",    ring: "ring-brand-primary/40"    },
   { id: "designer", emoji: "🎨", label: "デザイナー",  caption: "発想と表現を資産化する",   accent: "text-rose-400",    ring: "ring-rose-400/40"    },
   { id: "pdm",      emoji: "📋", label: "PdM",         caption: "意思決定と戦略を資産化する", accent: "text-emerald-400", ring: "ring-emerald-400/40" },
 ];
@@ -62,7 +62,7 @@ const MOCK_OAUTH_PROFILE = {
   email: "masaki.tanaka.0305@gmail.com",
   githubHandle: "masaki-tanaka",
   githubUrl: "https://github.com/masaki-tanaka/water-guild-demo",
-  avatarHexFill: "#22D3EE",
+  avatarHexFill: "#6366F1",
 } as const;
 
 // ─── Timer Bar ───────────────────────────────────────────────────────────────
@@ -247,10 +247,10 @@ function OnboardingContent() {
           aria-labelledby="step-a-heading"
         >
           <div className="flex flex-col items-center gap-3">
-            <span aria-hidden className="w-16 h-16 rounded-full bg-midnight-surface border border-cyan-400/30 flex items-center justify-center">
-              <GitHubMark className="w-8 h-8 text-cyan-400" />
+            <span aria-hidden className="w-16 h-16 rounded-full bg-midnight-surface border border-brand-primary/30 flex items-center justify-center">
+              <GitHubMark className="w-8 h-8 text-brand-primary" />
             </span>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">
               Step A — GitHub 連携
             </p>
             <h2 id="step-a-heading" className="text-2xl font-black text-white leading-tight">
@@ -269,7 +269,7 @@ function OnboardingContent() {
               setGithubConnected(true);
               setWizardStep(validQueryRole ? "confirm" : "role");
             }}
-            className="w-full inline-flex items-center justify-center gap-2 min-h-12 py-3 text-sm font-bold rounded-xl bg-cyan-400 text-text-on-primary hover:bg-cyan-300 active:scale-[0.99] focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="w-full inline-flex items-center justify-center gap-2 min-h-12 py-3 text-sm font-bold rounded-xl bg-brand-primary text-text-on-primary hover:bg-brand-primary active:scale-[0.99] focus:outline focus:outline-2 focus:outline-brand-primary"
           >
             <GitHubMark className="w-4 h-4 text-text-on-primary" />
             GitHub と連携する
@@ -287,7 +287,7 @@ function OnboardingContent() {
           aria-labelledby="step-b-heading"
         >
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">
               Step B — 職種選択
             </p>
             <h2 id="step-b-heading" className="text-xl font-black text-white leading-tight">
@@ -313,7 +313,7 @@ function OnboardingContent() {
                   }}
                   className={`group rounded-2xl border border-white/10 bg-midnight-surface p-5 text-left ring-1 ${
                     selected ? t.ring : "ring-transparent"
-                  } hover:${t.ring} hover:ring-2 focus:outline focus:outline-2 focus:outline-cyan-400 transition-shadow`}
+                  } hover:${t.ring} hover:ring-2 focus:outline focus:outline-2 focus:outline-brand-primary transition-shadow`}
                 >
                   <span aria-hidden className="text-3xl block">{t.emoji}</span>
                   <span className={`mt-2 block text-base font-bold ${t.accent}`}>{t.label}</span>
@@ -344,7 +344,7 @@ function OnboardingContent() {
                 <polygon
                   points="50,4 92,27 92,73 50,96 8,73 8,27"
                   fill="#162035"
-                  stroke="#22D3EE"
+                  stroke="#6366F1"
                   strokeWidth={2}
                 />
                 <text
@@ -354,14 +354,14 @@ function OnboardingContent() {
                   fontFamily="inherit"
                   fontWeight={900}
                   fontSize={32}
-                  fill="#22D3EE"
+                  fill="#6366F1"
                 >
                   {familyName.slice(0, 1) || "G"}
                 </text>
               </svg>
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#22D3EE)]">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#6366F1)]">
                 Smart Pre-fill — OAuth から取得した情報です
               </p>
               <h2 id="confirm-heading" className="text-base font-black text-[var(--water-text,#E2E8F0)]">
@@ -372,7 +372,7 @@ function OnboardingContent() {
               <button
                 type="button"
                 onClick={() => setEditMode(true)}
-                className="shrink-0 text-xs text-cyan-400 underline-offset-4 hover:underline focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+                className="shrink-0 text-xs text-brand-primary underline-offset-4 hover:underline focus:outline focus:outline-2 focus:outline-brand-primary rounded"
                 aria-label="プリフィル内容を編集する"
               >
                 編集する
@@ -381,7 +381,7 @@ function OnboardingContent() {
               <button
                 type="button"
                 onClick={() => setEditMode(false)}
-                className="shrink-0 text-xs text-slate-400 underline-offset-4 hover:underline hover:text-white focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+                className="shrink-0 text-xs text-slate-400 underline-offset-4 hover:underline hover:text-white focus:outline focus:outline-2 focus:outline-brand-primary rounded"
               >
                 キャンセル
               </button>
@@ -394,35 +394,35 @@ function OnboardingContent() {
                 <dt className="text-slate-400 text-xs uppercase tracking-wide">姓</dt>
                 <dd className="mt-1 flex items-center gap-1.5">
                   <span className="text-white font-semibold text-base">{familyName || "—"}</span>
-                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-brand-primary" />
                 </dd>
               </div>
               <div>
                 <dt className="text-slate-400 text-xs uppercase tracking-wide">名</dt>
                 <dd className="mt-1 flex items-center gap-1.5">
                   <span className="text-white font-semibold text-base">{givenName || "—"}</span>
-                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-brand-primary" />
                 </dd>
               </div>
               <div className="col-span-2">
                 <dt className="text-slate-400 text-xs uppercase tracking-wide">メールアドレス</dt>
                 <dd className="mt-1 flex items-center gap-1.5 min-w-0">
                   <span className="text-white font-semibold text-base truncate">{email || "—"}</span>
-                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400 shrink-0" />
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-brand-primary shrink-0" />
                 </dd>
               </div>
               <div className="col-span-2">
                 <dt className="text-slate-400 text-xs uppercase tracking-wide">GitHub ハンドル</dt>
                 <dd className="mt-1 flex items-center gap-1.5">
                   <span className="text-white font-semibold text-base font-mono">@{handle || "—"}</span>
-                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400" />
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-brand-primary" />
                 </dd>
               </div>
               <div className="col-span-2">
                 <dt className="text-slate-400 text-xs uppercase tracking-wide">GitHub コードベース URL</dt>
                 <dd className="mt-1 flex items-center gap-1.5 min-w-0">
                   <span className="text-white font-semibold text-sm font-mono truncate">{githubUrl || "—"}</span>
-                  <Check aria-hidden className="w-3.5 h-3.5 stroke-cyan-400 shrink-0" />
+                  <Check aria-hidden className="w-3.5 h-3.5 stroke-brand-primary shrink-0" />
                 </dd>
               </div>
             </dl>
@@ -438,7 +438,7 @@ function OnboardingContent() {
                     type="text"
                     defaultValue={familyName}
                     onChange={(e) => setFamilyName(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
                   />
                 </div>
                 <div>
@@ -450,7 +450,7 @@ function OnboardingContent() {
                     type="text"
                     defaultValue={givenName}
                     onChange={(e) => setGivenName(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
                   />
                 </div>
               </div>
@@ -464,7 +464,7 @@ function OnboardingContent() {
                   type="email"
                   defaultValue={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
                 />
               </div>
 
@@ -477,7 +477,7 @@ function OnboardingContent() {
                   type="text"
                   defaultValue={handle}
                   onChange={(e) => setHandle(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
                 />
               </div>
 
@@ -491,7 +491,7 @@ function OnboardingContent() {
                   defaultValue={githubUrl}
                   onChange={(e) => setGithubUrl(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#22D3EE)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
                 />
               </div>
             </div>
@@ -508,7 +508,7 @@ function OnboardingContent() {
                   任意項目（生年・住所）
                 </p>
                 <p className="mt-1 text-[11px] text-slate-400 leading-relaxed">
-                  登記には不要です。<span className="text-cyan-400">後で /profile でも編集できます</span>。
+                  登記には不要です。<span className="text-brand-primary">後で /profile でも編集できます</span>。
                 </p>
               </div>
               {!showOptional && (
@@ -516,7 +516,7 @@ function OnboardingContent() {
                   type="button"
                   data-testid="onboarding-later-skip"
                   onClick={() => setShowOptional(false)}
-                  className="shrink-0 inline-flex items-center justify-center min-h-11 px-4 rounded-full text-cyan-400 ring-1 ring-cyan-400/30 hover:bg-cyan-400/10 text-xs font-bold"
+                  className="shrink-0 inline-flex items-center justify-center min-h-11 px-4 rounded-full text-brand-primary ring-1 ring-brand-primary/30 hover:bg-brand-primary/10 text-xs font-bold"
                 >
                   後で設定する →
                 </button>
@@ -543,7 +543,7 @@ function OnboardingContent() {
                     placeholder="1990"
                     value={birthday}
                     onChange={(e) => setBirthday(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                 </div>
                 <div>
@@ -556,7 +556,7 @@ function OnboardingContent() {
                     placeholder="東京都"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-midnight-surface border border-white/10 text-text-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                 </div>
                 <button
@@ -572,9 +572,9 @@ function OnboardingContent() {
 
           <p className="text-[10px] text-[var(--water-muted,#94A3B8)] leading-relaxed">
             修正があれば「編集する」を押してください。登記の前に
-            <Link href="/legal/terms" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">利用規約</Link>
+            <Link href="/legal/terms" className="text-[var(--water-accent,#6366F1)] underline mx-0.5">利用規約</Link>
             と
-            <Link href="/legal/transfer" className="text-[var(--water-accent,#22D3EE)] underline mx-0.5">権利譲渡条件</Link>
+            <Link href="/legal/transfer" className="text-[var(--water-accent,#6366F1)] underline mx-0.5">権利譲渡条件</Link>
             に同意してください。あとで /profile でも編集できます。
           </p>
 
@@ -583,7 +583,7 @@ function OnboardingContent() {
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-midnight-surface accent-cyan-400 focus:outline focus:outline-2 focus:outline-cyan-400"
+              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-midnight-surface accent-brand-primary focus:outline focus:outline-2 focus:outline-brand-primary"
             />
             <span>
               利用規約と権利譲渡条件に同意します
@@ -593,7 +593,7 @@ function OnboardingContent() {
           <button
             onClick={runOnboarding}
             disabled={!agreed || !githubUrl.startsWith("https://github.com/")}
-            className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#22D3EE)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
+            className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#6366F1)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
           >
             確認して進む — 登記（Sync）開始
           </button>

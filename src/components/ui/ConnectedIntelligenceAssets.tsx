@@ -21,14 +21,14 @@ export function ConnectedIntelligenceAssets({ mdGuildId }: ConnectedIntelligence
       data-testid="connected-intelligence-assets"
       data-component="connected-intelligence-assets"
       aria-labelledby="connected-intel-heading"
-      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
+      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-brand-primary p-5 sm:p-6 mb-4"
     >
       <header className="flex items-start justify-between gap-3 mb-3">
         <h2
           id="connected-intel-heading"
           className="text-white font-semibold text-base sm:text-lg leading-snug inline-flex items-center gap-2"
         >
-          <Plug aria-hidden className="w-4 h-4 stroke-cyan-400" />
+          <Plug aria-hidden className="w-4 h-4 stroke-brand-primary" />
           Connected Intelligence Assets
         </h2>
       </header>
@@ -49,8 +49,8 @@ export function ConnectedIntelligenceAssets({ mdGuildId }: ConnectedIntelligence
 
         <div className="flex items-center gap-2">
           <dt className="text-slate-400 w-20 shrink-0">Agent</dt>
-          <dd className="inline-flex items-center gap-1.5 text-cyan-300">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+          <dd className="inline-flex items-center gap-1.5 text-brand-primary">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
             Synced (from MD Assets)
           </dd>
         </div>
@@ -70,9 +70,9 @@ export function ConnectedIntelligenceAssets({ mdGuildId }: ConnectedIntelligence
         className="mt-4 flex items-center justify-end gap-1.5 text-[11px] text-slate-400"
       >
         <span>接続中</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/70" />
-        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/40" />
+        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/70" />
+        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/40" />
       </div>
     </section>
   );

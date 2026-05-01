@@ -48,9 +48,9 @@ export default function GradingWaitPage({
           className="mt-3 flex items-center gap-2"
           data-testid="grading-static-dots"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80" />
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/50" />
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/30" />
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/80" />
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/50" />
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/30" />
         </div>
       </div>
     </main>

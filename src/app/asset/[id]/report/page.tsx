@@ -99,7 +99,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               { label: "最終実行", value: report.backtest.lastRunAt.slice(0, 10) },
             ].map(({ label, value, highlight }) => (
               <div key={label} className="section-card p-4 text-center print:border print:border-gray-200">
-                <p className={`text-lg font-black ${highlight ? "text-[var(--primary,#06B6D4)]" : "text-[var(--n-text,#1A1714)]"}`}>
+                <p className={`text-lg font-black ${highlight ? "text-[var(--primary,#6366F1)]" : "text-[var(--n-text,#1A1714)]"}`}>
                   {value}
                 </p>
                 <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">{label}</p>
@@ -118,7 +118,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                   <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
                     <div
                       style={{ height: `${heightPct}%` }}
-                      className="w-full rounded-t bg-[var(--primary,#06B6D4)] opacity-70"
+                      className="w-full rounded-t bg-[var(--primary,#6366F1)] opacity-70"
                     />
                   </div>
                 );
@@ -186,9 +186,9 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 真正性証明 — Intelligence Signature */}
         <section
           data-testid="intelligence-signature-section"
-          className="rounded-2xl border border-cyan-400/30 bg-midnight-surface p-5 mt-6"
+          className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-5 mt-6"
         >
-          <p className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-primary mb-2">
             真正性証明
           </p>
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">

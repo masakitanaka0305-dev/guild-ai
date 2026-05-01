@@ -64,7 +64,7 @@ export function ComingSoonModal({
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="rounded-full bg-brand-primary px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-brand-primary focus:outline focus:outline-2 focus:outline-brand-primary"
           >
             閉じる
           </button>

@@ -27,11 +27,11 @@ export function BackArrow({
       className={
         "inline-flex items-center justify-center min-h-[44px] min-w-[44px] " +
         "rounded-full text-ai-action hover:bg-white/5 active:bg-white/10 " +
-        "outline-none focus:outline focus:outline-2 focus:outline-cyan-400 " +
+        "outline-none focus:outline focus:outline-2 focus:outline-brand-primary " +
         className
       }
     >
-      <ArrowLeft strokeWidth={2.25} className="w-5 h-5 stroke-cyan-400" />
+      <ArrowLeft strokeWidth={2.25} className="w-5 h-5 stroke-brand-primary" />
     </Link>
   );
 }

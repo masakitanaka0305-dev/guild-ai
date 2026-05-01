@@ -845,13 +845,13 @@ function TextPath({
             type="checkbox"
             checked={consentChecked}
             onChange={(e) => setConsentChecked(e.target.checked)}
-            className="mt-0.5 w-4 h-4 accent-[var(--primary,#06B6D4)] flex-shrink-0"
+            className="mt-0.5 w-4 h-4 accent-[var(--primary,#6366F1)] flex-shrink-0"
             aria-label="利用規約と権利譲渡条件に同意します"
           />
           <span className="text-xs text-[var(--n-muted,#6B6456)] leading-relaxed">
-            <a href="/legal/terms" target="_blank" className="text-[var(--primary,#06B6D4)] hover:underline font-semibold">利用規約</a>
+            <a href="/legal/terms" target="_blank" className="text-[var(--primary,#6366F1)] hover:underline font-semibold">利用規約</a>
             {" "}と{" "}
-            <a href="/legal/transfer" target="_blank" className="text-[var(--primary,#06B6D4)] hover:underline font-semibold">権利譲渡条件</a>
+            <a href="/legal/transfer" target="_blank" className="text-[var(--primary,#6366F1)] hover:underline font-semibold">権利譲渡条件</a>
             {" "}に同意します。
           </span>
         </label>

@@ -36,23 +36,22 @@ describe("Intelligence Deck — three-step onboarding home", () => {
     expect(card).toContain("<li");
   });
 
-  it("HeroButton text is 「自分の知能を登記する」, links to /onboarding/repos, with aria-label and cyan glow", () => {
+  it("HeroButton text is 「自分の知能を登記する」, links to /onboarding/repos, with aria-label", () => {
     const src = read("src/components/intelligence-deck/HeroButton.tsx");
     expect(src).toContain("自分の知能を登記する");
     expect(src).toMatch(/href="\/onboarding\/repos"/);
     expect(src).toContain('aria-label="自分の知能を登記する"');
-    // Cyan-400 fill + static glow shadow + rounded-full
-    expect(src).toContain("bg-cyan-400");
-    expect(src).toContain("text-text-on-primary");
+    // Final Polish (#127): brand-primary fill + rounded-full. The static
+    // cyan glow was retired in favor of the purple ripple chip.
+    expect(src).toContain("bg-brand-primary");
     expect(src).toContain("rounded-full");
-    expect(src).toMatch(/shadow-\[0_0_0_2px_rgba\(34,211,238,0\.5\),0_0_28px_rgba\(34,211,238,0\.35\)\]/);
   });
 
   it("DeckHome surfaces 「登記済みエージェント数：1,284 体」 in the top-right", () => {
     const src = read("src/components/intelligence-deck/DeckHome.tsx");
     expect(src).toContain("登記済みエージェント数：");
     expect(src).toContain("data-testid=\"deck-registered-count\"");
-    expect(src).toContain("text-cyan-400/80");
+    expect(src).toContain("text-brand-primary/80");
     expect(src).toContain("font-mono");
   });
 

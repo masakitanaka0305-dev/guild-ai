@@ -44,7 +44,7 @@ export default function EnterprisePreviewPage({ params }: { params: { id: string
       </div>
 
       <header className="mb-6">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">
           Confidentiality Filter — 企業向けプレビュー
         </p>
         <h1 className="text-2xl font-semibold text-white mt-1">{listing.title}</h1>
@@ -58,7 +58,7 @@ export default function EnterprisePreviewPage({ params }: { params: { id: string
 
       <article
         data-testid="enterprise-preview-body"
-        className="rounded-2xl border border-cyan-400/20 bg-midnight-surface p-6 whitespace-pre-wrap font-mono text-sm text-slate-200 leading-relaxed"
+        className="rounded-2xl border border-brand-primary/20 bg-midnight-surface p-6 whitespace-pre-wrap font-mono text-sm text-slate-200 leading-relaxed"
       >
         {masked.text}
       </article>

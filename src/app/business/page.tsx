@@ -35,7 +35,7 @@ export default function BusinessPage() {
           href="/business/catalog"
           className="section-card p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
         >
-          <div className="w-10 h-10 rounded-xl bg-[var(--primary,#06B6D4)] flex items-center justify-center flex-shrink-0 text-white text-lg">
+          <div className="w-10 h-10 rounded-xl bg-[var(--primary,#6366F1)] flex items-center justify-center flex-shrink-0 text-white text-lg">
             📦
           </div>
           <div className="flex-1 min-w-0">
@@ -117,7 +117,7 @@ export default function BusinessPage() {
       <div className="mt-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-bold text-white">最新のゼロデイ情報</h2>
-          <Link href="/feed/zero-day" className="text-xs text-[var(--primary,#06B6D4)] hover:underline font-semibold">
+          <Link href="/feed/zero-day" className="text-xs text-[var(--primary,#6366F1)] hover:underline font-semibold">
             すべて見る →
           </Link>
         </div>
@@ -125,7 +125,7 @@ export default function BusinessPage() {
           {events.slice(0, 3).map((event) => (
             <div key={event.id} className="section-card p-3 flex items-start gap-3">
               <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                event.priority === "critical" ? "bg-[var(--primary,#06B6D4)] text-white" :
+                event.priority === "critical" ? "bg-[var(--primary,#6366F1)] text-white" :
                 event.priority === "high"     ? "bg-amber-500 text-white" :
                                                 "bg-blue-500 text-white"
               }`}>
@@ -157,7 +157,7 @@ export default function BusinessPage() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/business/checkout"
-            className="inline-block rounded-xl bg-[var(--primary,#06B6D4)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+            className="inline-block rounded-xl bg-[var(--primary,#6366F1)] px-8 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
           >
             プランを選んで始める →
           </Link>

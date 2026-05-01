@@ -19,7 +19,7 @@ export function CompatibilityReportSection({ report }: CompatibilityReportSectio
       aria-labelledby="compat-h"
       data-testid="intelligence-compatibility-report"
       data-component="intelligence-compatibility-report"
-      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-4"
+      className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-brand-primary p-5 sm:p-6 mb-4"
     >
       <header className="flex items-start justify-between gap-3 mb-3">
         <h2
@@ -40,7 +40,7 @@ export function CompatibilityReportSection({ report }: CompatibilityReportSectio
       <div className="flex items-baseline gap-3 flex-wrap">
         <p
           data-testid="compat-percent"
-          className="text-cyan-400 metric-prime tabular-nums"
+          className="text-brand-primary metric-prime tabular-nums"
         >
           Compatibility {Math.max(0, Math.min(100, report.percent))}%
         </p>
@@ -94,9 +94,9 @@ export function CompatibilityReportSection({ report }: CompatibilityReportSectio
             <span
               data-testid="compat-pill-bonus"
               aria-label={`ボーナス ${report.bonus}`}
-              className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-400/30 px-2 py-0.5"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/30 px-2 py-0.5"
             >
-              <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
               ボーナス：{report.bonus}
             </span>
           </li>

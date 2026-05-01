@@ -17,16 +17,16 @@ describe("Connected Intelligence Assets — section card on /projects/[id]", () 
     expect(cmp).toContain("Ready");
     expect(cmp).toContain("Synced (from MD Assets)");
     expect(cmp).toMatch(/\/api\/atoa\//);
-    expect(cmp).toMatch(/<Plug[^>]*stroke-cyan-400/);
+    expect(cmp).toMatch(/<Plug[^>]*stroke-brand-primary/);
   });
 
   it("uses the spec pill geometry: emerald for Ready, cyan dot for Synced", () => {
     expect(cmp).toContain("bg-emerald-500/15");
     expect(cmp).toContain("text-emerald-300");
     expect(cmp).toContain("ring-emerald-400/30");
-    expect(cmp).toContain("text-cyan-300");
+    expect(cmp).toContain("text-brand-primary");
     // Cyan vertical bar on the card
-    expect(cmp).toContain("border-l-4 border-l-cyan-400");
+    expect(cmp).toContain("border-l-4 border-l-brand-primary");
   });
 
   it("includes the supporting エンジニア・エージェント copy + 接続中 dot trail", () => {

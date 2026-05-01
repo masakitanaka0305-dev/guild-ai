@@ -50,7 +50,7 @@ export function FloatingPayoutToast({ deltaJpy, bumpCount, label = "お礼が届
         >
           <span className="text-[var(--n-gold,#D4AF37)] font-bold text-lg leading-none">🎉</span>
           <div>
-            <p className="text-[10px] text-cyan-300 font-bold leading-none">おめでとうございます！</p>
+            <p className="text-[10px] text-brand-primary font-bold leading-none">おめでとうございます！</p>
             <p className="text-emerald-300 font-bold text-sm tabular-nums mt-0.5">
               +¥{t.amountJpy.toLocaleString("ja-JP")}
             </p>

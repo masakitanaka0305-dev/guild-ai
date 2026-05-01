@@ -32,7 +32,7 @@ describe("Guild 詳細 link → /asset/[id] with Coming Soon fallback", () => {
     expect(src).toMatch(/aria-modal="true"/);
     expect(src).toContain("Coming Soon");
     expect(src).toContain("MVP 後リリース予定です");
-    expect(src).toContain("bg-cyan-400");
+    expect(src).toContain("bg-brand-primary");
     expect(src).toMatch(/key === "Escape"/);
     expect(src).toContain("bg-midnight-surface rounded-2xl shadow-xl p-6");
   });

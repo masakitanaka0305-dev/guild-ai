@@ -14,7 +14,7 @@ describe("SectionCard — unified card wrapper for /projects/[id]", () => {
     expect(card).toContain("rounded-2xl border border-white/10 bg-midnight-surface");
     expect(card).toContain("p-5 sm:p-6");
     expect(card).toContain("mb-4");
-    expect(card).toContain("border-l-4 border-cyan-400 pl-3");
+    expect(card).toContain("border-l-4 border-brand-primary pl-3");
     expect(card).toContain("text-white font-semibold text-base sm:text-lg");
   });
 
@@ -35,7 +35,7 @@ describe("SectionCard — unified card wrapper for /projects/[id]", () => {
 
   it("/projects/[id] uses lucide Check (cyan-400) and AlertCircle (amber-300) for matched/missing", () => {
     const src = read("src/app/projects/[id]/page.tsx");
-    expect(src).toMatch(/<Check[\s\S]*?stroke-cyan-400/);
+    expect(src).toMatch(/<Check[\s\S]*?stroke-brand-primary/);
     expect(src).toMatch(/<AlertCircle[\s\S]*?stroke-amber-300/);
   });
 });

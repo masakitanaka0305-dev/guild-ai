@@ -24,7 +24,7 @@ function ToastItem({ toast }: { toast: ToastEntry }) {
         ${toast.exiting ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"}
         ${isSubYen
           ? "bg-[#FFFBEB] border border-amber-400/40 text-[#92700E]"
-          : "bg-[var(--primary,#06B6D4)] text-white"
+          : "bg-[var(--primary,#6366F1)] text-white"
         }
       `}
     >

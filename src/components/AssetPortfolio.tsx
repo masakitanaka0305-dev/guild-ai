@@ -67,7 +67,7 @@ function AssetStatusBadge({ status }: { status: AssetStatus }) {
 // ─── Live status badge — Water Guild v3 contrast ─────────────────────────────
 
 const LIVE_STATUS_STYLE: Record<AssetStatusCode, { className: string; dot: string; label: string }> = {
-  ready:           { className: "bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-400/40",       dot: "bg-cyan-300",    label: "待機中" },
+  ready:           { className: "bg-brand-primary/20 text-brand-primary ring-1 ring-brand-primary/40",       dot: "bg-brand-primary",    label: "待機中" },
   executing:       { className: "bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-400/40", dot: "bg-emerald-300", label: "実行中" },
   awaiting_update: { className: "bg-amber-500/20 text-amber-300 ring-1 ring-amber-400/40",    dot: "bg-amber-300",   label: "要メンテナンス" },
 };
@@ -186,7 +186,7 @@ export function AssetPortfolio() {
         <p className="text-slate-400 mb-4">まだ投稿された資産はありません</p>
         <Link
           href="/sell"
-          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary font-semibold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
         >
           投稿する
         </Link>
@@ -212,7 +212,7 @@ export function AssetPortfolio() {
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
             aria-label="並び替え"
-            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-midnight-surface text-text-primary border border-white/10 focus:outline-none focus:border-ai-action focus:ring-1 focus:ring-[#22D3EE]"
+            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-midnight-surface text-text-primary border border-white/10 focus:outline-none focus:border-ai-action focus:ring-1 focus:ring-[#6366F1]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -221,7 +221,7 @@ export function AssetPortfolio() {
           <Link
             href="/sell"
             data-testid="new-listing-cta"
-            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-ai-action text-text-on-primary text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 whitespace-nowrap"
+            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-ai-action text-text-on-primary text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary whitespace-nowrap"
           >
             ＋ 新しく投稿する
           </Link>
@@ -300,7 +300,7 @@ export function AssetPortfolio() {
                       <DetailTrigger
                         guildId={asset.guildId}
                         onComingSoon={showComingSoon}
-                        className="inline-flex items-center justify-center min-h-[44px] px-3 text-cyan-400 underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+                        className="inline-flex items-center justify-center min-h-[44px] px-3 text-brand-primary underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-brand-primary rounded"
                       />
                       <Link
                         href={`/lineage/${encodeURIComponent(asset.guildId)}`}
@@ -326,7 +326,7 @@ export function AssetPortfolio() {
           return (
             <li
               key={asset.guildId}
-              className="bg-midnight-surface border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-cyan-400/40"
+              className="bg-midnight-surface border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-brand-primary/40"
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <h3
@@ -385,7 +385,7 @@ export function AssetPortfolio() {
                 <DetailTrigger
                   guildId={asset.guildId}
                   onComingSoon={showComingSoon}
-                  className="inline-flex items-center justify-center min-h-[44px] px-3 text-sm text-cyan-400 underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+                  className="inline-flex items-center justify-center min-h-[44px] px-3 text-sm text-brand-primary underline-offset-4 hover:underline outline-none focus:outline focus:outline-2 focus:outline-brand-primary rounded"
                 />
               </div>
             </li>

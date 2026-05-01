@@ -20,9 +20,10 @@ describe("Applications redesign + entry from /projects", () => {
 
   it("/applications mobile cards include status chip, MD (font-mono), applied date, timeline, and cancel", () => {
     const src = read("src/app/applications/page.tsx");
-    // Status chip with cyan/amber/slate variants
+    // Status chip with brand-primary/amber/slate variants (#127 retired
+    // the cyan chip in favor of the Mercari Purple brand token).
     expect(src).toContain("STATUS_CHIP");
-    expect(src).toContain("cyan-400");
+    expect(src).toContain("brand-primary");
     expect(src).toContain("amber-400");
     // MD id rendered with font-mono
     expect(src).toMatch(/font-mono[^"]*">\{row\.mdGuildId\}/);

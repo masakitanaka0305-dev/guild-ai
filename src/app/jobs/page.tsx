@@ -43,7 +43,7 @@ export default function JobsPage() {
             <p className="text-4xl mb-3">🎉</p>
             <p className="text-[var(--n-positive,#0E9F4F)] font-bold text-lg mb-1">採用されました！</p>
             <p className="text-sm text-[var(--n-muted,#6B6456)] mb-3">「{applyModal.jobTitle}」</p>
-            <p className="text-[var(--primary,#06B6D4)] font-black text-2xl tabular-nums">
+            <p className="text-[var(--primary,#6366F1)] font-black text-2xl tabular-nums">
               ¥{applyModal.reward.toLocaleString("ja-JP")} 着金
             </p>
           </div>
@@ -57,9 +57,9 @@ export default function JobsPage() {
         </h1>
         <p className="text-sm text-[var(--n-muted,#6B6456)] leading-relaxed">
           ここでは AI エージェントや企業からの{" "}
-          <span className="text-[#06B6D4] font-semibold">依頼</span>
+          <span className="text-[#6366F1] font-semibold">依頼</span>
           が並びます。マッチ度の高い案件を選んで、
-          <span className="text-[#06B6D4] font-semibold">1 タップで応募</span>
+          <span className="text-[#6366F1] font-semibold">1 タップで応募</span>
           できます。
         </p>
       </section>
@@ -77,7 +77,7 @@ export default function JobsPage() {
           return (
             <li key={job.id} className={`bg-[var(--n-surface,#FFFFFF)] border rounded-3xl p-5 transition-all duration-220 ${
               eligibility.canApply && !alreadyApplied
-                ? "border-[var(--primary,#06B6D4)]/30 hover:border-[var(--primary,#06B6D4)]/60 shadow-sm"
+                ? "border-[var(--primary,#6366F1)]/30 hover:border-[var(--primary,#6366F1)]/60 shadow-sm"
                 : "border-[var(--n-divider,rgba(0,0,0,0.08))]"
             }`}>
               <div className="flex items-start justify-between gap-3 mb-3">
@@ -134,7 +134,7 @@ export default function JobsPage() {
                 <button
                   type="button"
                   onClick={() => handleApply(job.id, job.reward)}
-                  className="w-full py-3 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-full bg-[var(--primary,#6366F1)] text-white font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-sm flex items-center justify-center gap-2"
                   aria-label={`${job.title}に応募する`}
                 >
                   <span className="font-black text-base">応募する</span>
@@ -142,7 +142,7 @@ export default function JobsPage() {
                 </button>
               ) : (
                 <div className="rounded-2xl bg-[var(--n-surface-2,#F5F3EE)] px-3 py-2 text-xs text-[var(--n-muted,#6B6456)] text-center">
-                  🔒 {eligibility.hint} — <Link href="/bank" className="text-[var(--primary,#06B6D4)] hover:underline">のこすページへ</Link>
+                  🔒 {eligibility.hint} — <Link href="/bank" className="text-[var(--primary,#6366F1)] hover:underline">のこすページへ</Link>
                 </div>
               )}
             </li>

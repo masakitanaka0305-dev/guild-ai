@@ -13,7 +13,7 @@ describe("BackArrow on detail pages", () => {
     expect(src).toMatch(/min-h-\[44px\]/);
     expect(src).toMatch(/min-w-\[44px\]/);
     expect(src).toMatch(/aria-label=\{label\}/);
-    expect(src).toMatch(/stroke-cyan-400/);
+    expect(src).toMatch(/stroke-brand-primary/);
   });
 
   it("each detail page mounts the shared BackArrow", () => {

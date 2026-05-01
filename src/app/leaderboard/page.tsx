@@ -32,11 +32,11 @@ export default function LeaderboardPage() {
             key={e.handle}
             data-testid="leaderboard-entry"
             data-rank={e.rank}
-            className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-[#FDE047]/70 p-4"
+            className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-[#FBBF24]/70 p-4"
           >
             <Link
               href={`/profile/${e.handle}`}
-              className="flex items-center gap-4 focus:outline focus:outline-2 focus:outline-cyan-400 rounded-xl"
+              className="flex items-center gap-4 focus:outline focus:outline-2 focus:outline-brand-primary rounded-xl"
             >
               <span className="shrink-0 w-10 text-center text-slate-400 font-mono tabular-nums">
                 #{i + 1}
@@ -50,7 +50,7 @@ export default function LeaderboardPage() {
               </div>
               <p
                 data-testid="leaderboard-cumulative"
-                className="text-cyan-400 metric-prime shrink-0"
+                className="text-brand-primary metric-prime shrink-0"
               >
                 ¥{e.cumulativeJpy.toLocaleString("ja-JP")}
               </p>

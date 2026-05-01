@@ -9,13 +9,13 @@ type Status = typeof STATUS_STEPS[number];
 
 const STATUS_CHIP: Record<Status, string> = {
   "受付中":     "bg-slate-700/60 text-slate-200 ring-slate-500/30",
-  "働いてます": "bg-cyan-900/40 text-cyan-200 ring-cyan-400/30",
+  "働いてます": "bg-brand-primary-hover/40 text-cyan-200 ring-brand-primary/30",
   "お礼まち":   "bg-amber-900/40 text-amber-200 ring-amber-400/30",
 };
 
 const STATUS_DOT: Record<Status, string> = {
   "受付中":     "bg-slate-400",
-  "働いてます": "bg-cyan-400",
+  "働いてます": "bg-brand-primary",
   "お礼まち":   "bg-amber-400",
 };
 
@@ -203,14 +203,14 @@ export default function ApplicationsPage() {
           参加状況
         </h1>
         <div className="section-card p-8 flex flex-col items-center text-center gap-3">
-          <ListChecks className="w-8 h-8 stroke-cyan-400" aria-hidden />
+          <ListChecks className="w-8 h-8 stroke-brand-primary" aria-hidden />
           <p className="text-sm text-white font-semibold">まだ参加していません</p>
           <p className="text-xs text-slate-400">
             お困りごとの中から、あなたの知恵が役立ちそうなものを探してみましょう。
           </p>
           <Link
             href="/projects"
-            className="mt-2 inline-flex items-center gap-1 rounded-full bg-cyan-400 px-4 py-2 text-xs font-bold text-text-on-primary hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)]"
+            className="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-primary px-4 py-2 text-xs font-bold text-text-on-primary hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)]"
           >
             お困りごとを探す
             <ArrowRight className="w-3.5 h-3.5" aria-hidden />
@@ -245,7 +245,7 @@ export default function ApplicationsPage() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="bg-midnight-surface border border-white/10 rounded-md px-2 py-1 text-xs text-white focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="bg-midnight-surface border border-white/10 rounded-md px-2 py-1 text-xs text-white focus:outline focus:outline-2 focus:outline-brand-primary"
           >
             <option value="latest">最新順</option>
             <option value="status">ステータス順</option>

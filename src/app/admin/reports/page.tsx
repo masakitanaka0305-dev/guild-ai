@@ -10,7 +10,7 @@ export default function AdminReportsPage() {
           <h1 className="text-xl font-bold text-[var(--n-text,#1A1714)]">不適切レポート管理</h1>
           <p className="text-xs text-[var(--n-muted,#6B6456)] mt-0.5">未処理: {reports.filter((r) => r.status === "pending").length} 件</p>
         </div>
-        <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-[var(--primary,#06B6D4)] text-white">管理者専用</span>
+        <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-[var(--primary,#6366F1)] text-white">管理者専用</span>
       </div>
 
       {reports.length === 0 ? (

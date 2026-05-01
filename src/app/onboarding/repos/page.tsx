@@ -24,7 +24,7 @@ function LanguageBadge({ lang }: { lang: string }) {
     TypeScript: "bg-blue-100 text-blue-700",
     JavaScript: "bg-yellow-100 text-yellow-700",
     Python: "bg-green-100 text-green-700",
-    Go: "bg-cyan-100 text-cyan-700",
+    Go: "bg-cyan-100 text-brand-primary-hover",
     Rust: "bg-orange-100 text-orange-700",
   };
   const cls = colors[lang] ?? "bg-gray-100 text-slate-400";
@@ -78,7 +78,7 @@ export default function ReposPage() {
           <p className="text-sm mt-1">{error}</p>
           <button
             onClick={() => { setError(null); setLoading(true); fetch("/api/repos/list").then(r => r.json()).then(d => { setRepos(d.repos ?? []); setLoading(false); }).catch(e => { setError(e.message); setLoading(false); }); }}
-            className="mt-4 px-4 py-2 rounded-xl bg-[var(--primary,#06B6D4)] text-white text-sm font-bold"
+            className="mt-4 px-4 py-2 rounded-xl bg-[var(--primary,#6366F1)] text-white text-sm font-bold"
           >
             再試行
           </button>
@@ -100,12 +100,12 @@ export default function ReposPage() {
                 key={repo.id}
                 className={`relative flex flex-col p-5 rounded-2xl border transition-shadow hover:shadow-md ${
                   repo.recommended
-                    ? "border-[var(--primary,#06B6D4)] bg-[var(--n-surface,#FFFFFF)]"
+                    ? "border-[var(--primary,#6366F1)] bg-[var(--n-surface,#FFFFFF)]"
                     : "border-[var(--n-border,#E8E4DE)] bg-[var(--n-surface,#FFFFFF)]"
                 }`}
               >
                 {repo.recommended && (
-                  <span className="absolute top-3 right-3 text-xs font-bold text-[var(--primary,#06B6D4)] bg-red-50 px-2 py-0.5 rounded-full">
+                  <span className="absolute top-3 right-3 text-xs font-bold text-[var(--primary,#6366F1)] bg-red-50 px-2 py-0.5 rounded-full">
                     おすすめ
                   </span>
                 )}
@@ -142,7 +142,7 @@ export default function ReposPage() {
 
                 <Link
                   href={`/onboarding/draft/${owner}/${repo.name}`}
-                  className="block text-center py-2 px-4 rounded-full bg-ai-action text-text-on-primary text-xs font-bold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+                  className="block text-center py-2 px-4 rounded-full bg-ai-action text-text-on-primary text-xs font-bold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
                 >
                   Analyze — このコードベースを解析
                 </Link>

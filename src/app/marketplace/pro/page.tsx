@@ -41,8 +41,8 @@ function ChipGroup<T extends string>({
             onClick={() => onChange(opt.value)}
             className={`shrink-0 rounded-full border px-3 py-1 text-[10px] font-semibold transition-colors ${
               value === opt.value
-                ? "bg-[var(--primary,#06B6D4)] border-[var(--primary,#06B6D4)] text-white"
-                : "border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--primary,#06B6D4)] hover:text-[var(--primary,#06B6D4)]"
+                ? "bg-[var(--primary,#6366F1)] border-[var(--primary,#6366F1)] text-white"
+                : "border-[var(--n-divider,rgba(0,0,0,0.08))] text-[var(--n-muted,#6B6456)] hover:border-[var(--primary,#6366F1)] hover:text-[var(--primary,#6366F1)]"
             }`}
           >
             {opt.label}
@@ -56,11 +56,11 @@ function ChipGroup<T extends string>({
 // ─── Result card ─────────────────────────────────────────────────────────────
 
 function ResultCard({ result, rank }: { result: ProSearchResult; rank: number }) {
-  const rankColors = { S: "#D4AF37", A: "#06B6D4", B: "#9890A8" } as const;
+  const rankColors = { S: "#D4AF37", A: "#6366F1", B: "#9890A8" } as const;
   const rankColor = rankColors[result.rank] ?? "#9890A8";
 
   return (
-    <li className="bg-white border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row gap-4 items-start hover:border-[var(--primary,#06B6D4)]/30 transition-colors">
+    <li className="bg-white border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row gap-4 items-start hover:border-[var(--primary,#6366F1)]/30 transition-colors">
       {/* Rank plate */}
       <div
         className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-lg font-extrabold text-white"
@@ -109,7 +109,7 @@ function ResultCard({ result, rank }: { result: ProSearchResult; rank: number })
       <div className="flex flex-row sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
         <Link
           href={`/asset/${result.assetId}`}
-          className="flex-1 sm:flex-none text-center h-9 px-4 rounded-full bg-[var(--primary,#06B6D4)] text-white text-xs font-bold flex items-center justify-center hover:opacity-90 active:scale-[0.97] transition-all"
+          className="flex-1 sm:flex-none text-center h-9 px-4 rounded-full bg-[var(--primary,#6366F1)] text-white text-xs font-bold flex items-center justify-center hover:opacity-90 active:scale-[0.97] transition-all"
         >
           この知能で解決
         </Link>
@@ -159,7 +159,7 @@ export default function MarketplaceProPage() {
       </Link>
 
       <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 rounded-full bg-[var(--primary,#06B6D4)]" />
+        <div className="w-1 h-6 rounded-full bg-[var(--primary,#6366F1)]" />
         <h2 className="text-xl font-extrabold text-[var(--n-text,#1A1714)]">法人検索（Pro Search）</h2>
       </div>
 
@@ -174,7 +174,7 @@ export default function MarketplaceProPage() {
           onChange={(e) => setQuery(e.target.value)}
           rows={3}
           placeholder="例：PDF の請求書を JSON に整形したい。月 50,000 件処理。SLA 99.9%"
-          className="w-full rounded-2xl border border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-surface,#FFFFFF)] px-4 py-3 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#06B6D4)] resize-none"
+          className="w-full rounded-2xl border border-[var(--n-divider,rgba(0,0,0,0.08))] bg-[var(--n-surface,#FFFFFF)] px-4 py-3 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#6366F1)] resize-none"
         />
 
         {/* Filter chips */}
@@ -264,7 +264,7 @@ export default function MarketplaceProPage() {
           </div>
           <button
             type="submit"
-            className="ml-auto h-11 px-8 rounded-full bg-[var(--primary,#06B6D4)] text-white font-bold text-sm hover:opacity-90 active:scale-[0.97] transition-all shadow-sm"
+            className="ml-auto h-11 px-8 rounded-full bg-[var(--primary,#6366F1)] text-white font-bold text-sm hover:opacity-90 active:scale-[0.97] transition-all shadow-sm"
           >
             検索
           </button>

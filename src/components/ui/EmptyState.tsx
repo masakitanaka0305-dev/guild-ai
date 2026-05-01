@@ -34,7 +34,7 @@ export function EmptyState({
       }
     >
       <span aria-hidden className="mb-4">
-        <Hexagon size={64} fill="transparent" stroke="#22D3EE" strokeWidth={1.5} />
+        <Hexagon size={64} fill="transparent" stroke="#6366F1" strokeWidth={1.5} />
       </span>
       <p className="text-base font-semibold text-white tracking-tight mb-1">
         {title}
@@ -45,7 +45,7 @@ export function EmptyState({
       <Link
         href={ctaHref}
         aria-label={ctaLabel}
-        className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary text-sm font-bold hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+        className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary text-sm font-bold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
       >
         {ctaLabel}
       </Link>

@@ -21,9 +21,9 @@ describe("/profile — tab UI + visible numbers", () => {
     expect(src).toMatch(/aria-controls=\{`tabpanel-\$\{t\.id\}`\}/);
   });
 
-  it("active tab is text-cyan-400 with a 2px bottom rule, inactive is text-slate-400", () => {
-    expect(src).toMatch(/active \? "text-cyan-400" : "text-slate-400 hover:text-white"/);
-    expect(src).toMatch(/h-0\.5 bg-cyan-400/);
+  it("active tab is text-brand-primary with a 2px bottom rule, inactive is text-slate-400", () => {
+    expect(src).toMatch(/active \? "text-brand-primary" : "text-slate-400 hover:text-white"/);
+    expect(src).toMatch(/h-0\.5 bg-brand-primary/);
   });
 
   it("header surfaces 「これまでのお礼 ¥」 and 「稼働中 MD」 as cyan metric-prime numbers", () => {
@@ -31,8 +31,8 @@ describe("/profile — tab UI + visible numbers", () => {
     // Friendly Tone (#123): 累計報酬 → これまでのお礼
     expect(src).toMatch(/これまでのお礼 ¥/);
     expect(src).toMatch(/稼働中 MD/);
-    expect(src).toMatch(/data-testid="profile-cumulative-jpy"[\s\S]{0,200}className="text-cyan-400 metric-prime"/);
-    expect(src).toMatch(/data-testid="profile-active-md"[\s\S]{0,200}className="text-cyan-400 metric-prime"/);
+    expect(src).toMatch(/data-testid="profile-cumulative-jpy"[\s\S]{0,200}className="text-brand-primary metric-prime"/);
+    expect(src).toMatch(/data-testid="profile-active-md"[\s\S]{0,200}className="text-brand-primary metric-prime"/);
     expect(src).toContain("text-[#CBD5E1] text-xs uppercase tracking-wide");
   });
 

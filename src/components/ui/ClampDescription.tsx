@@ -55,7 +55,7 @@ export function ClampDescription({
         type="button"
         aria-expanded={expanded}
         onClick={() => setExpanded(v => !v)}
-        className="mt-1 text-xs font-bold text-ai-action hover:underline focus:outline focus:outline-2 focus:outline-cyan-400 rounded"
+        className="mt-1 text-xs font-bold text-ai-action hover:underline focus:outline focus:outline-2 focus:outline-brand-primary rounded"
       >
         {expanded ? "閉じる" : "もっと見る"}
       </button>

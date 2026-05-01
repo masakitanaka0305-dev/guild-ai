@@ -40,7 +40,7 @@ export default function AdminMetricsPage() {
         ].map((stat) => (
           <div key={stat.label} className="section-card p-4 text-center">
             <p className="text-xs text-[var(--n-muted,#6B6456)] mb-1">{stat.label}</p>
-            <p className="text-2xl font-black text-[var(--primary,#06B6D4)]">{stat.value}</p>
+            <p className="text-2xl font-black text-[var(--primary,#6366F1)]">{stat.value}</p>
             <p className="text-[10px] text-[var(--n-muted,#6B6456)]">{stat.sub}</p>
           </div>
         ))}

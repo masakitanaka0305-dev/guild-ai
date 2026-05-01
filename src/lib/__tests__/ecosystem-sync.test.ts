@@ -14,26 +14,26 @@ describe("Ecosystem sync — shared footer banner + nav active state", () => {
     // Mobile sticky band sits above the bottom nav (z-20: below the FAB and nav)
     expect(src).toMatch(/sticky bottom-16[^"]*z-20[^"]*bg-midnight-surface/);
     // Cyan accent + underline on hover
-    expect(src).toContain("text-cyan-400");
+    expect(src).toContain("text-brand-primary");
     expect(src).toContain("underline-offset-4");
     // Both mobile and desktop variants link to /business/checkout
     const linkCount = (src.match(/href="\/business\/checkout"/g) ?? []).length;
     expect(linkCount).toBeGreaterThanOrEqual(2);
   });
 
-  it("BottomNav active tab uses text-cyan-400 + a 2px bottom rule, inactive uses text-slate-400", () => {
+  it("BottomNav active tab uses text-brand-primary + a 2px bottom rule, inactive uses text-slate-400", () => {
     const src = read("src/components/SidebarNav.tsx");
     // Active tab text
-    expect(src).toMatch(/active \? "text-cyan-400" : "text-slate-400"/);
+    expect(src).toMatch(/active \? "text-brand-primary" : "text-slate-400"/);
     // 2px-equivalent bottom rule (h-0.5 = 2px) in cyan-400, anchored to bottom
-    expect(src).toMatch(/absolute bottom-0[^"]*h-0\.5[^"]*bg-cyan-400/);
+    expect(src).toMatch(/absolute bottom-0[^"]*h-0\.5[^"]*bg-brand-primary/);
     // Tab icons follow the same active/inactive treatment
-    expect(src).toMatch(/active \? "stroke-cyan-400" : "stroke-slate-400"/);
+    expect(src).toMatch(/active \? "stroke-brand-primary" : "stroke-slate-400"/);
   });
 
-  it("NotificationBell unread indicator uses bg-cyan-400 (not bg-kaki)", () => {
+  it("NotificationBell unread indicator uses bg-brand-primary (not bg-kaki)", () => {
     const src = read("src/components/NotificationBell.tsx");
-    expect(src).toContain("bg-cyan-400");
+    expect(src).toContain("bg-brand-primary");
     expect(src).not.toContain("bg-kaki");
   });
 });

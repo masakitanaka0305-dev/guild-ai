@@ -14,7 +14,7 @@ describe("Onboarding — later-skip for birthday/address", () => {
     expect(src).toMatch(/data-testid="onboarding-later-skip"/);
     expect(src).toContain("後で設定する →");
     // Cyan secondary, ring-only, full tap target
-    expect(src).toMatch(/data-testid="onboarding-later-skip"[\s\S]{0,500}text-cyan-400/);
+    expect(src).toMatch(/data-testid="onboarding-later-skip"[\s\S]{0,500}text-brand-primary/);
     expect(src).toMatch(/data-testid="onboarding-later-skip"[\s\S]{0,500}min-h-11/);
     expect(src).toMatch(/data-testid="onboarding-later-skip"[\s\S]{0,500}rounded-full/);
   });

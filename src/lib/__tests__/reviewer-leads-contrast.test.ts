@@ -23,7 +23,7 @@ describe("Reviewer / business-leads contrast", () => {
     expect(src).toContain("bg-midnight-surface");
     expect(src).toContain("text-text-primary");
     // Selected plan tile keeps the deep-sea contrast (no nameraka red wash)
-    expect(src).not.toContain("border-[var(--primary,#06B6D4)] bg-red-50");
+    expect(src).not.toContain("border-[var(--primary,#6366F1)] bg-red-50");
   });
 
   it("legacy nameraka color tokens are absent from src/ tsx files (kuroko / 9890A8 / 4A4464 / surface-inset / 3A3664)", () => {

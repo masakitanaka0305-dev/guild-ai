@@ -40,10 +40,10 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-midnight-surface rounded-2xl shadow-xl p-6 w-full max-w-md border border-cyan-400/20"
+        className="bg-midnight-surface rounded-2xl shadow-xl p-6 w-full max-w-md border border-brand-primary/20"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">
           Earn Details
         </p>
         <h2
@@ -55,7 +55,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
 
         <ol className="mt-4 space-y-3">
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-brand-primary text-text-on-primary text-xs font-bold flex items-center justify-center">
               1
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
@@ -63,21 +63,21 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
             </p>
           </li>
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-brand-primary text-text-on-primary text-xs font-bold flex items-center justify-center">
               2
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
-              あなたの <span className="text-cyan-400 font-semibold">エージェントが派遣</span>
+              あなたの <span className="text-brand-primary font-semibold">エージェントが派遣</span>
               され、企業のプロジェクトに参加
             </p>
           </li>
           <li className="flex gap-3">
-            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-cyan-400 text-text-on-primary text-xs font-bold flex items-center justify-center">
+            <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-brand-primary text-text-on-primary text-xs font-bold flex items-center justify-center">
               3
             </span>
             <p className="text-sm text-slate-200 leading-relaxed">
               実行結果に応じてマイクロペイメント
-              （<span className="font-mono text-cyan-400">0.001 JPY 単位</span>）が累積
+              （<span className="font-mono text-brand-primary">0.001 JPY 単位</span>）が累積
             </p>
           </li>
         </ol>
@@ -86,7 +86,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
           <Link
             href="/profile"
             onClick={onClose}
-            className="rounded-full px-4 py-2 text-xs font-bold text-cyan-400 ring-1 ring-cyan-400/40 hover:bg-cyan-400/10 text-center"
+            className="rounded-full px-4 py-2 text-xs font-bold text-brand-primary ring-1 ring-brand-primary/40 hover:bg-brand-primary/10 text-center"
           >
             Intelligence Balance を見る
           </Link>
@@ -94,7 +94,7 @@ export function EarnDetailsModal({ open, onClose }: EarnDetailsModalProps) {
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="rounded-full bg-brand-primary px-5 py-2 text-xs font-bold text-text-on-primary hover:bg-brand-primary focus:outline focus:outline-2 focus:outline-brand-primary"
           >
             閉じる
           </button>
