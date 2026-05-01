@@ -81,11 +81,12 @@ function RevenueBlock({
 
 // ─── Tabs ────────────────────────────────────────────────────────────────────
 
-type TabId = "status" | "md" | "activity";
+type TabId = "status" | "md" | "activity" | "achievements";
 const TABS: { id: TabId; label: string }[] = [
-  { id: "status",   label: "ステータス" },
-  { id: "md",       label: "登記済み MD" },
-  { id: "activity", label: "活動履歴" },
+  { id: "status",       label: "ステータス" },
+  { id: "md",           label: "登記済み MD" },
+  { id: "activity",     label: "活動履歴" },
+  { id: "achievements", label: "アチーブメント" },
 ];
 
 export default function ProfilePage() {
@@ -554,6 +555,36 @@ export default function ProfilePage() {
       </section>
 
       </div>{/* /tabpanel 活動履歴 */}
+
+      {/* ── アチーブメント tab (#130) ─────────────────────────── */}
+      <div
+        role="tabpanel"
+        id="tabpanel-achievements"
+        aria-labelledby="tab-achievements"
+        hidden={activeTab !== "achievements"}
+        className="mt-6 space-y-3"
+      >
+        <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
+          5 つの軸（達成・期待・所属・発見・上達）でバッジを集めましょう。
+          解放済みのバッジは X / Threads で共有できます。
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            data-testid="achievements-link"
+            href="/profile/achievements"
+            className="inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand-primary text-white text-sm font-semibold hover:bg-brand-primary-hover focus:outline focus:outline-2 focus:outline-brand-primary"
+          >
+            アチーブメント・ウォールを開く →
+          </Link>
+          <Link
+            data-testid="knowledge-map-link"
+            href="/profile/map"
+            className="inline-flex items-center justify-center min-h-[44px] px-5 rounded-full border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] text-sm font-semibold hover:bg-[var(--color-bg-elevated)] focus:outline focus:outline-2 focus:outline-brand-primary"
+          >
+            知恵の地図 (Knowledge Map) →
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }

@@ -9,13 +9,14 @@ const src = readFileSync(
 );
 
 describe("/profile — tab UI + visible numbers", () => {
-  it("renders 3 tabs (status / md / activity) with role=tablist + role=tab", () => {
+  it("renders 4 tabs (status / md / activity / achievements) with role=tablist + role=tab", () => {
     expect(src).toMatch(/role="tablist"/);
     expect(src).toMatch(/data-testid="profile-tablist"/);
-    // The TABS table lists exactly the 3 tab ids
+    // The TABS table lists exactly the 4 tab ids (#130 added アチーブメント).
     expect(src).toMatch(/{ id: "status",\s+label: "ステータス" }/);
     expect(src).toMatch(/{ id: "md",\s+label: "登記済み MD" }/);
     expect(src).toMatch(/{ id: "activity",\s+label: "活動履歴" }/);
+    expect(src).toMatch(/{ id: "achievements", label: "アチーブメント" }/);
     // Each tab uses aria-selected + aria-controls
     expect(src).toMatch(/aria-selected=\{active\}/);
     expect(src).toMatch(/aria-controls=\{`tabpanel-\$\{t\.id\}`\}/);
@@ -46,5 +47,6 @@ describe("/profile — tab UI + visible numbers", () => {
     expect(src).toMatch(/id="tabpanel-status"[\s\S]{0,200}hidden=\{activeTab !== "status"\}/);
     expect(src).toMatch(/id="tabpanel-md"[\s\S]{0,200}hidden=\{activeTab !== "md"\}/);
     expect(src).toMatch(/id="tabpanel-activity"[\s\S]{0,200}hidden=\{activeTab !== "activity"\}/);
+    expect(src).toMatch(/id="tabpanel-achievements"[\s\S]{0,200}hidden=\{activeTab !== "achievements"\}/);
   });
 });
