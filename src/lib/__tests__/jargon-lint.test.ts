@@ -57,6 +57,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (UX pass 2 — agent-deploy CTA #118): エージェントをデプロイ / 知能をプラグイン / エージェント派遣中 / 思考をコピー / 後で設定 / Coming Soon / タブ切替 / 応募状況を見る / 取り消す / 別の知能を選びましょう / 編集する
 // Explicitly PERMITTED (Intelligence Deck #119): 自分の知能を登記する / 知能の資産化を開始する / 登記済みエージェント数 / 登記 (Sync) / 鑑定 (Grade) / 派遣 (Deploy) / STEP 1 / STEP 2 / STEP 3
 // Explicitly PERMITTED (Intelligence Proof #120): 鑑定中 / Analyzing your Intelligence / Intelligence Balance / 予測印税 / 伝説の知能ギルド / Hall of Fame / 知能の断片 / 真正性証明 / Legend / Expert / Core / Seed / Confidentiality Filter
+// Explicitly PERMITTED (Hybrid Plug-in System #121): 知能をプラグイン / 案件に参画 / 接続完了 / Plugged-in / デプロイ済み / エンジニア・エージェント / Connected Intelligence Assets / Agent Active
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -124,4 +125,31 @@ describe("jargon-lint: forbidden terms in app UI pages", () => {
       ).toHaveLength(0);
     });
   }
+});
+
+// ─── Hybrid Plug-in System (#121): "エージェントをデプロイ" CTA ban ──────────
+//
+// The phrase is allowed in body / docs / explanations, but it must not
+// appear as a primary CTA. We detect that by looking for it inside any
+// aria-label="..." attribute (CTAs always carry an aria-label).
+describe("jargon-lint: deploy-cta cannot be the aria-label of a primary button", () => {
+  const PRIMARY_FILES = [
+    ...collectTsx(join(process.cwd(), "src", "app")),
+    ...collectTsx(join(process.cwd(), "src", "components")),
+  ].filter((f) => !isApiRoute(f));
+
+  it('"エージェントをデプロイ" must not surface as an aria-label CTA', () => {
+    const violations: string[] = [];
+    for (const file of PRIMARY_FILES) {
+      const content = readFileSync(file, "utf-8");
+      // Skip jargon-lint allow-list comments inside the lint test itself.
+      if (content.includes('aria-label="エージェントをデプロイ"')) {
+        violations.push(file.split("src/")[1] ?? file);
+      }
+    }
+    expect(
+      violations,
+      `Primary CTA aria-label still uses エージェントをデプロイ in: ${violations.join(", ")}`,
+    ).toHaveLength(0);
+  });
 });
