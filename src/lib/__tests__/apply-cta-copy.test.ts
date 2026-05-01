@@ -4,42 +4,52 @@ import { join } from "node:path";
 
 const ROOT = process.cwd();
 
-describe("Apply CTA — 知能をプラグインする (Rezon Protocol)", () => {
+describe("Apply CTA — 知恵を貸す（参加する） — Friendly Tone", () => {
   const src = readFileSync(
     join(ROOT, "src/components/PlugInApply.tsx"),
     "utf-8",
   );
 
-  it("primary CTA reads 「知能をプラグインする（Plugin My Intelligence）」 with the matching aria-label", () => {
-    expect(src).toContain('aria-label="知能をプラグインする"');
-    expect(src).toContain("知能をプラグインする（Plugin My Intelligence）");
-    expect(src).toContain('"プラグイン中..."');
+  it("primary CTA reads 「この知恵を貸す（参加する）」 with the matching aria-label", () => {
+    expect(src).toContain('aria-label="この知恵を貸す"');
+    expect(src).toContain("この知恵を貸す（参加する）");
+    expect(src).toContain('"参加中..."');
   });
 
   it("retires the previous-iteration aria-label CTAs", () => {
+    expect(src).not.toMatch(/aria-label="知能をプラグインする"/);
     expect(src).not.toMatch(/aria-label="案件に参画する"/);
-    expect(src).not.toMatch(/aria-label="知能をプラグイン（案件に参画）"/);
     expect(src).not.toMatch(/aria-label="エージェントをデプロイ"/);
+    expect(src).not.toMatch(/aria-label="この案件に応募する"/);
   });
 
-  it("Plugged-in state reads 「プラグイン済み（Plugged-in）」 with CheckCircle2", () => {
-    expect(src).toContain("プラグイン済み（Plugged-in）");
-    expect(src).toContain('aria-label="プラグイン済み"');
+  it("Plugged-in state reads 「貸出中（参加中）」 with CheckCircle2", () => {
+    expect(src).toContain("貸出中（参加中）");
+    expect(src).toContain('aria-label="貸出中"');
     expect(src).toMatch(/<CheckCircle2\b/);
   });
 
-  it("uses the lucide LogIn icon (and CheckCircle2 in the plugged-in state)", () => {
-    expect(src).toContain('import { LogIn, CheckCircle2 } from "lucide-react"');
-    expect(src).toMatch(/<LogIn\b/);
+  it("uses the lucide Plug icon (and CheckCircle2 in the lent state)", () => {
+    expect(src).toContain('import { Plug, CheckCircle2 } from "lucide-react"');
+    expect(src).toMatch(/<Plug\b/);
   });
 
-  it("MD pre-select label uses 「この知能で参画します」 and the picker stays read-only", () => {
-    expect(src).toContain("この知能で参画します");
+  it("MD pre-select label reads 「この知恵で参加します」 and the picker stays read-only", () => {
+    expect(src).toContain("この知恵で参加します");
     expect(src).toContain('data-testid="apply-readonly-md"');
     expect(src).not.toMatch(/<select\b/);
   });
 
-  it("subcaption beneath the CTA reads 「= 案件に参画する」", () => {
-    expect(src).toContain("= 案件に参画する");
+  it("subcaption beneath the CTA reads the friendly help line", () => {
+    expect(src).toContain("あなたの知恵が、企業のお困りごとを助けます");
+  });
+
+  it("modal heading and body use the friendly tone", () => {
+    expect(src).toContain("選ばれました！");
+    expect(src).toContain(
+      "あなたの知恵のカードを、お困りごとに貸し出しました",
+    );
+    expect(src).toContain("使われた分だけお礼が届きます");
+    expect(src).toContain("参加状況を見る");
   });
 });

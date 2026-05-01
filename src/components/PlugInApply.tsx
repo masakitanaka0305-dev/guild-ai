@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { LogIn, CheckCircle2 } from "lucide-react";
+import { Plug, CheckCircle2 } from "lucide-react";
 import { getDemoOwnedMds } from "@/lib/matching";
 import { pickBestFitMd } from "@/lib/md-pickfit";
 import { getProject } from "@/lib/projects";
@@ -79,10 +79,10 @@ function PluggedInConfirmModal({ open, onClose }: ConfirmModalProps) {
           id="plugin-confirm-heading"
           className="text-white font-semibold text-lg leading-snug"
         >
-          接続完了
+          選ばれました！
         </h2>
         <p className="mt-3 text-slate-200 text-sm leading-relaxed">
-          あなたの知能（MD）に基づいた最適な条件で、案件にエントリーしました。参画中、あなたの知能資産が AI エージェントとして業務をサポートします。
+          あなたの知恵のカードを、お困りごとに貸し出しました。参加中はあなたの代わりに AI が知恵を活かして働き、使われた分だけお礼が届きます。
         </p>
         <div className="mt-5 flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
           <button
@@ -98,7 +98,7 @@ function PluggedInConfirmModal({ open, onClose }: ConfirmModalProps) {
             onClick={onClose}
             className="rounded-full bg-cyan-400 text-[#0B1121] px-5 py-2 text-xs font-bold hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400 text-center"
           >
-            マイページで確認 →
+            参加状況を見る →
           </Link>
         </div>
       </div>
@@ -166,13 +166,13 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
 
   return (
     <div className={wrapperClass} role={wrapperRole} aria-label={wrapperLabel}>
-      {/* Read-only AI pre-select MD — replaces the legacy SELECT picker */}
+      {/* Read-only AI pre-select — friendly tone copy */}
       <div
         data-testid="apply-readonly-md"
         className="rounded-lg bg-[#162035] border border-cyan-400/20 px-3 py-2 text-xs"
       >
         <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
-          この知能で参画します
+          この知恵で参加します
         </p>
         <p className="mt-0.5 font-mono text-[#E2E8F0]">
           {selectedMd ? (
@@ -181,7 +181,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
               <span className="text-cyan-300">[{selectedMd.rank}]</span>
             </>
           ) : (
-            <span className="text-slate-400">保有 MD がありません</span>
+            <span className="text-slate-400">まだ知恵のカードがありません</span>
           )}
         </p>
         {preselect.reason && (
@@ -199,29 +199,29 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
           type="button"
           disabled
           aria-disabled="true"
-          aria-label="プラグイン済み"
+          aria-label="貸出中"
           data-testid="apply-cta-plugged-in"
           className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 bg-emerald-500/10 ring-1 ring-emerald-400/40 text-emerald-300 rounded-full text-sm font-semibold"
         >
           <CheckCircle2 aria-hidden className="w-4 h-4 stroke-emerald-300" />
-          プラグイン済み（Plugged-in）
+          貸出中（参加中）
         </button>
       ) : (
         <button
           onClick={handleApply}
           disabled={!selectedMdId || applying || underwater}
-          aria-label="知能をプラグインする"
+          aria-label="この知恵を貸す"
           data-testid="apply-cta-engage"
           className="w-full px-4 py-3 bg-[#22D3EE] text-[#0B1121] font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2"
         >
-          <LogIn aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
-          {applying ? "プラグイン中..." : "知能をプラグインする（Plugin My Intelligence）"}
+          <Plug aria-hidden className="w-4 h-4 stroke-[#0B1121]" />
+          {applying ? "参加中..." : "この知恵を貸す（参加する）"}
         </button>
       )}
 
       {!pluggedIn && (
         <p className="text-center text-[11px] text-slate-300">
-          = 案件に参画する
+          あなたの知恵が、企業のお困りごとを助けます
         </p>
       )}
 

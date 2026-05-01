@@ -6,15 +6,15 @@ const ROOT = process.cwd();
 const src = readFileSync(join(ROOT, "src/components/PlugInApply.tsx"), "utf-8");
 
 describe("Plug-in flow — confirm modal + plugged-in state + localStorage", () => {
-  it("confirmation modal carries the spec body and routes to /applications", () => {
+  it("confirmation modal carries the friendly body and routes to /applications", () => {
     expect(src).toMatch(/role="dialog"/);
     expect(src).toMatch(/aria-modal="true"/);
     expect(src).toMatch(/aria-labelledby="plugin-confirm-heading"/);
-    expect(src).toContain("接続完了");
+    expect(src).toContain("選ばれました！");
     expect(src).toContain(
-      "あなたの知能（MD）に基づいた最適な条件で、案件にエントリーしました",
+      "あなたの知恵のカードを、お困りごとに貸し出しました",
     );
-    expect(src).toContain("マイページで確認 →");
+    expect(src).toContain("参加状況を見る →");
     expect(src).toMatch(/href="\/applications"/);
     // Esc handler + focus trap
     expect(src).toMatch(/key === "Escape"/);
@@ -23,9 +23,9 @@ describe("Plug-in flow — confirm modal + plugged-in state + localStorage", () 
     expect(src).toContain("max-w-[calc(100vw-32px)]");
   });
 
-  it("on success the CTA flips to a disabled emerald プラグイン済み pill", () => {
+  it("on success the CTA flips to a disabled emerald 貸出中（参加中） pill", () => {
     expect(src).toMatch(/data-testid="apply-cta-plugged-in"/);
-    expect(src).toContain('aria-label="プラグイン済み"');
+    expect(src).toContain('aria-label="貸出中"');
     expect(src).toContain('aria-disabled="true"');
     // Spec colors
     expect(src).toContain("bg-emerald-500/10");
