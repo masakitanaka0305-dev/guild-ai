@@ -54,13 +54,20 @@ describe("/mint — copy assertions", () => {
     expect(page).toContain("もう一枚 出品する");
   });
 
-  it("rank + demo query parameters drive the reveal in the user flow (#131)", () => {
-    // `?rank=A|S|B|D` lets QA preview every tier; `?demo=1` skips the
-    // importer + pipeline beats so the cinematic reveal is reachable
-    // in a single hop.
+  it("cinematic reveal is the default; ?real=1 opts back into the importer flow (#132)", () => {
+    // #132 — cinematic reveal renders by default. The legacy importer
+    // + 4-step pipeline now requires `?real=1` to opt in.
     expect(page).toContain("useSearchParams");
     expect(page).toMatch(/params\?\.get\("rank"\)/);
+    expect(page).toMatch(/params\?\.get\("real"\)\s*===\s*"1"/);
+    // `?demo=1` is still honoured for compatibility.
     expect(page).toMatch(/params\?\.get\("demo"\)\s*===\s*"1"/);
+    // Default-on logic: cinematic is on unless `real` is set (and even
+    // `?real=1&demo=1` keeps the cinematic).
+    expect(page).toMatch(/cinematicDefault\s*=\s*!realParam \|\| demoParam/);
+    // Initial useState seeds both `imported` and `done` to true so the
+    // SSR/client hydration lands on the reveal — no extra clicks.
+    expect(page).toMatch(/useState\(cinematicDefault\)/);
     expect(page).toContain("RANK_VALUATIONS");
     expect(page).toMatch(/DEFAULT_RANK:\s*Rank\s*=\s*"A"/);
   });

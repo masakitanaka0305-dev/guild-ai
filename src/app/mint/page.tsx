@@ -11,9 +11,10 @@ import { useTactile } from "@/hooks/useTactile";
 import { CinematicMint } from "@/components/mint/CinematicMint";
 import type { Rank } from "@/types";
 
-// Per-rank demo valuations. The actual rank reveal is parameterised
-// via `?rank=A|S|B|D`; `?demo=1` skips the importer + pipeline beats
-// so anyone can preview the four-phase reveal in one step.
+// Per-rank demo valuations. The cinematic reveal is the **default**
+// experience on /mint (#132) so users see the four-phase演出 without
+// having to type a query param. `?real=1` opts back into the legacy
+// Mint pipeline (importer → 4 step). `?rank=A|S|B|D` picks the tier.
 const RANK_VALUATIONS: Record<Rank, number> = {
   S: 248_400,
   A: 124_800,
@@ -47,26 +48,37 @@ export default function MintPage() {
 function MintPageInner() {
   const params = useSearchParams();
   const rankParam = params?.get("rank") ?? null;
+  // #132 — cinematic reveal is the default. `?real=1` opts back into
+  // the legacy importer + pipeline flow. `?demo=1` is still honoured
+  // for compatibility with QA links shipped before #132.
+  const realParam = params?.get("real") === "1";
   const demoParam = params?.get("demo") === "1";
+  const cinematicDefault = !realParam || demoParam;
   const rank: Rank = isRank(rankParam) ? rankParam : DEFAULT_RANK;
   const valuationJpy = RANK_VALUATIONS[rank];
 
-  // 3 importers select → step 0..3 → completion (4)
-  // `?demo=1` jumps straight to the cinematic reveal so QA / preview
-  // links don't need to walk the pipeline.
-  const [imported, setImported] = useState(demoParam);
+  // 3 importers select → step 0..3 → completion (4).
+  // Default lands users on the cinematic reveal (`done = true`); `?real=1`
+  // resets to the importer-first pipeline.
+  const [imported, setImported] = useState(cinematicDefault);
   const [stepIdx, setStepIdx] = useState(0);
-  const [done, setDone] = useState(demoParam);
+  const [done, setDone] = useState(cinematicDefault);
   const tap = useTactile("coin");
   const ripple = useRipple();
 
-  // Honor `?demo=1` even when the URL changes after mount.
+  // Honor query-string changes after mount (e.g. user toggles ?real=1
+  // via the URL bar). When `real` flips on we drop back to the importer
+  // start state; otherwise we land directly on the reveal.
   useEffect(() => {
-    if (demoParam) {
+    if (cinematicDefault) {
       setImported(true);
       setDone(true);
+    } else {
+      setImported(false);
+      setStepIdx(0);
+      setDone(false);
     }
-  }, [demoParam]);
+  }, [cinematicDefault]);
 
   function advance() {
     tap();
