@@ -36,15 +36,15 @@ describe("Water Guild — contrast & button shape pass", () => {
     expect(src).toMatch(/border-l-ai-action/);
   });
 
-  it("/projects INDUSTRY and DEADLINE cells use text-text-primary (≥ AA contrast on #0B1121)", () => {
+  it("/projects desktop table cells route through semantic text-muted token (#126)", () => {
     const src = read("src/app/projects/page.tsx");
-    // Friendly Tone (#123): industry tag is now wrapped through
-    // friendlyIndustry(row.industry) — the cell still carries the
-    // E2E8F0 utility, just on the wrapper.
+    // Mercari Lightness (#126): desktop table cells use the
+    // var(--color-text-muted) token for low-emphasis labels.
     const industryCell = src.match(/<td[^>]*>\{friendlyIndustry\(row\.industry\)\}<\/td>/);
-    const deadlineCell = src.match(/<td[^>]*>\{row\.deadline\}<\/td>/);
-    expect(industryCell?.[0] ?? "").toMatch(/text-text-primary/);
-    expect(deadlineCell?.[0] ?? "").toMatch(/text-text-primary/);
+    // Multi-line cell — match the <td> opening with its body call.
+    const deadlineCell = src.match(/<td[^>]*>\s*\{relativeDeadline\(row\.deadline\)\}/);
+    expect(industryCell?.[0] ?? "").toMatch(/text-\[var\(--color-text-muted\)\]/);
+    expect(deadlineCell?.[0] ?? "").toMatch(/text-\[var\(--color-text-muted\)\]/);
   });
 
   it("/projects/[id] Matching Score uses text-cyan-400 metric-prime (no amber/orange)", () => {

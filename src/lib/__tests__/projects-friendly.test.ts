@@ -21,7 +21,8 @@ describe("/projects — お困りごと一覧 (Friendly Tone)", () => {
     expect(list).toContain(">マッチ度<");
     expect(list).toContain(">想定お礼<");
     expect(list).toContain(">締切<");
-    expect(list).toContain("中身を見る");
+    // Mercari Lightness (#126): row CTA is now 「この困りごとを助ける」.
+    expect(list).toContain("この困りごとを助ける");
   });
 
   it("entry link to /applications reads 「参加状況を見る →」", () => {

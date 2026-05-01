@@ -12,7 +12,9 @@ describe("Applications redesign + entry from /projects", () => {
     const src = read("src/app/projects/page.tsx");
     expect(src).toContain("参加状況を見る");
     expect(src).toMatch(/href="\/applications"/);
-    expect(src).toContain("text-cyan-400");
+    // Mercari Lightness (#126): the link picks up the semantic
+    // ai-action token instead of the literal cyan-400 utility.
+    expect(src).toContain("text-[var(--color-ai-action)]");
     expect(src).toContain("ListChecks");
   });
 

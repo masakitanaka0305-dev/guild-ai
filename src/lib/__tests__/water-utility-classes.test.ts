@@ -41,7 +41,7 @@ describe("Water Guild — utility classes", () => {
 });
 
 describe("Water Guild — body-contrast sweep", () => {
-  it("INDUSTRY / DEADLINE / SES challenge cells use #E2E8F0 or slate-400", () => {
+  it("INDUSTRY / DEADLINE / SES challenge cells route through the semantic text tokens (#126)", () => {
     const projects = readFileSync(
       join(ROOT, "src/app/projects/page.tsx"),
       "utf-8",
@@ -50,9 +50,9 @@ describe("Water Guild — body-contrast sweep", () => {
       join(ROOT, "src/app/projects/[id]/page.tsx"),
       "utf-8",
     );
-    expect(projects).toMatch(/text-text-primary/);
-    // Detail page wraps the SES challenge body in ClampDescription, which
-    // applies #E2E8F0 to its body paragraph
+    // Mercari Lightness (#126): /projects table now reaches for
+    // text-[var(--color-text-muted)] / -primary on the cells.
+    expect(projects).toMatch(/text-\[var\(--color-text-(primary|muted)\)\]/);
     expect(detail).toContain("<ClampDescription");
     const clamp = readFileSync(
       join(ROOT, "src/components/ui/ClampDescription.tsx"),

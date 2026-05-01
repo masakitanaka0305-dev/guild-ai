@@ -18,6 +18,21 @@ function friendlyIndustry(raw: string): string {
   return FRIENDLY_INDUSTRY[raw] ?? raw;
 }
 
+/**
+ * Returns a friendly relative-deadline string ("あと N 日") computed
+ * deterministically from the project's `YYYY-MM-DD` deadline. Uses a
+ * fixed reference date so SSR / tests stay stable; in production we'd
+ * thread `Date.now()`.
+ */
+function relativeDeadline(deadline: string, today = new Date("2026-05-09T00:00:00.000Z")): string {
+  const due = new Date(`${deadline}T00:00:00.000Z`).getTime();
+  const diffDays = Math.round((due - today.getTime()) / (24 * 60 * 60 * 1000));
+  if (diffDays < 0) return "締切を過ぎました";
+  if (diffDays === 0) return "今日まで";
+  if (diffDays === 1) return "あと 1 日";
+  return `あと ${diffDays} 日`;
+}
+
 export default function ProjectsPage() {
   const demoMds = getDemoOwnedMds("demo-user");
   const rows = MOCK_PROJECTS.map(p => ({
@@ -30,25 +45,76 @@ export default function ProjectsPage() {
       <div className="flex items-center justify-between mb-4 gap-3">
         <h1
           data-testid="projects-h1"
-          className="text-white font-semibold text-2xl tracking-tight"
+          className="text-[var(--color-text-primary)] font-semibold text-2xl tracking-tight"
         >
           みんなの お困りごと
         </h1>
         <Link
           href="/applications"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 underline-offset-4 hover:underline"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-ai-action)] underline-offset-4 hover:underline"
         >
-          <ListChecks className="w-4 h-4 stroke-cyan-400" aria-hidden />
+          <ListChecks className="w-4 h-4 stroke-[var(--color-ai-action)]" aria-hidden />
           参加状況を見る →
         </Link>
       </div>
-      <p className="text-xs text-slate-400 mb-4">
+      <p className="text-xs text-[var(--color-text-muted)] mb-4">
         企業の困りごとに、あなたの知恵のカードを貸してみませんか？
       </p>
-      <div className="overflow-x-auto">
+
+      {/* Mobile: Mercari-style 2-column card grid */}
+      <ul
+        data-testid="projects-mobile-grid"
+        aria-label="お困りごと一覧"
+        className="md:hidden grid grid-cols-2 gap-3"
+      >
+        {rows.map((row) => {
+          const isRecommended = row.matchScore >= 80;
+          return (
+            <li
+              key={row.id}
+              data-testid="project-card-mobile"
+              className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-3 flex flex-col gap-2 min-w-[160px]"
+            >
+              <p className="font-semibold text-[var(--color-text-primary)] text-sm leading-snug line-clamp-2 min-h-[2.6em]">
+                {row.title}
+              </p>
+              <p className="text-[10px] text-[var(--color-text-muted)] truncate">
+                {friendlyIndustry(row.industry)}
+              </p>
+              <p
+                data-testid="project-card-reward"
+                className="text-base font-bold tabular-nums text-[#B45309]"
+              >
+                想定お礼 ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
+              </p>
+              <div className="flex items-center justify-between text-[10px] tabular-nums">
+                <span
+                  data-testid="project-card-deadline"
+                  className="text-[var(--color-text-muted)]"
+                >
+                  {relativeDeadline(row.deadline)}
+                </span>
+                <span className="font-semibold text-[var(--color-ai-action)]">
+                  マッチ {row.matchScore}%
+                </span>
+              </div>
+              <Link
+                href={`/projects/${row.id}`}
+                aria-label="この困りごとを助ける"
+                className="mt-1 inline-flex items-center justify-center min-h-[40px] rounded-full bg-[var(--color-ai-action)] text-[var(--color-text-on-primary)] text-xs font-bold active:scale-[0.98] motion-reduce:active:scale-100 transition-transform duration-100 focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)]"
+              >
+                {isRecommended ? "🌟 この困りごとを助ける" : "この困りごとを助ける"}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Desktop: keep the table view */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead>
-            <tr className="border-b border-slate-700 text-text-primary text-xs uppercase">
+            <tr className="border-b border-[var(--color-border-subtle)] text-[var(--color-text-muted)] text-xs uppercase">
               <th className="pb-3 pr-4">困りごと</th>
               <th className="pb-3 pr-4">分野</th>
               <th className="pb-3 pr-4">マッチ度</th>
@@ -63,31 +129,33 @@ export default function ProjectsPage() {
               return (
                 <tr
                   key={row.id}
-                  className={`border-b border-slate-800 hover:bg-slate-900 ${isRecommended ? "border-l-4 border-l-ai-action" : "border-l-4 border-l-transparent"}`}
+                  className={`border-b border-[var(--color-border-subtle)] hover:bg-[var(--color-bg-elevated)] ${isRecommended ? "border-l-4 border-l-ai-action" : "border-l-4 border-l-transparent"}`}
                 >
                   <td className="py-3 pr-4">
-                    <p className="font-medium text-white">{row.title}</p>
+                    <p className="font-medium text-[var(--color-text-primary)]">{row.title}</p>
                     {isRecommended && (
                       <span className="text-[10px] text-ai-action font-bold uppercase">おすすめ</span>
                     )}
                   </td>
-                  <td className="py-3 pr-4 text-text-primary text-xs">{friendlyIndustry(row.industry)}</td>
+                  <td className="py-3 pr-4 text-[var(--color-text-muted)] text-xs">{friendlyIndustry(row.industry)}</td>
                   <td className="py-3 pr-4">
                     <span className="font-semibold tabular-nums text-ai-action">
                       {row.matchScore}%
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-text-primary tabular-nums">
+                  <td className="py-3 pr-4 text-[var(--color-text-primary)] tabular-nums">
                     ¥{row.grossRewardJpy.toLocaleString("ja-JP")}
                   </td>
-                  <td className="py-3 pr-4 text-text-primary text-xs">{row.deadline}</td>
+                  <td className="py-3 pr-4 text-[var(--color-text-muted)] text-xs tabular-nums">
+                    {relativeDeadline(row.deadline)}
+                  </td>
                   <td className="py-3">
                     <Link
                       href={`/projects/${row.id}`}
-                      aria-label="この困りごとの中身を見る"
-                      className="px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-cyan-400"
+                      aria-label="この困りごとを助ける"
+                      className="px-4 py-1.5 bg-ai-action text-text-on-primary text-xs font-bold rounded-full min-h-[44px] inline-flex items-center hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] active:scale-[0.98] motion-reduce:active:scale-100 transition-transform duration-100 outline-none focus:outline focus:outline-2 focus:outline-[var(--color-ai-action)]"
                     >
-                      中身を見る
+                      この困りごとを助ける
                     </Link>
                   </td>
                 </tr>
