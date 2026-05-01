@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { getPageTitle, showBackButton } from "@/lib/nav-config";
 import { ThemeSwitch } from "@/components/ui/ThemeSwitch";
+import { EarningTicker } from "@/components/ui/EarningTicker";
 
 export function MainHeader() {
   const pathname = usePathname();
@@ -40,8 +41,9 @@ export function MainHeader() {
         {title}
       </h1>
 
-      {/* Right: theme toggle + small + entry + notification bell */}
+      {/* Right: earning ticker + theme toggle + small + entry + notification bell */}
       <div className="flex items-center justify-end gap-1">
+        <EarningTicker className="mr-1" />
         <ThemeSwitch />
         <Link
           href="/onboarding"

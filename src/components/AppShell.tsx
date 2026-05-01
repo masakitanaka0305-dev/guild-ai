@@ -6,6 +6,7 @@ import { IncomeStreamBar } from "@/components/IncomeStreamBar";
 import { ZeroDayToast } from "@/components/ZeroDayToast";
 import { MainHeader } from "@/components/MainHeader";
 import { ZeroDayBanner } from "@/components/ZeroDayBanner";
+import { EarningTicker } from "@/components/ui/EarningTicker";
 
 // ─── Enterprise CTA banner — shared footer band, sticks above bottom nav ─────
 
@@ -59,6 +60,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="text-white text-xs font-black tracking-wider">G</span>
           </div>
           <span className="text-sm font-bold text-[var(--n-text,#1A1714)]">GUILD AI</span>
+          <EarningTicker className="ml-auto" />
         </div>
         <SidebarNav />
         <EnterpriseCTADesktop />
