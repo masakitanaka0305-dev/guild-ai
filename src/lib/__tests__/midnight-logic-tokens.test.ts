@@ -19,7 +19,9 @@ describe("Midnight Logic — pro toggle palette (#124, dark)", () => {
     expect(block).toMatch(/--color-bg-elevated:\s*#1A2238/i);
     expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
     expect(block).toMatch(/--color-text-soft:\s*#E0E0E0/i);
-    expect(block).toMatch(/--color-text-muted:\s*#94A3B8/i);
+    // #135 — body sub-copy brightened to slate-300 for AAA on abyss base.
+    expect(block).toMatch(/--color-text-muted:\s*#CBD5E1/i);
+    expect(block).toMatch(/--color-text-helper:\s*#94A3B8/i);
     expect(block).toMatch(/--color-link:\s*#C4B5FD/i);
     expect(block).toMatch(/--color-action-primary:\s*#4C1D95/i);
     expect(block).toMatch(/--color-ai-action:\s*var\(--color-action-primary\)/i);

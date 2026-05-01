@@ -19,7 +19,9 @@ describe("Logic White (#125) — default light tokens", () => {
     // secondary text-soft token at #424242.
     expect(css).toMatch(/--color-text-primary:\s*#212121/i);
     expect(css).toMatch(/--color-text-soft:\s*#424242/i);
-    expect(css).toMatch(/--color-text-muted:\s*#475569/i);
+    // #135 — body sub-copy darkened from slate-600 to slate-700 for AAA on white.
+    expect(css).toMatch(/--color-text-muted:\s*#334155/i);
+    expect(css).toMatch(/--color-text-helper:\s*#64748B/i);
     expect(css).toMatch(/--color-text-on-primary:\s*#FFFFFF/i);
     // Action / status (#128 Cinematic Mint — primary moves to Deep Purple).
     expect(css).toMatch(/--color-action-primary:\s*#4C1D95/i);

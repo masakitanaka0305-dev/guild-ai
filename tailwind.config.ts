@@ -67,7 +67,9 @@ const config: Config = {
         },
         text: {
           primary:      "var(--color-text-primary)",
+          soft:         "var(--color-text-soft)",
           muted:        "var(--color-text-muted)",
+          helper:       "var(--color-text-helper)",
           "on-primary": "var(--color-text-on-primary)",
         },
         // Water Guild legacy alias — also routes through CSS variables

@@ -55,10 +55,14 @@
     --color-bg-elevated:    #F1F5F9;   /* L2  modals / hover */
     --color-border-subtle:  rgba(15,23,42,0.06);   /* L3-subtle */
     --color-border-strong:  rgba(15,23,42,0.12);   /* L3-strong */
-    /* ── Text (4 tokens) ──────────────────────────────────────────── */
+    /* ── Text — #135 readability pass ──────────────────────────────
+       text-muted darkened for body sub-copy (was slate-600 #475569;
+       now slate-700 #334155 for ~AAA on white surfaces).
+       text-helper is a new token for footnotes / captions only. */
     --color-text-primary:   #212121;
     --color-text-soft:      #424242;
-    --color-text-muted:     #475569;
+    --color-text-muted:     #334155;
+    --color-text-helper:    #64748B;
     --color-text-on-primary:#FFFFFF;
     --color-link:           #6D28D9;
     /* ── Status / role tokens ─────────────────────────────────────── */
@@ -128,10 +132,14 @@
     --color-bg-elevated:    #1A2238;   /* L2  modals / hover */
     --color-border-subtle:  rgba(255,255,255,0.06);  /* L3-subtle */
     --color-border-strong:  rgba(255,255,255,0.12);  /* L3-strong */
-    /* ── Text (4 tokens) ──────────────────────────────────────────── */
+    /* ── Text — #135 readability pass ──────────────────────────────
+       text-muted brightened for body sub-copy (was slate-400 #94A3B8;
+       now slate-300 #CBD5E1 for ~AAA on the abyss surface).
+       text-helper holds the old slate-400 for true footnotes. */
     --color-text-primary:   #F8FAFC;
     --color-text-soft:      #E0E0E0;
-    --color-text-muted:     #94A3B8;
+    --color-text-muted:     #CBD5E1;
+    --color-text-helper:    #94A3B8;
     --color-text-on-primary:#FFFFFF;
     --color-link:           #C4B5FD;   /* violet-300 reads on abyss */
     /* ── Status / role tokens ─────────────────────────────────────── */
