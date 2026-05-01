@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Copy } from "lucide-react";
 import { RankShield } from "@/components/RankShield";
+import { HexRankBadge } from "@/components/ui/HexRankBadge";
 import { ComplexityMeter } from "@/components/ComplexityMeter";
 import { AreaChart } from "@/components/AreaChart";
 import { ImpactCard } from "@/components/ImpactCard";
@@ -76,39 +77,6 @@ function RevenueBlock({
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-
-// ─── Hexagonal rank badge (large, static) ────────────────────────────────────
-
-function HexRankBadge({ rank, size = 48 }: { rank: "S" | "A" | "B"; size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      role="img"
-      aria-label={`鑑定ランク ${rank}`}
-      className="flex-shrink-0"
-    >
-      <polygon
-        points="50,4 92,27 92,73 50,96 8,73 8,27"
-        fill="#162035"
-        stroke="#22D3EE"
-        strokeWidth="3"
-      />
-      <text
-        x="50"
-        y="60"
-        textAnchor="middle"
-        fontFamily="inherit"
-        fontWeight={900}
-        fontSize="38"
-        fill="#22D3EE"
-      >
-        {rank}
-      </text>
-    </svg>
-  );
-}
 
 // ─── Tabs ────────────────────────────────────────────────────────────────────
 
