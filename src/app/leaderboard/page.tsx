@@ -38,7 +38,7 @@ export default function LeaderboardPage() {
               href={`/profile/${e.handle}`}
               className="flex items-center gap-4 focus:outline focus:outline-2 focus:outline-cyan-400 rounded-xl"
             >
-              <span className="shrink-0 w-10 text-center text-slate-500 font-mono tabular-nums">
+              <span className="shrink-0 w-10 text-center text-slate-400 font-mono tabular-nums">
                 #{i + 1}
               </span>
               <HexRankBadge rank="S" size={48} />
