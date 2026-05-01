@@ -6,7 +6,7 @@ import { Plug, CheckCircle2 } from "lucide-react";
 import { getDemoOwnedMds } from "@/lib/matching";
 import { pickBestFitMd } from "@/lib/md-pickfit";
 import { getProject } from "@/lib/projects";
-import { TAP_CLASS } from "@/lib/motion";
+import { TAP_CLASS, useRipple } from "@/lib/motion";
 import { useTactile } from "@/hooks/useTactile";
 
 interface Props {
@@ -91,14 +91,14 @@ function PluggedInConfirmModal({ open, onClose }: ConfirmModalProps) {
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-full px-4 py-2 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/5 focus:outline focus:outline-2 focus:outline-cyan-400"
+            className="rounded-full px-4 py-2 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/5 focus:outline focus:outline-2 focus:outline-brand-primary"
           >
             閉じる
           </button>
           <Link
             href="/applications"
             onClick={onClose}
-            className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300 focus:outline focus:outline-2 focus:outline-cyan-400 text-center"
+            className="rounded-full bg-brand-primary text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-brand-primary focus:outline focus:outline-2 focus:outline-brand-primary text-center"
           >
             参加状況を見る →
           </Link>
@@ -129,6 +129,7 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
   const [pluggedIn, setPluggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const tap = useTactile("quest");
+  const ripple = useRipple();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -173,16 +174,16 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
       {/* Read-only AI pre-select — friendly tone copy */}
       <div
         data-testid="apply-readonly-md"
-        className="rounded-lg bg-midnight-surface border border-cyan-400/20 px-3 py-2 text-xs"
+        className="rounded-lg bg-midnight-surface border border-brand-primary/20 px-3 py-2 text-xs"
       >
-        <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">
           この知恵で参加します
         </p>
         <p className="mt-0.5 font-mono text-text-primary">
           {selectedMd ? (
             <>
               {selectedMd.id}{" "}
-              <span className="text-cyan-300">[{selectedMd.rank}]</span>
+              <span className="text-brand-primary">[{selectedMd.rank}]</span>
             </>
           ) : (
             <span className="text-slate-400">まだ知恵のカードがありません</span>
@@ -213,13 +214,15 @@ export function PlugInApply({ projectId, sticky = false, underwater = false }: P
       ) : (
         <button
           onClick={handleApply}
+          onPointerDown={ripple.onPointerDown}
           disabled={!selectedMdId || applying || underwater}
           aria-label="この知恵を貸す"
           data-testid="apply-cta-engage"
-          className={`w-full px-4 py-3 bg-ai-action text-text-on-primary font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)] outline-none focus:outline focus:outline-2 focus:outline-cyan-400 inline-flex items-center justify-center gap-2 ${TAP_CLASS}`}
+          className={`relative overflow-hidden w-full px-4 py-3 bg-brand-primary text-white font-bold rounded-full disabled:opacity-40 disabled:cursor-not-allowed min-h-[44px] hover:bg-brand-primary-hover outline-none focus:outline focus:outline-2 focus:outline-brand-primary inline-flex items-center justify-center gap-2 ${TAP_CLASS}`}
         >
-          <Plug aria-hidden className="w-4 h-4 stroke-midnight-base" />
+          <Plug aria-hidden className="w-4 h-4 stroke-white" />
           {applying ? "参加中..." : "この知恵を貸す（参加する）"}
+          {ripple.ripples}
         </button>
       )}
 

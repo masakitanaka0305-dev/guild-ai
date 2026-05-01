@@ -9,7 +9,7 @@ import { CrystalSvg } from "@/components/ui/CrystalSvg";
 import { ShieldedBadge } from "@/components/ui/ShieldedBadge";
 import { MINT_STEPS, MINT_IMPORTS } from "@/lib/mint-pipeline";
 import { rankCardCta } from "@/lib/proof-of-make";
-import { TAP_CLASS } from "@/lib/motion";
+import { TAP_CLASS, useRipple } from "@/lib/motion";
 import { useTactile } from "@/hooks/useTactile";
 import type { Rank } from "@/types";
 
@@ -30,6 +30,7 @@ export default function MintPage() {
   const [stepIdx, setStepIdx] = useState(0);
   const [done, setDone] = useState(false);
   const tap = useTactile("coin");
+  const ripple = useRipple();
 
   function advance() {
     tap();
@@ -58,7 +59,7 @@ export default function MintPage() {
           取っておきのメモを教えてください
         </h1>
         <p className="mt-2 text-slate-300 text-sm leading-relaxed">
-          あなたのコツや工夫が、世界の AI に貸し出される <span className="text-cyan-400 font-semibold">知恵のカード</span> に変わります。
+          あなたのコツや工夫が、世界の AI に貸し出される <span className="text-brand-primary font-semibold">知恵のカード</span> に変わります。
         </p>
       </header>
 
@@ -78,7 +79,7 @@ export default function MintPage() {
                   type="button"
                   data-testid={`mint-import-${imp.id}`}
                   onClick={chooseImport}
-                  className="w-full text-left rounded-2xl border border-white/10 bg-midnight-surface hover:border-cyan-400/40 p-4 transition-colors"
+                  className="w-full text-left rounded-2xl border border-white/10 bg-midnight-surface hover:border-brand-primary/40 p-4 transition-colors"
                 >
                   <p className="text-white font-semibold">{imp.label}</p>
                   <p className="mt-1 text-xs text-slate-400">{imp.description}</p>
@@ -93,7 +94,7 @@ export default function MintPage() {
         <section
           data-testid="mint-pipeline"
           aria-labelledby="mint-pipeline-h"
-          className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-cyan-400 p-5 sm:p-6 mb-6"
+          className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-brand-primary p-5 sm:p-6 mb-6"
         >
           <h2 id="mint-pipeline-h" className="text-white font-semibold text-base mb-3">
             知恵をかたちにします
@@ -120,14 +121,14 @@ export default function MintPage() {
                     isDone
                       ? "bg-emerald-500/10 border-l-4 border-emerald-400"
                       : isActive
-                      ? "bg-cyan-500/10 border-l-4 border-cyan-400"
+                      ? "bg-brand-primary/10 border-l-4 border-brand-primary"
                       : "bg-midnight-base border-l-4 border-transparent opacity-70"
                   }`}
                 >
                   <Icon
                     aria-hidden
                     className={`w-5 h-5 mt-0.5 shrink-0 ${
-                      isDone ? "stroke-emerald-300" : isActive ? "stroke-cyan-300" : "stroke-slate-400"
+                      isDone ? "stroke-emerald-300" : isActive ? "stroke-brand-primary" : "stroke-slate-400"
                     }`}
                   />
                   <div className="min-w-0 flex-1">
@@ -153,9 +154,11 @@ export default function MintPage() {
               type="button"
               data-testid="mint-advance"
               onClick={advance}
-              className={`rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300 ${TAP_CLASS}`}
+              onPointerDown={ripple.onPointerDown}
+              className={`relative overflow-hidden rounded-full bg-brand-primary text-white px-5 py-2 text-xs font-semibold hover:bg-brand-primary-hover ${TAP_CLASS}`}
             >
               {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : rankCardCta(DEMO_RANK)}
+              {ripple.ripples}
             </button>
           </div>
         </section>
@@ -165,15 +168,15 @@ export default function MintPage() {
         <section
           data-testid="mint-complete"
           aria-labelledby="mint-complete-h"
-          className="rounded-2xl border border-cyan-400/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(34,211,238,0.25),0_0_24px_rgba(34,211,238,0.18)]"
+          className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(99,102,241,0.25),0_0_24px_rgba(99,102,241,0.18)]"
         >
           <CrystalSvg size={96} className="mx-auto mb-3" />
           <h2 id="mint-complete-h" className="text-white font-semibold text-xl">
             おめでとうございます！
           </h2>
           <p className="mt-2 text-slate-200 text-sm leading-relaxed">
-            これは <span className="text-cyan-400 font-semibold">仕事の場面</span> で役立つ、
-            <span className="text-[#FDE047] font-semibold"> 金</span> の太鼓判レベルの知恵ですね！
+            これは <span className="text-brand-primary font-semibold">仕事の場面</span> で役立つ、
+            <span className="text-[#FBBF24] font-semibold"> 金</span> の太鼓判レベルの知恵ですね！
           </p>
           <div className="mt-4 flex flex-col items-center gap-3">
             <HexRankBadge rank="S" size={64} showSubLabel />
@@ -181,7 +184,7 @@ export default function MintPage() {
           </div>
           <p className="mt-4 text-slate-400 text-xs leading-relaxed max-w-prose mx-auto">
             世界中の AI が、あなたの代わりにこの知恵を使って働きます。使われた分のお礼が
-            <span className="text-cyan-400">マイページ — もちもの</span>に届きます。
+            <span className="text-brand-primary">マイページ — もちもの</span>に届きます。
           </p>
           <div className="mt-5 flex flex-col-reverse sm:flex-row sm:justify-center gap-2">
             <button
@@ -193,7 +196,7 @@ export default function MintPage() {
             </button>
             <Link
               href="/guild"
-              className="rounded-full bg-cyan-400 text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-cyan-300 text-center"
+              className="rounded-full bg-brand-primary text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-brand-primary text-center"
             >
               もちものを見る →
             </Link>

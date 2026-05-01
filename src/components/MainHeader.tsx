@@ -49,9 +49,9 @@ export function MainHeader() {
           href="/onboarding"
           aria-label="出す"
           data-testid="header-plus"
-          className="w-9 h-9 flex items-center justify-center rounded-full text-cyan-400 hover:bg-cyan-400/10 transition-colors active:scale-95"
+          className="w-9 h-9 flex items-center justify-center rounded-full text-brand-primary hover:bg-brand-primary/10 transition-colors active:scale-95"
         >
-          <Plus className="w-5 h-5 stroke-cyan-400" aria-hidden />
+          <Plus className="w-5 h-5 stroke-brand-primary" aria-hidden />
         </Link>
         <button
           type="button"
