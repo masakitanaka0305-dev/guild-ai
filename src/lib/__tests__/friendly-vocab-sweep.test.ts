@@ -15,12 +15,17 @@ describe("Friendly Vocab Sweep (#126)", () => {
     expect(lib).toContain("分身AIが企業で働き始める");
   });
 
-  it("Mint completion screen still uses 「太鼓判」 (legacy gold caption)", () => {
+  it("Mint completion still routes the rank-aware 太鼓判 reveal (#131)", () => {
     const src = read("src/app/mint/page.tsx");
-    // Mercari Lightness keeps the rank-aware caption on the success
-    // screen but the surrounding copy stays friendly.
-    expect(src).toContain("太鼓判");
-    expect(src).toContain("もちものを見る");
+    // #131 swapped the in-page completion screen for <CinematicMint>,
+    // which carries the rank-aware 太鼓判 caption (sourced from
+    // @/lib/rank-rarity) + マイ銀行で確認 CTA.
+    expect(src).toContain("rankCardCta");
+    const cinematic = read("src/components/mint/CinematicMint.tsx");
+    expect(cinematic).toContain("マイ銀行で確認");
+    expect(cinematic).toContain("getRarity(rank)");
+    const rarity = read("src/lib/rank-rarity/index.ts");
+    expect(rarity).toContain("太鼓判");
   });
 
   it("Plug-in Apply CTA stays on the friendly 「この知恵を貸す」 verb", () => {

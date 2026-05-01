@@ -1,17 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { ScanSearch, Target, Gem, Lock } from "lucide-react";
 import { HexagonSteps } from "@/components/ui/HexagonSteps";
-import { HexRankBadge } from "@/components/ui/HexRankBadge";
-import { CrystalSvg } from "@/components/ui/CrystalSvg";
-import { ShieldedBadge } from "@/components/ui/ShieldedBadge";
 import { MINT_STEPS, MINT_IMPORTS } from "@/lib/mint-pipeline";
 import { rankCardCta } from "@/lib/proof-of-make";
 import { TAP_CLASS, useRipple } from "@/lib/motion";
 import { useTactile } from "@/hooks/useTactile";
+import { CinematicMint } from "@/components/mint/CinematicMint";
 import type { Rank } from "@/types";
+
+// Per-rank demo valuations. The actual rank reveal is parameterised
+// via `?rank=A|S|B|D`; `?demo=1` skips the importer + pipeline beats
+// so anyone can preview the four-phase reveal in one step.
+const RANK_VALUATIONS: Record<Rank, number> = {
+  S: 248_400,
+  A: 124_800,
+  B:  62_400,
+  D:  18_200,
+};
+
+function isRank(v: string | null): v is Rank {
+  return v === "S" || v === "A" || v === "B" || v === "D";
+}
 
 const ICON_MAP = {
   ScanSearch,
@@ -20,17 +32,41 @@ const ICON_MAP = {
   Lock,
 } as const;
 
-// Demo: completion screen always shows S rank in this surface. In
-// production the rank would come from grading.
-const DEMO_RANK: Rank = "S";
+// Default rank when no `?rank=` query is present. Production will read
+// the rank from grading; this constant is only the demo fallback.
+const DEFAULT_RANK: Rank = "A";
 
 export default function MintPage() {
+  return (
+    <Suspense fallback={null}>
+      <MintPageInner />
+    </Suspense>
+  );
+}
+
+function MintPageInner() {
+  const params = useSearchParams();
+  const rankParam = params?.get("rank") ?? null;
+  const demoParam = params?.get("demo") === "1";
+  const rank: Rank = isRank(rankParam) ? rankParam : DEFAULT_RANK;
+  const valuationJpy = RANK_VALUATIONS[rank];
+
   // 3 importers select → step 0..3 → completion (4)
-  const [imported, setImported] = useState(false);
+  // `?demo=1` jumps straight to the cinematic reveal so QA / preview
+  // links don't need to walk the pipeline.
+  const [imported, setImported] = useState(demoParam);
   const [stepIdx, setStepIdx] = useState(0);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(demoParam);
   const tap = useTactile("coin");
   const ripple = useRipple();
+
+  // Honor `?demo=1` even when the URL changes after mount.
+  useEffect(() => {
+    if (demoParam) {
+      setImported(true);
+      setDone(true);
+    }
+  }, [demoParam]);
 
   function advance() {
     tap();
@@ -157,7 +193,7 @@ export default function MintPage() {
               onPointerDown={ripple.onPointerDown}
               className={`relative overflow-hidden rounded-full bg-brand-primary text-white px-5 py-2 text-xs font-semibold hover:bg-brand-primary-hover ${TAP_CLASS}`}
             >
-              {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : rankCardCta(DEMO_RANK)}
+              {stepIdx < MINT_STEPS.length - 1 ? "次のステップ" : rankCardCta(rank)}
               {ripple.ripples}
             </button>
           </div>
@@ -168,39 +204,19 @@ export default function MintPage() {
         <section
           data-testid="mint-complete"
           aria-labelledby="mint-complete-h"
-          className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(76,29,149,0.25),0_0_24px_rgba(76,29,149,0.18)]"
+          className="space-y-3"
         >
-          <CrystalSvg size={96} className="mx-auto mb-3" />
-          <h2 id="mint-complete-h" className="text-white font-semibold text-xl">
-            おめでとうございます！
+          <h2 id="mint-complete-h" className="sr-only">
+            鑑定結果
           </h2>
-          <p className="mt-2 text-slate-200 text-sm leading-relaxed">
-            これは <span className="text-brand-primary font-semibold">仕事の場面</span> で役立つ、
-            <span className="text-[#F59E0B] font-semibold"> 金</span> の太鼓判レベルの知恵ですね！
-          </p>
-          <div className="mt-4 flex flex-col items-center gap-3">
-            <HexRankBadge rank="S" size={64} showSubLabel />
-            <ShieldedBadge />
-          </div>
-          <p className="mt-4 text-slate-400 text-xs leading-relaxed max-w-prose mx-auto">
-            世界中の AI が、あなたの代わりにこの知恵を使って働きます。使われた分のお礼が
-            <span className="text-brand-primary">マイページ — もちもの</span>に届きます。
-          </p>
-          <div className="mt-5 flex flex-col-reverse sm:flex-row sm:justify-center gap-2">
-            <button
-              type="button"
-              onClick={reset}
-              className="rounded-full px-4 py-2 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/5"
-            >
-              もう一枚 出品する
-            </button>
-            <Link
-              href="/guild"
-              className="rounded-full bg-brand-primary text-text-on-primary px-5 py-2 text-xs font-bold hover:bg-brand-primary text-center"
-            >
-              もちものを見る →
-            </Link>
-          </div>
+          <CinematicMint rank={rank} valuationJpy={valuationJpy} />
+          <button
+            type="button"
+            onClick={reset}
+            className="block mx-auto rounded-full px-4 py-2 text-xs font-bold text-slate-300 hover:text-white hover:bg-white/5"
+          >
+            もう一枚 出品する
+          </button>
         </section>
       )}
     </main>

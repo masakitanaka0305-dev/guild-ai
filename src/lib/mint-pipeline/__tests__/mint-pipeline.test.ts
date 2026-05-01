@@ -44,27 +44,24 @@ describe("/mint — copy assertions", () => {
     expect(page).toContain("知恵のカード");
   });
 
-  it("completion screen carries the 太鼓判レベル congratulatory copy", () => {
+  it("completion screen mounts <CinematicMint> with rank + valuation (#131)", () => {
     expect(page).toContain('data-testid="mint-complete"');
-    expect(page).toContain("おめでとうございます！");
-    expect(page).toContain("仕事の場面");
-    // Note: split across spans for the gold tint, but the user-facing
-    // sentence reads "...金 の太鼓判レベルの知恵ですね！".
-    expect(page).toContain("太鼓判レベルの知恵");
-    expect(page).toContain("金</span> の太鼓判");
+    // The legacy congratulatory block was replaced with the four-phase
+    // cinematic reveal so users actually see the rank-aware演出.
+    expect(page).toContain('import { CinematicMint }');
+    expect(page).toMatch(/<CinematicMint\s+rank=\{rank\}\s+valuationJpy=\{valuationJpy\}/);
+    // Reset CTA stays so users can run another Mint without a reload.
+    expect(page).toContain("もう一枚 出品する");
   });
 
-  it("ShieldedBadge mounts on the completion screen", () => {
-    expect(page).toContain('import { ShieldedBadge } from "@/components/ui/ShieldedBadge"');
-    expect(page).toMatch(/<ShieldedBadge\b/);
-    const badge = read("src/components/ui/ShieldedBadge.tsx");
-    expect(badge).toContain("大手 AI のクローラから守られています");
-  });
-
-  it("CrystalSvg shows on the completion screen with role=img + aria-label", () => {
-    expect(page).toMatch(/<CrystalSvg\b/);
-    const crystal = read("src/components/ui/CrystalSvg.tsx");
-    expect(crystal).toMatch(/role="img"/);
-    expect(crystal).toContain('aria-label="プロジェクト・クリスタル"');
+  it("rank + demo query parameters drive the reveal in the user flow (#131)", () => {
+    // `?rank=A|S|B|D` lets QA preview every tier; `?demo=1` skips the
+    // importer + pipeline beats so the cinematic reveal is reachable
+    // in a single hop.
+    expect(page).toContain("useSearchParams");
+    expect(page).toMatch(/params\?\.get\("rank"\)/);
+    expect(page).toMatch(/params\?\.get\("demo"\)\s*===\s*"1"/);
+    expect(page).toContain("RANK_VALUATIONS");
+    expect(page).toMatch(/DEFAULT_RANK:\s*Rank\s*=\s*"A"/);
   });
 });
