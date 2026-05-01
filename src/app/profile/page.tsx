@@ -522,14 +522,15 @@ export default function ProfilePage() {
 
             {isS && (
               <div
-                className="flex items-center gap-3 rounded-xl border-2 border-yellow-400 bg-yellow-50 px-4 py-3"
+                data-testid="profile-s-rank-banner"
+                className="flex items-center gap-3 rounded-xl border-2 border-[var(--color-action-secondary)] bg-[var(--color-action-secondary-soft)] px-4 py-3"
                 role="status"
                 aria-label="S ランク達成バッジ"
               >
-                <span className="text-2xl flex-shrink-0">🏆</span>
+                <span className="text-2xl flex-shrink-0" aria-hidden>🏆</span>
                 <div>
-                  <p className="text-sm font-black text-yellow-800">魂の登記 — S ランク達成</p>
-                  <p className="text-xs text-yellow-700 mt-0.5">
+                  <p className="text-sm font-black text-[var(--color-text-primary)]">魂の登記 — S ランク達成</p>
+                  <p className="text-xs text-[var(--color-text-soft)] mt-0.5">
                     思考密度・稼働実績・意思シグナル・実稼働コードの全条件を満たした最高格付け
                   </p>
                 </div>

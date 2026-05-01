@@ -4,10 +4,12 @@ export const dynamic = "force-dynamic";
 
 function rankBadgeClass(rank: ApplicationCard["rank"]): string {
   switch (rank) {
-    case "S": return "bg-yellow-400 text-yellow-900";
-    case "A": return "bg-[var(--n-primary,#E64545)] text-white";
-    case "B": return "bg-blue-500 text-white";
-    default:  return "bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)]";
+    // #133 — S aligns with brand-secondary (gold), A/B inherit the
+    // brand action so admin chips stop fighting the global palette.
+    case "S": return "bg-[var(--color-action-secondary)] text-[#0F172A]";
+    case "A": return "bg-[var(--color-action-primary)] text-white";
+    case "B": return "bg-[var(--color-action-primary-hover)] text-white";
+    default:  return "bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)]";
   }
 }
 
