@@ -111,7 +111,7 @@ export default function MintPage() {
                       ? "bg-emerald-500/10 border-l-4 border-emerald-400"
                       : isActive
                       ? "bg-cyan-500/10 border-l-4 border-cyan-400"
-                      : "bg-[#0F1827] border-l-4 border-transparent opacity-70"
+                      : "bg-midnight-base border-l-4 border-transparent opacity-70"
                   }`}
                 >
                   <Icon

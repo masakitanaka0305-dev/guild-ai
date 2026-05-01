@@ -500,7 +500,7 @@ function OnboardingContent() {
           {/* Optional profile fields — birthday + address. Default skipped. */}
           <div
             data-testid="onboarding-optional-fields"
-            className="rounded-xl border border-white/5 bg-[#0F1827] p-4 space-y-3"
+            className="rounded-xl border border-white/5 bg-midnight-base p-4 space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

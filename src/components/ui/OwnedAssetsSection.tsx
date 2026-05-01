@@ -142,7 +142,7 @@ export function OwnedAssetsSection() {
       </header>
 
       {/* もちもの時価のうごき */}
-      <div className="rounded-xl border border-white/5 bg-[#0F1827] p-4 mb-4">
+      <div className="rounded-xl border border-white/5 bg-midnight-base p-4 mb-4">
         <div className="flex items-baseline justify-between gap-3">
           <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
             もちもの時価のうごき
@@ -176,7 +176,7 @@ export function OwnedAssetsSection() {
           <li
             key={a.guildId}
             data-testid="owned-asset-card"
-            className="rounded-2xl border border-white/10 bg-[#0F1827] p-4"
+            className="rounded-2xl border border-white/10 bg-midnight-base p-4"
           >
             <div className="flex items-start justify-between gap-3 mb-2">
               <TypePill type={a.type} />
