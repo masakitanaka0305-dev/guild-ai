@@ -8,19 +8,14 @@ function read(rel: string) {
 }
 
 describe("Onboarding 鑑定中 wait page → reveal flow", () => {
-  it("/onboarding/grading/[handle]/[repo] is a 3-second static wait that replaces to draft?reveal=1", () => {
+  it("/onboarding/grading/[handle]/[repo] mounts the Cinematic Mint reveal (#128)", () => {
     const src = read("src/app/onboarding/grading/[handle]/[repo]/page.tsx");
-    expect(src).toContain("鑑定中...");
-    expect(src).toContain("Analyzing your Intelligence");
-    expect(src).toContain("bg-midnight-base");
-    expect(src).toMatch(/role="status"/);
-    expect(src).toMatch(/aria-live="polite"/);
-    // 3-second timeout that replaces with ?reveal=1
-    expect(src).toMatch(/setTimeout\([\s\S]*?3000\)/);
-    expect(src).toMatch(/router\.replace\(`\/onboarding\/draft\/\$\{handle\}\/\$\{repo\}\?reveal=1`\)/);
-    // No animation classes (animate-* excluded)
-    expect(src).not.toMatch(/animate-(bounce|pulse|spin|ping)/);
     expect(src).toContain('data-testid="grading-wait"');
+    expect(src).toContain("CinematicMint");
+    expect(src).toContain("bg-midnight-base");
+    // Continuation link to the draft surface is offered after reveal.
+    expect(src).toMatch(/\/onboarding\/draft\/\$\{handle\}\/\$\{repo\}\?reveal=1/);
+    expect(src).toContain("ノートを編集する");
   });
 
   it("/onboarding/draft/[owner]/[repo]?reveal=1 mounts a static rank Reveal with HexRankBadge", () => {
