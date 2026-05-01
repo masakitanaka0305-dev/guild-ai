@@ -219,7 +219,7 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
             data-rank={rank}
             className={`relative z-10 motion-safe:animate-hero-rise inline-flex flex-col items-center gap-4 rounded-3xl px-7 py-8 ring-1 ring-[var(--color-border-subtle)] bg-[var(--color-bg-surface)]/85 backdrop-blur-sm shadow-brand-glow ${rankGlowShadow(rank)}`}
           >
-            <HexRankBadge rank={rank} size={80} showSubLabel />
+            <HexRankBadge rank={rank} size={80} showSubLabel glow />
 
             <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--color-text-muted)]">
               資産価値

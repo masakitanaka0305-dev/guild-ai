@@ -1,10 +1,14 @@
 // GUILD AI — Static hex-shaped rank badge.
 //
-// Tier colors (Intelligence Proof spec):
-//   S #FBBF24 (Legend) / A #6366F1 (Expert) / B #34D399 (Core) / D #94A3B8 (Seed)
+// Tier colors (Cinematic Mint #128 — pulled from RANK_COLOR_TOKEN):
+//   S #F59E0B (Legend, Electric Gold)
+//   A #94A3B8 (Expert, Silver)
+//   B #B45309 (Core,   Bronze)
+//   D #94A3B8 (Seed,   Slate)
 //
-// Render is intentionally static: no animation, no glow loops. The shell
-// is the single source of truth for the hex contour.
+// Render stays static — no infinite-loop glows. The Cinematic Mint
+// reveal layers a one-shot rank-aware glow *outside* this component
+// (see CinematicMint.tsx → rankGlowShadow).
 
 import type { Rank } from "@/types";
 import { RANK_COLOR_TOKEN, RANK_SUB_LABEL, RANK_TIER } from "@/lib/grading";
@@ -15,9 +19,19 @@ interface HexRankBadgeProps {
   size?: number;
   /** When true, shows the sub-label caption beneath the hex. */
   showSubLabel?: boolean;
+  /** When true (Cinematic Mint), the badge sits inside a rank-coordinated
+   *  drop-shadow halo so the reveal radiates the medal's tier color. */
+  glow?: boolean;
 }
 
-export function HexRankBadge({ rank, size = 48, showSubLabel = false }: HexRankBadgeProps) {
+const GLOW_FILTER: Record<Rank, string> = {
+  S: "drop-shadow(0 0 16px rgba(245,158,11,0.55))",
+  A: "drop-shadow(0 0 12px rgba(148,163,184,0.45))",
+  B: "drop-shadow(0 0 12px rgba(180,83,9,0.45))",
+  D: "drop-shadow(0 0 8px rgba(148,163,184,0.35))",
+};
+
+export function HexRankBadge({ rank, size = 48, showSubLabel = false, glow = false }: HexRankBadgeProps) {
   const tone = RANK_COLOR_TOKEN[rank];
   const ariaLabel = `${rank}ランク ${RANK_SUB_LABEL[rank]}`;
   return (
@@ -29,8 +43,10 @@ export function HexRankBadge({ rank, size = 48, showSubLabel = false }: HexRankB
         role="img"
         aria-label={ariaLabel}
         data-rank={rank}
+        data-glow={glow ? "on" : "off"}
         data-testid="hex-rank-badge"
         className="flex-shrink-0"
+        style={glow ? { filter: GLOW_FILTER[rank] } : undefined}
       >
         <polygon
           points="50,4 92,27 92,73 50,96 8,73 8,27"
