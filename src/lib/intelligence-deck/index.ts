@@ -11,9 +11,9 @@ export interface DeckStep {
 }
 
 export const DECK_STEPS: readonly DeckStep[] = [
-  { number: 1, title: "登記 (Sync)",  subtitle: "GitHub 連携であなたの思考を抽出" },
-  { number: 2, title: "鑑定 (Grade)", subtitle: "AI があなたの専門知能を資産として評価" },
-  { number: 3, title: "派遣 (Deploy)", subtitle: "あなたの代わりに働く AI エージェントを企業へ" },
+  { number: 1, title: "あなたのコツ（メモ）を見つける", subtitle: "GitHub と連携して、あなたが書いてきた『工夫』を AI が読みとります" },
+  { number: 2, title: "そのコツの価値を鑑定する",      subtitle: "金・銀・銅の太鼓判で、市場での読み応えをチェックします" },
+  { number: 3, title: "分身AIが企業で働き始める",      subtitle: "あなたの代わりに、知恵カードが企業のお困りごとを助けます" },
 ] as const;
 
 /**

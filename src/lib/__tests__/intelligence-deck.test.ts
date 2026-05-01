@@ -8,15 +8,15 @@ function read(rel: string) {
 }
 
 describe("Intelligence Deck — three-step onboarding home", () => {
-  it("DECK_STEPS contains 登記 (Sync) → 鑑定 (Grade) → 派遣 (Deploy) in order", () => {
+  it("DECK_STEPS reads as 「コツを見つける」 → 「価値を鑑定する」 → 「分身AIが働き始める」 (Mercari Lightness #126)", () => {
     const src = read("src/lib/intelligence-deck/index.ts");
-    expect(src).toContain('title: "登記 (Sync)"');
-    expect(src).toContain('title: "鑑定 (Grade)"');
-    expect(src).toContain('title: "派遣 (Deploy)"');
-    // Subtitles match the spec verbatim
-    expect(src).toContain("GitHub 連携であなたの思考を抽出");
-    expect(src).toContain("AI があなたの専門知能を資産として評価");
-    expect(src).toContain("あなたの代わりに働く AI エージェントを企業へ");
+    expect(src).toContain('title: "あなたのコツ（メモ）を見つける"');
+    expect(src).toContain('title: "そのコツの価値を鑑定する"');
+    expect(src).toContain('title: "分身AIが企業で働き始める"');
+    // Subtitles use the friendly tone (太鼓判 / お困りごと / 知恵カード)
+    expect(src).toContain("あなたが書いてきた『工夫』を AI が読みとります");
+    expect(src).toContain("金・銀・銅の太鼓判");
+    expect(src).toContain("知恵カードが企業のお困りごとを助けます");
   });
 
   it("getRegisteredAgents returns the deterministic guild count 1284", async () => {
