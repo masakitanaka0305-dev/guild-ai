@@ -3,19 +3,20 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, ListChecks, X, HelpCircle } from "lucide-react";
 
-const STATUS_STEPS = ["受付", "AI鑑定中", "クライアント確認中"] as const;
+// Friendly Tone (#123): 受付中 / 働いてます / お礼まち
+const STATUS_STEPS = ["受付中", "働いてます", "お礼まち"] as const;
 type Status = typeof STATUS_STEPS[number];
 
 const STATUS_CHIP: Record<Status, string> = {
-  "受付":               "bg-slate-700/60 text-slate-200 ring-slate-500/30",
-  "AI鑑定中":           "bg-cyan-900/40 text-cyan-200 ring-cyan-400/30",
-  "クライアント確認中": "bg-amber-900/40 text-amber-200 ring-amber-400/30",
+  "受付中":     "bg-slate-700/60 text-slate-200 ring-slate-500/30",
+  "働いてます": "bg-cyan-900/40 text-cyan-200 ring-cyan-400/30",
+  "お礼まち":   "bg-amber-900/40 text-amber-200 ring-amber-400/30",
 };
 
 const STATUS_DOT: Record<Status, string> = {
-  "受付":               "bg-slate-400",
-  "AI鑑定中":           "bg-cyan-400",
-  "クライアント確認中": "bg-amber-400",
+  "受付中":     "bg-slate-400",
+  "働いてます": "bg-cyan-400",
+  "お礼まち":   "bg-amber-400",
 };
 
 interface AppRow {
@@ -29,9 +30,9 @@ interface AppRow {
 type SortKey = "latest" | "status";
 
 const STATUS_ORDER: Record<Status, number> = {
-  "AI鑑定中": 0,
-  "クライアント確認中": 1,
-  "受付": 2,
+  "働いてます": 0,
+  "お礼まち":   1,
+  "受付中":     2,
 };
 
 function StatusChip({ status }: { status: Status }) {
@@ -44,21 +45,21 @@ function StatusChip({ status }: { status: Status }) {
 }
 
 /**
- * Agent Active pill — shown alongside the application's status to
- * communicate that the AI layer is already plugged in even before
- * a human reviewer sees the entry.
+ * AI が代わりに働いています pill — friendly-tone wrapper for the
+ * Agent Active concept (#121). The internal data-testid stays
+ * `agent-active-pill` so call sites and lint don't drift.
  */
 function AgentActivePill() {
   return (
     <span
       data-testid="agent-active-pill"
-      aria-label="AI エージェントが接続中"
+      aria-label="AI が代わりに働いています"
       className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 bg-emerald-500/15 text-emerald-300 ring-emerald-400/30"
     >
       <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-      Agent Active
+      AI が代わりに働いています
       <span
-        title="人間の参画前から、AI レイヤでデプロイ済みです"
+        title="あなたの参加前から、AI が知恵を活かして動いています"
         className="ml-0.5 inline-flex items-center text-emerald-200/80"
       >
         <HelpCircle aria-hidden className="w-3 h-3 stroke-emerald-200/80" />
@@ -99,7 +100,7 @@ function CancelButton({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       className="inline-flex items-center gap-1 rounded-full bg-rose-900/40 px-3 py-1 text-[11px] font-bold text-rose-200 ring-1 ring-rose-400/30 hover:bg-rose-900/60 focus:outline focus:outline-2 focus:outline-rose-300"
-      aria-label="この応募を取り消す"
+      aria-label="この参加を取り消す"
     >
       取り消す
     </button>
@@ -120,10 +121,10 @@ function ConfirmCancelModal({ row, onConfirm, onDismiss }: {
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
             <h2 id="cancel-modal-heading" className="text-base font-bold text-white">
-              応募を取り消しますか？
+              参加を取り消しますか？
             </h2>
             <p className="mt-1 text-xs text-slate-300">
-              「{row.projectTitle}」への応募を取り消します。再応募はいつでも可能です。
+              「{row.projectTitle}」への参加を取り消します。いつでもまた参加できます。
             </p>
           </div>
           <button
@@ -168,9 +169,9 @@ export default function ApplicationsPage() {
 
   // Demo data if empty so the page is never bare during the soft-launch.
   const baseRows: AppRow[] = apps.length > 0 ? apps as AppRow[] : [
-    { id: "demo_1", projectTitle: "金融インフラ監視パイプライン", mdGuildId: "GUILD:001", status: "AI鑑定中",            appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString() },
-    { id: "demo_2", projectTitle: "EC在庫管理API",                mdGuildId: "GUILD:002", status: "受付",                  appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString() },
-    { id: "demo_3", projectTitle: "RAG社内ナレッジ検索",          mdGuildId: "GUILD:003", status: "クライアント確認中",   appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 50).toISOString() },
+    { id: "demo_1", projectTitle: "金融インフラ監視パイプライン", mdGuildId: "GUILD:001", status: "働いてます", appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString() },
+    { id: "demo_2", projectTitle: "EC在庫管理API",                mdGuildId: "GUILD:002", status: "受付中",     appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString() },
+    { id: "demo_3", projectTitle: "AIの参考書 — 社内ナレッジ検索", mdGuildId: "GUILD:003", status: "お礼まち",   appliedAt: new Date(Date.now() - 1000 * 60 * 60 * 50).toISOString() },
   ];
 
   const rows = useMemo(() => {
@@ -195,20 +196,23 @@ export default function ApplicationsPage() {
   if (rows.length === 0) {
     return (
       <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-4xl mx-auto">
-        <h1 className="hidden lg:block text-xl font-semibold tracking-tight text-white mb-4">
-          応募状況
+        <h1
+          data-testid="applications-h1"
+          className="hidden lg:block text-xl font-semibold tracking-tight text-white mb-4"
+        >
+          参加状況
         </h1>
         <div className="section-card p-8 flex flex-col items-center text-center gap-3">
           <ListChecks className="w-8 h-8 stroke-cyan-400" aria-hidden />
-          <p className="text-sm text-white font-semibold">まだ応募していません</p>
+          <p className="text-sm text-white font-semibold">まだ参加していません</p>
           <p className="text-xs text-slate-400">
-            あなたの知能に合う案件を見つけて応募しましょう。
+            お困りごとの中から、あなたの知恵が役立ちそうなものを探してみましょう。
           </p>
           <Link
             href="/projects"
             className="mt-2 inline-flex items-center gap-1 rounded-full bg-cyan-400 px-4 py-2 text-xs font-bold text-[#0B1121] hover:shadow-[0_0_0_2px_rgba(34,211,238,0.4),0_0_18px_rgba(34,211,238,0.25)]"
           >
-            探す
+            お困りごとを探す
             <ArrowRight className="w-3.5 h-3.5" aria-hidden />
           </Link>
         </div>
@@ -219,18 +223,23 @@ export default function ApplicationsPage() {
   return (
     <main className="px-4 sm:px-6 lg:px-8 py-8 max-w-4xl mx-auto">
       <div className="hidden lg:flex items-end justify-between mb-4">
-        <h1 className="text-xl font-semibold tracking-tight text-white">応募状況</h1>
+        <h1
+          data-testid="applications-h1"
+          className="text-xl font-semibold tracking-tight text-white"
+        >
+          参加状況
+        </h1>
       </div>
 
       <p
         data-testid="agent-active-banner"
         className="text-slate-300 text-sm mb-3 leading-relaxed"
       >
-        Agent Active：あなたの知能はすでに動いています。
+        AI が代わりに働いています：あなたの知恵はすでに動いています。
       </p>
 
       <div className="flex items-center justify-between mb-3">
-        <p className="text-xs text-slate-400">{rows.length} 件の応募</p>
+        <p className="text-xs text-slate-400">{rows.length} 件の参加</p>
         <label className="text-xs text-slate-400 inline-flex items-center gap-2">
           並び替え
           <select
@@ -245,7 +254,7 @@ export default function ApplicationsPage() {
       </div>
 
       {/* Mobile: vertical card list */}
-      <ul className="lg:hidden space-y-3" aria-label="応募一覧">
+      <ul className="lg:hidden space-y-3" aria-label="参加一覧">
         {rows.map((row) => (
           <li
             key={row.id}

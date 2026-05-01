@@ -36,11 +36,11 @@ describe("Applications redesign + entry from /projects", () => {
     expect(src).toContain("rounded-full");
   });
 
-  it("/applications shows an empty-state CTA「探す」 → /projects when there are no applications", () => {
+  it("/applications empty-state CTA reads 「お困りごとを探す」 → /projects (Friendly Tone)", () => {
     const src = read("src/app/applications/page.tsx");
-    expect(src).toContain("まだ応募していません");
+    expect(src).toContain("まだ参加していません");
     expect(src).toMatch(/href="\/projects"/);
-    expect(src).toContain("探す");
+    expect(src).toContain("お困りごとを探す");
   });
 
   it("/applications offers sort by 最新順 / ステータス順", () => {
