@@ -9,16 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ─── Brand Palette (#127) — Final Polish ───────────────────
-        // Three-color UI lock: Mercari Purple primary, お礼 Gold accent,
+        // ─── Brand Palette (#128) — Cinematic Mint ─────────────────
+        // Three-color UI lock: Deep Purple primary, Electric Gold accent,
         // Cyan helper (warn/helper only — never a CTA).
         brand: {
-          primary:        "var(--color-action-primary)",         // #6366F1
-          "primary-hover": "var(--color-action-primary-hover)",  // #4F46E5
-          "primary-soft": "var(--color-action-primary-soft)",    // #E0E7FF
-          secondary:      "var(--color-action-secondary)",       // #FBBF24
+          primary:        "var(--color-action-primary)",         // #4C1D95
+          "primary-hover": "var(--color-action-primary-hover)",  // #6D28D9
+          "primary-soft": "var(--color-action-primary-soft)",    // #1E0F47
+          secondary:      "var(--color-action-secondary)",       // #F59E0B
           "secondary-soft": "var(--color-action-secondary-soft)",// #FEF3C7
-          "cyan-helper":  "var(--color-cyan-helper)",            // #06B6D4 (warn/helper only)
+          "cyan-helper":  "var(--color-cyan-helper)",            // #0EA5E9 (warn/helper only)
         },
         primary: {
           DEFAULT: "var(--color-action-primary)",

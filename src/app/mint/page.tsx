@@ -168,7 +168,7 @@ export default function MintPage() {
         <section
           data-testid="mint-complete"
           aria-labelledby="mint-complete-h"
-          className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(99,102,241,0.25),0_0_24px_rgba(99,102,241,0.18)]"
+          className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 text-center shadow-[0_0_0_1px_rgba(76,29,149,0.25),0_0_24px_rgba(76,29,149,0.18)]"
         >
           <CrystalSvg size={96} className="mx-auto mb-3" />
           <h2 id="mint-complete-h" className="text-white font-semibold text-xl">
@@ -176,7 +176,7 @@ export default function MintPage() {
           </h2>
           <p className="mt-2 text-slate-200 text-sm leading-relaxed">
             これは <span className="text-brand-primary font-semibold">仕事の場面</span> で役立つ、
-            <span className="text-[#FBBF24] font-semibold"> 金</span> の太鼓判レベルの知恵ですね！
+            <span className="text-[#F59E0B] font-semibold"> 金</span> の太鼓判レベルの知恵ですね！
           </p>
           <div className="mt-4 flex flex-col items-center gap-3">
             <HexRankBadge rank="S" size={64} showSubLabel />

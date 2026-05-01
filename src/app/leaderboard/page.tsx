@@ -32,7 +32,7 @@ export default function LeaderboardPage() {
             key={e.handle}
             data-testid="leaderboard-entry"
             data-rank={e.rank}
-            className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-[#FBBF24]/70 p-4"
+            className="rounded-2xl border border-white/10 bg-midnight-surface border-l-4 border-l-[#F59E0B]/70 p-4"
           >
             <Link
               href={`/profile/${e.handle}`}

@@ -68,9 +68,9 @@ export function SchemaPanel({ guildId, title, schemas, compact = false }: Props)
             aria-controls={`schema-panel-${key}`}
             id={`schema-tab-${key}`}
             onClick={() => setTab(key)}
-            className={`flex-1 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary,#6366F1)] focus-visible:ring-inset ${
+            className={`flex-1 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary,#4C1D95)] focus-visible:ring-inset ${
               tab === key
-                ? "text-[var(--primary,#6366F1)] border-b-2 border-[var(--primary,#6366F1)]"
+                ? "text-[var(--primary,#4C1D95)] border-b-2 border-[var(--primary,#4C1D95)]"
                 : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
             }`}
           >

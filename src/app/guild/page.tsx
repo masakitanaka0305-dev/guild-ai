@@ -41,7 +41,7 @@ function PulseIndicator() {
 function SectionBand({ title, tip }: { title: string; tip?: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <div className="w-1 h-6 rounded-full bg-[var(--primary,#6366F1)] flex-shrink-0" />
+      <div className="w-1 h-6 rounded-full bg-[var(--primary,#4C1D95)] flex-shrink-0" />
       <h2 className="text-base sm:text-lg font-semibold text-white tracking-tight">{title}</h2>
       {tip && <Tip text={tip} />}
     </div>
@@ -168,7 +168,7 @@ export default function GuildPage() {
       <EarnDetailsModal open={earnOpen} onClose={() => setEarnOpen(false)} />
 
       {/* ── Mercari-style 売上金ヒーロー (#127 frosted glass + 1.5x) ──── */}
-      <section className="mb-5 sm:mb-6 bg-white/95 dark:bg-[#1E293B]/95 backdrop-blur-sm border-2 border-[#FBBF24]/40 rounded-2xl px-5 py-5 shadow-sm">
+      <section className="mb-5 sm:mb-6 bg-white/95 dark:bg-[#1E293B]/95 backdrop-blur-sm border-2 border-[#F59E0B]/40 rounded-2xl px-5 py-5 shadow-sm">
         <p className="text-[11px] font-bold text-[var(--color-text-muted)] mb-1 tracking-wider uppercase">
           稼ぐ — Asset Ledger
         </p>
@@ -212,13 +212,13 @@ export default function GuildPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/projects"
-            className={`flex-1 py-2.5 rounded-xl bg-[var(--primary,#6366F1)] text-white text-sm font-bold text-center hover:bg-[#4F46E5] transition-colors ${TAP_CLASS}`}
+            className={`flex-1 py-2.5 rounded-xl bg-[var(--primary,#4C1D95)] text-white text-sm font-bold text-center hover:bg-[#4F46E5] transition-colors ${TAP_CLASS}`}
           >
             さらに稼ぐ →
           </Link>
           <Link
             href="/profile"
-            className="px-4 py-2.5 rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.1))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--primary,#6366F1)] hover:text-[var(--primary,#6366F1)] transition-colors"
+            className="px-4 py-2.5 rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.1))] text-[var(--n-muted,#6B6456)] text-xs font-semibold hover:border-[var(--primary,#4C1D95)] hover:text-[var(--primary,#4C1D95)] transition-colors"
           >
             プロフィール
           </Link>
@@ -385,7 +385,7 @@ export default function GuildPage() {
             <button
               type="button"
               onClick={() => setShowAllTx(true)}
-              className="mt-2 w-full text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--primary,#6366F1)] transition-colors py-2"
+              className="mt-2 w-full text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--primary,#4C1D95)] transition-colors py-2"
             >
               もっと見る ↓
             </button>
@@ -427,7 +427,7 @@ export default function GuildPage() {
           {weapons.map((w) => (
             <li
               key={w.id}
-              className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--primary,#6366F1)]/30 hover:shadow-sm transition-all"
+              className="bg-[var(--n-surface,#FFFFFF)] border border-[var(--n-divider,rgba(0,0,0,0.08))] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--primary,#4C1D95)]/30 hover:shadow-sm transition-all"
             >
               <RankBadge rank={w.rank} />
               <div className="flex-1 min-w-0">

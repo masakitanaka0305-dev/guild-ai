@@ -114,7 +114,7 @@ describe("Final Polish (#127) — UI surfaces", () => {
     const src = read("src/app/projects/page.tsx");
     expect(src).toContain('data-testid="project-card-yen-mark"');
     expect(src).toMatch(/text-\[1\.4em\]/);
-    expect(src).toMatch(/text-\[#FBBF24\]/);
+    expect(src).toMatch(/text-\[#F59E0B\]/);
   });
 
   it("/projects mobile card help button is bg-brand-primary + white text", () => {
@@ -123,9 +123,9 @@ describe("Final Polish (#127) — UI surfaces", () => {
     expect(src).toContain("この困りごとを助ける");
   });
 
-  it("/guild value chart strokes through #6366F1", () => {
+  it("/guild value chart strokes through #4C1D95", () => {
     const owned = read("src/components/ui/OwnedAssetsSection.tsx");
-    expect(owned).toContain('stroke="#6366F1"');
+    expect(owned).toContain('stroke="#4C1D95"');
     expect(owned).toContain('data-testid="value-chart"');
   });
 
@@ -148,9 +148,9 @@ describe("Final Polish (#127) — UI surfaces", () => {
     expect(owned).not.toContain("もちもの時価のうごき");
   });
 
-  it("Onboarding StepCard uses purple Hexagon fill (#6366F1) with white inner number", () => {
+  it("Onboarding StepCard uses purple Hexagon fill (#4C1D95) with white inner number", () => {
     const card = read("src/components/intelligence-deck/StepCard.tsx");
-    expect(card).toMatch(/fill="#6366F1"/);
+    expect(card).toMatch(/fill="#4C1D95"/);
     expect(card).toMatch(/fill="#FFFFFF"/);
     expect(card).toMatch(/font-medium text-\[#F1F5F9\]/);
   });

@@ -84,7 +84,7 @@ export default function DraftPage() {
         return (
           <section
             data-testid="rank-reveal"
-            className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 mb-6 flex flex-col items-center text-center shadow-[0_0_0_1px_rgba(99,102,241,0.25),0_0_24px_rgba(99,102,241,0.18)]"
+            className="rounded-2xl border border-brand-primary/30 bg-midnight-surface p-6 mb-6 flex flex-col items-center text-center shadow-[0_0_0_1px_rgba(76,29,149,0.25),0_0_24px_rgba(76,29,149,0.18)]"
           >
             <p className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-2">
               鑑定結果
@@ -120,7 +120,7 @@ export default function DraftPage() {
       </div>
 
       <label className="flex items-center gap-2 mb-6 cursor-pointer">
-        <input type="checkbox" checked={consented} onChange={e => setConsented(e.target.checked)} className="accent-[#6366F1]" />
+        <input type="checkbox" checked={consented} onChange={e => setConsented(e.target.checked)} className="accent-[#4C1D95]" />
         <span className="text-xs text-text-primary">
           利用規約・権利譲渡規約に同意して登記します
         </span>
@@ -130,7 +130,7 @@ export default function DraftPage() {
         <button
           onClick={handleMint}
           disabled={!consented || minting}
-          className="px-6 py-3 bg-ai-action text-text-on-primary font-bold rounded-full disabled:opacity-40 min-h-[44px] hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
+          className="px-6 py-3 bg-ai-action text-text-on-primary font-bold rounded-full disabled:opacity-40 min-h-[44px] hover:shadow-[0_0_0_2px_rgba(76,29,149,0.4),0_0_18px_rgba(76,29,149,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
         >
           {minting ? "Minting…" : "Mint（精製）"}
         </button>

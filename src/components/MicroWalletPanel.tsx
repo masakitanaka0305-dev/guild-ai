@@ -126,7 +126,7 @@ export function MicroWalletPanel() {
           <button
             type="button"
             onClick={handleWithdraw}
-            className="text-[10px] font-semibold text-[var(--primary,#6366F1)] hover:underline transition-colors"
+            className="text-[10px] font-semibold text-[var(--primary,#4C1D95)] hover:underline transition-colors"
           >
             いま出金する
           </button>

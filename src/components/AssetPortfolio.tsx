@@ -186,7 +186,7 @@ export function AssetPortfolio() {
         <p className="text-slate-400 mb-4">まだ投稿された資産はありません</p>
         <Link
           href="/sell"
-          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary font-semibold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
+          className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-full bg-ai-action text-text-on-primary font-semibold hover:shadow-[0_0_0_2px_rgba(76,29,149,0.4),0_0_18px_rgba(76,29,149,0.25)] outline-none focus:outline focus:outline-2 focus:outline-brand-primary"
         >
           投稿する
         </Link>
@@ -212,7 +212,7 @@ export function AssetPortfolio() {
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
             aria-label="並び替え"
-            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-midnight-surface text-text-primary border border-white/10 focus:outline-none focus:border-ai-action focus:ring-1 focus:ring-[#6366F1]"
+            className="min-h-[44px] text-xs rounded-lg px-3 py-2 bg-midnight-surface text-text-primary border border-white/10 focus:outline-none focus:border-ai-action focus:ring-1 focus:ring-[#4C1D95]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -221,7 +221,7 @@ export function AssetPortfolio() {
           <Link
             href="/sell"
             data-testid="new-listing-cta"
-            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-ai-action text-text-on-primary text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(99,102,241,0.4),0_0_18px_rgba(99,102,241,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary whitespace-nowrap"
+            className="inline-flex items-center gap-1 min-h-[44px] px-4 py-2 rounded-full bg-ai-action text-text-on-primary text-sm font-semibold hover:shadow-[0_0_0_2px_rgba(76,29,149,0.4),0_0_18px_rgba(76,29,149,0.25)] active:shadow-inner outline-none focus:outline focus:outline-2 focus:outline-brand-primary whitespace-nowrap"
           >
             ＋ 新しく投稿する
           </Link>

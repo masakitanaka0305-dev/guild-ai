@@ -13,7 +13,7 @@ describe("contrast: WCAG 2.1 ratio utility", () => {
   });
 
   it("identical colors return 1:1", () => {
-    expect(contrastRatio("#6366F1", "#6366F1")).toBeCloseTo(1, 2);
+    expect(contrastRatio("#4C1D95", "#4C1D95")).toBeCloseTo(1, 2);
   });
 
   it("parseHex normalises 3-digit and 6-digit forms", () => {
@@ -44,7 +44,7 @@ describe("contrast: Midnight Logic AA gate", () => {
 
   it("ai-action × on-primary (button text) clears AA (≥ 4.5)", () => {
     // Final Polish (#127): button text on Mercari Purple is pure white.
-    const r = contrastRatioRounded("#FFFFFF", "#6366F1");
+    const r = contrastRatioRounded("#FFFFFF", "#4C1D95");
     expect(r).toBeGreaterThanOrEqual(4.5);
   });
 

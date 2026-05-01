@@ -94,7 +94,7 @@ export function SupportChat() {
                 <div
                   className={`max-w-[80%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
                     m.role === "user"
-                      ? "bg-[var(--primary,#6366F1)] text-white rounded-br-sm"
+                      ? "bg-[var(--primary,#4C1D95)] text-white rounded-br-sm"
                       : "bg-[var(--n-surface-2,#F5F3EE)] text-white rounded-bl-sm"
                   }`}
                 >
@@ -137,7 +137,7 @@ export function SupportChat() {
               onClick={() => handleSend(input)}
               disabled={!input.trim()}
               aria-label="送信"
-              className="w-8 h-8 rounded-full bg-[var(--primary,#6366F1)] text-white flex items-center justify-center disabled:opacity-40 active:scale-95 transition-all flex-shrink-0"
+              className="w-8 h-8 rounded-full bg-[var(--primary,#4C1D95)] text-white flex items-center justify-center disabled:opacity-40 active:scale-95 transition-all flex-shrink-0"
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>

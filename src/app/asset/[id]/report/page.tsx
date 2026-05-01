@@ -99,7 +99,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               { label: "最終実行", value: report.backtest.lastRunAt.slice(0, 10) },
             ].map(({ label, value, highlight }) => (
               <div key={label} className="section-card p-4 text-center print:border print:border-gray-200">
-                <p className={`text-lg font-black ${highlight ? "text-[var(--primary,#6366F1)]" : "text-[var(--n-text,#1A1714)]"}`}>
+                <p className={`text-lg font-black ${highlight ? "text-[var(--primary,#4C1D95)]" : "text-[var(--n-text,#1A1714)]"}`}>
                   {value}
                 </p>
                 <p className="text-[10px] text-[var(--n-muted,#6B6456)] mt-0.5">{label}</p>
@@ -118,7 +118,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                   <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
                     <div
                       style={{ height: `${heightPct}%` }}
-                      className="w-full rounded-t bg-[var(--primary,#6366F1)] opacity-70"
+                      className="w-full rounded-t bg-[var(--primary,#4C1D95)] opacity-70"
                     />
                   </div>
                 );

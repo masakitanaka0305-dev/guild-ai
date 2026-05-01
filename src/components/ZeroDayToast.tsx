@@ -49,7 +49,7 @@ export function ZeroDayToast() {
     : "bg-red-100 text-red-700 border-red-200";
 
   const priorityColor =
-    event.priority === "critical" ? "bg-[var(--primary,#6366F1)] text-white" :
+    event.priority === "critical" ? "bg-[var(--primary,#4C1D95)] text-white" :
     event.priority === "high"     ? "bg-amber-500 text-white" :
                                     "bg-blue-500 text-white";
 

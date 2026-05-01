@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { RANK_COLOR_TOKEN, RANK_TIER, RANK_SUB_LABEL } from "@/lib/grading";
 
 describe("rank — friendly tone × Logic White (#125)", () => {
-  it("S/A/B/D fills are gold #FBBF24 / silver #94A3B8 / bronze #B45309 / slate #94A3B8", () => {
-    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FBBF24");
+  it("S/A/B/D fills are gold #F59E0B / silver #94A3B8 / bronze #B45309 / slate #94A3B8", () => {
+    expect(RANK_COLOR_TOKEN.S.fill).toBe("#F59E0B");
     expect(RANK_COLOR_TOKEN.A.fill).toBe("#94A3B8");
     expect(RANK_COLOR_TOKEN.B.fill).toBe("#B45309");
     expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8");
@@ -24,7 +24,7 @@ describe("rank — friendly tone × Logic White (#125)", () => {
   });
 
   it("text utility classes match each rank's Logic White fill", () => {
-    expect(RANK_COLOR_TOKEN.S.text).toBe("text-[#FBBF24]");
+    expect(RANK_COLOR_TOKEN.S.text).toBe("text-[#F59E0B]");
     expect(RANK_COLOR_TOKEN.A.text).toBe("text-[#94A3B8]");
     expect(RANK_COLOR_TOKEN.B.text).toBe("text-[#B45309]");
     expect(RANK_COLOR_TOKEN.D.text).toBe("text-slate-400");

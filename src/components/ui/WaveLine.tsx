@@ -16,7 +16,7 @@ export interface WaveLineProps {
 
 export function WaveLine({
   height = 24,
-  color = "#6366F1",
+  color = "#4C1D95",
   opacity = 0.3,
   strokeWidth = 1.25,
   className,

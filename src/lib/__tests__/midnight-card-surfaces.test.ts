@@ -33,7 +33,7 @@ describe("Midnight Logic — unified card surfaces (#124)", () => {
     const apply = read("src/components/PlugInApply.tsx");
     const nav   = read("src/components/SidebarNav.tsx");
     // Apply CTA carries the cyan glow + bg-brand-primary (which is the same hex
-    // as ai-action #6366F1 in the canonical Midnight palette).
+    // as ai-action #4C1D95 in the canonical Midnight palette).
     expect(apply).toMatch(/bg-brand-primary|bg-ai-action/);
     expect(nav).toMatch(/bg-brand-primary|bg-ai-action/);
   });

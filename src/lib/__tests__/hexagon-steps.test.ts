@@ -12,7 +12,7 @@ describe("HexagonSteps — onboarding progress strip", () => {
 
   it("encodes three states (complete / active / pending) with distinct fill, stroke and label", () => {
     // complete → cyan fill + ✓ on deep-sea ink
-    expect(src).toMatch(/state\s*===\s*"complete"\s*\?\s*"#6366F1"/);
+    expect(src).toMatch(/state\s*===\s*"complete"\s*\?\s*"#4C1D95"/);
     expect(src).toMatch(/state\s*===\s*"complete"\s*\?\s*"#0B1121"/);
     expect(src).toMatch(/"complete"\s*\?\s*"✓"/);
 

@@ -102,7 +102,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       {/* Lineage link */}
       <Link
         href={`/lineage/${encodeURIComponent(listing.id)}`}
-        className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--primary,#6366F1)] hover:underline font-semibold"
+        className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--primary,#4C1D95)] hover:underline font-semibold"
       >
         この知能の家系図を見る →
       </Link>
@@ -110,7 +110,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       {/* SDK pipeline link */}
       <Link
         href={`/sdk?from=${encodeURIComponent(guildId)}`}
-        className="mt-1 inline-flex items-center gap-1 text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--primary,#6366F1)] hover:underline font-semibold transition-colors"
+        className="mt-1 inline-flex items-center gap-1 text-xs text-[var(--n-muted,#6B6456)] hover:text-[var(--primary,#4C1D95)] hover:underline font-semibold transition-colors"
       >
         このノートを使ったパイプラインを見る →
       </Link>
@@ -385,7 +385,7 @@ export default function AssetPage({ params }: { params: { id: string } }) {
       {/* プロの工夫 (Insight Delta) */}
       {(() => {
         const intensityColor: Record<string, string> = {
-          high:   "bg-[var(--primary,#6366F1)] text-white",
+          high:   "bg-[var(--primary,#4C1D95)] text-white",
           medium: "bg-amber-500 text-white",
           low:    "bg-blue-500 text-white",
         };

@@ -56,7 +56,7 @@ export function SidebarNav() {
             aria-selected={active}
             className={`w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium transition-all duration-220 active:scale-[0.98] rounded-2xl ${
               active
-                ? "bg-[var(--primary,#6366F1)]/10 text-[var(--primary,#6366F1)] font-bold"
+                ? "bg-[var(--primary,#4C1D95)]/10 text-[var(--primary,#4C1D95)] font-bold"
                 : "text-[var(--n-muted,#6B6456)] hover:bg-[var(--n-surface-2,#F5F3EE)] hover:text-[var(--n-text,#1A1714)]"
             }`}
           >
@@ -69,7 +69,7 @@ export function SidebarNav() {
       {/* Primary action: 出す — standalone highlighted card */}
       <Link
         href={PRIMARY_ACTION.href}
-        className={`w-full flex items-center gap-2.5 px-3 py-2.5 mt-1 text-[13px] font-bold rounded-2xl bg-[var(--primary,#6366F1)] text-white hover:bg-[#4F46E5] active:scale-[0.98] transition-all duration-220 ${
+        className={`w-full flex items-center gap-2.5 px-3 py-2.5 mt-1 text-[13px] font-bold rounded-2xl bg-[var(--primary,#4C1D95)] text-white hover:bg-[#4F46E5] active:scale-[0.98] transition-all duration-220 ${
           isActive(pathname, PRIMARY_ACTION.href) ? "opacity-90" : ""
         }`}
       >
@@ -87,7 +87,7 @@ export function SidebarNav() {
           href="/marketplace/pro"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/marketplace/pro")
-              ? "text-[var(--primary,#6366F1)]"
+              ? "text-[var(--primary,#4C1D95)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
@@ -97,7 +97,7 @@ export function SidebarNav() {
           href="/disputes"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/disputes")
-              ? "text-[var(--primary,#6366F1)]"
+              ? "text-[var(--primary,#4C1D95)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >
@@ -107,7 +107,7 @@ export function SidebarNav() {
           href="/scout"
           className={`w-full flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium rounded-xl transition-colors ${
             isActive(pathname, "/scout")
-              ? "text-[var(--primary,#6366F1)]"
+              ? "text-[var(--primary,#4C1D95)]"
               : "text-[var(--n-muted,#6B6456)] hover:text-[var(--n-text,#1A1714)]"
           }`}
         >

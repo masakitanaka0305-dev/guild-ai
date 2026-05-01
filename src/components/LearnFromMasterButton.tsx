@@ -43,7 +43,7 @@ export function LearnFromMasterButton({ handle }: Props) {
                   <Link
                     href={`/asset/${note.guildId}`}
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 rounded-2xl border border-[var(--n-divider,rgba(0,0,0,0.08))] px-4 py-3 hover:border-[var(--primary,#6366F1)] hover:bg-red-50 transition-colors"
+                    className="flex items-center gap-3 rounded-2xl border border-[var(--n-divider,rgba(0,0,0,0.08))] px-4 py-3 hover:border-[var(--primary,#4C1D95)] hover:bg-red-50 transition-colors"
                   >
                     <span className="w-6 h-6 rounded-full bg-[var(--n-surface-2,#F5F3EE)] flex items-center justify-center text-[10px] font-bold text-[var(--n-muted,#6B6456)] flex-shrink-0">
                       {i + 1}

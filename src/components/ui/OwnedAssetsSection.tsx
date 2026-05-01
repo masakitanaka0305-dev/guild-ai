@@ -67,12 +67,12 @@ function ValueTimelineChart({ data }: { data: number[] }) {
     >
       <defs>
         <linearGradient id="value-fill" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#6366F1" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="#6366F1" stopOpacity="0" />
+          <stop offset="0%" stopColor="#4C1D95" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={fill} fill="url(#value-fill)" data-testid="value-timeline-fill" />
-      <path d={path} fill="none" stroke="#6366F1" strokeWidth="1.5" data-testid="value-timeline-stroke" />
+      <path d={path} fill="none" stroke="#4C1D95" strokeWidth="1.5" data-testid="value-timeline-stroke" />
     </svg>
   );
 }
@@ -95,7 +95,7 @@ function TypePill({ type }: { type: AssetRoleType }) {
         <span
           aria-hidden
           className="w-1.5 h-1.5 rounded-full"
-          style={{ backgroundColor: type === "Dev" ? "#6366F1" : type === "Design" ? "#A78BFA" : "#FBBF24" }}
+          style={{ backgroundColor: type === "Dev" ? "#4C1D95" : type === "Design" ? "#A78BFA" : "#F59E0B" }}
         />
       )}
       {ROLE_LABEL[type]}

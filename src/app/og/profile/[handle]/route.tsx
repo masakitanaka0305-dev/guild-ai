@@ -23,7 +23,7 @@ export async function GET(
   const totalJpy = (50_000 + (seed % 950_000)).toLocaleString("ja-JP");
   const ranks = ["S", "A", "A", "B"] as const;
   const rank = ranks[seed % ranks.length];
-  const rankColor = rank === "S" ? "#D4AF37" : rank === "A" ? "#6366F1" : "#6B6456";
+  const rankColor = rank === "S" ? "#D4AF37" : rank === "A" ? "#4C1D95" : "#6B6456";
 
   return new ImageResponse(
     (
@@ -57,7 +57,7 @@ export async function GET(
               width: "40px",
               height: "40px",
               borderRadius: "12px",
-              background: "#6366F1",
+              background: "#4C1D95",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -101,7 +101,7 @@ export async function GET(
         <div style={{ display: "flex", gap: "48px", marginTop: "24px" }}>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: "14px", color: "#6B6456", margin: "0 0 4px" }}>Validation Score</p>
-            <p style={{ fontSize: "36px", fontWeight: 900, color: "#6366F1", margin: 0 }}>{score}</p>
+            <p style={{ fontSize: "36px", fontWeight: 900, color: "#4C1D95", margin: 0 }}>{score}</p>
           </div>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: "14px", color: "#6B6456", margin: "0 0 4px" }}>累計報酬</p>

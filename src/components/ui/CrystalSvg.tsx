@@ -24,13 +24,13 @@ export function CrystalSvg({ size = 96, className }: CrystalSvgProps) {
       className={className}
     >
       <g transform="translate(0,0) rotate(0 50 50)">
-        <polygon points={HEX} fill="#6366F1" fillOpacity={0.30} stroke="#6366F1" strokeOpacity={0.80} strokeWidth={1.5} />
+        <polygon points={HEX} fill="#4C1D95" fillOpacity={0.30} stroke="#4C1D95" strokeOpacity={0.80} strokeWidth={1.5} />
       </g>
       <g transform="translate(8,4) rotate(0 50 50)">
         <polygon points={HEX} fill="#A78BFA" fillOpacity={0.30} stroke="#A78BFA" strokeOpacity={0.80} strokeWidth={1.5} />
       </g>
       <g transform="translate(-6,6) rotate(0 50 50)">
-        <polygon points={HEX} fill="#FBBF24" fillOpacity={0.25} stroke="#FBBF24" strokeOpacity={0.80} strokeWidth={1.5} />
+        <polygon points={HEX} fill="#F59E0B" fillOpacity={0.25} stroke="#F59E0B" strokeOpacity={0.80} strokeWidth={1.5} />
       </g>
     </svg>
   );

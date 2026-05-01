@@ -6,7 +6,7 @@ import { Hexagon } from "@/components/ui/Hexagon";
 
 function Hi({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[#6366F1] font-semibold">{children}</span>
+    <span className="text-[#4C1D95] font-semibold">{children}</span>
   );
 }
 
@@ -101,7 +101,7 @@ export function OnboardingModal({ onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label="閉じる"
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary,#6366F1)]"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-gray-700 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary,#4C1D95)]"
         >
           ✕
         </button>
@@ -112,10 +112,10 @@ export function OnboardingModal({ onClose }: Props) {
             <Hexagon
               size={48}
               fill="rgba(34,211,238,0.10)"
-              stroke="#6366F1"
+              stroke="#4C1D95"
               strokeWidth={2}
               label="G"
-              labelColor="#6366F1"
+              labelColor="#4C1D95"
             />
           </span>
           <h2
@@ -153,7 +153,7 @@ export function OnboardingModal({ onClose }: Props) {
         <Link
           href="/sell"
           onClick={onClose}
-          className="block w-full h-12 rounded-full bg-[var(--primary,#6366F1)] text-white font-bold text-base text-center leading-[3rem] hover:bg-[#4F46E5] active:scale-[0.98] transition-all duration-220 shadow-sm"
+          className="block w-full h-12 rounded-full bg-[var(--primary,#4C1D95)] text-white font-bold text-base text-center leading-[3rem] hover:bg-[#4F46E5] active:scale-[0.98] transition-all duration-220 shadow-sm"
         >
           今すぐ投稿する
         </Link>

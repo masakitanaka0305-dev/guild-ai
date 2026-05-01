@@ -84,7 +84,7 @@ export default function ProjectsPage() {
               </p>
               <p
                 data-testid="project-card-reward"
-                className="font-bold tracking-tight tabular-nums text-[#A16207] dark:text-[#FBBF24] flex items-baseline gap-1 leading-none"
+                className="font-bold tracking-tight tabular-nums text-[#A16207] dark:text-[#F59E0B] flex items-baseline gap-1 leading-none"
               >
                 <span className="text-[10px] font-bold text-[var(--color-text-muted)] mr-0.5 self-center">
                   想定お礼
@@ -149,7 +149,7 @@ export default function ProjectsPage() {
                     </span>
                   </td>
                   <td className="py-3 pr-4 tabular-nums">
-                    <span className="font-bold text-[#A16207] dark:text-[#FBBF24] inline-flex items-baseline gap-0.5">
+                    <span className="font-bold text-[#A16207] dark:text-[#F59E0B] inline-flex items-baseline gap-0.5">
                       <span className="text-[1.4em] font-extrabold">¥</span>
                       <span>{row.grossRewardJpy.toLocaleString("ja-JP")}</span>
                     </span>

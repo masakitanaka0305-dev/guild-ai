@@ -62,7 +62,7 @@ const MOCK_OAUTH_PROFILE = {
   email: "masaki.tanaka.0305@gmail.com",
   githubHandle: "masaki-tanaka",
   githubUrl: "https://github.com/masaki-tanaka/water-guild-demo",
-  avatarHexFill: "#6366F1",
+  avatarHexFill: "#4C1D95",
 } as const;
 
 // ─── Timer Bar ───────────────────────────────────────────────────────────────
@@ -344,7 +344,7 @@ function OnboardingContent() {
                 <polygon
                   points="50,4 92,27 92,73 50,96 8,73 8,27"
                   fill="#162035"
-                  stroke="#6366F1"
+                  stroke="#4C1D95"
                   strokeWidth={2}
                 />
                 <text
@@ -354,14 +354,14 @@ function OnboardingContent() {
                   fontFamily="inherit"
                   fontWeight={900}
                   fontSize={32}
-                  fill="#6366F1"
+                  fill="#4C1D95"
                 >
                   {familyName.slice(0, 1) || "G"}
                 </text>
               </svg>
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#6366F1)]">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--water-accent,#4C1D95)]">
                 Smart Pre-fill — OAuth から取得した情報です
               </p>
               <h2 id="confirm-heading" className="text-base font-black text-[var(--water-text,#E2E8F0)]">
@@ -438,7 +438,7 @@ function OnboardingContent() {
                     type="text"
                     defaultValue={familyName}
                     onChange={(e) => setFamilyName(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#4C1D95)]"
                   />
                 </div>
                 <div>
@@ -450,7 +450,7 @@ function OnboardingContent() {
                     type="text"
                     defaultValue={givenName}
                     onChange={(e) => setGivenName(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#4C1D95)]"
                   />
                 </div>
               </div>
@@ -464,7 +464,7 @@ function OnboardingContent() {
                   type="email"
                   defaultValue={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#4C1D95)]"
                 />
               </div>
 
@@ -477,7 +477,7 @@ function OnboardingContent() {
                   type="text"
                   defaultValue={handle}
                   onChange={(e) => setHandle(e.target.value)}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#4C1D95)]"
                 />
               </div>
 
@@ -491,7 +491,7 @@ function OnboardingContent() {
                   defaultValue={githubUrl}
                   onChange={(e) => setGithubUrl(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#6366F1)]"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--water-surface-2,#1E293B)] border border-[var(--water-divider,rgba(226,232,240,0.10))] text-[var(--water-text,#E2E8F0)] placeholder-[var(--water-muted,#94A3B8)] focus:outline-none focus:ring-1 focus:ring-[var(--water-accent,#4C1D95)]"
                 />
               </div>
             </div>
@@ -572,9 +572,9 @@ function OnboardingContent() {
 
           <p className="text-[10px] text-[var(--water-muted,#94A3B8)] leading-relaxed">
             修正があれば「編集する」を押してください。登記の前に
-            <Link href="/legal/terms" className="text-[var(--water-accent,#6366F1)] underline mx-0.5">利用規約</Link>
+            <Link href="/legal/terms" className="text-[var(--water-accent,#4C1D95)] underline mx-0.5">利用規約</Link>
             と
-            <Link href="/legal/transfer" className="text-[var(--water-accent,#6366F1)] underline mx-0.5">権利譲渡条件</Link>
+            <Link href="/legal/transfer" className="text-[var(--water-accent,#4C1D95)] underline mx-0.5">権利譲渡条件</Link>
             に同意してください。あとで /profile でも編集できます。
           </p>
 
@@ -593,7 +593,7 @@ function OnboardingContent() {
           <button
             onClick={runOnboarding}
             disabled={!agreed || !githubUrl.startsWith("https://github.com/")}
-            className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#6366F1)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
+            className="w-full min-h-11 py-3 text-sm font-bold rounded-xl bg-[var(--water-accent,#4C1D95)] text-[var(--water-bg,#0B1121)] disabled:opacity-40 disabled:cursor-not-allowed shadow-water-glow"
           >
             確認して進む — 登記（Sync）開始
           </button>

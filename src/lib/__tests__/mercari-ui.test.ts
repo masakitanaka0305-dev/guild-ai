@@ -76,7 +76,7 @@ describe("catchphrase: metadata", () => {
   });
 });
 
-// ─── 3. Primary blue #6366F1 in globals.css ────────────────────────────────────
+// ─── 3. Primary blue #4C1D95 in globals.css ────────────────────────────────────
 
 describe("mercari-ui: primary color token", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
@@ -163,7 +163,7 @@ describe("sell: MD file input", () => {
 
   it("dragging state class switches on drag-over", () => {
     expect(src).toContain("isDragging");
-    expect(src).toContain("border-[#6366F1]");
+    expect(src).toContain("border-[#4C1D95]");
     expect(src).toContain("bg-red-50");
   });
 

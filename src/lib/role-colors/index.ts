@@ -1,9 +1,9 @@
 // GUILD AI — role color tokens (#123, repalette #127)
 //
 // Three roles are explicitly addressed:
-//   Dev    → brand-primary (#6366F1, Mercari Purple)
+//   Dev    → brand-primary (#4C1D95, Mercari Purple)
 //   Design → violet-400    (#A78BFA)
-//   PM     → brand-secondary (#FBBF24, お礼 Gold)
+//   PM     → brand-secondary (#F59E0B, お礼 Gold)
 //
 // "Cross-functional" is the explicit fourth tag — used for assets that
 // span more than one role and rendered with a brand-primary/violet
@@ -16,12 +16,12 @@
 export type AssetRoleType = "Dev" | "Design" | "PM" | "Cross-functional";
 
 export const ROLE_COLOR: Record<AssetRoleType, string> = {
-  Dev:               "#6366F1",
+  Dev:               "#4C1D95",
   Design:            "#A78BFA",
-  PM:                "#FBBF24",
+  PM:                "#F59E0B",
   // Visual: cyan dominant for cross-functional, paired with violet via
   // a split-fill dot in the consuming component.
-  "Cross-functional": "#6366F1",
+  "Cross-functional": "#4C1D95",
 };
 
 /** Friendly-tone display labels (Friendly Tone #123) — replaces the

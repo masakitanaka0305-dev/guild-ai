@@ -24,7 +24,7 @@ export function StepCard({ step, title, subtitle }: StepCardProps) {
       >
         STEP {step}
       </span>
-      <Hexagon size={56} stroke="#4F46E5" fill="#6366F1" strokeWidth={2}>
+      <Hexagon size={56} stroke="#4F46E5" fill="#4C1D95" strokeWidth={2}>
         <text
           x="50"
           y="60"

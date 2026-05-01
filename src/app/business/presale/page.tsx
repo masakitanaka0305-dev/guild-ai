@@ -88,7 +88,7 @@ function PresaleContent() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="例：製造ラインの在庫管理を自動化し、発注業務を効率化したい"
             rows={4}
-            className="w-full rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-4 py-3 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#6366F1)] resize-none"
+            className="w-full rounded-xl border border-[var(--n-divider,rgba(0,0,0,0.12))] bg-[var(--n-surface-2,#F5F3EE)] px-4 py-3 text-sm text-[var(--n-text,#1A1714)] placeholder:text-[var(--n-muted,#6B6456)] focus:outline-none focus:ring-2 focus:ring-[var(--primary,#4C1D95)] resize-none"
           />
         </div>
 
@@ -101,7 +101,7 @@ function PresaleContent() {
                 key={q}
                 type="button"
                 onClick={() => setQuery(q)}
-                className="text-[10px] px-2 py-1 rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border border-[var(--n-divider,rgba(0,0,0,0.08))] hover:border-[var(--primary,#6366F1)] hover:text-[var(--primary,#6366F1)] transition-colors"
+                className="text-[10px] px-2 py-1 rounded-full bg-[var(--n-surface-2,#F5F3EE)] text-[var(--n-muted,#6B6456)] border border-[var(--n-divider,rgba(0,0,0,0.08))] hover:border-[var(--primary,#4C1D95)] hover:text-[var(--primary,#4C1D95)] transition-colors"
               >
                 {q}
               </button>
@@ -112,7 +112,7 @@ function PresaleContent() {
         <button
           type="submit"
           disabled={!query.trim() || loading}
-          className="w-full rounded-xl bg-[var(--primary,#6366F1)] text-white text-sm font-bold py-3 hover:opacity-90 disabled:opacity-40 transition-opacity"
+          className="w-full rounded-xl bg-[var(--primary,#4C1D95)] text-white text-sm font-bold py-3 hover:opacity-90 disabled:opacity-40 transition-opacity"
         >
           {loading ? "分析中..." : "提案を生成する →"}
         </button>
@@ -143,12 +143,12 @@ function PresaleContent() {
 
           {/* Recommended package highlight */}
           {proposal.recommendedPackage && (
-            <div className="section-card p-5 border-2 border-[var(--primary,#6366F1)]">
+            <div className="section-card p-5 border-2 border-[var(--primary,#4C1D95)]">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="text-sm font-bold text-[var(--n-text,#1A1714)]">
                   推奨パッケージ: {proposal.recommendedPackage.title}
                 </h3>
-                <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--primary,#6366F1)] text-white">
+                <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--primary,#4C1D95)] text-white">
                   {TIER_LABEL[proposal.recommendedPackage.minTier]}
                 </span>
               </div>
@@ -168,7 +168,7 @@ function PresaleContent() {
           {/* Pricing cards */}
           <div className="grid grid-cols-3 gap-3">
             <div className="section-card p-4 text-center">
-              <p className="text-xs font-black text-[var(--primary,#6366F1)]">¥{roiM}M</p>
+              <p className="text-xs font-black text-[var(--primary,#4C1D95)]">¥{roiM}M</p>
               <p className="text-[9px] text-[var(--n-muted,#6B6456)] mt-0.5">月次期待ROI</p>
             </div>
             <div className="section-card p-4 text-center">
@@ -201,7 +201,7 @@ function PresaleContent() {
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               href="/business/checkout"
-              className="flex-1 text-center rounded-xl bg-[var(--primary,#6366F1)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+              className="flex-1 text-center rounded-xl bg-[var(--primary,#4C1D95)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
             >
               このプランで申し込む →
             </Link>

@@ -100,7 +100,7 @@ describe("grading: structure / density / consistency formula", () => {
 
   it("color tokens, tier labels, and sub-labels are wired for all four ranks", () => {
     // Logic White (#125): rank fills are tuned for a white background.
-    expect(RANK_COLOR_TOKEN.S.fill).toBe("#FBBF24"); // 金 (Logic White)
+    expect(RANK_COLOR_TOKEN.S.fill).toBe("#F59E0B"); // 金 (Logic White)
     expect(RANK_COLOR_TOKEN.A.fill).toBe("#94A3B8"); // 銀
     expect(RANK_COLOR_TOKEN.B.fill).toBe("#B45309"); // 銅
     expect(RANK_COLOR_TOKEN.D.fill).toBe("#94A3B8"); // みならい

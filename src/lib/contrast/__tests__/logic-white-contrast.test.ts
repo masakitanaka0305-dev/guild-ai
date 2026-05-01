@@ -31,7 +31,7 @@ describe("Logic White (#125) — WCAG AA gate", () => {
   it("rank-gold × text-primary on white reads ≥ 3.0:1 (AA-large for badges)", () => {
     // Gold tones can't always clear normal-text 4.5:1 on slate-900;
     // use as a badge fill where the pill geometry counts as large UI.
-    const r = contrastRatioRounded("#0F172A", "#FBBF24");
+    const r = contrastRatioRounded("#0F172A", "#F59E0B");
     expect(r).toBeGreaterThanOrEqual(3.0);
   });
 

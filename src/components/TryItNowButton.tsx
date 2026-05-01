@@ -17,7 +17,7 @@ export function TryItNowButton({ guildId }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 rounded-full bg-[var(--n-surface-2,#F5F3EE)] border border-[var(--n-divider,rgba(0,0,0,0.08))] px-4 py-2 text-sm font-bold text-[var(--n-text,#1A1714)] hover:border-[var(--primary,#6366F1)] hover:text-[var(--primary,#6366F1)] active:scale-[0.97] transition-all"
+        className="inline-flex items-center gap-1.5 rounded-full bg-[var(--n-surface-2,#F5F3EE)] border border-[var(--n-divider,rgba(0,0,0,0.08))] px-4 py-2 text-sm font-bold text-[var(--n-text,#1A1714)] hover:border-[var(--primary,#4C1D95)] hover:text-[var(--primary,#4C1D95)] active:scale-[0.97] transition-all"
       >
         <span>⚡</span>
         ためしてみる
@@ -74,7 +74,7 @@ export function TryItNowButton({ guildId }: Props) {
                       <span>・</span>
                       <span>{tier.ratePerMin.toLocaleString("ja-JP")} req/min</span>
                       <span>・</span>
-                      <span className={tier.commercialOk ? "text-[var(--n-positive,#0E9F4F)] font-semibold" : "text-[#6366F1]"}>
+                      <span className={tier.commercialOk ? "text-[var(--n-positive,#0E9F4F)] font-semibold" : "text-[#4C1D95]"}>
                         {tier.commercialOk ? "商用 OK" : "商用不可"}
                       </span>
                     </div>

@@ -94,7 +94,7 @@ export default function BusinessCheckoutPage() {
           </p>
           <Link
             href="/guild"
-            className="inline-block rounded-xl bg-[var(--primary,#6366F1)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+            className="inline-block rounded-xl bg-[var(--primary,#4C1D95)] px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity"
           >
             ダッシュボードへ →
           </Link>
@@ -132,7 +132,7 @@ export default function BusinessCheckoutPage() {
               aria-label={p.name}
             />
             {p.highlight && (
-              <span className="text-[9px] font-bold text-[var(--primary,#6366F1)] mb-1">人気</span>
+              <span className="text-[9px] font-bold text-[var(--primary,#4C1D95)] mb-1">人気</span>
             )}
             <p className="text-xs font-bold text-white">{p.name}</p>
             <p className="text-[10px] text-slate-400 mt-0.5">{p.price}</p>
@@ -215,7 +215,7 @@ export default function BusinessCheckoutPage() {
         <button
           type="submit"
           disabled={processing}
-          className="w-full rounded-xl bg-[#6366F1] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
+          className="w-full rounded-xl bg-[#4C1D95] py-3 text-sm font-bold text-white hover:bg-red-600 active:scale-95 transition disabled:opacity-60"
         >
           {processing ? "処理中…" : `${selected.name} プランで始める`}
         </button>

@@ -42,7 +42,7 @@ export function ZeroDayBanner() {
       <div className="flex items-center gap-2 shrink-0">
         <Link
           href="/feed/zero-day"
-          className="text-[10px] font-bold px-3 py-1 rounded-full bg-[var(--primary,#6366F1)] text-white hover:opacity-90 transition-opacity"
+          className="text-[10px] font-bold px-3 py-1 rounded-full bg-[var(--primary,#4C1D95)] text-white hover:opacity-90 transition-opacity"
         >
           詳細
         </Link>

@@ -34,8 +34,8 @@ describe("/leaderboard — Hall of Fame", () => {
     expect(src).toMatch(/href=\{`\/profile\/\$\{e\.handle\}`\}/);
     // Cyan metric-prime cumulative number on each row
     expect(src).toContain("text-brand-primary metric-prime");
-    // S-color hex pin (#FBBF24) on each row
-    expect(src).toContain("#FBBF24");
+    // S-color hex pin (#F59E0B) on each row
+    expect(src).toContain("#F59E0B");
   });
 
   it("AppShell exposes a 伝説 link to /leaderboard from the desktop footer band", () => {

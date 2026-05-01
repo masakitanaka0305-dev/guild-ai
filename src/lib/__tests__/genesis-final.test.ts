@@ -233,7 +233,7 @@ describe("theme: primary token is wired through CSS variables (Logic White)", ()
     // Legacy `primary` namespace keeps its cyan-500 hex for components
     // that still reference `bg-primary`. Logic White routes the active
     // CTA hue through `var(--color-ai-action)` separately.
-    expect(src).toContain("#6366F1");
+    expect(src).toContain("#4C1D95");
     expect(src).toContain("primary");
   });
 
@@ -244,11 +244,11 @@ describe("theme: primary token is wired through CSS variables (Logic White)", ()
     expect(src).toMatch(/--primary:\s*var\(--color-action-primary\)/);
   });
 
-  it("main CTAs use primary blue — FAB and sidebar action have #6366F1 or var(--primary", () => {
+  it("main CTAs use primary blue — FAB and sidebar action have #4C1D95 or var(--primary", () => {
     const fab = readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
     const nav = readFileSync(join(root, "src/components/SidebarNav.tsx"), "utf8");
     const combined = fab + nav;
-    expect(combined).toContain("bg-[var(--primary,#6366F1)]");
+    expect(combined).toContain("bg-[var(--primary,#4C1D95)]");
     expect(combined).toContain("aria-label=\"出す\"");
   });
 });
