@@ -81,7 +81,7 @@ export default function OpsDashboardPage() {
   // Latest alert (single, prominent banner).
   const alert = {
     severity: "high" as const,
-    title:    "推論エンドポイントの p95 レイテンシが 800ms を超えました",
+    title:    "推論おしごと窓口の p95 レイテンシが 800ms を超えました",
     detected: "2 分前",
     runbook:  "/admin/ops/runbook/p95-latency",
   };
