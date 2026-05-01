@@ -11,6 +11,8 @@ import { ClampDescription } from "@/components/ui/ClampDescription";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { ConnectedIntelligenceAssets } from "@/components/ui/ConnectedIntelligenceAssets";
+import { CompatibilityReportSection } from "@/components/ui/CompatibilityReportSection";
+import { buildCompatibilityReport } from "@/lib/compatibility-report";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -90,6 +92,11 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
   const ownedMds = getDemoOwnedMds("demo-user");
   const matching = computeMatchingScore(ownedMds, project);
   const competition = getCompetition(project.id, project.applicantCount);
+  const compatReport = buildCompatibilityReport({
+    ownedMds,
+    project,
+    githubSignals: { commitCount: 18, recentActivity: true },
+  });
 
   // Net payout calculation — owned MDs get rentalFee=0; only missing MDs incur rental.
   const payout = calcNet({
@@ -213,6 +220,11 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               totalReqs={matching.totalReqs}
             />
           </div>
+
+          {/* Intelligence Compatibility Report — Pre-Check above
+              Connected Intelligence Assets. The numeric % + the
+              personalised one-liner sit at the top of the rail. */}
+          <CompatibilityReportSection report={compatReport} />
 
           {/* Connected Intelligence Assets — surfaces the picked MD agent
               wiring before the Apply CTA. Mobile renders inline above the
