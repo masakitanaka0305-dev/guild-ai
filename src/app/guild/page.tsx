@@ -22,6 +22,8 @@ import { useUserId } from "@/components/AuthProvider";
 import { WaveLine } from "@/components/ui/WaveLine";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CoinCounter } from "@/components/ui/CoinCounter";
+import { NextMilestoneCard } from "@/components/NextMilestoneCard";
+import { demoUserHistory } from "@/lib/achievements";
 import { TAP_CLASS } from "@/lib/motion";
 import type { Weapon, PassbookTransaction } from "@/types";
 
@@ -138,6 +140,9 @@ export default function GuildPage() {
         </p>
         <WaveLine ariaLabel="水の意匠 — 静的波線" />
       </header>
+
+      {/* ── 次のマイルストーン (#130) ────────────────────────────── */}
+      <NextMilestoneCard history={demoUserHistory()} />
 
       {/* ── 知恵袋の中身（CoinCounter）─────────────────────────────── */}
       <CoinCounter initialJpy={earnings.jpy} label="知恵袋の中身（今月のお礼）" />
