@@ -68,14 +68,15 @@ export const RANK_TIER: Record<Rank, "金" | "銀" | "銅" | "みならい"> = {
 };
 
 // ─── Color tokens shared with HexRankBadge ───────────────────────────────────
-// Logic White (#125) tunes the rank fills for a white background:
-//   金 (S) #D4A437 — deep gold (旧 #FDE047 だと白上で薄すぎる)
-//   銀 (A) #94A3B8 — slate-400, neutral on white
+// Final Polish (#127) — 太鼓判 colors are unified with the brand gold so
+// the S medal and the お礼 amount share one yellow hue:
+//   金 (S) #FBBF24 — brand secondary (お礼 / S rank highlights)
+//   銀 (A) #94A3B8 — slate-400, neutral on both themes
 //   銅 (B) #B45309 — amber-700, distinct from gold
-//   みならい (D) #94A3B8 — same slate as silver, but used as the seed tier
+//   みならい (D) #94A3B8 — same slate as silver, used as the seed tier
 
 export const RANK_COLOR_TOKEN: Record<Rank, { fill: string; ink: string; text: string }> = {
-  S: { fill: "#D4A437", ink: "#FFFFFF", text: "text-[#D4A437]" }, // 金 (Logic White)
+  S: { fill: "#FBBF24", ink: "#0F172A", text: "text-[#FBBF24]" }, // 金 (brand gold)
   A: { fill: "#94A3B8", ink: "#0F172A", text: "text-[#94A3B8]" }, // 銀
   B: { fill: "#B45309", ink: "#FFFFFF", text: "text-[#B45309]" }, // 銅
   D: { fill: "#94A3B8", ink: "#0F172A", text: "text-slate-400"   }, // みならい
