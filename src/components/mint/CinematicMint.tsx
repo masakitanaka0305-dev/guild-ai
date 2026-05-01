@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Star } from "lucide-react";
 import { HexRankBadge } from "@/components/ui/HexRankBadge";
 import { TAP_CLASS } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { getRarity } from "@/lib/rank-rarity";
 import type { Rank } from "@/types";
 
 /**
@@ -255,21 +257,57 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
       )}
 
       {/* ── Phase 4 — 啓示 (reveal) ───────────────────────────────── */}
-      {phase === 4 && (
+      {phase === 4 && (() => {
+        const rarity = getRarity(rank);
+        const glowSize = rank === "S" ? 380 : rank === "A" ? 320 : rank === "B" ? 260 : 200;
+        const glowAlpha = rank === "S" ? 0.45 : rank === "A" ? 0.30 : rank === "B" ? 0.18 : 0.0;
+        return (
         <div
           data-testid="cinematic-phase-4"
+          data-rank={rank}
+          data-rarity-percent={rarity.recentSharePercent}
+          data-particle-count={rarity.particleCount}
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
         >
-          {/* Radial gold glow rising from the abyss */}
+          {/* Rank-aware radial gold glow — bigger for rarer ranks. */}
           <span
             aria-hidden
             data-testid="cinematic-gold-glow"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full motion-safe:animate-gold-glow"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full motion-safe:animate-gold-glow"
             style={{
-              background:
-                "radial-gradient(closest-side, rgba(245,158,11,0.42), rgba(245,158,11,0.0))",
+              width: `${glowSize}px`,
+              height: `${glowSize}px`,
+              background: glowAlpha > 0
+                ? `radial-gradient(closest-side, rgba(245,158,11,${glowAlpha}), rgba(245,158,11,0))`
+                : "none",
             }}
           />
+
+          {/* S-only particle spread: 6 stars + 3 hairlines around the hex.
+              Static placement — no spin loops. */}
+          {rarity.particleCount > 0 && (
+            <div
+              aria-hidden
+              data-testid="cinematic-rank-particles"
+              data-count={rarity.particleCount}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] pointer-events-none"
+            >
+              {Array.from({ length: rarity.particleCount }).map((_, i) => {
+                const angle = (i / rarity.particleCount) * 360;
+                const dist = 110;
+                return (
+                  <Star
+                    key={`p-${i}`}
+                    aria-hidden
+                    className="absolute top-1/2 left-1/2 w-4 h-4 fill-[var(--color-action-secondary)] stroke-[var(--color-action-secondary)] bg-brand-secondary/20 rounded-full"
+                    style={{
+                      transform: `rotate(${angle}deg) translateX(${dist}px) rotate(${-angle}deg)`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
 
           <div
             data-testid="cinematic-reveal-card"
@@ -291,6 +329,12 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
             <p className="text-sm text-slate-300">
               あなたの知恵が、銀行に届きました
             </p>
+            <p
+              data-testid="cinematic-rarity-caption"
+              className="text-xs text-[var(--color-text-muted)]"
+            >
+              {rarity.caption}
+            </p>
 
             <div className="mt-3 flex flex-col-reverse sm:flex-row gap-2 w-full sm:w-auto">
               <Link
@@ -308,7 +352,8 @@ export function CinematicMint({ rank, valuationJpy, onReveal }: CinematicMintPro
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
     </section>
   );
 }
