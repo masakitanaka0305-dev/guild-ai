@@ -78,3 +78,16 @@ export const MIDNIGHT_PAIRS = [
   { name: "ai-success × on-primary", fg: "#0F172A", bg: "#10B981" },
   { name: "bg-surface × text-primary", fg: "#F8FAFC", bg: "#1E293B" },
 ] as const;
+
+// ─── Canonical Logic White combinations (#125) ───────────────────────────────
+//
+// Every pair below MUST clear AA (≥ 4.5:1) for normal text.
+
+export const LOGIC_WHITE_PAIRS = [
+  { name: "bg-base × text-primary",     fg: "#0F172A", bg: "#F8FAFC" },
+  { name: "bg-surface × text-primary",  fg: "#0F172A", bg: "#FFFFFF" },
+  { name: "bg-surface × text-muted",    fg: "#475569", bg: "#FFFFFF" },
+  { name: "ai-action × on-primary",     fg: "#FFFFFF", bg: "#4F46E5" },
+  { name: "ai-success × on-primary",    fg: "#FFFFFF", bg: "#059669" },
+  { name: "rank-gold × text-primary",   fg: "#0F172A", bg: "#D4A437" },
+] as const;
