@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Copy } from "lucide-react";
 import { RankShield } from "@/components/RankShield";
 import { HexRankBadge } from "@/components/ui/HexRankBadge";
+import { aggregateRoyalty } from "@/lib/intelligence-balance";
 import { ComplexityMeter } from "@/components/ComplexityMeter";
 import { AreaChart } from "@/components/AreaChart";
 import { ImpactCard } from "@/components/ImpactCard";
@@ -208,6 +209,46 @@ export default function ProfilePage() {
         aria-labelledby="tab-status"
         hidden={activeTab !== "status"}
       >
+
+      {/* ── Intelligence Balance — predicted royalty range ─────────── */}
+      {(() => {
+        // Map the user's portfolio assets into balance inputs. Density is
+        // approximated from monthly revenue so heavy-traffic MDs nudge the
+        // prediction up. In production this would be replaced with the
+        // real grading density per MD.
+        const items = assets.map((a) => ({
+          rank: (a.status === "active" ? "A" : "B") as "A" | "B",
+          density: Math.min(100, Math.round(a.monthlyJpy / 200)),
+        }));
+        const royalty = aggregateRoyalty(items);
+        return (
+          <section
+            data-testid="intelligence-balance"
+            className="rounded-2xl border border-cyan-400/30 bg-[#162035] p-5 mb-6 border-l-4 border-l-cyan-400/60"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+              Intelligence Balance
+            </p>
+            <p className="mt-1 text-white text-sm font-semibold">
+              予測印税（月額シミュレーション）
+            </p>
+            <p
+              data-testid="intelligence-balance-central"
+              className="mt-2 text-cyan-400 metric-prime"
+            >
+              ¥{royalty.perMonthJpy.toLocaleString("ja-JP")}
+            </p>
+            <p className="mt-1 text-xs text-slate-400 tabular-nums">
+              保守 ¥{royalty.conservativeJpy.toLocaleString("ja-JP")}
+              {" 〜 楽観 "}
+              ¥{royalty.optimisticJpy.toLocaleString("ja-JP")}
+            </p>
+            <p className="mt-2 text-[11px] text-slate-400">
+              過去のロイヤリティ実績と類似度から推定（シミュレーション）。
+            </p>
+          </section>
+        );
+      })()}
 
       {/* ── 1. 収益サマリ（ヒーロー） ──────────────────────────────── */}
       <section className="mb-6">
