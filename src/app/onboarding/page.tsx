@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Check } from "lucide-react";
+import { useAuthState } from "@/components/AuthProvider";
+import { DeckHome } from "@/components/intelligence-deck/DeckHome";
 
 // Inline GitHub mark — lucide-react v1 does not export Github.
 function GitHubMark({ className }: { className?: string }) {
@@ -132,6 +134,12 @@ function Confetti() {
 function OnboardingContent() {
   const searchParams = useSearchParams();
   const fastMode = searchParams.get("fast") === "1";
+  const auth = useAuthState();
+  // Anonymous visitors land on the Intelligence Deck (3-step roadmap)
+  // before reaching the wizard. ?fast=1 bypasses the gate for demos.
+  if (!fastMode && auth.status === "anonymous") {
+    return <DeckHome />;
+  }
   const queryRole = searchParams.get("role") as RoleId | null;
   const validQueryRole: RoleId | null =
     queryRole === "engineer" || queryRole === "designer" || queryRole === "pdm"
