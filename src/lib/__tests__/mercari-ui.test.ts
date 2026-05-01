@@ -76,19 +76,19 @@ describe("catchphrase: metadata", () => {
   });
 });
 
-// ─── 3. Primary blue #06B6D4 in globals.css ────────────────────────────────────
+// ─── 3. Primary blue #6366F1 in globals.css ────────────────────────────────────
 
 describe("mercari-ui: primary color token", () => {
   const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("--primary aliases through the semantic ai-action token (Logic White)", () => {
-    // Logic White (#125): legacy --primary now redirects to the
-    // semantic --color-ai-action variable so it tracks the theme.
-    expect(src).toMatch(/--primary:\s*var\(--color-ai-action\)/);
+  it("--primary aliases through the brand action token (Final Polish #127)", () => {
+    // Final Polish (#127): legacy --primary now redirects to the
+    // brand action token so it always reads as Mercari Purple.
+    expect(src).toMatch(/--primary:\s*var\(--color-action-primary\)/);
   });
 
-  it("--primary-hover stays as a literal Royal Blue darker tone", () => {
-    expect(src).toMatch(/--primary-hover:\s*#4338CA/);
+  it("--primary-hover aliases through the brand hover token", () => {
+    expect(src).toMatch(/--primary-hover:\s*var\(--color-action-primary-hover\)/);
   });
 });
 
@@ -163,7 +163,7 @@ describe("sell: MD file input", () => {
 
   it("dragging state class switches on drag-over", () => {
     expect(src).toContain("isDragging");
-    expect(src).toContain("border-[#06B6D4]");
+    expect(src).toContain("border-[#6366F1]");
     expect(src).toContain("bg-red-50");
   });
 

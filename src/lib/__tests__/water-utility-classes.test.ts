@@ -5,15 +5,16 @@ import { join } from "node:path";
 const ROOT = process.cwd();
 const css = readFileSync(join(ROOT, "src/app/globals.css"), "utf-8");
 
-describe("Water Guild — utility classes", () => {
-  it("metric-prime is cyan #22D3EE, semibold, tabular-nums and ≥ 1.5rem", () => {
-    // Class block exists with the cyan accent
-    expect(css).toMatch(/\.metric-prime\s*\{[\s\S]*?#22D3EE[\s\S]*?\}/);
+describe("Brand Palette — utility classes (#127)", () => {
+  it("metric-prime is brand-primary purple, semibold, tabular-nums and ≥ 1.5rem", () => {
+    // Class reads through the brand action token now.
+    expect(css).toMatch(/\.metric-prime\s*\{[\s\S]*?--color-action-primary[\s\S]*?\}/);
     expect(css).toMatch(/\.metric-prime\s*\{[\s\S]*?font-semibold[\s\S]*?\}/);
     expect(css).toMatch(/\.metric-prime\s*\{[\s\S]*?tabular-nums[\s\S]*?\}/);
     expect(css).toMatch(/\.metric-prime\s*\{[\s\S]*?font-size:\s*1\.5rem/);
-    // White variant for truth-anchor figures
-    expect(css).toMatch(/\.metric-prime-white\s*\{[\s\S]*?text-white[\s\S]*?\}/);
+    // Hero variant for /guild 合計売上 — 1.5x the metric-prime size.
+    expect(css).toMatch(/\.metric-hero\s*\{[\s\S]*?font-size:\s*2\.25rem/);
+    expect(css).toMatch(/\.metric-hero-yen\s*\{[\s\S]*?font-size:\s*1\.4em/);
   });
 
   it("chip-tech uses bg #1E293B and text #F1F5F9 with rounded-full pill geometry", () => {
@@ -30,12 +31,11 @@ describe("Water Guild — utility classes", () => {
     expect(page).toMatch(/className="chip-tech/);
   });
 
-  it("/guild and TotalAssetsCard render prime numbers with metric-prime classes", () => {
+  it("/guild renders the合計売上 with metric-hero (1.5x) and TotalAssetsCard uses metric-prime", () => {
     const guild = readFileSync(join(ROOT, "src/app/guild/page.tsx"), "utf-8");
     const card  = readFileSync(join(ROOT, "src/components/TotalAssetsCard.tsx"), "utf-8");
-    expect(guild).toMatch(/className="metric-prime-white/);
+    expect(guild).toMatch(/className="metric-hero/);
     expect(guild).toContain("guild-total-sales");
-    expect(card).toMatch(/className="metric-prime-white/);
     expect(card).toMatch(/className="metric-prime[^"]*"/);
   });
 });

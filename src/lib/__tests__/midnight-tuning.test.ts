@@ -7,16 +7,18 @@ const css = readFileSync(join(ROOT, "src/app/globals.css"), "utf-8");
 const block =
   css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
 
-describe("Mercari Lightness (#126) — Midnight tuning", () => {
-  it("backgrounds lift off pure-black for less eye-strain", () => {
-    expect(block).toContain("#101418"); // bg-base
+describe("Final Polish (#127) — Midnight tuning (post Mercari Lightness)", () => {
+  it("backgrounds settle back to slate-900 base + lifted surfaces", () => {
+    // #127 returns to the canonical slate-900 base; surfaces stay lifted.
+    expect(block).toContain("#0F172A"); // bg-base
     expect(block).toContain("#1C2126"); // bg-surface
     expect(block).toContain("#252A30"); // bg-elevated
   });
 
-  it("action / warn colors flip to lighter, more legible tones on dark", () => {
-    expect(block).toContain("#4DD0E1"); // ai-action: lighter cyan
+  it("action / warn colors are the Mercari Purple brand + lemon warn", () => {
+    expect(block).toContain("#6366F1"); // brand-primary (action)
     expect(block).toContain("#FFF176"); // ai-warn: lemon yellow
+    expect(block).toContain("#A5B4FC"); // dark link (replaces cyan)
   });
 
   it("text-soft secondary token is added (#E0E0E0)", () => {

@@ -9,11 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ─── Brand Palette (#127) — Final Polish ───────────────────
+        // Three-color UI lock: Mercari Purple primary, お礼 Gold accent,
+        // Cyan helper (warn/helper only — never a CTA).
+        brand: {
+          primary:        "var(--color-action-primary)",         // #6366F1
+          "primary-hover": "var(--color-action-primary-hover)",  // #4F46E5
+          "primary-soft": "var(--color-action-primary-soft)",    // #E0E7FF
+          secondary:      "var(--color-action-secondary)",       // #FBBF24
+          "secondary-soft": "var(--color-action-secondary-soft)",// #FEF3C7
+          "cyan-helper":  "var(--color-cyan-helper)",            // #06B6D4 (warn/helper only)
+        },
         primary: {
-          DEFAULT: "#06B6D4",  // cyan-500
-          hover: "#0891B2",    // cyan-600
-          soft: "#164E63",     // cyan-950 dark
-          foreground: "#020617",  // slate-950
+          DEFAULT: "var(--color-action-primary)",
+          hover:   "var(--color-action-primary-hover)",
+          soft:    "var(--color-action-primary-soft)",
+          foreground: "#FFFFFF",
         },
         // retain for negative indicators only
         negative: "#E64545",
@@ -74,9 +85,9 @@ const config: Config = {
         // ─── ギルドAI — role color tokens (#123) ────────────────────
         // The dashboard mixes these three so the surface communicates
         // "intelligence is cross-functional, not siloed".
-        roleDev:    "#4F46E5", // ai-action — Royal Blue
+        roleDev:    "#6366F1", // ai-action — Mercari Purple (#127)
         roleDesign: "#7C3AED", // ai-flow   — Violet
-        rolePM:     "#D4A437", // 金 (太鼓判 gold tone, Logic White-tuned)
+        rolePM:     "#FBBF24", // 金 (brand-secondary gold, #127)
       },
       boxShadow: {
         card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",
@@ -109,9 +120,15 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(2px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "purple-ripple": {
+          "0%":   { opacity: "0.6", transform: "scale(0.95)" },
+          "60%":  { opacity: "0.35", transform: "scale(1.04)" },
+          "100%": { opacity: "0",   transform: "scale(1.05)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 320ms ease-out both",
+        "purple-ripple": "purple-ripple 220ms ease-out forwards",
       },
     }
   },

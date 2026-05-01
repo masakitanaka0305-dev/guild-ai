@@ -20,7 +20,9 @@ describe("water-theme: color tokens", () => {
     expect(src).toMatch(/--water-bg:\s*var\(--color-bg-base\)/);
     expect(src).toMatch(/--water-accent:\s*var\(--color-ai-action\)/);
     expect(src).toMatch(/--color-bg-base:\s*#F8FAFC/i);
-    expect(src).toMatch(/--color-ai-action:\s*#4F46E5/i);
+    // Final Polish (#127): ai-action resolves through brand action token.
+    expect(src).toMatch(/--color-ai-action:\s*var\(--color-action-primary\)/i);
+    expect(src).toMatch(/--color-action-primary:\s*#6366F1/i);
   });
 });
 

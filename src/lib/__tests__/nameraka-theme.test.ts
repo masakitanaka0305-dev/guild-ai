@@ -9,9 +9,10 @@ const root = process.cwd();
 describe("nameraka-theme.tokens", () => {
   const css = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
 
-  it("globals.css aliases Water theme --primary through ai-action (Logic White)", () => {
-    // Logic White (#125): --primary redirects to semantic ai-action.
-    expect(css).toMatch(/--primary:\s*var\(--color-ai-action\)/);
+  it("globals.css aliases --primary through the brand action token (#127)", () => {
+    // Final Polish (#127): --primary now redirects to the brand action
+    // token (Mercari Purple); --color-ai-action is itself an alias.
+    expect(css).toMatch(/--primary:\s*var\(--color-action-primary\)/);
   });
 
   it("globals.css aliases --bg through bg-base (Logic White default)", () => {

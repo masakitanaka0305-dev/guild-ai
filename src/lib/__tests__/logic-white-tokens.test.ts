@@ -21,8 +21,10 @@ describe("Logic White (#125) — default light tokens", () => {
     expect(css).toMatch(/--color-text-soft:\s*#424242/i);
     expect(css).toMatch(/--color-text-muted:\s*#475569/i);
     expect(css).toMatch(/--color-text-on-primary:\s*#FFFFFF/i);
-    // Action / status
-    expect(css).toMatch(/--color-ai-action:\s*#4F46E5/i);
+    // Action / status (#127 Final Polish — primary now resolves through
+    // the brand token; the literal value lives in --color-action-primary).
+    expect(css).toMatch(/--color-action-primary:\s*#6366F1/i);
+    expect(css).toMatch(/--color-ai-action:\s*var\(--color-action-primary\)/i);
     expect(css).toMatch(/--color-ai-flow:\s*#7C3AED/i);
     expect(css).toMatch(/--color-ai-success:\s*#059669/i);
     expect(css).toMatch(/--color-ai-warn:\s*#D97706/i);
@@ -35,11 +37,12 @@ describe("Logic White (#125) — default light tokens", () => {
   it("Midnight Logic values stay tuned under [data-theme=\"midnight\"] (#126)", () => {
     const css = read("src/app/globals.css");
     const block = css.match(/\[data-theme="midnight"\]\s*\{[\s\S]*?\n\s{2}\}/)?.[0] ?? "";
-    // Mercari Lightness (#126): the dark surface lifts off pure-black
-    // and the action color shifts to a lighter cyan.
-    expect(block).toMatch(/--color-bg-base:\s*#101418/i);
-    expect(block).toMatch(/--color-ai-action:\s*#4DD0E1/i);
-    expect(block).toMatch(/--color-text-primary:\s*#F8FAFC/i);
+    // Final Polish (#127): the dark surface returns to slate-900 base
+    // (#0F172A) and the action color becomes Mercari Purple via the
+    // shared --color-action-primary brand token.
+    expect(block).toMatch(/--color-bg-base:\s*#0F172A/i);
+    expect(block).toMatch(/--color-action-primary:\s*#6366F1/i);
+    expect(block).toMatch(/--color-text-primary:\s*#F1F5F9/i);
   });
 
   it("tailwind midnight / ai / text utilities resolve through CSS variables", () => {

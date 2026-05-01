@@ -69,25 +69,45 @@ export function contrastRatioRounded(fg: string, bg: string): number {
 }
 
 // ─── Canonical Midnight Logic combinations (used by tests + docs) ────────────
+//
+// Final Polish (#127) — text-on-primary is now pure white (#FFFFFF) since
+// the action color is purple, not cyan. Dark text-primary is slate-100
+// (#F1F5F9), dark link is indigo-300 (#A5B4FC, replaces cyan).
 
 export const MIDNIGHT_PAIRS = [
-  { name: "bg-base × text-primary",  fg: "#F8FAFC", bg: "#0F172A" },
-  { name: "bg-base × text-muted",    fg: "#94A3B8", bg: "#0F172A" },
-  { name: "ai-action × on-primary",  fg: "#0F172A", bg: "#06B6D4" },
-  { name: "ai-flow × on-primary",    fg: "#0F172A", bg: "#8B5CF6" },
-  { name: "ai-success × on-primary", fg: "#0F172A", bg: "#10B981" },
-  { name: "bg-surface × text-primary", fg: "#F8FAFC", bg: "#1E293B" },
+  { name: "bg-base × text-primary",   fg: "#F1F5F9", bg: "#0F172A" },
+  { name: "bg-base × text-muted",     fg: "#94A3B8", bg: "#0F172A" },
+  { name: "bg-base × text-link",      fg: "#A5B4FC", bg: "#0F172A" },
+  { name: "ai-action × on-primary",   fg: "#FFFFFF", bg: "#6366F1" },
+  { name: "ai-flow × dark-ink",       fg: "#0F172A", bg: "#8B5CF6" },
+  { name: "ai-success × dark-ink",    fg: "#0F172A", bg: "#10B981" },
+  { name: "bg-surface × text-primary",fg: "#F1F5F9", bg: "#1C2126" },
 ] as const;
 
-// ─── Canonical Logic White combinations (#125) ───────────────────────────────
+// ─── Canonical Logic White combinations (#125, repalette #127) ───────────────
 //
 // Every pair below MUST clear AA (≥ 4.5:1) for normal text.
 
 export const LOGIC_WHITE_PAIRS = [
-  { name: "bg-base × text-primary",     fg: "#0F172A", bg: "#F8FAFC" },
-  { name: "bg-surface × text-primary",  fg: "#0F172A", bg: "#FFFFFF" },
+  { name: "bg-base × text-primary",     fg: "#212121", bg: "#F8FAFC" },
+  { name: "bg-surface × text-primary",  fg: "#212121", bg: "#FFFFFF" },
   { name: "bg-surface × text-muted",    fg: "#475569", bg: "#FFFFFF" },
-  { name: "ai-action × on-primary",     fg: "#FFFFFF", bg: "#4F46E5" },
+  { name: "ai-action × on-primary",     fg: "#FFFFFF", bg: "#6366F1" },
   { name: "ai-success × on-primary",    fg: "#FFFFFF", bg: "#059669" },
-  { name: "rank-gold × text-primary",   fg: "#0F172A", bg: "#D4A437" },
+  { name: "rank-gold × text-primary",   fg: "#0F172A", bg: "#FBBF24" },
+] as const;
+
+// ─── Brand Palette pairs (#127, Final Polish) ────────────────────────────────
+//
+// The 6 brand-locked combinations the user-facing UI must clear at AA.
+// Independent of theme: verify the brand colors themselves work on the
+// surfaces they actually pair with.
+
+export const BRAND_PALETTE_PAIRS = [
+  { name: "brand-primary × on-primary",       fg: "#FFFFFF", bg: "#6366F1" },
+  { name: "brand-secondary × bg-base (dark)", fg: "#FBBF24", bg: "#0F172A" },
+  { name: "bg-base × text-primary (light)",   fg: "#212121", bg: "#F8FAFC" },
+  { name: "bg-base × text-primary (dark)",    fg: "#F1F5F9", bg: "#0F172A" },
+  { name: "bg-base × text-muted (dark)",      fg: "#94A3B8", bg: "#0F172A" },
+  { name: "bg-base × text-link (dark)",       fg: "#A5B4FC", bg: "#0F172A" },
 ] as const;

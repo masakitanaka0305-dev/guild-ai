@@ -233,22 +233,22 @@ describe("theme: primary token is wired through CSS variables (Logic White)", ()
     // Legacy `primary` namespace keeps its cyan-500 hex for components
     // that still reference `bg-primary`. Logic White routes the active
     // CTA hue through `var(--color-ai-action)` separately.
-    expect(src).toContain("#06B6D4");
+    expect(src).toContain("#6366F1");
     expect(src).toContain("primary");
   });
 
-  it("globals.css aliases --primary through var(--color-ai-action)", () => {
+  it("globals.css aliases --primary through the brand action token", () => {
     const src = readFileSync(join(root, "src/app/globals.css"), "utf8");
-    // Logic White (#125): --primary now redirects to the semantic
-    // ai-action token instead of carrying its own hex.
-    expect(src).toMatch(/--primary:\s*var\(--color-ai-action\)/);
+    // Final Polish (#127): --primary now redirects to the brand
+    // action token (Mercari Purple) which itself feeds --color-ai-action.
+    expect(src).toMatch(/--primary:\s*var\(--color-action-primary\)/);
   });
 
-  it("main CTAs use primary blue — FAB and sidebar action have #06B6D4 or var(--primary", () => {
+  it("main CTAs use primary blue — FAB and sidebar action have #6366F1 or var(--primary", () => {
     const fab = readFileSync(join(root, "src/components/AppShell.tsx"), "utf8");
     const nav = readFileSync(join(root, "src/components/SidebarNav.tsx"), "utf8");
     const combined = fab + nav;
-    expect(combined).toContain("bg-[var(--primary,#06B6D4)]");
+    expect(combined).toContain("bg-[var(--primary,#6366F1)]");
     expect(combined).toContain("aria-label=\"出す\"");
   });
 });

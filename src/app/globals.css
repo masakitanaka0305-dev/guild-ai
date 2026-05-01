@@ -31,6 +31,23 @@
   :root {
     color-scheme: light;
 
+    /* ── Brand Palette (#127 — Mercari Purple final polish) ──────────
+       Single source of truth for primary action colors across both
+       Logic White (light) and Midnight Logic (dark). UI is locked to
+       three colors:
+         Primary  — Mercari Purple  #6366F1   (action / progress / icons)
+         Secondary— お礼 Gold        #FBBF24   (お礼 amount, S rank, alerts)
+         Helper   — Cyan             #0EA5E9   (warn/helper ONLY, never CTA)
+       Older tokens (--color-ai-action / --primary / --water-accent) are
+       kept as aliases so unmodified components inherit the new purple
+       automatically. */
+    --color-action-primary:        #6366F1;
+    --color-action-primary-hover:  #4F46E5;
+    --color-action-primary-soft:   #E0E7FF;
+    --color-action-secondary:      #FBBF24;
+    --color-action-secondary-soft: #FEF3C7;
+    --color-cyan-helper:           #0EA5E9;
+
     --color-bg-base:        #F8FAFC;
     --color-bg-surface:     #FFFFFF;
     --color-bg-elevated:    #F1F5F9;
@@ -38,17 +55,20 @@
     --color-text-soft:      #424242;   /* secondary headings */
     --color-text-muted:     #475569;
     --color-text-on-primary:#FFFFFF;
-    --color-ai-action:      #4F46E5;
+    --color-link:           #4F46E5;
+    --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #7C3AED;
     --color-ai-success:     #059669;
     --color-ai-warn:        #D97706;
     --color-ai-negative:    #DC2626;
+    --color-status-success: var(--color-ai-success);
+    --color-status-warn:    var(--color-ai-warn);
     --color-border-subtle:  #E2E8F0;
     --color-border-strong:  #CBD5E1;
 
-    /* Rank colors tuned for the white background. The dark themes
-       still see the cooler Midnight palette via the override below. */
-    --rank-gold:   #D4A437;
+    /* Rank colors — final palette aligned to the brand gold so the
+       S medal and "お礼" amount share one yellow hue. */
+    --rank-gold:   #FBBF24;
     --rank-silver: #94A3B8;
     --rank-bronze: #B45309;
     --rank-seed:   #94A3B8;
@@ -65,9 +85,9 @@
     --water-muted:        var(--color-text-muted);
     --water-divider:      var(--color-border-subtle);
 
-    --primary: var(--color-ai-action);
-    --primary-hover: #4338CA;
-    --primary-soft: #E0E7FF;
+    --primary: var(--color-action-primary);
+    --primary-hover: var(--color-action-primary-hover);
+    --primary-soft: var(--color-action-primary-soft);
     --negative: var(--color-ai-negative);
     --bg: var(--color-bg-base);
     --surface: var(--water-surface);
@@ -85,22 +105,34 @@
   [data-theme="midnight"] {
     color-scheme: dark;
 
-    --color-bg-base:        #101418;   /* ← #0F172A */
-    --color-bg-surface:     #1C2126;   /* ← #1E293B (lift over base) */
-    --color-bg-elevated:    #252A30;   /* ← #293548 */
-    --color-text-primary:   #F8FAFC;
-    --color-text-soft:      #E0E0E0;   /* secondary headings / subdued body */
+    /* Brand Palette — same purple/gold primaries, with link/text-on
+       tones tuned for the dark surface. */
+    --color-action-primary:        #6366F1;
+    --color-action-primary-hover:  #818CF8;   /* lift on dark */
+    --color-action-primary-soft:   rgba(99,102,241,0.18);
+    --color-action-secondary:      #FBBF24;
+    --color-action-secondary-soft: rgba(251,191,36,0.18);
+    --color-cyan-helper:           #38BDF8;   /* sky-400 — warn/helper only */
+
+    --color-bg-base:        #0F172A;   /* deep slate-900 base */
+    --color-bg-surface:     #1C2126;
+    --color-bg-elevated:    #252A30;
+    --color-text-primary:   #F1F5F9;   /* slate-100 */
+    --color-text-soft:      #E0E0E0;
     --color-text-muted:     #94A3B8;
-    --color-text-on-primary:#101418;
-    --color-ai-action:      #4DD0E1;   /* lighter cyan reads on dark */
+    --color-text-on-primary:#FFFFFF;
+    --color-link:           #A5B4FC;   /* indigo-300 reads on dark, no cyan */
+    --color-ai-action:      var(--color-action-primary);
     --color-ai-flow:        #8B5CF6;
     --color-ai-success:     #10B981;
-    --color-ai-warn:        #FFF176;   /* lemon yellow on dark */
+    --color-ai-warn:        #FFF176;
     --color-ai-negative:    #E64545;
+    --color-status-success: var(--color-ai-success);
+    --color-status-warn:    var(--color-ai-warn);
     --color-border-subtle:  rgba(248,250,252,0.08);
     --color-border-strong:  rgba(248,250,252,0.18);
 
-    --rank-gold:   #FDE047;
+    --rank-gold:   #FBBF24;   /* unified with brand gold */
     --rank-silver: #CBD5E1;
     --rank-bronze: #D2A06B;
     --rank-seed:   #94A3B8;
@@ -233,9 +265,11 @@
     -webkit-backdrop-filter: blur(12px);
   }
 
-  /* Primary CTA button */
+  /* Primary CTA button — Mercari Purple (#127) */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-cyan-500 px-5 py-2.5 text-sm font-medium text-slate-950;
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-medium;
+    background-color: var(--color-action-primary);
+    color: #FFFFFF;
     transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
                 transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -275,15 +309,20 @@
 
   /* Input base */
   .input-base {
-    @apply w-full rounded-lg border border-white/20 bg-slate-800 px-3 py-2.5 text-base text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20;
+    @apply w-full rounded-lg border border-white/20 bg-slate-800 px-3 py-2.5 text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2;
+    border-color: var(--color-border-subtle);
     transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .input-base:focus {
+    border-color: var(--color-action-primary);
+    --tw-ring-color: rgba(99, 102, 241, 0.25);
+  }
 
-  /* ── Water Guild — prime numbers (sales / payout / match %) ──── */
-  /* Cyan-lit prime — for accent-worthy figures (default). */
+  /* ── Mercari Purple prime numbers (#127) — sales / payout / match % */
   .metric-prime {
-    @apply text-[#22D3EE] font-semibold tabular-nums tracking-tight;
+    @apply font-semibold tabular-nums tracking-tight;
+    color: var(--color-action-primary);
     font-size: 1.5rem;
     line-height: 1.15;
   }
@@ -291,6 +330,37 @@
     .metric-prime {
       font-size: 1.875rem;
     }
+  }
+
+  /* Gold prime — お礼の金額 / S rank totals. */
+  .metric-prime-gold {
+    @apply font-semibold tabular-nums tracking-tight;
+    color: var(--color-action-secondary);
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  @media (min-width: 640px) {
+    .metric-prime-gold {
+      font-size: 1.875rem;
+    }
+  }
+
+  /* Hero — 1.5x of metric-prime, used for /guild 合計売上 */
+  .metric-hero {
+    @apply font-semibold tabular-nums tracking-tight;
+    color: var(--color-text-primary);
+    font-size: 2.25rem;          /* 36px mobile (was 24px → 36px = 1.5x) */
+    line-height: 1.05;
+  }
+  @media (min-width: 640px) {
+    .metric-hero {
+      font-size: 4.5rem;          /* 72px desktop (was 48px → 72px = 1.5x) */
+    }
+  }
+  .metric-hero-yen {
+    font-size: 1.4em;             /* ¥ 記号は本体の 1.4倍 */
+    font-weight: 700;
+    margin-right: 0.04em;
   }
 
   /* Pure-white prime — for figures that should anchor as truth, not accent. */

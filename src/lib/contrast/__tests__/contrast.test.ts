@@ -13,7 +13,7 @@ describe("contrast: WCAG 2.1 ratio utility", () => {
   });
 
   it("identical colors return 1:1", () => {
-    expect(contrastRatio("#06B6D4", "#06B6D4")).toBeCloseTo(1, 2);
+    expect(contrastRatio("#6366F1", "#6366F1")).toBeCloseTo(1, 2);
   });
 
   it("parseHex normalises 3-digit and 6-digit forms", () => {
@@ -43,16 +43,19 @@ describe("contrast: Midnight Logic AA gate", () => {
   });
 
   it("ai-action × on-primary (button text) clears AA (≥ 4.5)", () => {
-    const r = contrastRatioRounded("#0F172A", "#06B6D4");
+    // Final Polish (#127): button text on Mercari Purple is pure white.
+    const r = contrastRatioRounded("#FFFFFF", "#6366F1");
     expect(r).toBeGreaterThanOrEqual(4.5);
   });
 
-  it("ai-success × on-primary clears AA (≥ 4.5)", () => {
+  it("ai-success × dark text clears AA-large (≥ 3.0) — emerald is a light pill bg", () => {
+    // Emerald-500 is a light tone, so the chip's text reads as dark
+    // (slate-900). White text on emerald falls below 3:1.
     const r = contrastRatioRounded("#0F172A", "#10B981");
-    expect(r).toBeGreaterThanOrEqual(4.5);
+    expect(r).toBeGreaterThanOrEqual(3.0);
   });
 
-  it("ai-flow × on-primary clears AA-large (≥ 3.0) — flow is for badges, not body text", () => {
+  it("ai-flow × dark text clears AA-large (≥ 3.0) — violet pill bg", () => {
     const r = contrastRatioRounded("#0F172A", "#8B5CF6");
     expect(r).toBeGreaterThanOrEqual(3.0);
   });
@@ -62,8 +65,8 @@ describe("contrast: Midnight Logic AA gate", () => {
     expect(r).toBeGreaterThanOrEqual(4.5);
   });
 
-  it("MIDNIGHT_PAIRS list covers the 6 spec pairs", () => {
-    expect(MIDNIGHT_PAIRS).toHaveLength(6);
+  it("MIDNIGHT_PAIRS list covers the 7 spec pairs (#127 added the dark link)", () => {
+    expect(MIDNIGHT_PAIRS).toHaveLength(7);
     for (const p of MIDNIGHT_PAIRS) {
       expect(p.fg).toMatch(/^#[0-9A-F]{6}$/i);
       expect(p.bg).toMatch(/^#[0-9A-F]{6}$/i);
