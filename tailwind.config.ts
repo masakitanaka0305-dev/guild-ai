@@ -36,23 +36,45 @@ const config: Config = {
         "n-gold-soft": "#F2DFA0",
         "n-positive": "#0E9F4F",
         "n-negative": "#E64545",
-        // ─── Water Guild — Hexagonal Robustness (active) ────────────
+        // ─── Midnight Logic — Pro tier palette (#124, canonical) ────
+        // bg-base #0F172A / bg-surface #1E293B / bg-elevated #293548
+        // ai-action #06B6D4 / ai-flow #8B5CF6 / ai-success #10B981
+        midnight: {
+          base:    "#0F172A",
+          surface: "#1E293B",
+          panel:   "#1E293B",   // alias for "card panel"
+          elevated:"#293548",
+        },
+        ai: {
+          action:  "#06B6D4",   // Electric Cyan — primary CTA
+          flow:    "#8B5CF6",   // Electric Violet — generation / multi-dim
+          success: "#10B981",   // Neon Mint — live / OK
+          warn:    "#F59E0B",
+          negative:"#E64545",
+        },
+        text: {
+          primary: "#F8FAFC",
+          muted:   "#94A3B8",
+        },
+        // ─── Water Guild legacy alias (now resolves to Midnight) ─────
+        // Existing components keep referencing `bg-water-bg` etc. — the
+        // hex below mirrors the canonical Midnight tokens above.
         water: {
-          bg:             "#0B1121",
-          surface:        "#162035",
-          "surface-2":    "#1E293B",
-          accent:         "#22D3EE",
-          "accent-hover": "#06B6D4",
-          text:           "#E2E8F0",
+          bg:             "#0F172A",
+          surface:        "#1E293B",
+          "surface-2":    "#293548",
+          accent:         "#06B6D4",
+          "accent-hover": "#0891B2",
+          text:           "#F8FAFC",
           muted:          "#94A3B8",
-          divider:        "rgba(226,232,240,0.10)",
+          divider:        "rgba(248,250,252,0.10)",
         },
         // ─── ギルドAI — role color tokens (#123) ────────────────────
         // The dashboard mixes these three so the surface communicates
         // "intelligence is cross-functional, not siloed".
-        roleDev:    "#22D3EE", // cyan-400
-        roleDesign: "#A78BFA", // violet-400
-        rolePM:     "#FDE047", // amber/yellow-300
+        roleDev:    "#06B6D4", // ai-action — was cyan-400 #22D3EE
+        roleDesign: "#8B5CF6", // ai-flow   — was violet-400 #A78BFA
+        rolePM:     "#FDE047", // amber/yellow-300 (太鼓判 gold tone)
       },
       boxShadow: {
         card: "0px 1px 2px rgba(0,0,0,0.04), 0px 2px 6px rgba(0,0,0,0.03)",

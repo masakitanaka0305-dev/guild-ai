@@ -5,18 +5,22 @@ import { resolve } from "path";
 const root = process.cwd();
 
 describe("water-theme: color tokens", () => {
-  it("tailwind.config.ts defines the cyan-500 hover hue (#06B6D4) and the Water Guild accent (#22D3EE)", () => {
+  it("tailwind.config.ts defines the Midnight Logic action hue (#06B6D4)", () => {
     const src = readFileSync(resolve(root, "tailwind.config.ts"), "utf8");
+    // Midnight Logic (#124) supersedes #22D3EE — Electric Cyan #06B6D4
+    // is now the canonical ai-action hue.
     expect(src).toContain("#06B6D4");
-    expect(src).toContain("#22D3EE");
     expect(src).toContain("primary");
   });
 
-  it("globals.css uses the Water Guild palette (#0B1121 / #22D3EE)", () => {
-    // Water Guild v1 supersedes the earlier slate-950 base with deep-sea navy.
+  it("globals.css resolves --water-* through Midnight Logic tokens", () => {
+    // Midnight Logic (#124): legacy --water-* tokens are aliases that
+    // resolve through --color-bg-base / --color-ai-action.
     const src = readFileSync(resolve(root, "src/app/globals.css"), "utf8");
-    expect(src).toMatch(/--water-bg:\s*#0B1121/i);
-    expect(src).toMatch(/--water-accent:\s*#22D3EE/i);
+    expect(src).toMatch(/--water-bg:\s*var\(--color-bg-base\)/);
+    expect(src).toMatch(/--water-accent:\s*var\(--color-ai-action\)/);
+    expect(src).toMatch(/--color-bg-base:\s*#0F172A/i);
+    expect(src).toMatch(/--color-ai-action:\s*#06B6D4/i);
   });
 });
 

@@ -6,15 +6,50 @@
   /* Water Guild — Hexagonal Robustness (デフォルト) */
   :root {
     color-scheme: dark;
-    /* ── Water Guild tokens (#0B1121 / #22D3EE / #162035) ────────── */
-    --water-bg:           #0B1121;
-    --water-surface:      #162035;
-    --water-surface-2:    #1E293B;
-    --water-accent:       #22D3EE;
-    --water-accent-hover: #06B6D4;
-    --water-text:         #E2E8F0;
-    --water-muted:        #94A3B8;
-    --water-divider:      rgba(226,232,240,0.10);
+
+    /* ── Midnight Logic — semantic tokens (正本 / canonical) ──────
+       The "Midnight Logic" palette is the single source of truth for
+       background, text, action and status colors. All older tokens
+       (water-* / n-* / surface / primary) become aliases that resolve
+       through these. Pro-tier surfaces target WCAG AA on every pair.
+
+       Color           Hex       Role
+       ──────────────  ────────  ─────────────────────────────────
+       Deep Space Blue  #0F172A  bg-base — the cockpit floor
+       Cockpit Surface  #1E293B  bg-surface — panels and cards
+       Elevated Panel   #293548  bg-elevated — modals, popovers
+       Off-white        #F8FAFC  text-primary
+       Slate-400        #94A3B8  text-muted
+       Electric Cyan    #06B6D4  ai-action (primary CTA)
+       Electric Violet  #8B5CF6  ai-flow (generation / multi-dim)
+       Neon Mint        #10B981  ai-success (live / OK)
+       Amber 500        #F59E0B  ai-warn
+       Red 500          #E64545  ai-negative
+       Border subtle    rgba(248,250,252,0.10)
+       Border strong    rgba(248,250,252,0.18)                  */
+    --color-bg-base:        #0F172A;
+    --color-bg-surface:     #1E293B;
+    --color-bg-elevated:    #293548;
+    --color-text-primary:   #F8FAFC;
+    --color-text-muted:     #94A3B8;
+    --color-text-on-primary:#0F172A;
+    --color-ai-action:      #06B6D4;
+    --color-ai-flow:        #8B5CF6;
+    --color-ai-success:     #10B981;
+    --color-ai-warn:        #F59E0B;
+    --color-ai-negative:    #E64545;
+    --color-border-subtle:  rgba(248,250,252,0.10);
+    --color-border-strong:  rgba(248,250,252,0.18);
+
+    /* ── Water Guild tokens (legacy aliases — resolve through Midnight) */
+    --water-bg:           var(--color-bg-base);
+    --water-surface:      var(--color-bg-surface);
+    --water-surface-2:    var(--color-bg-elevated);
+    --water-accent:       var(--color-ai-action);
+    --water-accent-hover: #0891B2;
+    --water-text:         var(--color-text-primary);
+    --water-muted:        var(--color-text-muted);
+    --water-divider:      var(--color-border-subtle);
 
     /* Legacy aliases retained for components that still reference them.
        --primary keeps its cyan-500 tone to avoid disturbing pre-Water-Guild
@@ -34,14 +69,16 @@
 
   [data-theme="water"] {
     color-scheme: dark;
-    --water-bg:           #0B1121;
-    --water-surface:      #162035;
-    --water-surface-2:    #1E293B;
-    --water-accent:       #22D3EE;
-    --water-accent-hover: #06B6D4;
-    --water-text:         #E2E8F0;
-    --water-muted:        #94A3B8;
-    --water-divider:      rgba(226,232,240,0.10);
+    /* Mirror Midnight Logic tokens at the theme root so that any
+       descendant only needs to read `var(--color-bg-base)` etc. */
+    --water-bg:           var(--color-bg-base);
+    --water-surface:      var(--color-bg-surface);
+    --water-surface-2:    var(--color-bg-elevated);
+    --water-accent:       var(--color-ai-action);
+    --water-accent-hover: #0891B2;
+    --water-text:         var(--color-text-primary);
+    --water-muted:        var(--color-text-muted);
+    --water-divider:      var(--color-border-subtle);
 
     /* Redirect legacy --n-* variables to Water palette so existing
        components (referencing --n-bg / --n-text / etc.) automatically
