@@ -65,6 +65,7 @@ function isApiRoute(filePath: string): boolean {
 // FORBIDDEN as UI tokens (Final Polish #127): "Mercari Purple" / "メルカリ・パープル" / "お礼のゴールド" / "Cyan Helper" / "Brand Palette" — these are internal names only.
 // Explicitly PERMITTED (Cinematic Mint #128): 読みとり中 / 価値を結晶化中 / 準備中 / 資産価値 / 金/銀/銅 の太鼓判 / 知恵の銀行 / 先週、あなたの知恵は ¥X 稼ぎました / 新しい印税が ¥X 入金されました / ○○社があなたの『…』に注目しています / もう一度出品する / マイ銀行で確認 / ノートを編集する
 // FORBIDDEN as UI tokens (Cinematic Mint #128): "アビス・ブラック" / "ディープパープル" / "エレクトリックゴールド" / "クリスタル・フェイズ" / "啓示" / "Cinematic Mint" — internal palette names only.
+// Explicitly PERMITTED (Overload-Healthy #129): Live モード / LIVE / 音と更新頻度が上がります / 1 タップで OFF に戻せます / N 日連続で印税が届いています / 今週、あなたの知恵が連続 N 件採用されました（過去最多）/ 直近 24 時間で N 回呼び出されました / 累計 ¥N 達成 / 累計 ¥N を超えました / わかりました / 直近 30 秒で +¥X 入りました
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
