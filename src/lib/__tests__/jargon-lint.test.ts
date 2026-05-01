@@ -56,6 +56,7 @@ function isApiRoute(filePath: string): boolean {
 // Explicitly PERMITTED (Water Guild v3 — direct CTA copy #117): この知能で応募 / 知能資産 / あなたのスキル証明 / GitHub から始める / まだ知能を登記していません / あなたの知能を資産化する場所
 // Explicitly PERMITTED (UX pass 2 — agent-deploy CTA #118): エージェントをデプロイ / 知能をプラグイン / エージェント派遣中 / 思考をコピー / 後で設定 / Coming Soon / タブ切替 / 応募状況を見る / 取り消す / 別の知能を選びましょう / 編集する
 // Explicitly PERMITTED (Intelligence Deck #119): 自分の知能を登記する / 知能の資産化を開始する / 登記済みエージェント数 / 登記 (Sync) / 鑑定 (Grade) / 派遣 (Deploy) / STEP 1 / STEP 2 / STEP 3
+// Explicitly PERMITTED (Intelligence Proof #120): 鑑定中 / Analyzing your Intelligence / Intelligence Balance / 予測印税 / 伝説の知能ギルド / Hall of Fame / 知能の断片 / 真正性証明 / Legend / Expert / Core / Seed / Confidentiality Filter
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
