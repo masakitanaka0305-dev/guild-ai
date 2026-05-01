@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { Copy } from "lucide-react";
 import { RankShield } from "@/components/RankShield";
 import { ComplexityMeter } from "@/components/ComplexityMeter";
 import { AreaChart } from "@/components/AreaChart";
@@ -75,8 +77,52 @@ function RevenueBlock({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+// ─── Hexagonal rank badge (large, static) ────────────────────────────────────
+
+function HexRankBadge({ rank, size = 48 }: { rank: "S" | "A" | "B"; size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      role="img"
+      aria-label={`鑑定ランク ${rank}`}
+      className="flex-shrink-0"
+    >
+      <polygon
+        points="50,4 92,27 92,73 50,96 8,73 8,27"
+        fill="#162035"
+        stroke="#22D3EE"
+        strokeWidth="3"
+      />
+      <text
+        x="50"
+        y="60"
+        textAnchor="middle"
+        fontFamily="inherit"
+        fontWeight={900}
+        fontSize="38"
+        fill="#22D3EE"
+      >
+        {rank}
+      </text>
+    </svg>
+  );
+}
+
+// ─── Tabs ────────────────────────────────────────────────────────────────────
+
+type TabId = "status" | "md" | "activity";
+const TABS: { id: TabId; label: string }[] = [
+  { id: "status",   label: "ステータス" },
+  { id: "md",       label: "登記済み MD" },
+  { id: "activity", label: "活動履歴" },
+];
+
 export default function ProfilePage() {
   const handle = useUserId();
+  const [activeTab, setActiveTab] = useState<TabId>("status");
+  const [copied, setCopied] = useState(false);
   const daily    = getDailyUsage(handle);
   const weekly   = getWeeklyUsage(handle);
   const lifetime = getLifetimeUsage(handle);
@@ -96,6 +142,17 @@ export default function ProfilePage() {
   const totalSettledJpy = Object.values(settlementSummary).reduce((s, v) => s + v, 0);
   const tierBreakdown = getTierUsageBreakdown(totalCalls * 15 / 100, totalCalls * 45 / 100, totalCalls * 40 / 100);
 
+  const cumulativeJpy = daily.jpy + weekly.jpy + lifetime.jpy;
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(`@${handle}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      /* clipboard API unavailable in test env — silently ignore */
+    }
+  };
+
   return (
     <main className="px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto py-8 pb-24 sm:pb-12">
       <h1 className="sr-only">プロフィール</h1>
@@ -103,6 +160,86 @@ export default function ProfilePage() {
       <Link href="/guild" className="text-xs text-[var(--n-muted,#6B6456)] hover:underline mb-4 inline-block">
         ← 運用に戻る
       </Link>
+
+      {/* ── Profile header ─────────────────────────────────────────── */}
+      <header
+        data-testid="profile-header"
+        className="mb-5 rounded-2xl border border-white/10 bg-[#162035] p-5"
+      >
+        <div className="flex items-start gap-4">
+          <HexRankBadge rank={topRank as "S" | "A" | "B"} size={48} />
+          <div className="min-w-0 flex-1">
+            <h2 className="text-white font-semibold text-2xl leading-tight truncate">
+              @{handle}
+            </h2>
+            <button
+              type="button"
+              onClick={onCopy}
+              aria-label="ハンドルをコピー"
+              className="mt-1 inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-cyan-400"
+            >
+              <Copy aria-hidden className="w-3 h-3" />
+              {copied ? "コピーしました" : "ハンドルをコピー"}
+            </button>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <p className="text-[#CBD5E1] text-xs uppercase tracking-wide">累計報酬 ¥</p>
+            <p data-testid="profile-cumulative-jpy" className="text-cyan-400 metric-prime">
+              ¥{cumulativeJpy.toLocaleString("ja-JP")}
+            </p>
+          </div>
+          <div>
+            <p className="text-[#CBD5E1] text-xs uppercase tracking-wide">稼働中 MD</p>
+            <p data-testid="profile-active-md" className="text-cyan-400 metric-prime">
+              {activeCount}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Tabs ───────────────────────────────────────────────────── */}
+      <div
+        role="tablist"
+        aria-label="プロフィール切替"
+        data-testid="profile-tablist"
+        className="flex border-b border-white/10 mb-5 gap-2"
+      >
+        {TABS.map((t) => {
+          const active = activeTab === t.id;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              id={`tab-${t.id}`}
+              aria-selected={active}
+              aria-controls={`tabpanel-${t.id}`}
+              onClick={() => setActiveTab(t.id)}
+              className={`relative px-3 py-2 text-sm font-semibold ${
+                active ? "text-cyan-400" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              {t.label}
+              {active && (
+                <span
+                  aria-hidden
+                  className="absolute left-0 right-0 -bottom-px h-0.5 bg-cyan-400"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ── ステータス tab ─────────────────────────────────────────── */}
+      <div
+        role="tabpanel"
+        id="tabpanel-status"
+        aria-labelledby="tab-status"
+        hidden={activeTab !== "status"}
+      >
 
       {/* ── 1. 収益サマリ（ヒーロー） ──────────────────────────────── */}
       <section className="mb-6">
@@ -218,7 +355,31 @@ export default function ProfilePage() {
         <ComplexityMeter score={complexity.score} label={complexity.label} />
       </section>
 
-      {/* ── 2b. 社会インパクト ─────────────────────────────────────── */}
+      </div>{/* /tabpanel ステータス */}
+
+      {/* ── 登記済み MD tab ───────────────────────────────────────── */}
+      <div
+        role="tabpanel"
+        id="tabpanel-md"
+        aria-labelledby="tab-md"
+        hidden={activeTab !== "md"}
+      >
+        <section className="rounded-2xl border border-white/10 bg-[#162035] p-5 mb-4">
+          <p className="text-white font-semibold mb-1">登記済み MD（{activeCount} 件）</p>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            登記済みの知能資産は <Link href="/guild" className="text-cyan-400 underline-offset-4 hover:underline">マイ銀行</Link> に一覧表示されます。
+            鑑定状況・呼び出し数・収益はマイ銀行の Asset Portfolio から確認できます。
+          </p>
+        </section>
+      </div>
+
+      {/* ── 活動履歴 tab ─────────────────────────────────────────── */}
+      <div
+        role="tabpanel"
+        id="tabpanel-activity"
+        aria-labelledby="tab-activity"
+        hidden={activeTab !== "activity"}
+      >
       <ImpactCard
         savedProjects={impact.savedProjects}
         contributionScore={impact.contributionScore}
@@ -359,6 +520,8 @@ export default function ProfilePage() {
           設計難度の高い案件を中心に 100 件超の実績。
         </p>
       </section>
+
+      </div>{/* /tabpanel 活動履歴 */}
     </main>
   );
 }
