@@ -1,14 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Check, AlertCircle } from "lucide-react";
+import { Check, AlertCircle, Plug } from "lucide-react";
 import { MOCK_PROJECTS, getProject } from "@/lib/projects";
 import { computeMatchingScore, getDemoOwnedMds } from "@/lib/matching";
+import { pickBestFitMd } from "@/lib/md-pickfit";
 import { calcNet, formatJpy } from "@/lib/payout-sim";
 import { getCompetition, RANK_COLOR } from "@/lib/competitor-stats";
 import { PlugInApply } from "@/components/PlugInApply";
 import { ClampDescription } from "@/components/ui/ClampDescription";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { SectionCard } from "@/components/ui/SectionCard";
+import { ConnectedIntelligenceAssets } from "@/components/ui/ConnectedIntelligenceAssets";
 
 export function generateStaticParams() {
   return MOCK_PROJECTS.map((p) => ({ id: p.id }));
@@ -211,6 +213,15 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               totalReqs={matching.totalReqs}
             />
           </div>
+
+          {/* Connected Intelligence Assets — surfaces the picked MD agent
+              wiring before the Apply CTA. Mobile renders inline above the
+              sticky bar; desktop sits in the right rail. */}
+          <ConnectedIntelligenceAssets
+            mdGuildId={
+              pickBestFitMd(ownedMds, project).mdId ?? ownedMds[0]?.id ?? "md_demo"
+            }
+          />
 
           {/* Plug-in Apply — fixed on mobile (thumb zone), regular card on md+ */}
           <div className="hidden md:block section-card p-5">
