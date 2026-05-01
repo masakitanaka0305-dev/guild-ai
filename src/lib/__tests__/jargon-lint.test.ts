@@ -65,7 +65,8 @@ function isApiRoute(filePath: string): boolean {
 // FORBIDDEN as UI tokens (Final Polish #127): "Mercari Purple" / "メルカリ・パープル" / "お礼のゴールド" / "Cyan Helper" / "Brand Palette" — these are internal names only.
 // Explicitly PERMITTED (Cinematic Mint #128): 読みとり中 / 価値を結晶化中 / 準備中 / 資産価値 / 金/銀/銅 の太鼓判 / 知恵の銀行 / 先週、あなたの知恵は ¥X 稼ぎました / 新しい印税が ¥X 入金されました / ○○社があなたの『…』に注目しています / もう一度出品する / マイ銀行で確認 / ノートを編集する
 // FORBIDDEN as UI tokens (Cinematic Mint #128): "アビス・ブラック" / "ディープパープル" / "エレクトリックゴールド" / "クリスタル・フェイズ" / "啓示" / "Cinematic Mint" — internal palette names only.
-// Explicitly PERMITTED (Overload-Healthy #129): Live モード / LIVE / 音と更新頻度が上がります / 1 タップで OFF に戻せます / N 日連続で印税が届いています / 今週、あなたの知恵が連続 N 件採用されました（過去最多）/ 直近 24 時間で N 回呼び出されました / 累計 ¥N 達成 / 累計 ¥N を超えました / わかりました / 直近 30 秒で +¥X 入りました
+// Explicitly PERMITTED (Overload-Healthy #129): 音と更新頻度が上がります / 1 タップで OFF に戻せます / N 日連続で印税が届いています / 今週、あなたの知恵が連続 N 件採用されました（過去最多）/ 直近 24 時間で N 回呼び出されました / 累計 ¥N 達成 / 累計 ¥N を超えました / わかりました / 直近 30 秒で +¥X 入りました
+// Explicitly PERMITTED (Healthy Excitement #130): アチーブメント / バッジ / バッジを獲得しました / 次のマイルストーン / 次の解放まで / Hall of Fame / 知恵の地図 / Knowledge Map / 太鼓判の希少度 / 直近 100 件で N% / この太鼓判は希少です / 確かな実力です / 着実な一歩です / 次は太鼓判を狙いましょう / さんの『…』が金の太鼓判を獲得 / 知恵が直近 24 時間で N 人に使われました / あと N 件で解放
 const FORBIDDEN: Array<{ term: string; reason: string }> = [
   // Auth UI terms were forbidden when auth was postponed to v2.
   // Re-introduced (2026-04-30): GUILD AI Engineer Onboarding spec brings back /login + /welcome
@@ -129,6 +130,10 @@ const FORBIDDEN: Array<{ term: string; reason: string }> = [
   { term: "クラッシュ",                reason: "→ 暗転を crash と語らない（Cinematic Mint #128 — curtain は意図演出）" },
   { term: "真っ暗",                    reason: "→ Phase 3 は「静謐の間」（Cinematic Mint #128）" },
   { term: "無音演出",                  reason: "→ FOMO 演出は禁止。tick 音はデフォ無音（Cinematic Mint #128）" },
+  // ─── Healthy Excitement (#130) — Live mode は撤回。再発防止に NG 入り
+  { term: "Live モード",               reason: "→ #129 Live モードは #130 で撤回。CoinCounter は単一 3-5s 仕様" },
+  { term: "ライブモード",              reason: "→ #129 Live モードは #130 で撤回（再発防止）" },
+  { term: "LiveModeSwitch",            reason: "→ コンポーネント削除済み（#130）" },
 ];
 
 describe("jargon-lint: forbidden terms in app UI pages", () => {

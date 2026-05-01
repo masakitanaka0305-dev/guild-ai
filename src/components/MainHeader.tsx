@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { getPageTitle, showBackButton } from "@/lib/nav-config";
 import { ThemeSwitch } from "@/components/ui/ThemeSwitch";
 import { EarningTicker } from "@/components/ui/EarningTicker";
-import { LiveModeSwitch } from "@/components/ui/LiveModeSwitch";
 
 export function MainHeader() {
   const pathname = usePathname();
@@ -42,10 +41,9 @@ export function MainHeader() {
         {title}
       </h1>
 
-      {/* Right: earning ticker + Live mode + theme toggle + entry + bell */}
+      {/* Right: earning ticker + theme toggle + entry + bell */}
       <div className="flex items-center justify-end gap-1">
         <EarningTicker className="mr-1" />
-        <LiveModeSwitch className="mr-1" />
         <ThemeSwitch />
         <Link
           href="/onboarding"

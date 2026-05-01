@@ -1,113 +1,54 @@
-# Live Mode 設計（#129）
+# Live Mode 設計（#129） — **撤回ノート（#130 で削除）**
 
-GUILD AI の `/guild` 知恵袋銀行カウンタを、**ユーザーの明示同意があるとき**だけ
-高頻度（2s）＋音付きで動かすための設計仕様。default は OFF。
-
-> 不利益を与える dark pattern にならないよう、3 つの原則を必ず守る：
-> 1. **OFF が default**（黙示の opt-in は禁止）
-> 2. **1 タップで OFF に戻せる**
-> 3. **初回 ON 時に「音と更新頻度が上がる」と明示するトースト**を 1 度だけ表示
-
----
-
-## 1. 状態モデル
-
-| state | cadence | 音 | UI ピル | aria-live |
-|---|---|---|---|---|
-| `off`（default） | 3〜5 秒 ランダム + 12 ticks/60s rate-limit | 無音 | なし | 値の更新のみ |
-| `on`（user opt-in） | **2 秒固定** | `playPoyon`（global mute toggle 尊重） | 「LIVE」ピル ＋ pulse ドット | 30 秒に 1 回サマリ「直近 30 秒で +¥X 入りました」 |
-
-両モード共通：
-- 表示する数値は同一（フラクショナル ¥ → 整数 ¥ への自動切替）
-- reduced-motion 時はチップのフェードが無効、値だけ更新
-- localStorage `coinLiveMode = "on" | "off"` で永続化（device 単位）
-- localStorage `coinLiveMode:firstSeen = "1"` で初回トースト acknowledge を保存
-
----
-
-## 2. UI: `<LiveModeSwitch>`
-
-`src/components/ui/LiveModeSwitch.tsx`。MainHeader（モバイル）／AppShell
-sidebar（デスクトップ）に常駐。
-
-```tsx
-<button
-  role="switch"
-  aria-checked={isOn}
-  aria-label={
-    isOn
-      ? "Live モード ON。1 タップで OFF に戻せます（音と更新頻度を抑えます）"
-      : "Live モード OFF。1 タップで ON にできます（音と更新頻度が上がります）"
-  }
-  data-testid="live-mode-switch"
-  data-live={isOn ? "on" : "off"}
+> ## ステータス: REVOKED — 2026-05-01（#130 で撤去）
 >
-  <Activity /> Live
-</button>
-```
-
-- `role="switch" aria-checked` で SR は **トグル**として認識
-- `aria-label` は **状態 ＋ 結果** を必ず述べる（"ON にできます（…が上がります）"）
-- フォーカスリングは `outline-[var(--color-action-primary)]`
-- ON のとき pulse ドットが Activity アイコン横に出る（`motion-reduce:animate-none`）
-
-### 初回 ON トースト
-
-```tsx
-<div role="status" aria-live="polite" data-testid="live-mode-first-toast">
-  Live モード になりました。音と更新頻度が上がります。いつでも OFF にできます。
-  <button onClick={ack}>わかりました</button>
-</div>
-```
-
-- 表示は **1 デバイスにつき 1 回限り**（`coinLiveMode:firstSeen` が永続化）
-- 「わかりました」ボタンで明示的に ack（タップしないとトーストは閉じない）
+> #129 で実装した Live モード（CoinCounter の opt-in 高速ティッカー＋
+> chime ＋ LIVE ピル）は、`#130 Healthy Excitement` の設計レビューで
+> **撤回**しました。実装はコードベースから削除済み。本ドキュメントは
+> 履歴として残します。
 
 ---
 
-## 3. CoinCounter 内部実装（抜粋）
+## 撤回した理由
 
-```ts
-const TICK_MIN_MS = 3000;
-const TICK_MAX_MS = 5000;
-const LIVE_TICK_MS = 2000;
-const ARIA_THROTTLE_MS = 30_000;
-
-const ms = isLive
-  ? LIVE_TICK_MS
-  : TICK_MIN_MS + Math.floor(Math.random() * (TICK_MAX_MS - TICK_MIN_MS + 1));
-
-if (isLive && !isMuted()) playPoyon();
-
-if (now - lastAriaAtRef.current >= ARIA_THROTTLE_MS) {
-  setAriaSummary(`直近 30 秒で +¥${tickAccumRef.current} 入りました`);
-}
-```
-
-- Live モードは relaxed モードの 12 ticks/分 ガードを **意図的に bypass**
-  （opt-in しているため）
-- グローバル `isMuted()` トグルが ON の場合、Live モードでも音は出ない
+1. **default 設計だけで十分**：3〜5s ランダムケイデンスとフラクショナル
+   ¥ デルタは、それ単体で「動いている」「お礼が増えていく」感を
+   ちゃんと作れていた。
+2. **操作の複雑性を減らした**：トグル ＋ 初回トースト ＋ aria-live
+   throttling という多層構造は、ヘッダの認知負荷を増やすわりに
+   ユーザー価値が薄かった。
+3. **音は global mute で十分**：ヘッダにもう 1 つトグルを置くより、
+   既存の global mute を尊重するだけで OK。
+4. **健全な熱狂は別軸で作る**：高頻度ティッカーで興奮を煽るより、
+   `#130` で導入した **アチーブメント・ウォール／次のマイルストーン
+   ／Hall of Fame ティッカー／Knowledge Map／ランク連動 reveal** の
+   方が、達成感・期待・所属・発見・上達という健全な動機に
+   ひもづく。
 
 ---
 
-## 4. テスト
+## 実装当時の挙動（参考）
 
-| Test | カバー |
-|---|---|
-| `live-mode.test.ts > LiveModeSwitch` | role=switch / aria-checked / aria-label の状態反転 |
-| `live-mode.test.ts > localStorage 'coinLiveMode'` | デフォ off ／ toggle で setItem |
-| `live-mode.test.ts > first-on toast` | `coinLiveMode:firstSeen` の永続化／「わかりました」CTA |
-| `live-mode.test.ts > CoinCounter wiring` | useLiveMode 購読／`LIVE_TICK_MS=2000`／chime 条件 |
-| `live-mode.test.ts > LIVE pill + motion-reduce` | LIVE ピルは Live 時のみ／pulse は motion-safe |
-| `live-mode.test.ts > aria-live throttle` | `ARIA_THROTTLE_MS=30_000` ＋ サマリ文 |
-| `live-mode.test.ts > header mounting` | MainHeader ＋ AppShell の両方にマウントされている |
+| state | cadence | 音 | UI ピル |
+|---|---|---|---|
+| `off`（default） | 3〜5 秒 ランダム + 12 ticks/60s rate-limit | 無音 | なし |
+| `on`（user opt-in） | 2 秒固定 | playPoyon（global mute 尊重） | 「LIVE」ピル ＋ pulse |
+
+`localStorage["coinLiveMode"]` ＋ `localStorage["coinLiveMode:firstSeen"]`
+で永続化、初回 ON 時に role="status" トーストで「音と更新頻度が上がります」
+と明示。
 
 ---
 
-## 5. 既知の積み残し
+## 撤去した成果物（#130 で削除）
 
-- 視覚障害ユーザー向けに「Live モードの **強度を 3 段階**で選べる」仕様は次フェーズ
-  （現状 OFF / ON の 2 値）。
-- chime のサウンドソースは既存 `playPoyon`。Live mode 専用の音色は別途検討
-- `forceLiveMode` prop は埋め込みコンテキスト用エスケープハッチ。通常 UI からは
-  常に `useLiveMode` を経由
+- `src/hooks/useLiveMode.ts`
+- `src/components/ui/LiveModeSwitch.tsx`
+- `src/lib/__tests__/live-mode.test.ts`
+- `<MainHeader>` ／ `<AppShell>` の `<LiveModeSwitch>` マウント
+- CoinCounter の `useLiveMode` 購読 / `LIVE_TICK_MS` / `playPoyon` 呼び出し /
+  `aria-live` throttle / forceLiveMode prop
+- jargon-lint：`Live モード` / `LIVE` を **FORBIDDEN** に追加（再発防止）
+
+CoinCounter は default のシンプル仕様に戻り、`#130` で生まれた 5 軸の
+健全な熱狂（`docs/Healthy-Excitement設計.md`）にバトンを渡しています。
