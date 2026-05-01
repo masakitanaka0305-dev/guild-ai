@@ -327,3 +327,101 @@ md:border-0 md:bg-transparent md:backdrop-blur-0 md:p-0
 | water-utility-classes | 6 | `src/lib/__tests__/water-utility-classes.test.ts` |
 
 合計 **17 件** の v2 新規テスト。
+
+---
+
+## 18. UX Pass 2 — 「+」配置／CTA 文言／ウィザード／プロフィール
+
+### 18.1 「+」ボタン配置ルール
+
+| 表示面 | ＋ ボタン | z-index |
+|--------|----------|---------|
+| モバイル BottomNav 中央 | `data-testid="bottom-nav-fab"`（cyan-400 の固定中央 FAB） | `z-30` |
+| モバイル MainHeader 右 | lucide `Plus`（cyan-400 アイコン） | inline |
+| デスクトップ サイドバー | SidebarNav `PRIMARY_ACTION` カード（cyan-400 塗り） | inline |
+| **撤去** | `fixed right-8 bottom-8` の旧 desktop 用 floating FAB | — |
+
+提携バナー帯は `z-20`、BottomNav は `z-40`。FAB は `z-30` に挟まれて常に視認可能・重ならない構造。
+
+### 18.2 CTA 文言マップ（Water Guild v3 → UX pass 2）
+
+| 用途 | 旧文言 | 新文言（UX pass 2） |
+|------|--------|----------------------|
+| 案件 Apply CTA | この案件に応募する | **エージェントをデプロイ**（lucide `Send`） |
+| Apply CTA キャプション | 選んだ知能資産があなたのスキル証明になります | **あなたの思考をコピーした AI が、企業のプロジェクトに参加します**（`text-cyan-400/70`） |
+| 知能選択ラベル | この知能で応募 | **知能をプラグイン** |
+| 案件ステータス（applied） | 応募中 | **エージェント派遣中** |
+| Apply 中ラベル | 応募中... | **派遣中...** |
+
+`jargon-lint`：「この案件に応募する」は **NG**、「エージェントをデプロイ／知能をプラグイン／エージェント派遣中／思考をコピー」は許可。
+
+### 18.3 Onboarding ウィザード仕様
+
+3 ステップを `phase === "form"` の中で `wizardStep` で管理：
+
+```
+Step A — GitHub 連携
+  data-testid="onboarding-step-a"
+  GitHub から始める CTA → 連携ボタンをタップ → wizardStep = "role"
+        ↓
+Step B — 職種選択
+  data-testid="onboarding-step-b"
+  3 タイル（💻 エンジニア / 🎨 デザイナー / 📋 PdM）
+  role="radio" + aria-checked、タップで wizardStep = "confirm"
+        ↓
+Step 0 — Smart Pre-fill 確認（既存）
+  - <dl>/<dt>/<dd> 確認ビュー
+  - 「編集する」で <input> に切替
+  - 任意項目（生年・住所）は「後で設定する →」cyan ring CTA、デフォルト skip
+  - 「あとで /profile でも編集できます」キャプション
+  - 同意チェックボックス → 「確認して進む — 登記（Sync）開始」
+        ↓
+phase = "running" → TimerBar + 既存 7 ステップ
+```
+
+クエリパラメータ `?role=engineer/designer/pdm` で Step B をスキップ可能。
+`?fast=1` で Step A/B 両方をスキップ。
+
+### 18.4 プロフィールタブ構成
+
+`/profile` ヘッダ：
+
+- 六角形 Static Badge（48px、`HexRankBadge`）
+- `@handle`（white semibold 24px）＋ ハンドルコピー（lucide `Copy`）
+- 累計報酬 ¥ ／ 稼働中 MD：cyan `metric-prime`（数値）+ `text-[#CBD5E1] text-xs uppercase tracking-wide`（ラベル）
+
+3 タブ：
+
+| ID | ラベル | 中身 |
+|----|--------|------|
+| `status` | ステータス | 収益サマリ + プロ識別バッジ列（鑑定/完了案件/月間コール/鑑定済 件） |
+| `md` | 登記済み MD | 登記済み件数の summary ＋ /guild への深いリンク |
+| `activity` | 活動履歴 | 社会インパクト ＋ グローバル着金 ＋ オリジナリティ ＋ 自己紹介 |
+
+`role="tablist"` ＋ 各タブ `role="tab"` ＋ `aria-selected` ＋ `aria-controls`。タブパネルは `role="tabpanel"` ＋ `hidden` で切替。active は `text-cyan-400` ＋ 2px 下線、非 active は `text-slate-400`。
+
+### 18.5 Coming Soon フォールバック
+
+`<ComingSoonModal>` (`src/components/ui/ComingSoonModal.tsx`)
+
+- `role="dialog"` ＋ `aria-modal="true"` ＋ Esc 閉じ
+- カード：`bg-[#162035] rounded-2xl shadow-xl p-6`
+- 見出し：「Coming Soon」白
+- 本文：「この詳細ページは MVP 後リリース予定です。」slate-400
+- 閉じるボタン：cyan-400 塗り
+
+`/guild` の Asset Portfolio から「詳細」をタップすると、`isAssetImplemented(guildId)` が `true` なら `<Link href={\`/asset/\${guildId}\`}>`、`false` なら ComingSoonModal を開く。型で接続を保証。
+
+### 18.6 テスト一覧（UX pass 2）
+
+| テスト | 件数 | 場所 |
+|--------|------|------|
+| fab-placement | 3 | `src/lib/__tests__/fab-placement.test.ts` |
+| asset-detail-fallback | 3 | `src/lib/__tests__/asset-detail-fallback.test.ts` |
+| apply-cta-copy | 5 | `src/lib/__tests__/apply-cta-copy.test.ts` |
+| onboarding-wizard | 4 | `src/lib/__tests__/onboarding-wizard.test.ts` |
+| onboarding-later-skip | 3 | `src/lib/__tests__/onboarding-later-skip.test.ts` |
+| profile-tabs | 5 | `src/lib/__tests__/profile-tabs.test.ts` |
+
+合計 **23 件** の UX pass 2 新規テスト。
+
